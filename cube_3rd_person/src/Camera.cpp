@@ -23,7 +23,7 @@ void Camera::Update() {
     upPos.x=tempPos.x;
     upPos.y=tempPos.y;
     upPos.z=tempPos.z;
-    std::cout<<glm::to_string(tempTar)<<std::endl;
+    //std::cout<<glm::to_string(tempTar)<<std::endl;
     view = glm::lookAt(upPos, upTar, CameraUp);
     //glm::mat4 world(1);
     
