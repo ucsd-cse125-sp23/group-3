@@ -1,0 +1,4 @@
+H:/Documents/125/3rd_perspective_cube_windows/out/build/x64-Debug/CMakeFiles/menv.dir
+H:/Documents/125/3rd_perspective_cube_windows/out/build/x64-Debug/CMakeFiles/CopyShaders.dir
+H:/Documents/125/3rd_perspective_cube_windows/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+H:/Documents/125/3rd_perspective_cube_windows/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
