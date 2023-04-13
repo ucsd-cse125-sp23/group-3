@@ -11,8 +11,8 @@
 
 #include <iostream>
 
-
-const int NUM_PLAYERS = 4;
+#define DEFAULT_PORT "2400"
+const int NUM_PLAYERS = 1;
 
 class Server
 {
