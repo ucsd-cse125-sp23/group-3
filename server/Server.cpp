@@ -24,7 +24,7 @@ Server::Server()
 	hints.ai_flags = AI_PASSIVE;
 
 	// Resolve the server address and port
-	iResult = getaddrinfo(NULL, "2400", &hints, &result);
+	iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
 	if ( iResult != 0 ) {
 		printf("getaddrinfo failed with error: %d\n", iResult);
 		WSACleanup();
@@ -70,37 +70,40 @@ Server::Server()
 		exit(1);
 	}
 }
-
-void Server::update()
+Server::~Server(){
+	closesocket(ListenSocket);
+	WSACleanup();
+}
+int Server::update()
 {
-	SOCKET ClientSocket = INVALID_SOCKET;
-	ClientSocket = accept(ListenSocket,NULL,NULL);
 
-	bool conn = ClientSocket != INVALID_SOCKET;
-	if (conn) 
-	{
-		session = ClientSocket;
-		printf("connected\n");
-	}
-	
-	int data_length = recv(session, buffer, 512, 0);
-	if (data_length <= 0) 
-		return;
-
-	printf("%s\n", buffer);
-
-	if(buffer[0] == 'q'){
-		closesocket(session);
-		WSACleanup();
-	}
-	else{
-		char echo[512] = "echo ";
-		memcpy(&echo[strlen(echo)], buffer, strlen(buffer));
-
-		if (send(session, echo, 512, 0) == SOCKET_ERROR) 
+	for (int id = 0; id < NUM_PLAYERS; id ++){
+		if (sessions[id] != INVALID_SOCKET && recv(sessions[id], buffer[id], 512, 0) > 0)
 		{
-			printf("send failed with error: %d\n", WSAGetLastError());
-			closesocket(session);
+			printf("%s\n", buffer[id]);
+
+			if(buffer[id][0] == 'q'){
+				closesocket(sessions[id]);
+				sessions[id] = INVALID_SOCKET;
+			}
+			else{
+				char echo[512] = "echo ";
+				memcpy(&echo[strlen(echo)], buffer[id], strlen(buffer[id]));
+
+				if (send(sessions[id], echo, 512, 0) == SOCKET_ERROR) 
+				{
+					printf("send failed with error: %d\n", WSAGetLastError());
+					closesocket(sessions[id]);
+				}
+			}
 		}
 	}
+	bool valid = false;
+	for (int id = 0; id < NUM_PLAYERS; id ++)
+		valid = valid || sessions[id] != INVALID_SOCKET;
+
+	if (!valid)
+		return -1;
+
+	return 0;
 }

@@ -23,7 +23,7 @@ Client::Client()
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 	
-	iResult = getaddrinfo("100.81.38.145", "2400", &hints, &result);
+	iResult = getaddrinfo(DEFAULT_ADDR, DEFAULT_PORT, &hints, &result);
 
 	if( iResult != 0 ) 
 	{
@@ -34,7 +34,6 @@ Client::Client()
 
 	// Attempt to connect to an address until one succeeds
 	for(ptr=result; ptr != NULL ;ptr=ptr->ai_next) {
-
 		// Create a SOCKET for connecting to server
 		ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, 
 			ptr->ai_protocol);
@@ -89,11 +88,5 @@ void Client::update()
 	char input[512];
 	std::cin >> input;
 	send(ConnectSocket, input, 512, 0);
-	if(buffer[0] == 'q'){
-		closesocket(ConnectSocket);
-		WSACleanup();
-		exit(0);
-	}
-	//send(ConnectSocket, "hello", 512, 0);
 }
 

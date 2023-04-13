@@ -9,14 +9,20 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
+#include <iostream>
+
+#define DEFAULT_PORT "2400"
+const int NUM_PLAYERS = 1;
+
 class Server
 {
 public:
 	Server();
-	void update();
+	~Server();
+	int update();
 
-private:
-	char buffer[512];
+	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
-	SOCKET session;
+
+	SOCKET sessions[NUM_PLAYERS];
 };

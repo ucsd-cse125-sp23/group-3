@@ -9,6 +9,11 @@
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 
+#include <string>
+
+#define DEFAULT_ADDR "127.0.0.1"
+#define DEFAULT_PORT "2400"
+
 class Client
 {
 public:
