@@ -4,6 +4,9 @@
 #include "Cube.h"
 #include "Ground.h"
 #include "Shader.h"
+#include "Model.h"
+#include "ObjObject.h"
+
 #include "core.h"
 
 class Window {
@@ -16,6 +19,7 @@ public:
     // Objects to render
     static Cube* cube;
     static Ground* ground;
+    static ObjObject* combatRobotObject;
 
     // Shader Program
     static GLuint shaderProgram;

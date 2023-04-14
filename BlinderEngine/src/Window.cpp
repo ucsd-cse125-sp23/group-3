@@ -8,6 +8,7 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Cube* Window::cube;
 Ground* Window::ground;
+ObjObject* Window::combatRobotObject;
 
 // Camera Properties
 Camera* Cam;
@@ -40,6 +41,8 @@ bool Window::initializeObjects() {
     cube = new Cube();
     ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
+    combatRobotObject = new ObjObject("./models/combatRobot.obj");
+
 
     return true;
 }
@@ -48,6 +51,7 @@ void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
     delete ground;
+    delete combatRobotObject;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -119,8 +123,8 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
-
     cube->update();
+    combatRobotObject->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
@@ -130,6 +134,7 @@ void Window::displayCallback(GLFWwindow* window) {
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -151,21 +156,25 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
         cube->move(-cameraSpeed);
+        combatRobotObject->move(-cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
         cube->move(cameraSpeed);
+        combatRobotObject->move(cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
         cube->spin(cameraSpeed*turningratio);
+        combatRobotObject->spin(cameraSpeed * turningratio);
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
         cube->spin(-cameraSpeed*turningratio);
+        combatRobotObject->spin(-cameraSpeed * turningratio);
     }
     // Check for a key press.
     if (action == GLFW_PRESS) {

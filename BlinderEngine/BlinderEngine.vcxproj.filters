@@ -64,6 +64,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -85,6 +91,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\core.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Model.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObjObject.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
