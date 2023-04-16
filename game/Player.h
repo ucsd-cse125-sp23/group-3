@@ -3,7 +3,6 @@ enum class Character {Alice, Bob, Carol, Dave};
 class Player {
     private:
         int id;
-        bool blind; // Alice: true; others: false
         float speed;
         int insecurity;
         int awareness;
