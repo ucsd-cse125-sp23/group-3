@@ -28,6 +28,8 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin2=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax2=std::vector<glm::vec3>();
+    const char* file2="./scene/map_clown.txt";
+    readWallsCoord(file2,wallsmin2,wallsmax2,glm::vec3(-5.1f,0.0f,-5.1f));
 
     glm::vec3 groundmin2=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax2=glm::vec3(-(groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
@@ -41,6 +43,8 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin3=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax3=std::vector<glm::vec3>();
+    const char* file3="./scene/map_sculpture.txt";
+    readWallsCoord(file3,wallsmin3,wallsmax3,glm::vec3(0.1f,0.0f,-5.1f));
 
     glm::vec3 groundmin3=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax3=glm::vec3((groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
