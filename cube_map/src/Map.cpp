@@ -65,20 +65,20 @@ void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std:
     token.Open(file);
     float walllength=groundsize/5.0f;
     float offsetforwidth=wallwidth/2.0f;
-    std::cout<<"offset "<<offsetforwidth<<std::endl;
+    //std::cout<<"offset "<<offsetforwidth<<std::endl;
     for(int j=0;j<6;j++){
         for(int i=0;i<6;i++){
             int tempint=token.GetInt();
             
-            std::cout<<"int "<<tempint<<std::endl;
+            //std::cout<<"int "<<tempint<<std::endl;
             glm::vec3 topwallmin=glm::vec3(i*walllength-offsetforwidth,0.0f,j*walllength-offsetforwidth)+translation;
             glm::vec3 topwallmax=glm::vec3((i+1)*walllength+offsetforwidth,wallheight,j*walllength+offsetforwidth)+translation;
             glm::vec3 leftwallmin=glm::vec3(i*walllength-offsetforwidth,0.0f,j*walllength-offsetforwidth)+translation;
             glm::vec3 leftwallmax=glm::vec3((i)*walllength+offsetforwidth,wallheight,(j+1)*walllength+offsetforwidth)+translation;
-            std::cout<<"topwallmin "<<glm::to_string(topwallmin)<<std::endl;
-            std::cout<<"topwallmax "<<glm::to_string(topwallmax)<<std::endl;
-            std::cout<<"leftwallmin "<<glm::to_string(leftwallmin)<<std::endl;
-            std::cout<<"leftwallmax "<<glm::to_string(leftwallmax)<<std::endl;
+            //std::cout<<"topwallmin "<<glm::to_string(topwallmin)<<std::endl;
+            //std::cout<<"topwallmax "<<glm::to_string(topwallmax)<<std::endl;
+            //std::cout<<"leftwallmin "<<glm::to_string(leftwallmin)<<std::endl;
+            //std::cout<<"leftwallmax "<<glm::to_string(leftwallmax)<<std::endl;
             if(tempint==0){
                 continue;
             }else if(tempint==1){
@@ -95,7 +95,7 @@ void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std:
             }
         }
     }
-    std::cout<<"get here"<<std::endl;
+    //std::cout<<"get here"<<std::endl;
     token.Close();
 }
 
