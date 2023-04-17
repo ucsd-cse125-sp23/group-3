@@ -130,7 +130,7 @@ void Window::displayCallback(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the object.
-    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 

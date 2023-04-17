@@ -6,10 +6,10 @@
 
 Map::Map() {
     
-    wallheight=2.0f;
+    wallheight=5.0f;
     groundheight=0.0f;
-    wallwidth=0.2f;
-    groundsize=10.0f;
+    wallwidth=0.3f;
+    groundsize=30.0f;
 
     float offsetforwidth=wallwidth/2.0f;
 
