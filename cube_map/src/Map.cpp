@@ -4,12 +4,19 @@
 
 
 Map::Map() {
-    float wallheight=2.0f;
-    float groundheight=0.0f;
-    std::vector<glm::vec3> wallsmin1=std::vector<glm::vec3>({glm::vec3(0.0f,groundheight,0.0f),glm::vec3(-5.0f,groundheight,0.0f)});
-    std::vector<glm::vec3> wallsmax1=std::vector<glm::vec3>({glm::vec3(-5.0f,wallheight,0.2f),glm::vec3(-4.8f,wallheight,5.0f)});
+    
+    wallheight=2.0f;
+    groundheight=0.0f;
+    wallwidth=0.2f;
+    groundsize=5.0f;
+
+    std::vector<glm::vec3> wallsmin1=std::vector<glm::vec3>();
+    std::vector<glm::vec3> wallsmax1=std::vector<glm::vec3>();
+    const char* file1="../scene/map_animal.txt";
+    
+
     glm::vec3 groundmin1=glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 groundmax1=glm::vec3(-5.0f,-0.2f,5.0f);
+    glm::vec3 groundmax1=glm::vec3(-groundsize-wallwidth,-0.2f,groundsize+wallwidth);
     map1=new Submap(wallsmin1,wallsmax1,groundmin1,groundmax1);
     glm::mat4 trans1 = {
         {1,0,0,0},
@@ -17,17 +24,69 @@ Map::Map() {
         {0.5,0,0.5*glm::sqrt(3.0f),0},
         {0,0,0,1}};
     map1->setModel(trans1);
+
+    std::vector<glm::vec3> wallsmin2=std::vector<glm::vec3>();
+    std::vector<glm::vec3> wallsmax2=std::vector<glm::vec3>();
+
+    glm::vec3 groundmin2=glm::vec3(0.0f,0.0f,0.0f);
+    glm::vec3 groundmax2=glm::vec3(-(groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
+    map2=new Submap(wallsmin2,wallsmax2,groundmin2,groundmax2);
+    glm::mat4 trans2 = {
+        {1,0,0,0},
+        {0,1,0,0},
+        {-0.5,0,0.5*glm::sqrt(3.0f),0},
+        {0,0,0,1}};
+    map2->setModel(trans2);
+
+    std::vector<glm::vec3> wallsmin3=std::vector<glm::vec3>();
+    std::vector<glm::vec3> wallsmax3=std::vector<glm::vec3>();
+
+    glm::vec3 groundmin3=glm::vec3(0.0f,0.0f,0.0f);
+    glm::vec3 groundmax3=glm::vec3((groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
+    map3=new Submap(wallsmin3,wallsmax3,groundmin3,groundmax3);
+    glm::mat4 trans3 = {
+        {0.5,0,0.5*glm::sqrt(3.0f),0},
+        {0,1,0,0},
+        {-0.5,0,0.5*glm::sqrt(3.0f),0},
+        {0,0,0,1}};
+    map3->setModel(trans3);
 }
 
 Map::~Map() {
     delete map1;
+    delete map2;
+    delete map3;
+}
+
+void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std::vector<glm::vec3> &wallsmax,glm::vec3 translation){
+    Tokenizer token=Tokenizer();
+    char temp[256];
+    token.Open(file);
+    float walllength=groundsize/5.0f;
+    for(int i=0;i<6;i++){
+        int tempint=token.GetInt();
+        if(tempint==0){
+            continue;
+        }else if(tempint==1){
+            wallsmin.push_back(translation+)
+        }else if(tempint==2){
+            
+        }else if(tempint==3){
+            
+        }
+    }
+    token.Close();
 }
 
 void Map::update(){
     map1->update();
+    map2->update();
+    map3->update();
 }
 
 void Map::draw(const glm::mat4& viewProjMtx, GLuint shader){
     map1->draw(viewProjMtx,shader);
+    map2->draw(viewProjMtx,shader);
+    map3->draw(viewProjMtx,shader);
 }
 
