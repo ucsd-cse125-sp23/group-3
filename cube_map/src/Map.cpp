@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "Map.h"
+#include <glm/gtx/string_cast.hpp>
 
 
 Map::Map() {
@@ -12,8 +13,8 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin1=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax1=std::vector<glm::vec3>();
-    const char* file1="../scene/map_animal.txt";
-    
+    const char* file1="./scene/map_animal.txt";
+    readWallsCoord(file1,wallsmin1,wallsmax1,glm::vec3(-5.1f,0.0f,0.1f));
 
     glm::vec3 groundmin1=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax1=glm::vec3(-groundsize-wallwidth,-0.2f,groundsize+wallwidth);
@@ -63,18 +64,38 @@ void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std:
     char temp[256];
     token.Open(file);
     float walllength=groundsize/5.0f;
-    for(int i=0;i<6;i++){
-        int tempint=token.GetInt();
-        if(tempint==0){
-            continue;
-        }else if(tempint==1){
-            wallsmin.push_back(translation+)
-        }else if(tempint==2){
+    float offsetforwidth=wallwidth/2.0f;
+    std::cout<<"offset "<<offsetforwidth<<std::endl;
+    for(int j=0;j<6;j++){
+        for(int i=0;i<6;i++){
+            int tempint=token.GetInt();
             
-        }else if(tempint==3){
-            
+            std::cout<<"int "<<tempint<<std::endl;
+            glm::vec3 topwallmin=glm::vec3(i*walllength-offsetforwidth,0.0f,j*walllength-offsetforwidth)+translation;
+            glm::vec3 topwallmax=glm::vec3((i+1)*walllength+offsetforwidth,wallheight,j*walllength+offsetforwidth)+translation;
+            glm::vec3 leftwallmin=glm::vec3(i*walllength-offsetforwidth,0.0f,j*walllength-offsetforwidth)+translation;
+            glm::vec3 leftwallmax=glm::vec3((i)*walllength+offsetforwidth,wallheight,(j+1)*walllength+offsetforwidth)+translation;
+            std::cout<<"topwallmin "<<glm::to_string(topwallmin)<<std::endl;
+            std::cout<<"topwallmax "<<glm::to_string(topwallmax)<<std::endl;
+            std::cout<<"leftwallmin "<<glm::to_string(leftwallmin)<<std::endl;
+            std::cout<<"leftwallmax "<<glm::to_string(leftwallmax)<<std::endl;
+            if(tempint==0){
+                continue;
+            }else if(tempint==1){
+                wallsmin.push_back(topwallmin);
+                wallsmax.push_back(topwallmax);
+            }else if(tempint==2){
+                wallsmin.push_back(leftwallmin);
+                wallsmax.push_back(leftwallmax);
+            }else if(tempint==3){
+                wallsmin.push_back(topwallmin);
+                wallsmax.push_back(topwallmax);
+                wallsmin.push_back(leftwallmin);
+                wallsmax.push_back(leftwallmax);
+            }
         }
     }
+    std::cout<<"get here"<<std::endl;
     token.Close();
 }
 
