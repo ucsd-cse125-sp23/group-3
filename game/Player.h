@@ -5,21 +5,18 @@ class Player {
         int id;
         Character character;
         float speed;
-        int insecurity;
-        int awareness;
+        int level; // insecurity for Alice, awareness for others
         bool seeAliceLocation;
 
     public:
         Player(int id);
 
         void setCharacter(Character charChoice);
-        void setInsesurityLevel(int num);
-        void setAwarenessLevel(int num);
+        void setLevel(int num);
         void setSeeAliceLocation(bool visible);
 
         int getPlayerId();
         Character getCharacter();
-        int getInsesurityLevel();
-        int getAwarenessLevel();
+        int getLevel();
         bool getSeeAliceLocation();
 };

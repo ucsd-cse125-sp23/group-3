@@ -1,17 +1,13 @@
 #include "Player.h"
 
-Player::Player(int id): id(id), character(Character::NOT_SELECTED), speed(1), insecurity(0), awareness(0), seeAliceLocation(false) {}
+Player::Player(int id): id(id), character(Character::NOT_SELECTED), speed(1), level(0), seeAliceLocation(false) {}
 
 void Player::setCharacter(Character charChoice) {
     character = charChoice;
 }
 
-void Player::setInsesurityLevel(int num) {
-    insecurity = num;
-}
-
-void Player::setAwarenessLevel(int num) {
-    awareness = num;
+void Player::setLevel(int num) {
+    level = num;
 }
 
 void Player::setSeeAliceLocation(bool visible) {
@@ -26,12 +22,8 @@ Character Player::getCharacter() {
     return character;
 }
 
-int Player::getInsesurityLevel() {
-    return insecurity;
-}
-
-int Player::getAwarenessLevel() {
-    return awareness;
+int Player::getLevel() {
+    return level;
 }
 
 bool Player::getSeeAliceLocation() {
