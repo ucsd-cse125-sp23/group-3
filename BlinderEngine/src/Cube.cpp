@@ -151,7 +151,12 @@ void Cube::draw(const glm::mat4& viewProjMtx, GLuint shader) {
     glUseProgram(0);
 }
 
-void Cube::update() {
+void Cube::update(glm::mat4 world) {
+    model = world;
+}
+
+void Cube::setColor(glm::vec3 _color) {
+    color=_color;
     // Spin the cube
     //spin(0.05f);
 }

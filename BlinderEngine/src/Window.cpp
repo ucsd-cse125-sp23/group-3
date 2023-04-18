@@ -9,6 +9,7 @@ const char* Window::windowTitle = "Model Environment";
 Cube* Window::cube;
 Ground* Window::ground;
 ObjObject* Window::combatRobotObject;
+Map* Window::map;
 
 // Camera Properties
 Camera* Cam;
@@ -39,9 +40,10 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
-    ground= new Ground();
+    //ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    combatRobotObject = new ObjObject("./models/combatRobot.obj");
+    combatRobotObject = new ObjObject("./resources/models/combatRobot.obj");
+    map = new Map();
 
 
     return true;
@@ -50,8 +52,9 @@ bool Window::initializeObjects() {
 void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
-    delete ground;
+    //delete ground;
     delete combatRobotObject;
+    delete map;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -123,7 +126,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
-    cube->update();
+    //cube->update();
     combatRobotObject->update();
 }
 
@@ -133,8 +136,9 @@ void Window::displayCallback(GLFWwindow* window) {
 
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    //combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

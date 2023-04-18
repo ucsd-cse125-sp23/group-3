@@ -1,17 +1,5 @@
-﻿  main.cpp
-  Camera.cpp
-  Cube.cpp
-H:\group-3\BlinderEngine\src\Cube.cpp(147,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Ground.cpp
-H:\group-3\BlinderEngine\src\Ground.cpp(81,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Model.cpp
-  ObjObject.cpp
-H:\group-3\BlinderEngine\src\ObjObject.cpp(75,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Shader.cpp
-  Tokenizer.cpp
+﻿  ObjObject.cpp
+C:\Users\xizou\group-3\BlinderEngine\src\ObjObject.cpp(76,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Window.cpp
   Generating Code...
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew32s.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'H:\group-3\BlinderEngine\x64\Debug\glew32s.pdb'; linking object as if no debug info
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  BlinderEngine.vcxproj -> H:\group-3\BlinderEngine\x64\Debug\BlinderEngine.exe
+  BlinderEngine.vcxproj -> C:\Users\xizou\group-3\BlinderEngine\x64\Debug\BlinderEngine.exe
