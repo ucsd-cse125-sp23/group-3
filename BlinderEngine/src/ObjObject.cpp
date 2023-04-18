@@ -16,8 +16,9 @@ ObjObject::ObjObject(const char* path, glm::vec3 cubeMin, glm::vec3 cubeMax)
     std::vector<glm::vec2> uvs;
 
     Model* blinderModel = new Model();
-    bool res = blinderModel->loadAssImp(path, indices, positions, uvs, normals);
     model = model * glm::scale(glm::vec3(0.2f, 0.2f, 0.2f));
+    bool res = blinderModel->loadAssImp(path, indices, positions, uvs, normals);
+    
 
     // Generate a vertex array (VAO) and two vertex buffer objects (VBO).
     glGenVertexArrays(1, &VAO);
@@ -62,7 +63,7 @@ void ObjObject::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
     // actiavte the shader program
     glUseProgram(shader);
-
+    
     // get the locations and send the uniforms to the shader
     glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
     glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&model);
