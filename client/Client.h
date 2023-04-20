@@ -19,6 +19,7 @@ class Client
 public:
 	Client();
 	void update();
+	int accept_init();
 
 private:
 	SOCKET ConnectSocket;

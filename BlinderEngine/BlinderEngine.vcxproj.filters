@@ -70,13 +70,7 @@
     <ClCompile Include="src\ObjObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\BlinderImporter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Map.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Submap.cpp">
+    <ClCompile Include="..\client\Client.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,11 +102,8 @@
     <ClInclude Include="include\ObjObject.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Map.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Submap.h">
-      <Filter>include</Filter>
+    <ClInclude Include="..\client\Client.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
