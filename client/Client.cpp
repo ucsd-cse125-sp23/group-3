@@ -90,3 +90,28 @@ void Client::update()
 	send(ConnectSocket, input, 512, 0);
 }
 
+int Client::accept_init()
+{
+	if (recv(ConnectSocket, buffer, 512, 0) <= 0)
+		return -1;
+
+	switch (buffer[0])
+	{
+		case '0':
+			std::cout << "character:" << "Alice" << std::endl;
+			return 0;
+		case '1':
+			std::cout << "character:" << "Bob" << std::endl;
+			return 1;
+		case '2':
+			std::cout << "character:" << "Carol" << std::endl;
+			return 2;
+		case '3':
+			std::cout << "character:" << "Dave" << std::endl;
+			return 3;
+		default:
+			break;
+	}
+	return -1;
+}
+

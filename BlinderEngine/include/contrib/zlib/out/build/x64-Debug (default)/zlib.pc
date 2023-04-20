@@ -1,0 +1,13 @@
+prefix=C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/zlib/out/install/x64-Debug (default)
+exec_prefix=C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/zlib/out/install/x64-Debug (default)
+libdir=
+sharedlibdir=
+includedir=
+
+Name: zlib
+Description: zlib compression library
+Version: 
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

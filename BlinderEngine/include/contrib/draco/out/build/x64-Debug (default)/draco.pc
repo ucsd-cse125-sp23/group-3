@@ -1,0 +1,6 @@
+Name: draco
+Description: Draco geometry de(com)pression library.
+Version: 1.5.6
+Cflags: -Iinclude
+Libs: -Llib -ldraco
+Libs.private: 

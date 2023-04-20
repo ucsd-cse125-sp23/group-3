@@ -107,3 +107,21 @@ int Server::update()
 
 	return 0;
 }
+
+void Server::send_init_packet(int character_id){
+	if (sessions[character_id] != INVALID_SOCKET)
+	{
+		std::string init_str;
+		// Init packet
+		// init_str.append("0");
+		init_str.append(std::to_string(character_id));
+		const char* buf_init = init_str.c_str();
+		std::cout << "sending init..." << buf_init << std::endl;
+		if (send(sessions[character_id], buf_init, 2, 0) == SOCKET_ERROR)
+		{
+			printf("send failed with error: %d\n", WSAGetLastError());
+			closesocket(sessions[character_id]);
+		}
+	}
+	
+}

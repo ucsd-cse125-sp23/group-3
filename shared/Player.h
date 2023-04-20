@@ -1,4 +1,10 @@
-enum class Character {NOT_SELECTED, Alice, Bob, Carol, Dave};
+enum class Character {
+    NOT_SELECTED = -1, 
+    Alice = 0, 
+    Bob = 1, 
+    Carol = 2, 
+    Dave = 3
+};
 
 class Player {
     private:

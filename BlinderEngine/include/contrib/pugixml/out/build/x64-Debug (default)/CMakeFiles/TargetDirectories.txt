@@ -1,0 +1,6 @@
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/pugixml.dir
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/install/local.dir
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/install.dir
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
+C:/Users/24424/Desktop/group3/serialization/group-3/BlinderEngine/include/contrib/pugixml/out/build/x64-Debug (default)/CMakeFiles/list_install_components.dir
