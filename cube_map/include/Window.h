@@ -16,7 +16,6 @@ public:
 
     // Objects to render
     static Cube* cube;
-    static Ground* ground;
     static Map* map;
 
     // Shader Program
