@@ -12,6 +12,7 @@ Cube* Window::cube;
 Map* Window::map;
 Model* ourModel;
 ObjObject* backPackObject;
+int Window::eventChecker;
 
 // Camera Properties
 Camera* Cam;
@@ -167,6 +168,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     /*
      * TODO: Modify below to add your key callbacks.
      */
+    eventChecker = 0;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
         //cube->move(-cameraSpeed);
