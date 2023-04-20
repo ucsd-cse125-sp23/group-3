@@ -70,15 +70,15 @@
     <ClCompile Include="src\Submap.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Ground.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Tokenizer.h">
@@ -99,13 +99,19 @@
     <ClInclude Include="include\Submap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\BShader.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Mesh.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Model.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BCamera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MShader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

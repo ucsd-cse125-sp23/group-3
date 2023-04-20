@@ -64,7 +64,8 @@ void Camera::Reset() {
     }
     else{
         CameraTar=glm::vec3(0.0f,0.0f,0.0f); 
-        CameraDir=glm::vec3(0.0f,30.0f,10.0f);  
+        CameraDir=glm::vec3(0.0f,30.0f,10.0f); 
+        CameraPos = CameraTar + CameraDir;
     }
     //third perspective
     //std::cout<<glm::to_string(CameraPos)<<std::endl;

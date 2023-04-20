@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "core.h"
-#include "BShader.h"
 #include "Model.h"
 
 
@@ -62,13 +61,10 @@ int main(void) {
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects()) exit(EXIT_FAILURE);
 
-    Shader ourShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
-    Model ourModel("./resources/objects/backpack/backpack.obj");
+
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
-        ourShader.use();
-        ourModel.Draw(ourShader);
 
         // Main render display callback. Rendering of objects is done here.
         Window::displayCallback(window);

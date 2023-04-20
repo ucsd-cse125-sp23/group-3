@@ -2,11 +2,12 @@
 #define MESH_H
 
 #include "core.h"
+#include "MShader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <BShader.h>
+#include <MShader.h>
 
 #include <string>
 #include <vector>
@@ -55,6 +56,8 @@ public:
         // now that we have all the required data, set the vertex buffers and its attribute pointers.
         setupMesh();
     }
+
+    
 
     // render the mesh
     void Draw(Shader &shader) 
