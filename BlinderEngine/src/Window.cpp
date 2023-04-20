@@ -7,7 +7,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
-ObjObject* Window::combatRobotObject;
+Ground* Window::ground;
 Map* Window::map;
 
 // Camera Properties
@@ -16,8 +16,8 @@ Camera* Cam;
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
-const float cameraSpeed = 0.05f;
-const float turningratio=5.0f;
+const float cameraSpeed = 0.10f;
+const float turningratio = 30.0f;
 
 // The shader program id
 GLuint Window::shaderProgram;
@@ -39,11 +39,10 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
-    //ground= new Ground();
-    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    combatRobotObject = new ObjObject("./resources/models/combatRobot.obj");
+    ground = new Ground();
     map = new Map();
-
+    //cube->move(2.0f);
+    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
 
     return true;
 }
@@ -51,9 +50,7 @@ bool Window::initializeObjects() {
 void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
-    //delete ground;
-    delete combatRobotObject;
-    delete map;
+    delete ground;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -125,8 +122,12 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
+    map->update();
+    int mapID;
+    float x, y;
+    map->getPosition(cube->getModel(), &mapID, &x, &y);
+
     //cube->update();
-    combatRobotObject->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
@@ -136,7 +137,6 @@ void Window::displayCallback(GLFWwindow* window) {
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
@@ -150,49 +150,44 @@ void Window::resetCamera() {
     Cam->Reset();
     Cam->SetAspect(float(Window::width) / float(Window::height));
 }
-
 // callbacks - for Interaction
 void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     /*
      * TODO: Modify below to add your key callbacks.
      */
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         Cam->SetMove(-cameraSpeed);
         cube->move(-cameraSpeed);
-        combatRobotObject->move(-cameraSpeed);
     }
-        
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+
+    /*if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
         cube->move(cameraSpeed);
-        combatRobotObject->move(cameraSpeed);
+    }*/
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        Cam->SetSpin(cameraSpeed * turningratio);
+        cube->spin(cameraSpeed * turningratio);
     }
-        
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-        Cam->SetSpin(cameraSpeed*turningratio);
-        cube->spin(cameraSpeed*turningratio);
-        combatRobotObject->spin(cameraSpeed * turningratio);
-    }
-        
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-        Cam->SetSpin(-cameraSpeed*turningratio);
-        cube->spin(-cameraSpeed*turningratio);
-        combatRobotObject->spin(-cameraSpeed * turningratio);
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        Cam->SetSpin(-cameraSpeed * turningratio);
+        cube->spin(-cameraSpeed * turningratio);
     }
     // Check for a key press.
     if (action == GLFW_PRESS) {
         switch (key) {
-            case GLFW_KEY_ESCAPE:
-                // Close the window. This causes the program to also terminate.
-                glfwSetWindowShouldClose(window, GL_TRUE);
-                break;
+        case GLFW_KEY_ESCAPE:
+            // Close the window. This causes the program to also terminate.
+            glfwSetWindowShouldClose(window, GL_TRUE);
+            break;
 
-            case GLFW_KEY_R:
-                resetCamera();
-                break;
+        case GLFW_KEY_R:
+            resetCamera();
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
@@ -234,3 +229,6 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
         cube->move(-cameraspeed/100.0f);
     }*/
 }
+
+
+
