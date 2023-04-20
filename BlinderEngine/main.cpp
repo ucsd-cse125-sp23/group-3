@@ -2,7 +2,6 @@
 #include "core.h"
 #include "Model.h"
 
-
 void error_callback(int error, const char* description) {
     // Print error.
     std::cerr << description << std::endl;
@@ -60,7 +59,6 @@ int main(void) {
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects()) exit(EXIT_FAILURE);
-
 
 
     // Loop while GLFW window should stay open.
