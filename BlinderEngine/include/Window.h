@@ -6,7 +6,6 @@
 #include "Map.h"
 #include "Shader.h"
 #include "core.h"
-#include "ObjObject.h"
 
 class Window {
 public:
@@ -18,7 +17,6 @@ public:
     // Objects to render
     static Cube* cube;
     static Map* map;
-    static ObjObject* combatRobotObject;
 
     // Shader Program
     static GLuint shaderProgram;
