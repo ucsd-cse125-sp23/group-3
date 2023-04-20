@@ -41,6 +41,7 @@ bool Window::initializeObjects() {
     cube = new Cube();
     ground= new Ground();
     map=new Map();
+    //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
 
     return true;
@@ -122,6 +123,10 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
+    int mapID;
+    float x,y;
+    map->getPosition(cube->getModel(),&mapID,&x,&y);
+
     //cube->update();
 }
 

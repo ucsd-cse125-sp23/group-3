@@ -111,6 +111,41 @@ void Map::update(){
     map3->update();
 }
 
+void Map::getPosition(glm::mat4 model,int* mapID,float* x,float* y){
+    const float *pSource = (const float*)glm::value_ptr(model);
+    glm::vec4 position=glm::vec4(pSource[12],pSource[13],pSource[14],pSource[15]);
+    float theta=atan2(-pSource[14],pSource[12]);
+    float offsetforwidth=wallwidth/2.0f;
+    //std::cout<<"position "<<glm::to_string(position)<<std::endl;
+    //std::cout<<"degree "<<theta<<std::endl;
+    if(pSource[12]<0){
+        theta+=M_PI;
+    }
+    if(theta<0){
+        theta=M_PI*2+theta;
+    }
+    glm::vec4 MapTranslation;
+    if(theta<M_PI/3 || theta>M_PI*2/6*5){
+        *mapID=3;
+        position=glm::inverse(map3->getModel())*position;
+        MapTranslation=-glm::vec4(offsetforwidth,0.0f,-(groundsize+offsetforwidth),1.0f);
+    }else if(theta<M_PI){
+        *mapID=2;
+        position=glm::inverse(map2->getModel())*position;
+        MapTranslation=-glm::vec4(-(groundsize+offsetforwidth),0.0f,-(groundsize+offsetforwidth),1.0f);
+    }else{
+        *mapID=1;
+        position=glm::inverse(map1->getModel())*position;
+        MapTranslation=-glm::vec4(-(groundsize+offsetforwidth),0.0f,offsetforwidth,1.0f);     
+    }
+    position=position+MapTranslation;
+    *x=(position.x)/groundsize*5;
+    *y=(position.z)/groundsize*5;
+    /*std::cout<<"mapID "<<*mapID<<std::endl;
+    std::cout<<"x "<<*x<<std::endl;
+    std::cout<<"y "<<*y<<std::endl;*/
+}
+
 void Map::draw(const glm::mat4& viewProjMtx, GLuint shader){
     map1->draw(viewProjMtx,shader);
     map2->draw(viewProjMtx,shader);

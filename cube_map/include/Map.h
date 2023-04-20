@@ -21,6 +21,7 @@ class Map {
         ~Map();
 
         void draw(const glm::mat4& viewProjMtx, GLuint shader);
+        void getPosition(glm::mat4 model,int* mapID,float* x,float* y);
         void update();
         void readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std::vector<glm::vec3> &wallsmax,glm::vec3 translation);
 };
