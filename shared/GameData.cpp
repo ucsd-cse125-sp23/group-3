@@ -28,3 +28,20 @@ GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 loc
 	this->remaining_time = rt;
 	this->gamestate = gs;
 }
+
+string GameData::gamestate_to_string() {
+	stringstream result;
+	copy(this->obstacle_states.begin(), this->obstacle_states.end(), std::ostream_iterator<int>(result, " "));
+	
+	return "locA: " + glm::to_string(this->location_A) + "\n"
+		+ "locB: " + glm::to_string(this->location_B) + "\n"
+		+ "locC: " + glm::to_string(this->location_C) + "\n"
+		+ "locD: " + glm::to_string(this->location_D) + "\n"
+		+ "obstacle_states: " + result.str().c_str() + "\n"
+		+ "level_A: " + to_string(this->level_A) + "\n"
+		+ "level_B: " + to_string(this->level_B) + "\n"
+		+ "level_C: " + to_string(this->level_C) + "\n"
+		+ "level_D: " + to_string(this->level_D) + "\n"
+		+ "remaining_time: " + to_string(this->remaining_time) + "\n"
+		+ "GameState: " + to_string((int)this->gamestate) + "\n";
+}

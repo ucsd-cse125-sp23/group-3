@@ -139,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\client\Client.cpp" />
+    <ClCompile Include="..\shared\Event.cpp" />
+    <ClCompile Include="..\shared\GameData.cpp" />
+    <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Cube.cpp" />
@@ -151,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\client\Client.h" />
+    <ClInclude Include="..\shared\Event.h" />
+    <ClInclude Include="..\shared\GameData.h" />
+    <ClInclude Include="..\shared\Player.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\core.h" />
     <ClInclude Include="include\Cube.h" />

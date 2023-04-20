@@ -2,8 +2,10 @@
 
 class Event {
 public:
-	Event(EventType eventType);
+    Event(EventType eventType);
+
+    EventType getEventType();
 
 protected:
-	EventType eventType;
+    EventType eventType;
 };
