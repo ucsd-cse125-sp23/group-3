@@ -16,7 +16,7 @@ Map::Map() {
     std::vector<glm::vec3> wallsmin1=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax1=std::vector<glm::vec3>();
     const char* file1="./scene/map_animal.txt";
-    readWallsCoord(file1,wallsmin1,wallsmax1,glm::vec3(-(groundsize+offsetforwidth),0.0f,offsetforwidth));
+    readWallsCoord(0, file1,wallsmin1,wallsmax1,glm::vec3(-(groundsize+offsetforwidth),0.0f,offsetforwidth));
 
     glm::vec3 groundmin1=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax1=glm::vec3(-groundsize-wallwidth,-0.2f,groundsize+wallwidth);
@@ -31,7 +31,7 @@ Map::Map() {
     std::vector<glm::vec3> wallsmin2=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax2=std::vector<glm::vec3>();
     const char* file2="./scene/map_clown.txt";
-    readWallsCoord(file2,wallsmin2,wallsmax2,glm::vec3(-(groundsize+offsetforwidth),0.0f,-(groundsize+offsetforwidth)));
+    readWallsCoord(1, file2,wallsmin2,wallsmax2,glm::vec3(-(groundsize+offsetforwidth),0.0f,-(groundsize+offsetforwidth)));
 
     glm::vec3 groundmin2=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax2=glm::vec3(-(groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
@@ -46,7 +46,7 @@ Map::Map() {
     std::vector<glm::vec3> wallsmin3=std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax3=std::vector<glm::vec3>();
     const char* file3="./scene/map_sculpture.txt";
-    readWallsCoord(file3,wallsmin3,wallsmax3,glm::vec3(offsetforwidth,0.0f,-(groundsize+offsetforwidth)));
+    readWallsCoord(2, file3,wallsmin3,wallsmax3,glm::vec3(offsetforwidth,0.0f,-(groundsize+offsetforwidth)));
 
     glm::vec3 groundmin3=glm::vec3(0.0f,0.0f,0.0f);
     glm::vec3 groundmax3=glm::vec3((groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
@@ -65,7 +65,7 @@ Map::~Map() {
     delete map3;
 }
 
-void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std::vector<glm::vec3> &wallsmax,glm::vec3 translation){
+void Map::readWallsCoord(int mapId, const char* file,std::vector<glm::vec3> &wallsmin, std::vector<glm::vec3> &wallsmax,glm::vec3 translation){
     Tokenizer token=Tokenizer();
     char temp[256];
     token.Open(file);
@@ -75,7 +75,7 @@ void Map::readWallsCoord(const char* file,std::vector<glm::vec3> &wallsmin, std:
     for(int j=0;j<6;j++){
         for(int i=0;i<6;i++){
             int tempint=token.GetInt();
-            
+            mapEncode[mapId][j][i] = tempint;
             //std::cout<<"int "<<tempint<<std::endl;
             glm::vec3 topwallmin=glm::vec3(i*walllength-offsetforwidth,0.0f,j*walllength-offsetforwidth)+translation;
             glm::vec3 topwallmax=glm::vec3((i+1)*walllength+offsetforwidth,wallheight,j*walllength+offsetforwidth)+translation;
