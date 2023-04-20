@@ -19,6 +19,7 @@ public:
     static Cube* cube;
     static Map* map;
     static ObjObject* combatRobotObject;
+    static int eventChecker;
 
     // Shader Program
     static GLuint shaderProgram;
