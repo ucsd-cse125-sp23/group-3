@@ -1,4 +1,7 @@
 #include "Window.h"
+#include "Model.h"
+#include "BCamera.h"
+#include "MShader.h"
 
 // Window Properties
 int Window::width;
@@ -8,6 +11,8 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Cube* Window::cube;
 Map* Window::map;
+Model* ourModel;
+BCamera* bCamera;
 
 // Camera Properties
 Camera* Cam;
@@ -17,6 +22,11 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.05f;
 const float turningratio=5.0f;
+Shader* ourShader;
+
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
 
 // The shader program id
 GLuint Window::shaderProgram;
@@ -26,6 +36,8 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
+    ourShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    bCamera = new BCamera(glm::vec3(0.0f, 0.0f, 3.0f));
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -41,6 +53,8 @@ bool Window::initializeObjects() {
     //ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     map = new Map();
+
+    ourModel = new Model("./resources/objects/backpack/backpack.obj");
 
 
     return true;
@@ -128,11 +142,27 @@ void Window::idleCallback() {
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   
 
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+
+    ourShader->use();
+    // view/projection transformations
+    glm::mat4 projection = glm::perspective(glm::radians(bCamera->Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = bCamera->GetViewMatrix();
+    ourShader->setMat4("projection", projection);
+    ourShader->setMat4("view", view);
+
+    // render the loaded model
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+    model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+    ourShader->setMat4("model", model);
+    ourModel->Draw(*ourShader);
+
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

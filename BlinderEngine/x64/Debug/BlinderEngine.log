@@ -1,5 +1,2 @@
-﻿  main.cpp
-glew32s.lib(glew.obj) : warning LNK4099: PDB '' was not found with 'glew32s.lib(glew.obj)' or at ''; linking object as if no debug info
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  BlinderEngine.vcxproj -> E:\workspace\0420\group-3\BlinderEngine\x64\Debug\BlinderEngine.exe
+﻿  Window.cpp
+  BlinderEngine.vcxproj -> C:\Users\yuh032\group-3\BlinderEngine\x64\Debug\BlinderEngine.exe
