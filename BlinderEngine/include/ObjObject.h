@@ -11,6 +11,7 @@ private:
 
     glm::mat4 model;
     glm::vec3 color;
+    glm::vec3 scalingFactor;
 
     // Cube Information
     std::vector<glm::vec3> positions;
