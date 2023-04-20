@@ -63,7 +63,9 @@ void ObjObject::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
     // actiavte the shader program
     glUseProgram(shader);
-    glm::mat4 drawModel=model*glm::scale(scalingFactor);
+    glm::mat4 drawModel =  glm::translate(model,glm::vec3(0.0f, 0.0f, -3.0f));
+    drawModel= drawModel *glm::scale(scalingFactor);
+    
     
     // get the locations and send the uniforms to the shader
     glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);

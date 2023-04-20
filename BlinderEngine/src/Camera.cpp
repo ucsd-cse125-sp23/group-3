@@ -7,7 +7,7 @@
 #include "glm/gtx/string_cast.hpp"
 #include <glm/glm.hpp>
 
-bool first_pers=false;
+bool first_pers=true;
 Camera::Camera() {
     Reset();
 }
@@ -58,7 +58,7 @@ void Camera::Reset() {
 
     //first perspective
     if(first_pers){
-        CameraTar=glm::vec3(0.0f,2.0f,0.0f); 
+        CameraTar=glm::vec3(0.0f,3.0f,0.0f); 
         CameraDir=glm::vec3(0.0f,0.0f,1.0f);  
         CameraPos=CameraTar+CameraDir;
     }

@@ -136,7 +136,7 @@ void Window::displayCallback(GLFWwindow* window) {
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    //combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
