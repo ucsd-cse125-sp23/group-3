@@ -20,6 +20,7 @@ public:
 	~Server();
 	int update();
 	void send_init_packet(int character_id);
+	void recv_event();
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
