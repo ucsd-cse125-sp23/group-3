@@ -7,7 +7,6 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
-Ground* Window::ground;
 ObjObject* Window::combatRobotObject;
 Map* Window::map;
 

@@ -16,7 +16,7 @@ ObjObject::ObjObject(const char* path, glm::vec3 cubeMin, glm::vec3 cubeMax)
     std::vector<glm::vec2> uvs;
 
     Model* blinderModel = new Model();
-    model = model * glm::scale(glm::vec3(0.2f, 0.2f, 0.2f));
+    scalingFactor=glm::vec3(0.2f, 0.2f, 0.2f);
     bool res = blinderModel->loadAssImp(path, indices, positions, uvs, normals);
     
 
@@ -63,10 +63,11 @@ void ObjObject::draw(const glm::mat4& viewProjMtx, GLuint shader)
 {
     // actiavte the shader program
     glUseProgram(shader);
+    glm::mat4 drawModel=model*glm::scale(scalingFactor);
     
     // get the locations and send the uniforms to the shader
     glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
-    glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&model);
+    glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&drawModel);
     glUniform3fv(glGetUniformLocation(shader, "DiffuseColor"), 1, &color[0]);
 
     // Bind the VAO
