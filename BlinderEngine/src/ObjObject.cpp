@@ -5,6 +5,7 @@ ObjObject::ObjObject(const std::string path, glm::vec3 scalingFactor)
 	objModel = new Model(path);
 
 	mvp = glm::mat4(1.0f);
+	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	translate = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = scalingFactor;
 }
@@ -58,6 +59,6 @@ void ObjObject::spin(float deg)
 }
 void ObjObject::move(float i) 
 {
-	mvp = glm::translate(mvp, glm::vec3(0, 0, i));
+	mvp = glm::translate(mvp, glm::vec3(0, 0, -i));
 
 }
