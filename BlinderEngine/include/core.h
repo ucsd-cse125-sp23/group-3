@@ -4,3 +4,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+
+// standard libs
+#include <iostream>
+#include <string>
+#include <vector>
