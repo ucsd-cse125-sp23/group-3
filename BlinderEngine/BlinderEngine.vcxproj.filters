@@ -41,6 +41,12 @@
     <None Include="shaders\shader.frag">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\model_loading.vs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\model_loading.fs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp">
@@ -64,19 +70,16 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Model.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ObjObject.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BlinderImporter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Map.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Submap.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -85,9 +88,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Ground.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Tokenizer.h">
@@ -102,16 +102,28 @@
     <ClInclude Include="include\core.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Map.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Submap.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mesh.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\Model.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MShader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\ObjObject.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Map.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Submap.h">
+    <ClInclude Include="include\Constants.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

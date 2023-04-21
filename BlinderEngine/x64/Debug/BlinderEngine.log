@@ -1,5 +1,0 @@
-﻿  ObjObject.cpp
-C:\Users\xizou\group-3\BlinderEngine\src\ObjObject.cpp(76,68): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Window.cpp
-  Generating Code...
-  BlinderEngine.vcxproj -> C:\Users\xizou\group-3\BlinderEngine\x64\Debug\BlinderEngine.exe

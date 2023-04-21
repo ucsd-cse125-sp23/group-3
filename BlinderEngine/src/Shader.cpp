@@ -51,9 +51,9 @@ GLuint LoadSingleShader(const char* shaderFilePath, ShaderType type) {
         return 0;
     } else {
         if (type == vertex)
-            printf("Successfully compiled vertex shader!\n");
+            std::cerr << "Successfully compiled vertex shader!" << std::endl;
         else if (type == fragment)
-            printf("Successfully compiled fragment shader!\n");
+            std::cerr << "Successfully compiled fragment shader!" << std::endl;
     }
 
     return shaderID;

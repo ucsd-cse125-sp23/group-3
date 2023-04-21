@@ -7,13 +7,12 @@
 #include "glm/gtx/string_cast.hpp"
 #include <glm/glm.hpp>
 
-bool first_pers=true;
+bool first_pers=false;
 Camera::Camera() {
     Reset();
 }
 void Camera::Update() {
     // Compute camera world matrix
-    glm::mat4 view;
     glm::vec4 tempTar=model*glm::vec4(CameraTar,1);
     glm::vec4 tempPos=model*glm::vec4(CameraPos,1);
     
@@ -43,7 +42,7 @@ void Camera::Update() {
     //glm::mat4 view = glm::inverse(world);
 
     // Compute perspective projection matrix
-    glm::mat4 project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
+    project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
 
     // Compute final view-projection matrix
     ViewProjectMtx = project * view;
@@ -64,10 +63,23 @@ void Camera::Reset() {
     }
     else{
         CameraTar=glm::vec3(0.0f,0.0f,0.0f); 
-        CameraDir=glm::vec3(0.0f,30.0f,10.0f);  
+        CameraDir=glm::vec3(0.0f,30.0f,10.0f); 
+        CameraPos = CameraTar + CameraDir;
     }
     //third perspective
     //std::cout<<glm::to_string(CameraPos)<<std::endl;
     //TODO:: change back to glm::vec3(0.0f,1.0f,0.0f); for later use
     CameraUp=glm::vec3(0.0f,1.0f,0.0f);
+}
+
+const glm::mat4& Camera::GetProjectMtx()
+{
+    // TODO: insert return statement here
+    return project;
+}
+
+const glm::mat4& Camera::GetViewMtx()
+{
+    // TODO: insert return statement here
+    return view;
 }

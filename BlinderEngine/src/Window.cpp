@@ -1,5 +1,7 @@
 #include "Window.h"
-
+#include "Model.h"
+#include "MShader.h"
+#include "ObjObject.h"
 // Window Properties
 int Window::width;
 int Window::height;
@@ -7,8 +9,9 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
-ObjObject* Window::combatRobotObject;
 Map* Window::map;
+Model* ourModel;
+ObjObject* backPackObject;
 
 // Camera Properties
 Camera* Cam;
@@ -18,6 +21,11 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.05f;
 const float turningratio=5.0f;
+Shader* objShader;
+
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
 
 // The shader program id
 GLuint Window::shaderProgram;
@@ -27,6 +35,7 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
+    objShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -38,11 +47,12 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects() {
     // Create a cube
-    cube = new Cube();
+    //cube = new Cube();
     //ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    combatRobotObject = new ObjObject("./resources/models/combatRobot.obj");
     map = new Map();
+    backPackObject = new ObjObject(Constants::nanosuit_object_path, Constants::nanosuit_scaling_factor);
+    
 
 
     return true;
@@ -52,7 +62,6 @@ void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
     //delete ground;
-    delete combatRobotObject;
     delete map;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
@@ -126,18 +135,20 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     //cube->update();
-    combatRobotObject->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   
 
     // Render the object.
-    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    combatRobotObject->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+
+    backPackObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *objShader);
+
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -158,26 +169,26 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
      */
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
-        cube->move(-cameraSpeed);
-        combatRobotObject->move(-cameraSpeed);
+        //cube->move(-cameraSpeed);
+        backPackObject->move(-cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
-        cube->move(cameraSpeed);
-        combatRobotObject->move(cameraSpeed);
+        //cube->move(cameraSpeed);
+        backPackObject->move(cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
-        cube->spin(cameraSpeed*turningratio);
-        combatRobotObject->spin(cameraSpeed * turningratio);
+        //cube->spin(cameraSpeed*turningratio);
+        backPackObject->spin(cameraSpeed * turningratio);
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
-        cube->spin(-cameraSpeed*turningratio);
-        combatRobotObject->spin(-cameraSpeed * turningratio);
+        //cube->spin(-cameraSpeed*turningratio);
+        backPackObject->spin(-cameraSpeed * turningratio);
     }
     // Check for a key press.
     if (action == GLFW_PRESS) {

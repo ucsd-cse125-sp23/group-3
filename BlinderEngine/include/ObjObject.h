@@ -1,30 +1,25 @@
-#pragma once
-
-#include <vector>
-
 #include "core.h"
 
-class ObjObject {
-private:
-    GLuint VAO;
-    GLuint VBO_positions, VBO_normals, EBO;
+#include "Model.h"
 
-    glm::mat4 model;
-    glm::vec3 color;
-    glm::vec3 scalingFactor;
-
-    // Cube Information
-    std::vector<glm::vec3> positions;
-    std::vector<glm::vec3> normals;
-    std::vector<unsigned int> indices;
-
+class ObjObject 
+{
 public:
-    ObjObject(const char* path, glm::vec3 cubeMin = glm::vec3(-1, -1, -1), glm::vec3 cubeMax = glm::vec3(1, 1, 1));
-    ~ObjObject();
+	ObjObject(const std::string path, glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
 
-    void draw(const glm::mat4& viewProjMtx, GLuint shader);
-    void update();
+	void draw(const glm::mat4 &projection, const glm::mat4 &view, const glm::vec3& translate,Shader &shader);
+	void draw(const glm::mat4& projection, const glm::mat4& view, Shader& shader);
 
-    void spin(float deg);
-    void move(float i);
+	void setTranslation(glm::vec3& translate);
+
+	void update(glm::mat4 world);
+
+	void spin(float deg);
+	void move(float i);
+private:
+
+	Model* objModel;
+	glm::vec3 scale;
+	glm::mat4 mvp;
+	glm::vec3 translate;
 };
