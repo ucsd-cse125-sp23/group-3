@@ -47,11 +47,11 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects() {
     // Create a cube
-    cube = new Cube();
+    //cube = new Cube();
     //ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     map = new Map();
-    backPackObject = new ObjObject("./resources/objects/backpack/backpack.obj", glm::vec3(2.0f, 2.0f, 2.0f));
+    backPackObject = new ObjObject(Constants::nanosuit_object_path, Constants::nanosuit_scaling_factor);
     
 
 
@@ -143,7 +143,7 @@ void Window::displayCallback(GLFWwindow* window) {
    
 
     // Render the object.
-    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
@@ -169,25 +169,25 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
      */
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
-        cube->move(-cameraSpeed);
+        //cube->move(-cameraSpeed);
         backPackObject->move(-cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
-        cube->move(cameraSpeed);
+        //cube->move(cameraSpeed);
         backPackObject->move(cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
-        cube->spin(cameraSpeed*turningratio);
+        //cube->spin(cameraSpeed*turningratio);
         backPackObject->spin(cameraSpeed * turningratio);
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
-        cube->spin(-cameraSpeed*turningratio);
+        //cube->spin(-cameraSpeed*turningratio);
         backPackObject->spin(-cameraSpeed * turningratio);
     }
     // Check for a key press.

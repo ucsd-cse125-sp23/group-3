@@ -123,5 +123,8 @@
     <ClInclude Include="include\ObjObject.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
