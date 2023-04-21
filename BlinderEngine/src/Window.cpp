@@ -1,8 +1,7 @@
 #include "Window.h"
 #include "Model.h"
-#include "BCamera.h"
 #include "MShader.h"
-
+#include "ObjObject.h"
 // Window Properties
 int Window::width;
 int Window::height;
@@ -12,7 +11,7 @@ const char* Window::windowTitle = "Model Environment";
 Cube* Window::cube;
 Map* Window::map;
 Model* ourModel;
-BCamera* bCamera;
+ObjObject* backPackObject;
 
 // Camera Properties
 Camera* Cam;
@@ -22,7 +21,7 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.05f;
 const float turningratio=5.0f;
-Shader* ourShader;
+Shader* objShader;
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -36,8 +35,7 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    ourShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
-    bCamera = new BCamera(glm::vec3(0.0f, 0.0f, 3.0f));
+    objShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -53,8 +51,8 @@ bool Window::initializeObjects() {
     //ground= new Ground();
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     map = new Map();
-
-    ourModel = new Model("./resources/objects/backpack/backpack.obj");
+    backPackObject = new ObjObject("./resources/objects/backpack/backpack.obj", glm::vec3(2.0f, 2.0f, 2.0f));
+    
 
 
     return true;
@@ -149,19 +147,7 @@ void Window::displayCallback(GLFWwindow* window) {
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
-    ourShader->use();
-    // view/projection transformations
-    glm::mat4 projection = Cam->GetViewProjectMtx();
-    glm::mat4 view = bCamera->GetViewMatrix();
-    ourShader->setMat4("projection", projection);
-    ourShader->setMat4("view", view);
-
-    // render the loaded model
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-    model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
-    ourShader->setMat4("model", model);
-    ourModel->Draw(*ourShader);
+    backPackObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *objShader);
 
 
     // Gets events, including input such as keyboard and mouse or window resizing.
@@ -184,21 +170,25 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
         cube->move(-cameraSpeed);
+        backPackObject->move(-cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
         cube->move(cameraSpeed);
+        backPackObject->move(cameraSpeed);
     }
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
         cube->spin(cameraSpeed*turningratio);
+        backPackObject->spin(cameraSpeed * turningratio);
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
         cube->spin(-cameraSpeed*turningratio);
+        backPackObject->spin(-cameraSpeed * turningratio);
     }
     // Check for a key press.
     if (action == GLFW_PRESS) {

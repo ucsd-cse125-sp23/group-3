@@ -134,6 +134,8 @@
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\model_loading.fs" />
+    <None Include="shaders\model_loading.vs" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
   </ItemGroup>
@@ -144,13 +146,13 @@
     <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Submap.cpp" />
     <ClCompile Include="src\Tokenizer.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BCamera.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\core.h" />
     <ClInclude Include="include\Cube.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Model.h" />
     <ClInclude Include="include\MShader.h" />
+    <ClInclude Include="include\ObjObject.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Submap.h" />
     <ClInclude Include="include\Tokenizer.h" />
