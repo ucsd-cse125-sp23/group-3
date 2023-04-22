@@ -51,8 +51,8 @@ int main(void) {
     GLFWwindow* window = Window::createWindow(800, 600);
     if (!window) exit(EXIT_FAILURE);
 
-    // Client setup
-    Client* cli = new Client();
+    //// Client setup
+    //Client* cli = new Client();
 
     // Print OpenGL and GLSL versions.
     print_versions();
@@ -62,14 +62,14 @@ int main(void) {
     setup_opengl_settings();
 
     // listen for init packet
-    int assigned_id = cli->accept_init();
-    while (assigned_id == -1) {
-        assigned_id = cli->accept_init();
-    }
+    //int assigned_id = cli->accept_init();
+    //while (assigned_id == -1) {
+    //    assigned_id = cli->accept_init();
+    //}
 
     // TODO: render things based on assigned_id & player setup
-    Player* player = new Player(assigned_id);
-    player->setCharacter((Character)assigned_id);
+    //Player* player = new Player(assigned_id);
+    //player->setCharacter((Character)assigned_id);
 
     // Initialize the shader program; exit if initialization fails.
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
@@ -80,10 +80,10 @@ int main(void) {
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
         // TODO:check for event&send
-        if (Window::eventChecker != 0) {
-            Event* event = new Event((EventType)Window::eventChecker);
-            // TODO: send event packet
-        }
+        //if (Window::eventChecker != 0) {
+        //    Event* event = new Event((EventType)Window::eventChecker);
+        //    // TODO: send event packet
+        //}
         // TODO: receive updated game data & deserialize
         // TODO: update graphics...
         

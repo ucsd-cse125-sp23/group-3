@@ -38,6 +38,8 @@ bool Window::initializeProgram() {
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
     objShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+
+    backPackObject = new ObjObject(Constants::backpack_object_path, Constants::backpack_scaling_factor);
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
