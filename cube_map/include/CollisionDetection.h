@@ -14,5 +14,11 @@ class CollisionDetection {
         ~CollisionDetection();
 
         void checkCollision();
-        void checkCollisionWithWall(float x, float y); // x, y as in Window.cpp IdleCallback()s
+        /**
+         * Checks if a character is colliding with wall
+         * 
+         * @param x, y - character 2d position on the map; can be obtained from 
+         * Map::getPosition (check IdleCallback() in Window.cpp)
+        */
+        void checkCollisionWithWall(float x, float y);
 };
