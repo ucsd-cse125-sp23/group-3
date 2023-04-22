@@ -43,7 +43,7 @@ Cube::Cube(glm::vec3 cubeMin, glm::vec3 cubeMax) {
         glm::vec3(cubeMax.x, cubeMin.y, cubeMax.z),
         glm::vec3(cubeMax.x, cubeMin.y, cubeMin.z),
         glm::vec3(cubeMax.x, cubeMax.y, cubeMin.z),
-        glm::vec3(cubeMax.x, cubeMax.y, cubeMax.z)};
+        glm::vec3(cubeMax.x, cubeMax.y, cubeMax.z) };
 
     // Specify normals
     normals = {
@@ -81,7 +81,7 @@ Cube::Cube(glm::vec3 cubeMin, glm::vec3 cubeMax) {
         glm::vec3(1, 0, 0),
         glm::vec3(1, 0, 0),
         glm::vec3(1, 0, 0),
-        glm::vec3(1, 0, 0)};
+        glm::vec3(1, 0, 0) };
 
     // Specify indices
     indices = {
@@ -156,7 +156,7 @@ void Cube::update(glm::mat4 world) {
 }
 
 void Cube::setColor(glm::vec3 _color) {
-    color=_color;
+    color = _color;
     // Spin the cube
     //spin(0.05f);
 }
@@ -168,5 +168,5 @@ void Cube::spin(float deg) {
 
 void Cube::move(float i) {
     // Update the model matrix by multiplying a rotation matrix
-    model = glm::translate(model, glm::vec3(0,0,i));
+    model = glm::translate(model, glm::vec3(0, 0, i));
 }

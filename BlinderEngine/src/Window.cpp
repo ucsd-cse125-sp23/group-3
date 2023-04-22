@@ -9,6 +9,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
+Ground* Window::ground;
 Map* Window::map;
 Model* ourModel;
 ObjObject* backPackObject;
@@ -27,6 +28,8 @@ Shader* objShader;
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+const float cameraSpeed = 0.10f;
+const float turningratio = 30.0f;
 
 // The shader program id
 GLuint Window::shaderProgram;
@@ -48,13 +51,11 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects() {
     // Create a cube
-    //cube = new Cube();
-    //ground= new Ground();
-    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
+    cube = new Cube();
+    ground = new Ground();
     map = new Map();
-    backPackObject = new ObjObject(Constants::nanosuit_object_path, Constants::nanosuit_scaling_factor);
-    
-
+    //cube->move(2.0f);
+    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
 
     return true;
 }
@@ -62,6 +63,8 @@ bool Window::initializeObjects() {
 void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
+    delete ground;
+    //delete cube;
     //delete ground;
     delete map;
     // Delete the shader program.
@@ -135,6 +138,11 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
+    map->update();
+    int mapID;
+    float x, y;
+    map->getPosition(backPackObject->getModel(), &mapID, &x, &y);
+
     //cube->update();
 }
 
@@ -162,7 +170,6 @@ void Window::resetCamera() {
     Cam->Reset();
     Cam->SetAspect(float(Window::width) / float(Window::height));
 }
-
 // callbacks - for Interaction
 void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     /*
@@ -171,65 +178,50 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     eventChecker = 0;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
-<<<<<<< HEAD
         //cube->move(-cameraSpeed);
         backPackObject->move(-cameraSpeed);
-=======
         cube->move(-cameraSpeed);
         combatRobotObject->move(-cameraSpeed);
         eventChecker = 1;
->>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
-        
+
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
-<<<<<<< HEAD
-        //cube->move(cameraSpeed);
         backPackObject->move(cameraSpeed);
-=======
         cube->move(cameraSpeed);
-        combatRobotObject->move(cameraSpeed);
         eventChecker = 0;
->>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
+
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
-<<<<<<< HEAD
         //cube->spin(cameraSpeed*turningratio);
         backPackObject->spin(cameraSpeed * turningratio);
-=======
         cube->spin(cameraSpeed*turningratio);
-        combatRobotObject->spin(cameraSpeed * turningratio);
         eventChecker = 2;
->>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
-<<<<<<< HEAD
-        //cube->spin(-cameraSpeed*turningratio);
         backPackObject->spin(-cameraSpeed * turningratio);
-=======
         cube->spin(-cameraSpeed*turningratio);
-        combatRobotObject->spin(-cameraSpeed * turningratio);
         eventChecker = 3;
->>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
+
     // Check for a key press.
     if (action == GLFW_PRESS) {
         switch (key) {
-            case GLFW_KEY_ESCAPE:
-                // Close the window. This causes the program to also terminate.
-                glfwSetWindowShouldClose(window, GL_TRUE);
-                break;
+        case GLFW_KEY_ESCAPE:
+            // Close the window. This causes the program to also terminate.
+            glfwSetWindowShouldClose(window, GL_TRUE);
+            break;
 
-            case GLFW_KEY_R:
-                resetCamera();
-                break;
+        case GLFW_KEY_R:
+            resetCamera();
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
@@ -271,3 +263,6 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
         cube->move(-cameraspeed/100.0f);
     }*/
 }
+
+
+

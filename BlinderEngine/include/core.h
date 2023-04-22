@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // standard libs
 #include <iostream>
@@ -12,3 +13,4 @@
 
 // Our libs
 #include "Constants.h"
+#include <glm/gtc/type_ptr.hpp>
