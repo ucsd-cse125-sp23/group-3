@@ -138,7 +138,7 @@ void Window::idleCallback() {
     map->update();
     int mapID;
     float x, y;
-    map->getPosition(cube->getModel(), &mapID, &x, &y);
+    // map->getPosition(cube->getModel(), &mapID, &x, &y);
 
     //cube->update();
 }
@@ -188,6 +188,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         cube->move(cameraSpeed);
         eventChecker = 0;
     }
+
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
