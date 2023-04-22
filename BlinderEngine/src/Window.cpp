@@ -28,8 +28,6 @@ Shader* objShader;
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-const float cameraSpeed = 0.10f;
-const float turningratio = 30.0f;
 
 // The shader program id
 GLuint Window::shaderProgram;
@@ -181,7 +179,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->move(-cameraSpeed);
         backPackObject->move(-cameraSpeed);
         cube->move(-cameraSpeed);
-        combatRobotObject->move(-cameraSpeed);
         eventChecker = 1;
     }
 

@@ -1,13 +1,13 @@
 #define NUM_OBSTACLE 22
 #define GAME_LENGTH 300
 
-enum class Character
-{
-	ALICE = 0,
-	BOB = 1,
-	CAROL = 2,
-	DAVE = 3
-};
+//enum class Character
+//{
+//	ALICE = 0,
+//	BOB = 1,
+//	CAROL = 2,
+//	DAVE = 3
+//};
 
 enum class GameState
 {

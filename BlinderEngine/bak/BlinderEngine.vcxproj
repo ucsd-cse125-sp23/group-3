@@ -142,20 +142,23 @@
   <ItemGroup>
     <ClCompile Include="..\client\Client.cpp" />
     <ClCompile Include="..\shared\Event.cpp" />
+    <ClCompile Include="..\shared\GameData.cpp" />
     <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\Ground.cpp" />
-    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Submap.cpp" />
     <ClCompile Include="src\Tokenizer.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\client\Client.h" />
+    <ClInclude Include="..\shared\Event.h" />
+    <ClInclude Include="..\shared\GameData.h" />
+    <ClInclude Include="..\shared\Player.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\core.h" />
@@ -167,7 +170,6 @@
     <ClInclude Include="include\MShader.h" />
     <ClInclude Include="include\ObjObject.h" />
     <ClInclude Include="include\Shader.h" />
-    <ClInclude Include="include\Submap.h" />
     <ClInclude Include="include\Tokenizer.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>

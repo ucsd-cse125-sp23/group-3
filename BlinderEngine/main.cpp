@@ -1,9 +1,6 @@
 #include "Window.h"
 #include "core.h"
-<<<<<<< HEAD
 #include "Model.h"
-=======
->>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
 #include "../client/Client.h"
 #include "../shared/Player.h"
 #include "../shared/Event.h"
