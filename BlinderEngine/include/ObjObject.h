@@ -13,7 +13,7 @@ public:
 	void setTranslation(glm::vec3& translate);
 
 	void update(glm::mat4 world);
-
+	glm::mat4 getModel() { return mvp; };
 	void spin(float deg);
 	void move(float i);
 private:

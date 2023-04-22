@@ -64,6 +64,9 @@ void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
     delete ground;
+    //delete cube;
+    //delete ground;
+    delete map;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -138,7 +141,7 @@ void Window::idleCallback() {
     map->update();
     int mapID;
     float x, y;
-    // map->getPosition(cube->getModel(), &mapID, &x, &y);
+    map->getPosition(backPackObject->getModel(), &mapID, &x, &y);
 
     //cube->update();
 }
