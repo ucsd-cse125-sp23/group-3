@@ -1,101 +1,64 @@
 #include "ObjObject.h"
-#include "Model.h"
 
-ObjObject::ObjObject(const char* path, glm::vec3 cubeMin, glm::vec3 cubeMax)
+ObjObject::ObjObject(const std::string path, glm::vec3 scalingFactor)
 {
-    model = glm::mat4(1.0f);
+	objModel = new Model(path);
 
-    // The color of the cube. Try setting it to something else!
-    color = glm::vec3(0.5f, 0.95f, 0.1f);
-
-    // Specify vertex positions
-
-    // Specify normals
-
-    // Specify indices
-    std::vector<glm::vec2> uvs;
-
-    Model* blinderModel = new Model();
-    scalingFactor=glm::vec3(0.2f, 0.2f, 0.2f);
-    bool res = blinderModel->loadAssImp(path, indices, positions, uvs, normals);
-    
-
-    // Generate a vertex array (VAO) and two vertex buffer objects (VBO).
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO_positions);
-    glGenBuffers(1, &VBO_normals);
-
-    // Bind to the VAO.
-    glBindVertexArray(VAO);
-
-    // Bind to the first VBO - We will use it to store the vertices
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_positions);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positions.size(), positions.data(), GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-
-    // Bind to the second VBO - We will use it to store the normals
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_normals);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-
-    // Generate EBO, bind the EBO to the bound VAO and send the data
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices.size(), indices.data(), GL_STATIC_DRAW);
-
-    // Unbind the VBOs.
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+	mvp = glm::mat4(1.0f);
+	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	translate = glm::vec3(0.0f, 0.0f, 0.0f);
+	scale = scalingFactor;
 }
 
-ObjObject::~ObjObject()
+void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, Shader& shader)
 {
-    // Delete the VBOs and the VAO.
-    glDeleteBuffers(1, &VBO_positions);
-    glDeleteBuffers(1, &VBO_normals);
-    glDeleteBuffers(1, &EBO);
-    glDeleteVertexArrays(1, &VAO);
+	shader.use();
+
+	shader.setMat4("projection", projection);
+	shader.setMat4("view", view);
+
+	this->translate = translate;
+
+	mvp = glm::mat4(1.0f);
+	mvp = glm::translate(mvp, translate); // translate it down so it's at the center of the scene
+	mvp = glm::scale(mvp, scale);	
+	shader.setMat4("model", mvp);
+	objModel->Draw(shader);
 }
 
-void ObjObject::draw(const glm::mat4& viewProjMtx, GLuint shader)
+void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, Shader& shader)
 {
-    // actiavte the shader program
-    glUseProgram(shader);
-    glm::mat4 drawModel =  glm::translate(model,glm::vec3(0.0f, 0.0f, -3.0f));
-    drawModel= drawModel *glm::scale(scalingFactor);
-    
-    
-    // get the locations and send the uniforms to the shader
-    glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
-    glUniformMatrix4fv(glGetUniformLocation(shader, "model"), 1, GL_FALSE, (float*)&drawModel);
-    glUniform3fv(glGetUniformLocation(shader, "DiffuseColor"), 1, &color[0]);
+	shader.use();
 
-    // Bind the VAO
-    glBindVertexArray(VAO);
+	shader.setMat4("projection", projection);
+	shader.setMat4("view", view);
 
-    // draw the points using triangles, indexed with the EBO
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-
-    // Unbind the VAO and shader program
-    glBindVertexArray(0);
-    glUseProgram(0);
+	// If mvp is not calculated
+	if (mvp == glm::mat4(1.0f))
+	{
+		mvp = glm::translate(mvp, translate);
+	}
+	glm::mat4 currMVP = glm::scale(mvp, scale);
+	shader.setMat4("model", currMVP);
+	objModel->Draw(shader);
 }
 
-void ObjObject::update()
+void ObjObject::setTranslation(glm::vec3& translate)
 {
-
+	this->translate = translate;
 }
 
-void ObjObject::spin(float deg)
+void ObjObject::update(glm::mat4 world) 
 {
-    // Update the model matrix by multiplying a rotation matrix
-    model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f));
+	mvp = world;
 }
 
-void ObjObject::move(float i)
+void ObjObject::spin(float deg) 
 {
-    // Update the model matrix by multiplying a rotation matrix
-    model = glm::translate(model, glm::vec3(0, 0, i));
+	mvp = mvp * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+void ObjObject::move(float i) 
+{
+	mvp = glm::translate(mvp, glm::vec3(0, 0, -i));
+
 }

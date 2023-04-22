@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "core.h"
+#include "Model.h"
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -59,8 +60,10 @@ int main(void) {
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects()) exit(EXIT_FAILURE);
 
+
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
+
         // Main render display callback. Rendering of objects is done here.
         Window::displayCallback(window);
 

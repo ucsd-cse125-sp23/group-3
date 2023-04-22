@@ -25,7 +25,9 @@ public:
 
     glm::vec3 GetCamTarget(){return CameraTar;};
 
-    const glm::mat4 &GetViewProjectMtx() { return ViewProjectMtx; }
+    const glm::mat4& GetViewProjectMtx() { return ViewProjectMtx; }
+    const glm::mat4& GetProjectMtx();
+    const glm::mat4& GetViewMtx();
 
 private:
     // Perspective controls
@@ -36,6 +38,8 @@ private:
     // Polar controls
     glm::vec3 CameraPos, CameraTar, CameraUp,CameraDir;
     // Computed data
+
+    glm::mat4 project, view;
     
     glm::mat4 model,ViewProjectMtx;
 };
