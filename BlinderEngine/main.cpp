@@ -79,6 +79,7 @@ int main(void) {
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
+
         // TODO:check for event&send
         //if (Window::eventChecker != 0) {
         //    Event* event = new Event((EventType)Window::eventChecker);
