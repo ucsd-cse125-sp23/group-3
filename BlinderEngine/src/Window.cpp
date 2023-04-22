@@ -12,6 +12,7 @@ Cube* Window::cube;
 Map* Window::map;
 Model* ourModel;
 ObjObject* backPackObject;
+int Window::eventChecker;
 
 // Camera Properties
 Camera* Cam;
@@ -167,28 +168,53 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     /*
      * TODO: Modify below to add your key callbacks.
      */
+    eventChecker = 0;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
+<<<<<<< HEAD
         //cube->move(-cameraSpeed);
         backPackObject->move(-cameraSpeed);
+=======
+        cube->move(-cameraSpeed);
+        combatRobotObject->move(-cameraSpeed);
+        eventChecker = 1;
+>>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
         
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
         Cam->SetMove(cameraSpeed);
+<<<<<<< HEAD
         //cube->move(cameraSpeed);
         backPackObject->move(cameraSpeed);
+=======
+        cube->move(cameraSpeed);
+        combatRobotObject->move(cameraSpeed);
+        eventChecker = 0;
+>>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         Cam->SetSpin(cameraSpeed*turningratio);
+<<<<<<< HEAD
         //cube->spin(cameraSpeed*turningratio);
         backPackObject->spin(cameraSpeed * turningratio);
+=======
+        cube->spin(cameraSpeed*turningratio);
+        combatRobotObject->spin(cameraSpeed * turningratio);
+        eventChecker = 2;
+>>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         Cam->SetSpin(-cameraSpeed*turningratio);
+<<<<<<< HEAD
         //cube->spin(-cameraSpeed*turningratio);
         backPackObject->spin(-cameraSpeed * turningratio);
+=======
+        cube->spin(-cameraSpeed*turningratio);
+        combatRobotObject->spin(-cameraSpeed * turningratio);
+        eventChecker = 3;
+>>>>>>> 948cd890aa889892ceee21d0daefa7838065a43f
     }
     // Check for a key press.
     if (action == GLFW_PRESS) {
