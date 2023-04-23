@@ -30,7 +30,7 @@ int main()
          while (check_recv_ready == -1) {
              check_recv_ready = serv->recv_event(i);
          }
-         serv->send_init_packet(i);
+         serv->send_init_packet(i); // TODO: add randomly assign character logic
      }
 
      // send updated game data

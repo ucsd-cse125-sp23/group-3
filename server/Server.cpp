@@ -138,7 +138,7 @@ void Server::send_gamedata(int client_id)
 	if (sessions[client_id] != INVALID_SOCKET)
 	{
 		Packet::serialize(this->gd, buffer[client_id]);
-		if (send(sessions[client_id], buffer[client_id], 2, 0) == SOCKET_ERROR)
+		if (send(sessions[client_id], buffer[client_id], 512, 0) == SOCKET_ERROR)
 		{
 			printf("send failed with error: %d\n", WSAGetLastError());
 			closesocket(sessions[client_id]);
