@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1c18464f-f7b9-49ae-9bea-c1ce7dc3fc79}</ProjectGuid>
-    <RootNamespace>GameStates</RootNamespace>
+    <ProjectGuid>{8259c399-de45-44d4-b474-554f83a50988}</ProjectGuid>
+    <RootNamespace>server</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\24424\Desktop\group3\serialization\group-3\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\BlinderEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,14 +128,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Event.cpp" />
-    <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\server\main.cpp" />
+    <ClCompile Include="..\..\server\Server.cpp" />
+    <ClCompile Include="..\..\shared\Event.cpp" />
+    <ClCompile Include="..\..\shared\GameData.cpp" />
+    <ClCompile Include="..\..\shared\Packet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="GameData.h" />
-    <ClInclude Include="GlobalVariables.h" />
+    <ClInclude Include="..\..\server\Server.h" />
+    <ClInclude Include="..\..\shared\Event.h" />
+    <ClInclude Include="..\..\shared\GameData.h" />
+    <ClInclude Include="..\..\shared\GlobalVariables.h" />
+    <ClInclude Include="..\..\shared\Packet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,6 @@
 #include "Model.h"
 #include "../client/Client.h"
 #include "../shared/Player.h"
-#include "../shared/Event.h"
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -51,9 +50,6 @@ int main(void) {
     GLFWwindow* window = Window::createWindow(800, 600);
     if (!window) exit(EXIT_FAILURE);
 
-    //// Client setup
-    //Client* cli = new Client();
-
     // Print OpenGL and GLSL versions.
     print_versions();
     // Setup callbacks.
@@ -61,31 +57,47 @@ int main(void) {
     // Setup OpenGL settings.
     setup_opengl_settings();
 
-    // listen for init packet
-    //int assigned_id = cli->accept_init();
-    //while (assigned_id == -1) {
-    //    assigned_id = cli->accept_init();
-    //}
-
-    // TODO: render things based on assigned_id & player setup
-    //Player* player = new Player(assigned_id);
-    //player->setCharacter((Character)assigned_id);
-
     // Initialize the shader program; exit if initialization fails.
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
+
+    // Client setup
+    Client* cli = new Client();
+
+    // listen for initial game data
+    int check_gd = cli->recv_gamedata();
+    while (check_gd == -1) {
+        cli->recv_gamedata();
+    }
+
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects()) exit(EXIT_FAILURE);
 
+    // TODO(graphics): load story&skill
+    // TODO(graphics): load landing page
+    
+    // TODO: check user action(ready for game) & send event packet
+    cli->send_event(EventType::READY);
+    // listen for init packet
+    int assigned_id = cli->accept_init();
+    while (assigned_id == -1) {
+        assigned_id = cli->accept_init();
+    }
+
+    // TODO(graphics): render things based on assigned_id & player setup
+
+    Player* player = new Player(assigned_id);
+    player->setCharacter((Character)assigned_id);
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
-        // TODO:check for event&send
-        //if (Window::eventChecker != 0) {
-        //    Event* event = new Event((EventType)Window::eventChecker);
-        //    // TODO: send event packet
-        //}
-        // TODO: receive updated game data & deserialize
-        // TODO: update graphics...
+
+        // check for event&send
+        if (Window::eventChecker != 0) {
+            Event* event = new Event((EventType)Window::eventChecker);
+            cli->send_event(event->getEventType());
+            cli->recv_gamedata();
+        }
+        // TODO(graphics): update graphics based on cli->gd
         
         // Main render display callback. Rendering of objects is done here.
         Window::displayCallback(window);

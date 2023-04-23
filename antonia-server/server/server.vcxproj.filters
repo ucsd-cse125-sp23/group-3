@@ -13,26 +13,41 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="shared">
+      <UniqueIdentifier>{eb87f93a-e56a-494d-b33e-a68eca969811}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Event.cpp">
+    <ClCompile Include="..\..\server\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameData.cpp">
+    <ClCompile Include="..\..\server\Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\shared\Packet.cpp">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\GameData.cpp">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\Event.cpp">
+      <Filter>shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event.h">
+    <ClInclude Include="..\..\server\Server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameData.h">
+    <ClInclude Include="..\..\shared\Packet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalVariables.h">
+    <ClInclude Include="..\..\shared\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\GameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\GlobalVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

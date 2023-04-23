@@ -1,5 +1,10 @@
+#pragma once
+
 #define NUM_OBSTACLE 22
-#define GAME_LENGTH 300
+#define GAME_LENGTH 300000
+#define TICK_TIME 40
+#define CAMERA_SPEED 0.05f
+#define TURNING_RATIO 5.0f
 
 //enum class Character
 //{
@@ -20,9 +25,11 @@ enum class GameState
 
 enum class EventType
 {
-	FORWARD = 0,
-	BACKWARD = 1,
-	TURN_RIGHT = 2,
-	TURN_LEFT = 3,
-	ATTACK = 4
+	NOEVENT = 0,
+	FORWARD = 1,
+	BACKWARD = 2,
+	TURN_RIGHT = 3,
+	TURN_LEFT = 4,
+	ATTACK = 5,
+	READY = 6
 };

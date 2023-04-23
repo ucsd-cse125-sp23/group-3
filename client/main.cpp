@@ -1,6 +1,7 @@
 #include "Client.h"
 
 int main(){
+
 	Client* cli = new Client();
 
 	// listen for init packet

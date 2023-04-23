@@ -1,0 +1,48 @@
+#include <glm/glm.hpp>
+<<<<<<< Updated upstream:shared/GameData.h
+#include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <string>
+=======
+#include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <string>
+#include <sstream>
+>>>>>>> Stashed changes:shared/GameStates/GameData.h
+#include "GlobalVariables.h"
+using namespace std;
+
+class GameData {
+public:
+	GameData();
+	GameData(glm::mat4 locA); // testing constructor
+	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs);
+
+<<<<<<< Updated upstream:shared/GameData.h
+	string gamestate_to_string();
+
+=======
+	static void serialize(GameData* gd, char* buffer);
+	static GameData deserialize(char* buffer);
+	static void mat2str(const glm::mat4&, char* &buffer);
+	static void vec2str(const vector<int>&, char* &buffer);
+	static glm::mat4 str2mat(char* &buffer);
+	static vector<int> str2vec(char* &buffer);
+
+	string gamestate_to_string();
+
+protected:
+>>>>>>> Stashed changes:shared/GameStates/GameData.h
+	glm::mat4 location_A;
+	glm::mat4 location_B;
+	glm::mat4 location_C;
+	glm::mat4 location_D;
+	vector<int> obstacle_states;
+	int level_A;
+	int level_B;
+	int level_C;
+	int level_D;
+	int remaining_time; // in seconds?
+	GameState gamestate;
+};
