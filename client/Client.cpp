@@ -88,7 +88,7 @@ void Client::update()
 	this->updateGameData(gd);
 
 	// printf("%s\n", buffer);
-	std::cout << this->gd->gamestate_to_string() << endl;
+	std::cout << this->gd->gamestate_to_string() << std::endl;
 	
 	char input[512];
 	std::cin >> input;

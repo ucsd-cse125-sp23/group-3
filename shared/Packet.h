@@ -14,7 +14,7 @@ public:
 
 	// Used in serialize and deserialize functions
 	static void mat2str(const glm::mat4&, char*& buffer);
-	static void vec2str(const vector<int>&, char*& buffer);
+	static void vec2str(const std::vector<int>&, char*& buffer);
 	static glm::mat4 str2mat(char*& buffer);
-	static vector<int> str2vec(char*& buffer);
+	static std::vector<int> str2vec(char*& buffer);
 };

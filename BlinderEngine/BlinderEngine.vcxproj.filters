@@ -102,6 +102,11 @@
     </ClCompile>
     <ClCompile Include="src\graphic2D.cpp">
       <Filter>src</Filter>
+    <ClCompile Include="..\shared\GameData.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Packet.cpp">
+      <Filter>Shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +153,13 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\MShader.h">
+    <ClInclude Include="..\shared\GameData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Packet.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\client\Client.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,7 +34,7 @@ GameData Packet::deserializeGameData(char* buffer) {
 	glm::mat4 locC = str2mat(buffer);
 	glm::mat4 locD = str2mat(buffer);
 	
-	vector<int> vec = str2vec(buffer);
+	std::vector<int> vec = str2vec(buffer);
 
 	int level_A;
 	memcpy(&level_A, buffer, sizeof(int));
@@ -82,7 +82,7 @@ glm::mat4 Packet::str2mat(char* &buffer) {
 	return mat;
 }
 
-void Packet::vec2str(const vector<int>& states, char* &buffer) {
+void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
 	int vecSize = states.size();
 	std::cout << reinterpret_cast<void*>(buffer) << std::endl;
 	memcpy(buffer, &vecSize, sizeof(int));
@@ -95,8 +95,8 @@ void Packet::vec2str(const vector<int>& states, char* &buffer) {
 	std::cout << reinterpret_cast<void*>(buffer) << std::endl;
 }
 
-vector<int> Packet::str2vec(char* &buffer) {
-	vector<int> vec;
+std::vector<int> Packet::str2vec(char* &buffer) {
+	std::vector<int> vec;
 	int size;
 	memcpy(&size, buffer, sizeof(int));
 	buffer += sizeof(int);

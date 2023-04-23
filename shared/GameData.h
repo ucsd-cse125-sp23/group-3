@@ -6,21 +6,20 @@
 #include <string>
 #include <sstream>
 #include "GlobalVariables.h"
-using namespace std;
 
 class GameData {
 public:
 	GameData();
 	GameData(glm::mat4 locA); // testing constructor
-	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs);
+	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs);
 
-	string gamestate_to_string();
+	std::string gamestate_to_string();
 
 	glm::mat4 location_A;
 	glm::mat4 location_B;
 	glm::mat4 location_C;
 	glm::mat4 location_D;
-	vector<int> obstacle_states;
+	std::vector<int> obstacle_states;
 	int level_A;
 	int level_B;
 	int level_C;

@@ -3,7 +3,6 @@
 #include "Model.h"
 #include "../client/Client.h"
 #include "../shared/Player.h"
-#include "../shared/Event.h"
 
 void error_callback(int error, const char* description) {
     // Print error.

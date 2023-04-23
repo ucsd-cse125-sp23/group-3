@@ -1,18 +1,14 @@
-#include <winsock2.h>
-#include <Windows.h>
-
-#define _WIN32_WINNT _WIN32_WINNT_WINXP // mingw bug
-
 #include <ws2tcpip.h>
 #include <stdio.h> 
+#include <winsock2.h>
+#include <Windows.h>
+#include <string>
+#include "../shared/Packet.h"
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 
-#include <string>
-
-#include "Packet.h"
-
+#define _WIN32_WINNT _WIN32_WINNT_WINXP // mingw bug
 #define DEFAULT_ADDR "127.0.0.1"
 #define DEFAULT_PORT "2400"
 
