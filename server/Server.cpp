@@ -138,7 +138,7 @@ void Server::send_gamedata(int client_id)
 	if (sessions[client_id] != INVALID_SOCKET)
 	{
 		Packet::serialize(this->gd, buffer[client_id]);
-		if (send(sessions[client_id], buffer[client_id], 2, 0) == SOCKET_ERROR)
+		if (send(sessions[client_id], buffer[client_id], 512, 0) == SOCKET_ERROR)
 		{
 			printf("send failed with error: %d\n", WSAGetLastError());
 			closesocket(sessions[client_id]);
@@ -156,8 +156,8 @@ int Server::recv_event(int client_id)
 	return -1;
 }
 
-void Server::updateBySingleEvent(Event e, int id) {
-	if (e.getEventType() == EventType::NOEVENT)
+void Server::updateBySingleEvent(EventType e, int id) {
+	if (e == EventType::NOEVENT)
 		return;
 	glm::mat4* loc = NULL;
 	switch (id)
@@ -178,25 +178,25 @@ void Server::updateBySingleEvent(Event e, int id) {
 		break;
 	}
 
-	if (e.getEventType() == EventType::FORWARD) {
+	if (e == EventType::FORWARD) {
 		*loc = glm::translate(*loc, glm::vec3(0, 0, CAMERA_SPEED / 100.0f));
 	}
-	else if (e.getEventType() == EventType::BACKWARD) {
+	else if (e == EventType::BACKWARD) {
 		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED / 100.0f));
 	}
-	else if (e.getEventType() == EventType::TURN_LEFT) {
+	else if (e == EventType::TURN_LEFT) {
 		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
-	else if (e.getEventType() == EventType::TURN_RIGHT) {
+	else if (e == EventType::TURN_RIGHT) {
 		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
-	else if (e.getEventType() == EventType::ATTACK) {
+	else if (e == EventType::ATTACK) {
 		// Attack!!!
 	}
 
 }
 
-void Server::updateByEvent(Event e0, Event e1, Event e2, Event e3) {
+void Server::updateByEvent(EventType e0, EventType e1, EventType e2, EventType e3) {
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
