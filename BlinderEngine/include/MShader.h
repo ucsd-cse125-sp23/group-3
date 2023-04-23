@@ -1,7 +1,7 @@
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef M_SHADER_H
+#define M_SHADER_H
 
-#include "core.h"
+#include <core.h>
 #include <glm/glm.hpp>
 
 #include <string>
@@ -9,13 +9,13 @@
 #include <sstream>
 #include <iostream>
 
-class Shader
+class MShader
 {
 public:
     unsigned int ID;
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(const char* vertexPath, const char* fragmentPath)
+    MShader(const char* vertexPath, const char* fragmentPath)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;

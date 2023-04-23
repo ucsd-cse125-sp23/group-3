@@ -50,6 +50,12 @@
     <None Include="shaders\model_loading.fs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\texture2D.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\texture2D.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp">
@@ -94,6 +100,9 @@
     <ClCompile Include="..\shared\Player.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -126,9 +135,6 @@
     <ClInclude Include="include\Model.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\MShader.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -136,6 +142,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic2D.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MShader.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

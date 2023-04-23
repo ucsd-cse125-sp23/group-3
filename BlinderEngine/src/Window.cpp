@@ -23,7 +23,7 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.05f;
 const float turningratio=5.0f;
-Shader* objShader;
+MShader* objShader;
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -37,7 +37,7 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    objShader = new Shader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    objShader = new MShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
 
     backPackObject = new ObjObject(Constants::backpack_object_path, Constants::backpack_scaling_factor);
     // Check the shader program.
