@@ -2,8 +2,9 @@
 
 int main()
 {
+
      Server* serv = new Server();
-    
+     
      // blocks until 4 clients
      for (int id = 0; id < NUM_PLAYERS; id ++){
          SOCKET ss = INVALID_SOCKET;

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "Packet.h"
 
 #pragma comment (lib, "Ws2_32.lib")
 
@@ -11,7 +12,7 @@
 #define _WIN32_WINNT _WIN32_WINNT_WINXP // mingw bug
 #define DEFAULT_PORT "2400"
 
-const int NUM_PLAYERS = 1;
+const int NUM_PLAYERS = 4;
 
 class Server
 {
@@ -26,4 +27,10 @@ public:
 	SOCKET ListenSocket;
 
 	SOCKET sessions[NUM_PLAYERS];
+
+	GameData* gd;
+	Event e[NUM_PLAYERS];
+	
+	void updateByEvent(Event, Event, Event, Event);
+	void updateBySingleEvent(Event, int);
 };

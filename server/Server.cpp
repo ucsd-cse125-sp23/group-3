@@ -69,6 +69,11 @@ Server::Server()
 		WSACleanup();
 		exit(1);
 	}
+
+	for (int i = 0; i < NUM_PLAYERS; i++) {
+		e[i] = Event(EventType::NOEVENT);
+	}
+	this->gd = new GameData();
 }
 Server::~Server(){
 	closesocket(ListenSocket);
@@ -124,4 +129,54 @@ void Server::send_init_packet(int character_id){
 		}
 	}
 	
+}
+
+void Server::updateBySingleEvent(Event e, int id) {
+	if (e.getEventType() == EventType::NOEVENT)
+		return;
+	glm::mat4* loc = NULL;
+	switch (id)
+	{
+	case 0:
+		loc = &this->gd->location_A;
+		break;
+	case 1:
+		loc = &this->gd->location_B;
+		break;
+	case 2:
+		loc = &this->gd->location_C;
+		break;
+	case 3:
+		loc = &this->gd->location_D;
+		break;
+	default:
+		break;
+	}
+
+	if (e.getEventType() == EventType::FORWARD) {
+		*loc = glm::translate(*loc, glm::vec3(0, 0, CAMERA_SPEED / 100.0f));
+	}
+	else if (e.getEventType() == EventType::BACKWARD) {
+		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED / 100.0f));
+	}
+	else if (e.getEventType() == EventType::TURN_LEFT) {
+		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	else if (e.getEventType() == EventType::TURN_RIGHT) {
+		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	else if (e.getEventType() == EventType::ATTACK) {
+		// Attack!!!
+	}
+
+}
+
+void Server::updateByEvent(Event e0, Event e1, Event e2, Event e3) {
+	if (this->gd->remaining_time >= 0) {
+		this->gd->remaining_time -= TICK_TIME;
+	}
+	updateBySingleEvent(e0, 0);
+	updateBySingleEvent(e1, 1);
+	updateBySingleEvent(e2, 2);
+	updateBySingleEvent(e3, 3);
 }

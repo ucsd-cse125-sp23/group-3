@@ -75,6 +75,8 @@ Client::Client()
 		exit(1);        
 	}
 
+	this->gd = new GameData();
+
 	send(ConnectSocket, "start", 512, 0);
 }
 
@@ -82,8 +84,11 @@ void Client::update()
 {
 	if (recv(ConnectSocket, buffer, 512, 0) <= 0) 
 		return;
+	GameData gd = Packet::deserializeGameData(buffer);
+	this->updateGameData(gd);
 
-	printf("%s\n", buffer);
+	// printf("%s\n", buffer);
+	std::cout << this->gd->gamestate_to_string() << endl;
 	
 	char input[512];
 	std::cin >> input;
@@ -113,5 +118,23 @@ int Client::accept_init()
 			break;
 	}
 	return -1;
+}
+
+void Client::updateGameData(GameData gd) {
+	this->gd->location_A = gd.location_A;
+	this->gd->location_B = gd.location_B;
+	this->gd->location_C = gd.location_C;
+	this->gd->location_D = gd.location_D;
+
+	this->gd->obstacle_states = gd.obstacle_states;
+
+	this->gd->level_A = gd.level_A;
+	this->gd->level_B = gd.level_B;
+	this->gd->level_C = gd.level_C;
+	this->gd->level_D = gd.level_D;
+
+	this->gd->remaining_time = gd.remaining_time;
+
+	this->gd->gamestate = gd.gamestate;
 }
 

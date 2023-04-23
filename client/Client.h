@@ -11,6 +11,8 @@
 
 #include <string>
 
+#include "Packet.h"
+
 #define DEFAULT_ADDR "127.0.0.1"
 #define DEFAULT_PORT "2400"
 
@@ -21,8 +23,13 @@ public:
 	void update();
 	int accept_init();
 
+	void updateGameData(GameData);
+
+	GameData* gd;
+
 private:
 	SOCKET ConnectSocket;
     char buffer[512];
+
 };
 
