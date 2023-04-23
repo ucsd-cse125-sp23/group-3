@@ -18,6 +18,8 @@ public:
 	Client();
 	void update();
 	int accept_init();
+	int recv_gamedata();
+	void send_event(EventType e);
 
 	void updateGameData(GameData);
 

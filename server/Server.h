@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "Packet.h"
+#include "../shared/Packet.h"
 
 #pragma comment (lib, "Ws2_32.lib")
 
@@ -21,7 +21,8 @@ public:
 	~Server();
 	int update();
 	void send_init_packet(int character_id);
-	void recv_event();
+	void send_gamedata(int client_id);
+	int recv_event(int client_id);
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;

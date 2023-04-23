@@ -120,6 +120,22 @@ int Client::accept_init()
 	return -1;
 }
 
+int Client::recv_gamedata()
+{
+	if (recv(ConnectSocket, buffer, 512, 0) <= 0)
+		return -1;
+	GameData new_gd = Packet::deserializeGameData(buffer);
+	this->updateGameData(new_gd);
+	return 0;
+}
+
+void Client::send_event(EventType e)
+{
+	Event* event = new Event(e);
+	Packet::serialize(event, buffer);
+	send(ConnectSocket, buffer, 512, 0);
+}
+
 void Client::updateGameData(GameData gd) {
 	this->gd->location_A = gd.location_A;
 	this->gd->location_B = gd.location_B;

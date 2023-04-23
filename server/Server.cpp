@@ -75,10 +75,12 @@ Server::Server()
 	}
 	this->gd = new GameData();
 }
+
 Server::~Server(){
 	closesocket(ListenSocket);
 	WSACleanup();
 }
+
 int Server::update()
 {
 
@@ -129,6 +131,29 @@ void Server::send_init_packet(int character_id){
 		}
 	}
 	
+}
+
+void Server::send_gamedata(int client_id)
+{
+	if (sessions[client_id] != INVALID_SOCKET)
+	{
+		Packet::serialize(this->gd, buffer[client_id]);
+		if (send(sessions[client_id], buffer[client_id], 2, 0) == SOCKET_ERROR)
+		{
+			printf("send failed with error: %d\n", WSAGetLastError());
+			closesocket(sessions[client_id]);
+		}
+	}
+}
+
+int Server::recv_event(int client_id)
+{
+	if (recv(sessions[client_id], buffer[client_id], 512, 0) > 0)
+	{
+		Event event = Packet::deserializeEvent(buffer[client_id]);
+		return (int)event.getEventType();
+	}
+	return -1;
 }
 
 void Server::updateBySingleEvent(Event e, int id) {

@@ -162,5 +162,8 @@
     <ClInclude Include="..\client\Client.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\shared\GlobalVariables.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

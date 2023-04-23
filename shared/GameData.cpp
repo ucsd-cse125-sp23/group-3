@@ -3,6 +3,10 @@
 
 GameData::GameData() {
 	// TODO: hardcode locations
+	this->location_A = glm::mat4();
+	this->location_B = glm::mat4();
+	this->location_C = glm::mat4();
+	this->location_D = glm::mat4();
 	this->obstacle_states = std::vector<int>(NUM_OBSTACLE, 2);
 	this->level_A = 0;
 	this->level_B = 0;
