@@ -1,5 +1,6 @@
 #include "Window.h"
 
+
 // Window Properties
 int Window::width;
 int Window::height;
@@ -7,8 +8,8 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
-Ground* Window::ground;
 Map* Window::map;
+graphic2D* Window::canvas;
 
 // Camera Properties
 Camera* Cam;
@@ -21,12 +22,15 @@ const float turningratio=30.0f;
 
 // The shader program id
 GLuint Window::shaderProgram;
+Shader* Window::shaderText2DProgram;
+
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
-
+    //std::cout<<"make myself here"<<std::endl;
+    shaderText2DProgram=new Shader("shaders/texture2D.vs", "shaders/texture2D.fs"); 
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -39,18 +43,17 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
-    ground= new Ground();
     map=new Map();
-    //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-
+    canvas=new graphic2D(0.8,0.3,-0.4,0.7,true);
+    const char* textfile="./images/tag.png";
+    canvas->bindTexture(textfile);
     return true;
 }
 
 void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
-    delete ground;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -123,10 +126,6 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
-    int mapID;
-    float x,y;
-    map->getPosition(cube->getModel(),&mapID,&x,&y);
-
     //cube->update();
 }
 
@@ -138,7 +137,8 @@ void Window::displayCallback(GLFWwindow* window) {
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-
+    //std::cout<<"make myself here"<<std::endl;
+    canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     // Swap buffers.

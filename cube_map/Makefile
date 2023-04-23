@@ -8,10 +8,12 @@ LDFLAGS = -framework OpenGL -L$(BREW)/lib -lglfw
 
 RM = /bin/rm -f
 all: menv
-menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o
-	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o $(LDFLAGS)
+menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o
+	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o $(LDFLAGS)
 main.o: main.cpp include/Window.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp
+graphic2D.o: src/graphic2D.cpp include/graphic2D.h
+	$(CC) $(CFLAGS) $(INCFLAGS) -c src/graphic2D.cpp
 Camera.o: src/Camera.cpp include/Camera.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Camera.cpp
 Ground.o: src/Ground.cpp include/Ground.h

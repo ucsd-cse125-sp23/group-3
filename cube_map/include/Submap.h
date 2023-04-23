@@ -20,7 +20,6 @@ class Submap {
         ~Submap();
 
         void draw(const glm::mat4& viewProjMtx, GLuint shader);
-        glm::mat4 getModel(){return model;};
         void update();
         void setModel(glm::mat4 _model);
 };

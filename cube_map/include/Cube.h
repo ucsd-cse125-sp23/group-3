@@ -23,7 +23,7 @@ public:
 
     void draw(const glm::mat4& viewProjMtx, GLuint shader);
     void update(glm::mat4 world);
-    glm::mat4 getModel(){return model;};
+
     void setColor(glm::vec3 _color);
     void spin(float deg);
     void move(float i);

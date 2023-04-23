@@ -2,10 +2,11 @@
 
 #include "Camera.h"
 #include "Cube.h"
-#include "Ground.h"
 #include "Map.h"
+#include "graphic2D.h"
 #include "Shader.h"
 #include "core.h"
+#include <iostream>
 
 class Window {
 public:
@@ -17,9 +18,11 @@ public:
     // Objects to render
     static Cube* cube;
     static Map* map;
+    static graphic2D* canvas;
 
     // Shader Program
     static GLuint shaderProgram;
+    static Shader* shaderText2DProgram;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();
