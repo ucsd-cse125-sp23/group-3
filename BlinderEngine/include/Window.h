@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Shader.h"
 #include "core.h"
+#include <vector>
 
 class Window {
 public:
@@ -15,17 +16,16 @@ public:
     static const char* windowTitle;
 
     // Objects to render
-    static Cube* cube;
-    static Ground* ground;
+    static std::vector<Cube*> players;
     static Map* map;
     static int eventChecker;
-
+    static int playerID;
     // Shader Program
     static GLuint shaderProgram;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();
-    static bool initializeObjects();
+    static bool initializeObjects(int PlayID);
     static void cleanUp();
 
     // for the Window

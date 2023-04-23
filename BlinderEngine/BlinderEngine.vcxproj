@@ -161,7 +161,6 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\client\Client.h" />
     <ClInclude Include="..\shared\GameData.h" />
     <ClInclude Include="..\shared\GlobalVariables.h" />
     <ClInclude Include="..\shared\Packet.h" />

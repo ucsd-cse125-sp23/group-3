@@ -66,15 +66,13 @@ int main(void) {
     // listen for initial game data
     int check_gd = cli->recv_gamedata();
     while (check_gd == -1) {
-        cli->recv_gamedata();
+        check_gd = cli->recv_gamedata();
     }
 
-    // Initialize objects/pointers for rendering; exit if initialization fails.
-    if (!Window::initializeObjects()) exit(EXIT_FAILURE);
-
     // TODO(graphics): load story&skill
+
     // TODO(graphics): load landing page
-    
+
     // TODO: check user action(ready for game) & send event packet
     cli->send_event(EventType::READY);
     // listen for init packet
@@ -82,23 +80,38 @@ int main(void) {
     while (assigned_id == -1) {
         assigned_id = cli->accept_init();
     }
-
     // TODO(graphics): render things based on assigned_id & player setup
 
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
 
+    // Initialize objects/pointers for rendering; exit if initialization fails.
+    if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
+    
+    // listen for game start
+    int check_start = cli->recv_gamedata();
+    while (check_start == -1) {
+        check_start = cli->recv_gamedata();
+    }
+
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
 
         // check for event&send
-        if (Window::eventChecker != 0) {
-            Event* event = new Event((EventType)Window::eventChecker);
-            cli->send_event(event->getEventType());
-            cli->recv_gamedata();
+        Event* event = new Event((EventType)Window::eventChecker);
+        cli->send_event(event->getEventType());
+        // listen for updated game data
+        check_gd = cli->recv_gamedata();
+        while (check_gd == -1) {
+            check_gd = cli->recv_gamedata();
         }
+        Window::eventChecker = 0; // avoid double action
+
         // TODO(graphics): update graphics based on cli->gd
-        
+        Window::players.at(0)->setModel(cli->gd->location_A);
+        Window::players.at(1)->setModel(cli->gd->location_B);
+        Window::players.at(2)->setModel(cli->gd->location_C);
+        Window::players.at(3)->setModel(cli->gd->location_D);
         // Main render display callback. Rendering of objects is done here.
         Window::displayCallback(window);
         

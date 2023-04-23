@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -25,6 +25,9 @@
     <Filter Include="lib">
       <UniqueIdentifier>{e1eed18d-849b-4532-b852-87f454d6d7ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{fa5752e6-9dd9-4704-8b73-99eef70b09fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glfw3.lib">
@@ -45,6 +48,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\model_loading.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\texture2D.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
@@ -82,6 +91,23 @@
     <ClCompile Include="src\ObjObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\client\Client.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Event.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Player.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic2D.cpp">
+      <Filter>src</Filter>
+    <ClCompile Include="..\shared\GameData.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\Packet.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -114,9 +140,6 @@
     <ClInclude Include="include\Model.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\MShader.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -124,6 +147,22 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic2D.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MShader.h">
+    <ClInclude Include="..\shared\GameData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Packet.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\client\Client.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\GlobalVariables.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
