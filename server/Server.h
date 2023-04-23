@@ -32,6 +32,6 @@ public:
 	GameData* gd;
 	Event e[NUM_PLAYERS];
 	
-	void updateByEvent(Event, Event, Event, Event);
-	void updateBySingleEvent(Event, int);
+	void updateByEvent(EventType, EventType, EventType, EventType);
+	void updateBySingleEvent(EventType, int);
 };
