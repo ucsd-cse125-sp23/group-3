@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "Model.h"
+#include "model_animation.h"
 #include "MShader.h"
 #include "ObjObject.h"
 #include <animation.h>
@@ -11,7 +11,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Map* Window::map;
-Dynamic_Model* ourModel;
+Model* ourModel;
 ObjObject* backPackObject;
 int Window::eventChecker;
 int  Window::playerID;
@@ -44,7 +44,7 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    ourShader = new BShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    ourShader = new BShader("./shaders/anim_model.vs", "./shaders/anim_model.fs");
 
     // Check the shader program.
     if (!shaderProgram) {
@@ -65,7 +65,7 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    ourModel = new Dynamic_Model("./resources/objects/uav/uav.dae");
+    ourModel = new Model("./resources/objects/uav/uav.dae");
     animation = new Animation("./resources/objects/uav/uav.dae", ourModel);
     animator = new Animator(animation);
     return true;
@@ -151,8 +151,10 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 // update and draw functions
 void Window::idleCallback() {
     // Perform any updates as necessary.
+    
     if (playerID == 0) {
-        Cam->setFirstperson();
+
+        //Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
@@ -165,20 +167,20 @@ void Window::idleCallback() {
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
-
+    
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     animator->UpdateAnimation(deltaTime);
+    //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
-
+    
     // Render the object.
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     for (int i = 0; i < 4; i++) {
-        players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+        //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
 
     ourShader->use();
@@ -200,6 +202,7 @@ void Window::displayCallback(GLFWwindow* window) {
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
     ourShader->setMat4("model", model);
     ourModel->Draw(*ourShader);
+
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

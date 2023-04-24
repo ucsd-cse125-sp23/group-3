@@ -134,6 +134,8 @@
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\anim_model.fs" />
+    <None Include="shaders\anim_model.vs" />
     <None Include="shaders\model_loading.fs" />
     <None Include="shaders\model_loading.vs" />
     <None Include="shaders\shader.frag" />
@@ -179,8 +181,8 @@
     <ClInclude Include="include\Ground.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Mesh.h" />
-    <ClInclude Include="include\Model.h" />
     <ClInclude Include="include\model_animation.h" />
+    <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\MShader.h" />
     <ClInclude Include="include\ObjObject.h" />
     <ClInclude Include="include\Shader.h" />

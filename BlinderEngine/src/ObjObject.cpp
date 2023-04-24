@@ -2,7 +2,7 @@
 
 ObjObject::ObjObject(const std::string path, glm::vec3 scalingFactor)
 {
-	objModel = new Model(path);
+	objModel = new StaticModel(path);
 
 	mvp = glm::mat4(1.0f);
 	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));

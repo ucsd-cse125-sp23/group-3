@@ -1,6 +1,6 @@
 #include "core.h"
 
-#include "Model.h"
+#include "StaticModel.h"
 
 class ObjObject 
 {
@@ -18,7 +18,7 @@ public:
 	void move(float i);
 private:
 
-	Model* objModel;
+	StaticModel* objModel;
 	glm::vec3 scale;
 	glm::mat4 mvp;
 	glm::vec3 translate;

@@ -56,6 +56,12 @@
     <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\anim_model.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\anim_model.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp">
@@ -138,7 +144,7 @@
     <ClInclude Include="include\Mesh.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Model.h">
+    <ClInclude Include="include\StaticModel.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Shader.h">

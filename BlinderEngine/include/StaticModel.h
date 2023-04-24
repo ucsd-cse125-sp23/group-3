@@ -1,5 +1,5 @@
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef STATIC_MODEL_H
+#define STATIC_MODEL_H
 
 #include "core.h"
 
@@ -23,7 +23,7 @@ using namespace std;
 
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
 
-class Model 
+class StaticModel 
 {
 public:
     // model data 
@@ -33,7 +33,7 @@ public:
     bool gammaCorrection;
 
     // constructor, expects a filepath to a 3D model.
-    Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
+    StaticModel(string const &path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
     }

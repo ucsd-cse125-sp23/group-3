@@ -1,5 +1,5 @@
-#ifndef DYNAMIC_MODEL_H
-#define DYNAMIC_MODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include "core.h"
 
@@ -25,7 +25,7 @@
 
 using namespace std;
 
-class Dynamic_Model 
+class Model 
 {
 public:
     // model data 
@@ -37,7 +37,7 @@ public:
 	
 
     // constructor, expects a filepath to a 3D model.
-	Dynamic_Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
+    Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
     }
