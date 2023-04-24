@@ -1,13 +1,21 @@
-#pragma once
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
-#include <vector>
-#include <map>
-#include <glm/glm.hpp>
+#include <Animdata.h>
+#include <Bone.h>
+#include <core.h>
+#include <DynamicModel.h>
+
+
 #include <assimp/scene.h>
-#include <bone.h>
+#include <glm/glm.hpp>
+
 #include <functional>
-#include <animdata.h>
-#include <model_animation.h>
+#include <map>
+#include <vector>
+
+
+
 
 struct AssimpNodeData
 {
@@ -22,7 +30,7 @@ class Animation
 public:
 	Animation() = default;
 
-	Animation(const std::string& animationPath, Model* model)
+	Animation(const std::string& animationPath, DynamicModel* model)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
@@ -62,7 +70,7 @@ public:
 	}
 
 private:
-	void ReadMissingBones(const aiAnimation* animation, Model& model)
+	void ReadMissingBones(const aiAnimation* animation, DynamicModel& model)
 	{
 		int size = animation->mNumChannels;
 
@@ -108,4 +116,4 @@ private:
 	AssimpNodeData m_RootNode;
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 };
-
+#endif

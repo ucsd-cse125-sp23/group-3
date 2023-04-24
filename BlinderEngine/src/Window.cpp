@@ -1,9 +1,11 @@
 #include "Window.h"
-#include "model_animation.h"
+#include "DynamicModel.h"
 #include "MShader.h"
 #include "ObjObject.h"
 #include <animation.h>
 #include <animator.h>
+
+#include <DaeObject.h>
 // Window Properties
 int Window::width;
 int Window::height;
@@ -11,8 +13,9 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Map* Window::map;
-Model* ourModel;
+DynamicModel* ourModel;
 ObjObject* backPackObject;
+DaeObject* daeObject1;
 int Window::eventChecker;
 int  Window::playerID;
 // Camera Properties
@@ -25,8 +28,8 @@ Animator* animator;
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
-const float cameraSpeed = 0.05f;
-const float turningratio=5.0f;
+const float cameraSpeed = 0.15f;
+const float turningratio=20.0f;
 BShader* ourShader;
 
 float deltaTime = 0.0f;
@@ -65,9 +68,8 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    ourModel = new Model("./resources/objects/uav/uav.dae");
-    animation = new Animation("./resources/objects/uav/uav.dae", ourModel);
-    animator = new Animator(animation);
+    daeObject1 = new DaeObject(Constants::drone_object_path, Constants::drone_scaling_factor);
+
     return true;
 }
 
@@ -171,7 +173,7 @@ void Window::displayCallback(GLFWwindow* window) {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-    animator->UpdateAnimation(deltaTime);
+    daeObject1->updateAnimation(deltaTime);
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -183,26 +185,7 @@ void Window::displayCallback(GLFWwindow* window) {
         //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
 
-    ourShader->use();
-
-    // view/projection transformations
-    glm::mat4 projection = Cam->GetProjectMtx();
-    glm::mat4 view = Cam->GetViewMtx();
-    ourShader->setMat4("projection", projection);
-    ourShader->setMat4("view", view);
-
-    auto transforms = animator->GetFinalBoneMatrices();
-    for (int i = 0; i < transforms.size(); ++i)
-        ourShader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-
-
-    // render the loaded model
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-    ourShader->setMat4("model", model);
-    ourModel->Draw(*ourShader);
-
+    daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *ourShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

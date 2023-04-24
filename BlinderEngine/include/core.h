@@ -13,4 +13,3 @@
 
 // Our libs
 #include "Constants.h"
-#include <glm/gtc/type_ptr.hpp>

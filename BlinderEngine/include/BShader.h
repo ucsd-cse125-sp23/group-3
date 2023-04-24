@@ -2,6 +2,7 @@
 #define BSHADER_H
 
 #include <core.h>
+
 #include <glm/glm.hpp>
 
 #include <string>
