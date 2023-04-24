@@ -165,5 +165,26 @@
     <ClInclude Include="..\shared\GameData.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\BShader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\animdata.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\assimp_glm_helpers.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bone.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\animation.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\animator.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\model_animation.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

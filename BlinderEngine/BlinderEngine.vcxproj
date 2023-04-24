@@ -164,6 +164,12 @@
     <ClInclude Include="..\shared\GameData.h" />
     <ClInclude Include="..\shared\GlobalVariables.h" />
     <ClInclude Include="..\shared\Packet.h" />
+    <ClInclude Include="include\animation.h" />
+    <ClInclude Include="include\animator.h" />
+    <ClInclude Include="include\animdata.h" />
+    <ClInclude Include="include\assimp_glm_helpers.h" />
+    <ClInclude Include="include\bone.h" />
+    <ClInclude Include="include\BShader.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\core.h" />
@@ -173,6 +179,7 @@
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Model.h" />
+    <ClInclude Include="include\model_animation.h" />
     <ClInclude Include="include\MShader.h" />
     <ClInclude Include="include\ObjObject.h" />
     <ClInclude Include="include\Shader.h" />
