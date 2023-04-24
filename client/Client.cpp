@@ -3,6 +3,9 @@
 #include <iostream>
 Client::Client()
 {
+	if (Constants::offline) {
+		return;
+	}
 	WSADATA wsaData;
 	ConnectSocket = INVALID_SOCKET;
 

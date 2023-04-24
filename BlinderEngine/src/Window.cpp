@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "MShader.h"
 #include "ObjObject.h"
+#include <animation.h>
+#include <animator.h>
 // Window Properties
 int Window::width;
 int Window::height;
@@ -9,7 +11,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Map* Window::map;
-Model* ourModel;
+Dynamic_Model* ourModel;
 ObjObject* backPackObject;
 int Window::eventChecker;
 int  Window::playerID;
@@ -17,12 +19,18 @@ int  Window::playerID;
 Camera* Cam;
 std::vector<Cube*> Window::players=std::vector<Cube*>(4);
 
+Animation* animation;
+Animator* animator;
+
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.05f;
 const float turningratio=5.0f;
-MShader* objShader;
+BShader* ourShader;
+
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -36,9 +44,8 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    objShader = new MShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    ourShader = new BShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
 
-    backPackObject = new ObjObject(Constants::backpack_object_path, Constants::backpack_scaling_factor);
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -58,7 +65,9 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    
+    ourModel = new Dynamic_Model("./resources/objects/uav/uav.dae");
+    animation = new Animation("./resources/objects/uav/uav.dae", ourModel);
+    animator = new Animator(animation);
     return true;
 }
 
@@ -150,13 +159,17 @@ void Window::idleCallback() {
     map->update();
     int mapID;
     float x, y;
-    map->getPosition(backPackObject->getModel(), &mapID, &x, &y);
 
     //cube->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
+
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    animator->UpdateAnimation(deltaTime);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    
 
@@ -167,8 +180,26 @@ void Window::displayCallback(GLFWwindow* window) {
     for (int i = 0; i < 4; i++) {
         players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
-    backPackObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *objShader);
 
+    ourShader->use();
+
+    // view/projection transformations
+    glm::mat4 projection = Cam->GetProjectMtx();
+    glm::mat4 view = Cam->GetViewMtx();
+    ourShader->setMat4("projection", projection);
+    ourShader->setMat4("view", view);
+
+    auto transforms = animator->GetFinalBoneMatrices();
+    for (int i = 0; i < transforms.size(); ++i)
+        ourShader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+
+
+    // render the loaded model
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+    ourShader->setMat4("model", model);
+    ourModel->Draw(*ourShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -190,8 +221,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //Cam->SetMove(-cameraSpeed);
         //cube->move(-cameraSpeed);
-        //backPackObject->move(-cameraSpeed);
         //cube->move(-cameraSpeed);
+        players.at(playerID)->move(-cameraSpeed);
         eventChecker = 1;
     }
 
@@ -199,15 +230,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         //Cam->SetSpin(cameraSpeed*turningratio);
         //cube->spin(cameraSpeed*turningratio);
-        //backPackObject->spin(cameraSpeed * turningratio);
         //cube->spin(cameraSpeed*turningratio);
+        players.at(playerID) ->spin(cameraSpeed * turningratio);
         eventChecker = 2;
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         //Cam->SetSpin(-cameraSpeed*turningratio);
-        //backPackObject->spin(-cameraSpeed * turningratio);
+        //backPackObjectspin(-cameraSpeed * turningratio);
         //cube->spin(-cameraSpeed*turningratio);
+        players.at(playerID) ->spin(-cameraSpeed * turningratio);
         eventChecker = 3;
     }
 

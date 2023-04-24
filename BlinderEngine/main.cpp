@@ -65,7 +65,7 @@ int main(void) {
 
     // listen for initial game data
     int check_gd = cli->recv_gamedata();
-    while (check_gd == -1) {
+    while (check_gd == -1 && !Constants::offline) {
         check_gd = cli->recv_gamedata();
     }
 
@@ -76,9 +76,13 @@ int main(void) {
     // TODO: check user action(ready for game) & send event packet
     cli->send_event(EventType::READY);
     // listen for init packet
+    
     int assigned_id = cli->accept_init();
-    while (assigned_id == -1) {
+    while (assigned_id == -1 && !Constants::offline) {
         assigned_id = cli->accept_init();
+    }
+    if (assigned_id == -1) {
+        assigned_id = 0;
     }
     // TODO(graphics): render things based on assigned_id & player setup
 
@@ -90,7 +94,7 @@ int main(void) {
     
     // listen for game start
     int check_start = cli->recv_gamedata();
-    while (check_start == -1) {
+    while (check_start == -1 && !Constants::offline) {
         check_start = cli->recv_gamedata();
     }
 
@@ -102,16 +106,19 @@ int main(void) {
         cli->send_event(event->getEventType());
         // listen for updated game data
         check_gd = cli->recv_gamedata();
-        while (check_gd == -1) {
-            check_gd = cli->recv_gamedata();
-        }
         Window::eventChecker = 0; // avoid double action
 
         // TODO(graphics): update graphics based on cli->gd
-        Window::players.at(0)->setModel(cli->gd->location_A);
-        Window::players.at(1)->setModel(cli->gd->location_B);
-        Window::players.at(2)->setModel(cli->gd->location_C);
-        Window::players.at(3)->setModel(cli->gd->location_D);
+        if (Constants::offline) {
+            
+        }
+        else if(check_gd != -1) {
+            Window::players.at(0)->setModel(cli->gd->location_A);
+            Window::players.at(1)->setModel(cli->gd->location_B);
+            Window::players.at(2)->setModel(cli->gd->location_C);
+            Window::players.at(3)->setModel(cli->gd->location_D);
+        }
+        
         // Main render display callback. Rendering of objects is done here.
         Window::displayCallback(window);
         
