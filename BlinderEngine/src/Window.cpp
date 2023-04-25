@@ -30,7 +30,11 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.15f;
 const float turningratio=20.0f;
-BShader* ourShader;
+BShader* dynamicShader;
+MShader* staticShader;
+
+std::vector<DaeObject*> daeObjectList;
+std::vector<ObjObject*> objObjectList;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -47,7 +51,8 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    ourShader = new BShader("./shaders/anim_model.vs", "./shaders/anim_model.fs");
+    dynamicShader = new BShader("./shaders/anim_model.vs", "./shaders/anim_model.fs");
+    staticShader = new MShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
 
     // Check the shader program.
     if (!shaderProgram) {
@@ -69,7 +74,7 @@ bool Window::initializeObjects(int PlayID) {
     }
     playerID = PlayID;
     daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
-
+    daeObjectList.push_back(daeObject1);
     return true;
 }
 
@@ -173,7 +178,7 @@ void Window::displayCallback(GLFWwindow* window) {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-    daeObject1->updateAnimation(deltaTime);
+
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -184,8 +189,11 @@ void Window::displayCallback(GLFWwindow* window) {
     for (int i = 0; i < 4; i++) {
         //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
-
-    daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *ourShader);
+    for (auto daeObject : daeObjectList)
+    {
+        daeObject->updateAnimation(deltaTime);
+        daeObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
+    }
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
