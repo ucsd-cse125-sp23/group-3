@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "core.h"
-#include "Model.h"
 #include "../client/Client.h"
 #include "../shared/Player.h"
 

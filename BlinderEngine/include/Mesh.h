@@ -2,13 +2,12 @@
 #define MESH_H
 
 #include "core.h"
-#include "MShader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <MShader.h>
-#include <BShader.h>
+#include <StaticShader.h>
+#include <DynamicShader.h>
 
 #include <string>
 #include <vector>
@@ -58,7 +57,7 @@ public:
         setupMesh();
     }
 
-    void Draw(BShader& shader)
+    void Draw(DynamicShader& shader)
     {
         // bind appropriate textures
         unsigned int diffuseNr = 1;
@@ -96,7 +95,7 @@ public:
     }
 
     // render the mesh
-    void Draw(MShader &shader) 
+    void Draw(StaticShader &shader)
     {
         // bind appropriate textures
         unsigned int diffuseNr  = 1;

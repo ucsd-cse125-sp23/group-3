@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "StaticModel.h"
 
 #include <contrib/stb/stb_image.h>
 

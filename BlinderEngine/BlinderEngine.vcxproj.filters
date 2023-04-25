@@ -56,6 +56,12 @@
     <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\anim_model.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\anim_model.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp">
@@ -109,6 +115,9 @@
     <ClCompile Include="..\shared\GameData.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\DaeObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -138,7 +147,7 @@
     <ClInclude Include="include\Mesh.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Model.h">
+    <ClInclude Include="include\StaticModel.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Shader.h">
@@ -153,7 +162,7 @@
     <ClInclude Include="include\graphic2D.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\MShader.h">
+    <ClInclude Include="include\StaticShader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Packet.h">
@@ -165,25 +174,28 @@
     <ClInclude Include="..\shared\GameData.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\BShader.h">
+    <ClInclude Include="include\DynamicShader.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\animdata.h">
+    <ClInclude Include="include\Animdata.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\assimp_glm_helpers.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\bone.h">
+    <ClInclude Include="include\Bone.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\animation.h">
+    <ClInclude Include="include\Animation.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\animator.h">
+    <ClInclude Include="include\Animator.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\model_animation.h">
+    <ClInclude Include="include\DynamicModel.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DaeObject.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\client\Client.h">
