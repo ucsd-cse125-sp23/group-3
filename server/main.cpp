@@ -1,5 +1,6 @@
 #include "Server.h"
 #include <GLFW/glfw3.h>
+#include <chrono>
 
 int main()
 {
@@ -41,10 +42,20 @@ int main()
      }
 
      while (1) {
-         double start = glfwGetTime();
-         double end = glfwGetTime();
+
+         std::chrono::milliseconds start = std::chrono::duration_cast<std::chrono::milliseconds>(
+             std::chrono::system_clock::now().time_since_epoch()
+         );
+         //double start = glfwGetTime();
+
+         std::chrono::milliseconds end = std::chrono::duration_cast<std::chrono::milliseconds>(
+             std::chrono::system_clock::now().time_since_epoch()
+         );
+         //double end = glfwGetTime();
+
          int events[4] = {-1, -1, -1, -1};
-         while (end - start < (double)LISTEN_TICK / 1000.0) {
+         while (end - start < (std::chrono::milliseconds)LISTEN_TICK) {
+
              for (int i = 0; i < NUM_PLAYERS; i++)
              {
                  if (events[i] != -1)
@@ -54,17 +65,26 @@ int main()
                  int check_event = serv->recv_event(i);
                  events[i] = check_event;
              }
-             end = glfwGetTime();
+             end = std::chrono::duration_cast<std::chrono::milliseconds>(
+                 std::chrono::system_clock::now().time_since_epoch()
+             );
+             //end = glfwGetTime();
          }
          serv->updateByEvent((EventType)events[0], (EventType)events[1], (EventType)events[2], (EventType)events[3]);
          for (int j = 0; j < NUM_PLAYERS; j++)
          {
              serv->send_gamedata(j);
          }
-         end = glfwGetTime();
-         while (end - start < (double)TICK_TIME / 1000.0) {
+         end = std::chrono::duration_cast<std::chrono::milliseconds>(
+             std::chrono::system_clock::now().time_since_epoch()
+         );
+         //end = glfwGetTime();
+         while (end - start < (std::chrono::milliseconds)TICK_TIME) {
              // wait until tick time
-             end = glfwGetTime();
+             end = std::chrono::duration_cast<std::chrono::milliseconds>(
+                 std::chrono::system_clock::now().time_since_epoch()
+             );
+             //end = glfwGetTime();
          }
      }
     

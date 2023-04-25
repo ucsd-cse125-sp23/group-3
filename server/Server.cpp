@@ -157,7 +157,7 @@ int Server::recv_event(int client_id)
 }
 
 void Server::updateBySingleEvent(EventType e, int id) {
-	if (e == EventType::NOEVENT)
+	if (e == EventType::NOEVENT || (int)e == -1)
 		return;
 	glm::mat4* loc = NULL;
 	switch (id)
@@ -179,10 +179,7 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	}
 
 	if (e == EventType::FORWARD) {
-		*loc = glm::translate(*loc, glm::vec3(0, 0, CAMERA_SPEED / 100.0f));
-	}
-	else if (e == EventType::BACKWARD) {
-		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED / 100.0f));
+		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
 	}
 	else if (e == EventType::TURN_LEFT) {
 		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));

@@ -103,7 +103,11 @@ int main(void) {
 
         // check for event&send
         Event* event = new Event((EventType)Window::eventChecker);
-        cli->send_event(event->getEventType());
+        if (event->getEventType()!=EventType::NOEVENT)
+        {
+            cli->send_event(event->getEventType());
+        }
+        
         // listen for updated game data
         check_gd = cli->recv_gamedata();
         Window::eventChecker = 0; // avoid double action

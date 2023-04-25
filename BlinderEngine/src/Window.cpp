@@ -222,7 +222,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //Cam->SetMove(-cameraSpeed);
         //cube->move(-cameraSpeed);
         //cube->move(-cameraSpeed);
-        players.at(playerID)->move(-cameraSpeed);
+        if (Constants::offline) {
+            players.at(playerID)->move(-cameraSpeed);
+        }
+        
         eventChecker = 1;
     }
 
@@ -231,7 +234,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //Cam->SetSpin(cameraSpeed*turningratio);
         //cube->spin(cameraSpeed*turningratio);
         //cube->spin(cameraSpeed*turningratio);
-        players.at(playerID) ->spin(cameraSpeed * turningratio);
+        if (Constants::offline) {
+            players.at(playerID)->spin(cameraSpeed * turningratio);
+        }
         eventChecker = 2;
     }
         
@@ -239,7 +244,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //Cam->SetSpin(-cameraSpeed*turningratio);
         //backPackObjectspin(-cameraSpeed * turningratio);
         //cube->spin(-cameraSpeed*turningratio);
-        players.at(playerID) ->spin(-cameraSpeed * turningratio);
+        if (Constants::offline) {
+            players.at(playerID)->spin(-cameraSpeed * turningratio);
+        }
         eventChecker = 3;
     }
 

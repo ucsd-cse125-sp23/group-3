@@ -84,7 +84,7 @@ glm::mat4 Packet::str2mat(char* &buffer) {
 
 void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
 	int vecSize = states.size();
-	std::cout << reinterpret_cast<void*>(buffer) << std::endl;
+	//std::cout << reinterpret_cast<void*>(buffer) << std::endl;
 	memcpy(buffer, &vecSize, sizeof(int));
 	buffer += sizeof(int);
 	for (int i = 0; i < vecSize; i++) {
@@ -92,7 +92,7 @@ void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
 		memcpy(buffer, &num, sizeof(int));
 		buffer += sizeof(int);
 	}
-	std::cout << reinterpret_cast<void*>(buffer) << std::endl;
+	//std::cout << reinterpret_cast<void*>(buffer) << std::endl;
 }
 
 std::vector<int> Packet::str2vec(char* &buffer) {
@@ -112,7 +112,7 @@ std::vector<int> Packet::str2vec(char* &buffer) {
 void Packet::serialize(Event* event, char* buffer){
 	buffer[0] = '1'; // just in case we want to differentiate packets
 
-	buffer[1] = int(event->getEventType());
+	buffer[1] = (char)(event->getEventType());
 }
 Event Packet::deserializeEvent(char* buffer){
 	return Event(EventType(buffer[1]));

@@ -186,5 +186,8 @@
     <ClInclude Include="include\model_animation.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\client\Client.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

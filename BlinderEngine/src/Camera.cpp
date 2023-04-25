@@ -12,6 +12,18 @@ Camera::Camera() {
 }
 void Camera::Update() {
     // Compute camera world matrix
+
+    if (first_person) {
+        CameraTar = glm::vec3(0.0f, 3.0f, 0.0f);
+        CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
+        CameraPos = CameraTar + CameraDir;
+    }
+    else {
+        CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
+        CameraDir = glm::vec3(0.0f, 30.0f, 10.0f);
+        CameraPos = CameraTar + CameraDir;
+    }
+
     glm::vec4 tempTar=model*glm::vec4(CameraTar,1);
     glm::vec4 tempPos=model*glm::vec4(CameraPos,1);
     
@@ -55,16 +67,7 @@ void Camera::Reset() {
     model = glm::mat4(1.0f);
 
     //first perspective
-    if(first_person){
-        CameraTar=glm::vec3(0.0f,3.0f,0.0f); 
-        CameraDir=glm::vec3(0.0f,0.0f,1.0f);
-        CameraPos=CameraTar+CameraDir;
-    }
-    else{
-        CameraTar=glm::vec3(0.0f,0.0f,0.0f); 
-        CameraDir=glm::vec3(0.0f,30.0f,10.0f); 
-        CameraPos = CameraTar + CameraDir;
-    }
+    
     //third perspective
     //std::cout<<glm::to_string(CameraPos)<<std::endl;
     //TODO:: change back to glm::vec3(0.0f,1.0f,0.0f); for later use
