@@ -11,7 +11,7 @@
 #include <assimp/postprocess.h>
 
 #include <Mesh.h>
-#include <MShader.h>
+#include <StaticShader.h>
 
 #include <string>
 #include <fstream>
@@ -42,7 +42,7 @@ public:
 
 
 
-    void Draw(MShader &shader)
+    void Draw(StaticShader& shader)
     {
         for(unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(shader);

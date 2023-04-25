@@ -4,8 +4,7 @@
 
 #include "core.h"
 #include "Camera.h"
-#include <MShader.h>
-
+#include <StaticShader.h>
 
 class graphic2D {
     private:
@@ -27,7 +26,7 @@ class graphic2D {
         ~graphic2D();
 
         void bindTexture(const char* filename);
-        void draw(const glm::mat4& viewProjMtx, MShader shader);
+        void draw(const glm::mat4& viewProjMtx, StaticShader shader);
         void update();
         void setColor(glm::vec3 _color);
 };

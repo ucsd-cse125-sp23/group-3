@@ -10,7 +10,7 @@ ObjObject::ObjObject(const std::string path, glm::vec3 scalingFactor)
 	scale = scalingFactor;
 }
 
-void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, MShader& shader)
+void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, StaticShader& shader)
 {
 	shader.use();
 
@@ -26,7 +26,7 @@ void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, const g
 	objModel->Draw(shader);
 }
 
-void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, MShader& shader)
+void ObjObject::draw(const glm::mat4& projection, const glm::mat4& view, StaticShader& shader)
 {
 	shader.use();
 

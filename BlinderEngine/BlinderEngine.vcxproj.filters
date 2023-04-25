@@ -162,7 +162,7 @@
     <ClInclude Include="include\graphic2D.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\MShader.h">
+    <ClInclude Include="include\StaticShader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Packet.h">
@@ -174,7 +174,7 @@
     <ClInclude Include="..\shared\GameData.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\BShader.h">
+    <ClInclude Include="include\DynamicShader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Animdata.h">
@@ -196,9 +196,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\DaeObject.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\group-3\BlinderEngine\include\Timer.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\client\Client.h">

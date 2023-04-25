@@ -2,8 +2,8 @@
 #include <core.h>
 #include <Animation.h>
 #include <Animator.h>
-#include <BShader.h>
-#include <MShader.h>
+#include <DynamicShader.h>
+#include <StaticShader.h>
 #include <DynamicModel.h>
 
 class DaeObject
@@ -11,8 +11,8 @@ class DaeObject
 public:
 	DaeObject(const std::string path, glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
 
-	void draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, BShader& shader);
-	void draw(const glm::mat4& projection, const glm::mat4& view, BShader& shader);
+	void draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, DynamicShader& shader);
+	void draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader);
 
 	void updateAnimation(float deltaTime);
 	void setTranslation(glm::vec3& translate);
