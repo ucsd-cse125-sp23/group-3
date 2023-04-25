@@ -14,7 +14,7 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Map* Window::map;
 DynamicModel* ourModel;
-ObjObject* backPackObject;
+ObjObject* objObject1;
 DaeObject* daeObject1;
 int Window::eventChecker;
 int  Window::playerID;
@@ -74,6 +74,8 @@ bool Window::initializeObjects(int PlayID) {
     }
     playerID = PlayID;
     daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
+    objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
+
     daeObjectList.push_back(daeObject1);
     return true;
 }
@@ -176,8 +178,7 @@ void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     
     float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+
 
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -191,9 +192,11 @@ void Window::displayCallback(GLFWwindow* window) {
     }
     for (auto daeObject : daeObjectList)
     {
-        daeObject->updateAnimation(deltaTime);
         daeObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
+
+    // Draw static objObject
+    objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -218,8 +221,12 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->move(-cameraSpeed);
         }
-        
         eventChecker = 1;
     }
 
@@ -230,8 +237,14 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->spin(cameraSpeed * turningratio);
         }
         eventChecker = 2;
+
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
@@ -240,6 +253,11 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->spin(-cameraSpeed * turningratio); 
         }
         eventChecker = 3;
     }
