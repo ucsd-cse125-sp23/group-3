@@ -1,9 +1,11 @@
 #include "Window.h"
-#include "Model.h"
+#include "DynamicModel.h"
 #include "MShader.h"
 #include "ObjObject.h"
 #include <animation.h>
 #include <animator.h>
+
+#include <DaeObject.h>
 // Window Properties
 int Window::width;
 int Window::height;
@@ -11,8 +13,9 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Map* Window::map;
-Dynamic_Model* ourModel;
-ObjObject* backPackObject;
+DynamicModel* ourModel;
+ObjObject* objObject1;
+DaeObject* daeObject1;
 int Window::eventChecker;
 int  Window::playerID;
 // Camera Properties
@@ -25,9 +28,13 @@ Animator* animator;
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
-const float cameraSpeed = 0.05f;
-const float turningratio=5.0f;
-BShader* ourShader;
+const float cameraSpeed = 0.15f;
+const float turningratio=20.0f;
+BShader* dynamicShader;
+MShader* staticShader;
+
+std::vector<DaeObject*> daeObjectList;
+std::vector<ObjObject*> objObjectList;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -44,7 +51,8 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    ourShader = new BShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    dynamicShader = new BShader("./shaders/anim_model.vs", "./shaders/anim_model.fs");
+    staticShader = new MShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
 
     // Check the shader program.
     if (!shaderProgram) {
@@ -65,9 +73,10 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    ourModel = new Dynamic_Model("./resources/objects/uav/uav.dae");
-    animation = new Animation("./resources/objects/uav/uav.dae", ourModel);
-    animator = new Animator(animation);
+    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
+    objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
+
+    daeObjectList.push_back(daeObject1);
     return true;
 }
 
@@ -151,8 +160,10 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 // update and draw functions
 void Window::idleCallback() {
     // Perform any updates as necessary.
+    
     if (playerID == 0) {
-        Cam->setFirstperson();
+
+        //Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
@@ -165,41 +176,27 @@ void Window::idleCallback() {
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
-
+    
     float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
-    animator->UpdateAnimation(deltaTime);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
 
+
+    //std::cerr << deltaTime << std::endl;
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     // Render the object.
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     for (int i = 0; i < 4; i++) {
-        players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+        //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    }
+    for (auto daeObject : daeObjectList)
+    {
+        daeObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
 
-    ourShader->use();
-
-    // view/projection transformations
-    glm::mat4 projection = Cam->GetProjectMtx();
-    glm::mat4 view = Cam->GetViewMtx();
-    ourShader->setMat4("projection", projection);
-    ourShader->setMat4("view", view);
-
-    auto transforms = animator->GetFinalBoneMatrices();
-    for (int i = 0; i < transforms.size(); ++i)
-        ourShader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-
-
-    // render the loaded model
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-    ourShader->setMat4("model", model);
-    ourModel->Draw(*ourShader);
+    // Draw static objObject
+    objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -224,8 +221,12 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->move(-cameraSpeed);
         }
-        
         eventChecker = 1;
     }
 
@@ -236,8 +237,14 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->spin(cameraSpeed * turningratio);
         }
         eventChecker = 2;
+
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
@@ -246,6 +253,11 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            daeObject1->updateAnimation(deltaTime);
+            daeObject1->spin(-cameraSpeed * turningratio); 
         }
         eventChecker = 3;
     }

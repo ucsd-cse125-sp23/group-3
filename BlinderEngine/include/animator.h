@@ -1,12 +1,16 @@
 #pragma once
 
+#include <Animation.h>
+#include <Bone.h>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
 #include <glm/glm.hpp>
+
 #include <map>
 #include <vector>
-#include <assimp/scene.h>
-#include <assimp/Importer.hpp>
-#include <animation.h>
-#include <bone.h>
+
+
 
 class Animator
 {
