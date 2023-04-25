@@ -28,16 +28,6 @@ void Camera::Update() {
     glm::vec4 tempTar=model*glm::vec4(CameraTar,1);
     glm::vec4 tempPos=model*glm::vec4(CameraPos,1);
     
-    if (first_person) {
-        CameraTar = glm::vec3(0.0f, 3.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
-        CameraPos = CameraTar + CameraDir;
-    }
-    else {
-        CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 30.0f, 10.0f);
-        CameraPos = CameraTar + CameraDir;
-    }
     glm::vec3 upTar,upPos;
     upTar.x=tempTar.x;
     upTar.y=tempTar.y;

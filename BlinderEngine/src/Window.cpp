@@ -164,7 +164,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        //Cam->setFirstperson();
+        Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
@@ -188,12 +188,14 @@ void Window::displayCallback(GLFWwindow* window) {
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    for (int i = 0; i < 4; i++) {
-        //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    if (Constants::offline) {
+        daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
-
-    daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
-
+    else {
+        for (int i = 0; i < 4; i++) {
+            players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+        }
+    }
 
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
