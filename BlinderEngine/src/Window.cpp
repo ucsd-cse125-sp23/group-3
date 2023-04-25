@@ -68,7 +68,7 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    daeObject1 = new DaeObject(Constants::drone_object_path, Constants::drone_scaling_factor);
+    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
 
     return true;
 }
