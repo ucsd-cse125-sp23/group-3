@@ -83,10 +83,7 @@ glm::mat4 Packet::str2mat(char* &buffer) {
 }
 
 void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
-	int vecSize = states.size();
-	//std::cout << reinterpret_cast<void*>(buffer) << std::endl;
-	memcpy(buffer, &vecSize, sizeof(int));
-	buffer += sizeof(int);
+	int vecSize = NUM_OBSTACLE;
 	for (int i = 0; i < vecSize; i++) {
 		int num = states[i];
 		memcpy(buffer, &num, sizeof(int));
@@ -97,9 +94,7 @@ void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
 
 std::vector<int> Packet::str2vec(char* &buffer) {
 	std::vector<int> vec;
-	int size;
-	memcpy(&size, buffer, sizeof(int));
-	buffer += sizeof(int);
+	int size = NUM_OBSTACLE;
 	for (int i = 0; i < size; i++) {
 		int num;
 		memcpy(&num, buffer, sizeof(int));
