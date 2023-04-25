@@ -1,5 +1,5 @@
-#ifndef M_SHADER_H
-#define M_SHADER_H
+#ifndef STATIC_SHADER_H
+#define STATIC_SHADER_H
 
 #include <core.h>
 #include <glm/glm.hpp>
@@ -9,13 +9,13 @@
 #include <sstream>
 #include <iostream>
 
-class MShader
+class StaticShader
 {
 public:
     unsigned int ID;
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    MShader(const char* vertexPath, const char* fragmentPath)
+    StaticShader(const std::string vertexPath, std::string fragmentPath)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
@@ -28,8 +28,8 @@ public:
         try 
         {
             // open files
-            vShaderFile.open(vertexPath);
-            fShaderFile.open(fragmentPath);
+            vShaderFile.open(vertexPath.c_str());
+            fShaderFile.open(fragmentPath.c_str());
             std::stringstream vShaderStream, fShaderStream;
             // read file's buffer contents into streams
             vShaderStream << vShaderFile.rdbuf();

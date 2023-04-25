@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "DynamicModel.h"
-#include "MShader.h"
+#include <StaticShader.h>
+
 #include "ObjObject.h"
 #include <animation.h>
 #include <animator.h>
@@ -30,8 +31,8 @@ bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.15f;
 const float turningratio=20.0f;
-BShader* dynamicShader;
-MShader* staticShader;
+DynamicShader* dynamicShader;
+StaticShader* staticShader;
 
 std::vector<DaeObject*> daeObjectList;
 std::vector<ObjObject*> objObjectList;
@@ -51,8 +52,8 @@ bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
-    dynamicShader = new BShader("./shaders/anim_model.vs", "./shaders/anim_model.fs");
-    staticShader = new MShader("./shaders/model_loading.vs", "./shaders/model_loading.fs");
+    dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
+    staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
 
     // Check the shader program.
     if (!shaderProgram) {
@@ -190,13 +191,12 @@ void Window::displayCallback(GLFWwindow* window) {
     for (int i = 0; i < 4; i++) {
         //players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     }
-    for (auto daeObject : daeObjectList)
-    {
-        daeObject->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
-    }
+
+    daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
+
 
     // Draw static objObject
-    objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
+    //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

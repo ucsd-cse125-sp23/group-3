@@ -5,6 +5,7 @@ DaeObject::DaeObject(const std::string path, glm::vec3 scalingFactor)
 	objModel = new DynamicModel(path);
 	animation = new Animation(path, objModel);
 	animator = new Animator(animation);
+	animator->UpdateAnimation(0.0f);
 
 	mvp = glm::mat4(1.0f);
 	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -12,7 +13,7 @@ DaeObject::DaeObject(const std::string path, glm::vec3 scalingFactor)
 	scale = scalingFactor;
 }
 
-void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, BShader& shader)
+void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, DynamicShader& shader)
 {
 	shader.use();
 
@@ -31,7 +32,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const g
 	objModel->Draw(shader);
 }
 
-void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, BShader& shader)
+void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader)
 {
 	shader.use();
 

@@ -7,8 +7,8 @@ class ObjObject
 public:
 	ObjObject(const std::string path, glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
 
-	void draw(const glm::mat4 &projection, const glm::mat4 &view, const glm::vec3& translate,MShader &shader);
-	void draw(const glm::mat4& projection, const glm::mat4& view, MShader& shader);
+	void draw(const glm::mat4 &projection, const glm::mat4 &view, const glm::vec3& translate, StaticShader& shader);
+	void draw(const glm::mat4& projection, const glm::mat4& view, StaticShader& shader);
 
 	void setTranslation(glm::vec3& translate);
 

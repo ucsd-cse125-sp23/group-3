@@ -21,9 +21,9 @@
 #include <vector>
 
 #include <Animdata.h>
-#include <BShader.h>
+#include <DynamicShader.h>
 #include <Mesh.h>
-#include <MShader.h>
+#include <StaticShader.h>
 
 
 
@@ -47,13 +47,13 @@ public:
     }
 
     // draws the model, and thus all its meshes
-    void Draw(MShader &shader)
+    void Draw(StaticShader& shader)
     {
         for(unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(shader);
     }
 
-	void Draw(BShader& shader)
+	void Draw(DynamicShader& shader)
 	{
 		for (unsigned int i = 0; i < meshes.size(); i++)
 			meshes[i].Draw(shader);
