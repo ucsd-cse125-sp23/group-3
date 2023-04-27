@@ -164,7 +164,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        //Cam->setFirstperson();
+        Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
@@ -225,7 +225,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             players.at(playerID)->move(-cameraSpeed);
             glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
             daeObject1->setModel(newMVP);
-            
         }
         eventChecker = 1;
     }
