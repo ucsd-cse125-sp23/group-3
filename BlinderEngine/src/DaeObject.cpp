@@ -55,8 +55,8 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 	float currentFrame = glfwGetTime();
 	float deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
-	std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
-	std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
+	//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
+	//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
 	if (currentFrame - lastStartWalking < animation->GetDuration() / 1000)
 	{
 		this->updateAnimation(deltaTime);
