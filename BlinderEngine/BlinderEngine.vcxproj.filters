@@ -201,5 +201,8 @@
     <ClInclude Include="..\client\Client.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

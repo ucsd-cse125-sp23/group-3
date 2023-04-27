@@ -3,6 +3,7 @@
 #include "../client/Client.h"
 #include "../shared/Player.h"
 
+
 void error_callback(int error, const char* description) {
     // Print error.
     std::cerr << description << std::endl;
