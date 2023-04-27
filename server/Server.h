@@ -17,7 +17,7 @@
 #define _WIN32_WINNT _WIN32_WINNT_WINXP // mingw bug
 #define DEFAULT_PORT "2400"
 
-const int NUM_PLAYERS = 1;
+const int NUM_PLAYERS = 4;
 
 class Server
 {

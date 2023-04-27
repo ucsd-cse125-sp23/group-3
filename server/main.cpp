@@ -35,11 +35,20 @@ int main()
          serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
      }
 
+     SOCKET cp_sessions[NUM_PLAYERS];
+
+     for (int ind = 0; ind < 4; ind ++) {
+         cp_sessions[ind] = serv->sessions[serv->ids[ind]];
+     }
+     for (int ind = 0; ind < 4; ind++) {
+         serv->sessions[ind] = cp_sessions[ind];
+     }
+
      // send updated game data
      serv->gd->gamestate = GameState::IN_GAME;
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
-         serv->send_gamedata(serv->ids[i]);
+         serv->send_gamedata(i);
      }
 
      while (1) {
@@ -59,22 +68,23 @@ int main()
 
              for (int i = 0; i < NUM_PLAYERS; i++)
              {
-                 if (events[serv->ids[i]] != -1)
+                 if (events[i] != -1)
                  {
                      continue; // continue if we already receive 1 event from this client
                  }
-                 int check_event = serv->recv_event(serv->ids[i]);
-                 events[serv->ids[i]] = check_event;
+                 int check_event = serv->recv_event(i);
+                 events[i] = check_event;
              }
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
              //end = glfwGetTime();
          }
-         serv->updateByEvent((EventType)events[serv->ids[0]], (EventType)events[serv->ids[1]], (EventType)events[serv->ids[2]], (EventType)events[serv->ids[3]]);
+
+         serv->updateByEvent((EventType)events[0], (EventType)events[1], (EventType)events[2], (EventType)events[3]);
          for (int j = 0; j < NUM_PLAYERS; j++)
          {
-             serv->send_gamedata(serv->ids[j]);
+             serv->send_gamedata(j);
          }
          end = std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch()
