@@ -19,8 +19,12 @@ public:
 
 	void update(glm::mat4 world);
 	glm::mat4 getModel() { return mvp; };
+	void setModel(glm::mat4 model);
+
 	void spin(float deg);
 	void move(float i);
+
+	glm::mat4 calculateMoveMVP(float i);
 private:
 	DynamicModel* objModel;
 	Animation* animation;
@@ -29,4 +33,7 @@ private:
 	glm::vec3 scale;
 	glm::mat4 mvp;
 	glm::vec3 translate;
+
+	float lastFrame;
+	float lastStartWalking;
 };

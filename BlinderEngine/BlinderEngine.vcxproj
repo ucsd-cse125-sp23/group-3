@@ -110,7 +110,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\assimp;$(SolutionDir)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;assimp-vc143-mtd.lib;SoLoud-wav.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,6 +189,7 @@
     <ClInclude Include="include\ObjObject.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Submap.h" />
+    <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Tokenizer.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>

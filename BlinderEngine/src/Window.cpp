@@ -74,7 +74,7 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
+    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(3.0f));
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
@@ -223,11 +223,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
-            daeObject1->move(-cameraSpeed);
+            glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
+            daeObject1->setModel(newMVP);
         }
         eventChecker = 1;
     }
@@ -239,10 +236,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
             daeObject1->spin(cameraSpeed * turningratio);
         }
         eventChecker = 2;
@@ -255,10 +248,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
         eventChecker = 3;
