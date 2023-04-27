@@ -27,18 +27,19 @@ int main()
      // wait for ready action and send init packet;blocks until 4 connect
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
+         std::cout << "sending id:" << serv->ids[i] << std::endl;
          int check_recv_ready = serv->recv_event(i);
          while (check_recv_ready == -1) {
              check_recv_ready = serv->recv_event(i);
          }
-         serv->send_init_packet(i); // TODO: add randomly assign character logic
+         serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
      }
 
      // send updated game data
      serv->gd->gamestate = GameState::IN_GAME;
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
-         serv->send_gamedata(i);
+         serv->send_gamedata(serv->ids[i]);
      }
 
      while (1) {
@@ -58,22 +59,22 @@ int main()
 
              for (int i = 0; i < NUM_PLAYERS; i++)
              {
-                 if (events[i] != -1)
+                 if (events[serv->ids[i]] != -1)
                  {
                      continue; // continue if we already receive 1 event from this client
                  }
-                 int check_event = serv->recv_event(i);
-                 events[i] = check_event;
+                 int check_event = serv->recv_event(serv->ids[i]);
+                 events[serv->ids[i]] = check_event;
              }
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
              //end = glfwGetTime();
          }
-         serv->updateByEvent((EventType)events[0], (EventType)events[1], (EventType)events[2], (EventType)events[3]);
+         serv->updateByEvent((EventType)events[serv->ids[0]], (EventType)events[serv->ids[1]], (EventType)events[serv->ids[2]], (EventType)events[serv->ids[3]]);
          for (int j = 0; j < NUM_PLAYERS; j++)
          {
-             serv->send_gamedata(j);
+             serv->send_gamedata(serv->ids[j]);
          }
          end = std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch()
