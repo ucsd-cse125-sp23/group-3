@@ -122,6 +122,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\CollisionDetection.cpp">
+    <ClCompile Include="src\PlayerModels.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -208,6 +209,7 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Timer.h">
+    <ClInclude Include="include\PlayerModel.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\UI.h">
