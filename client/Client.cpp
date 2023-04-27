@@ -118,6 +118,7 @@ int Client::accept_init()
 			std::cout << "character:" << "Dave" << std::endl;
 			return 3;
 		default:
+			std::cout << "??????????????" << std::endl;
 			break;
 	}
 	return -1;

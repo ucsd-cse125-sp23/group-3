@@ -27,11 +27,21 @@ int main()
      // wait for ready action and send init packet;blocks until 4 connect
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
+         std::cout << "sending id:" << serv->ids[i] << std::endl;
          int check_recv_ready = serv->recv_event(i);
          while (check_recv_ready == -1) {
              check_recv_ready = serv->recv_event(i);
          }
-         serv->send_init_packet(i); // TODO: add randomly assign character logic
+         serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
+     }
+
+     SOCKET cp_sessions[NUM_PLAYERS];
+
+     for (int ind = 0; ind < 4; ind ++) {
+         cp_sessions[ind] = serv->sessions[serv->ids[ind]];
+     }
+     for (int ind = 0; ind < 4; ind++) {
+         serv->sessions[ind] = cp_sessions[ind];
      }
 
      // send updated game data
@@ -70,6 +80,7 @@ int main()
              );
              //end = glfwGetTime();
          }
+
          serv->updateByEvent((EventType)events[0], (EventType)events[1], (EventType)events[2], (EventType)events[3]);
          for (int j = 0; j < NUM_PLAYERS; j++)
          {

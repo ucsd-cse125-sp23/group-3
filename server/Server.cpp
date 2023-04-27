@@ -2,6 +2,13 @@
 
 Server::Server()
 {
+	std::random_device rd;
+	std::mt19937 g(rd());
+	std::shuffle(ids.begin(), ids.end(), g);
+
+	//for (auto a : ids)
+	//	std::cout << a << " ";
+
 	WSADATA wsaData;
 	int iResult;
 
@@ -115,8 +122,8 @@ int Server::update()
 	return 0;
 }
 
-void Server::send_init_packet(int character_id){
-	if (sessions[character_id] != INVALID_SOCKET)
+void Server::send_init_packet(int client_id, int character_id){
+	if (sessions[client_id] != INVALID_SOCKET)
 	{
 		std::string init_str;
 		// Init packet
@@ -124,10 +131,10 @@ void Server::send_init_packet(int character_id){
 		init_str.append(std::to_string(character_id));
 		const char* buf_init = init_str.c_str();
 		std::cout << "sending init..." << buf_init << std::endl;
-		if (send(sessions[character_id], buf_init, 2, 0) == SOCKET_ERROR)
+		if (send(sessions[client_id], buf_init, 2, 0) == SOCKET_ERROR)
 		{
 			printf("send failed with error: %d\n", WSAGetLastError());
-			closesocket(sessions[character_id]);
+			closesocket(sessions[client_id]);
 		}
 	}
 	
