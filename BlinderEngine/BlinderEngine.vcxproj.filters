@@ -118,6 +118,9 @@
     <ClCompile Include="src\DaeObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -202,6 +205,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Timer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
