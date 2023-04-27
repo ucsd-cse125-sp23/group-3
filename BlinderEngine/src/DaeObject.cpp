@@ -50,6 +50,18 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 	}
 	glm::mat4 currMVP = glm::scale(mvp, scale);
 	shader.setMat4("model", currMVP);
+
+	// Animation
+	float currentFrame = glfwGetTime();
+	float deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+	std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
+	std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
+	if (currentFrame - lastStartWalking < animation->GetDuration() / 1000)
+	{
+		this->updateAnimation(deltaTime);
+	}
+
 	objModel->Draw(shader);
 }
 
@@ -63,9 +75,26 @@ void DaeObject::setTranslation(glm::vec3& translate)
 	this->translate = translate;
 }
 
+
+
 void DaeObject::update(glm::mat4 world)
 {
 	mvp = world;
+}
+
+void DaeObject::setModel(glm::mat4 model)
+{
+	// If there is no delta between 2 frames, do nothing,
+	// If not, update the mvp and set walk fram
+	if (mvp != model)
+	{
+		float currentFrame = glfwGetTime();
+		if (currentFrame - lastStartWalking >= animation->GetDuration() / 1000)
+		{
+			lastStartWalking = currentFrame;
+		}
+		mvp = model;
+	}
 }
 
 void DaeObject::spin(float deg)
@@ -75,5 +104,17 @@ void DaeObject::spin(float deg)
 
 void DaeObject::move(float i)
 {
+	//float currentFrame = glfwGetTime();
+	//if (currentFrame - lastStartWalking >= animation->GetDuration() / 1000) 
+	//{
+	//	lastStartWalking = currentFrame;
+	//}
 	mvp = glm::translate(mvp, glm::vec3(0, 0, -i));
 }
+
+glm::mat4 DaeObject::calculateMoveMVP(float i)
+{
+	return glm::translate(mvp, glm::vec3(0, 0, -i));
+}
+
+
