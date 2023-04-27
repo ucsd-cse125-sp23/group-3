@@ -50,3 +50,7 @@ std::string GameData::gamestate_to_string() {
 		+ "remaining_time: " + std::to_string(this->remaining_time) + "\n"
 		+ "GameState: " + std::to_string((int)this->gamestate) + "\n";
 }
+
+std::vector<glm::mat4> GameData::getAllLocations() {
+	return std::vector<glm::mat4>({this->location_A, this->location_B, this->location_C, this->location_D});
+}
