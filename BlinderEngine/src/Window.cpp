@@ -74,7 +74,7 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(5.0f, 5.0f, 5.0f));
+    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(4.0f));
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
@@ -164,7 +164,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        Cam->setFirstperson();
+        //Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
