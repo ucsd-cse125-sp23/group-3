@@ -223,11 +223,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
-            daeObject1->move(-cameraSpeed);
+            glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
+            daeObject1->setModel(newMVP);
+            
         }
         eventChecker = 1;
     }
@@ -239,10 +237,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
             daeObject1->spin(cameraSpeed * turningratio);
         }
         eventChecker = 2;
@@ -255,10 +249,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         //cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
-            float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
-            daeObject1->updateAnimation(deltaTime);
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
         eventChecker = 3;
