@@ -4,8 +4,6 @@
 #include "MapConstants.h"
 #include <glm/gtx/string_cast.hpp>
 
-
-
 int MAP_ENCODING[3][6][6] = { 0 };
 
 Map::Map() {

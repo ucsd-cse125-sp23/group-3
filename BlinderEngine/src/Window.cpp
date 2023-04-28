@@ -93,9 +93,10 @@ bool Window::initializeObjects(int PlayID) {
 
     cube = new Cube();
     cube->spin(180);
-    cube->move(-30.0f);
+    cube->move(-8.0f);
+    cube->spin(180);
     Cam->SetSpin(180);
-    Cam->SetMove(-30.0f);
+    Cam->SetMove(-8.0f);
     return true;
 }
 
@@ -227,9 +228,9 @@ void Window::displayCallback(GLFWwindow* window) {
 
     std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
     if (collisionDetection.checkCollisionWithWall(mapID, points)) {
-        // std::cout<<"colliding!"<<std::endl;
-        Cam->SetMove(cameraSpeed);
-        cube->move(cameraSpeed);
+         std::cerr<<"colliding!"<<std::endl;
+        //Cam->SetMove(cameraSpeed);
+        //cube->move(cameraSpeed);
     }
 
     // Gets events, including input such as keyboard and mouse or window resizing.
@@ -250,8 +251,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
      */
     eventChecker = 0;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        //Cam->SetMove(-cameraSpeed);
-        //cube->move(-cameraSpeed);
+        Cam->SetMove(-cameraSpeed);
+        cube->move(-cameraSpeed);
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
@@ -263,8 +264,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-        //Cam->SetSpin(cameraSpeed*turningratio);
-        //cube->spin(cameraSpeed*turningratio);
+        Cam->SetSpin(cameraSpeed*turningratio);
+        cube->spin(cameraSpeed*turningratio);
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
@@ -275,9 +276,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-        //Cam->SetSpin(-cameraSpeed*turningratio);
+        Cam->SetSpin(-cameraSpeed*turningratio);
         //backPackObjectspin(-cameraSpeed * turningratio);
-        //cube->spin(-cameraSpeed*turningratio);
+        cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
             daeObject1->spin(-cameraSpeed * turningratio); 
