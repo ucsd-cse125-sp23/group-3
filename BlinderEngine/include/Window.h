@@ -10,6 +10,8 @@
 #include "core.h"
 #include <vector>
 #include <graphic2D.h>
+#include <CollisionDetection.h>
+
 class Window {
 public:
     // Window Properties
@@ -19,6 +21,7 @@ public:
 
     // Objects to render
     static std::vector<Cube*> players;
+    static Cube* cube;
     static Map* map;
     static graphic2D* canvas;
     static Shader* shaderText2DProgram;
