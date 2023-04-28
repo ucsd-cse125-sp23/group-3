@@ -1,16 +1,21 @@
 #include <DaeObject.h>
 
-DaeObject::DaeObject(const std::string path, glm::vec3 scalingFactor)
+DaeObject::DaeObject(const std::string model_path, 
+	const std::string walking_animation_path, 
+	const std::string action_animation_path,
+	glm::vec3 scalingFactor)
 {
-	objModel = new DynamicModel(path);
-	animation = new Animation(path, objModel);
-	animator = new Animator(animation);
+	objModel = new DynamicModel(model_path);
+	animation_walking = new Animation(walking_animation_path, objModel);
+	animation_action = new Animation(action_animation_path, objModel);
+	animator = new Animator(animation_walking);
 	animator->UpdateAnimation(0.0f);
 
 	mvp = glm::mat4(1.0f);
 	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	translate = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = scalingFactor;
+	currentStatus = Action::idle;
 }
 
 void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, DynamicShader& shader)
@@ -57,11 +62,29 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 	lastFrame = currentFrame;
 	//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 	//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
-	if (currentFrame - lastStartWalking < animation->GetDuration() / 1000)
+	if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
 	{
-		this->updateAnimation(deltaTime);
+		if (currentStatus != Action::action) 
+		{
+			animator->PlayAnimation(animation_action);
+			currentStatus = Action::action;
+		}
+		updateAnimation(deltaTime);
 	}
-
+	else if (currentFrame - lastStartWalking < animation_walking->GetDuration() / 1000)
+	{
+		if (currentStatus != Action::walking)
+		{
+			animator->PlayAnimation(animation_walking);
+			currentStatus = Action::walking;
+		}
+		updateAnimation(deltaTime);
+	}
+	else {
+		animator->PlayAnimation(animation_walking);
+		updateAnimation(0.0f);
+		currentStatus = Action::idle;
+	}
 	objModel->Draw(shader);
 }
 
@@ -89,7 +112,7 @@ void DaeObject::setModel(glm::mat4 model)
 	if (mvp != model)
 	{
 		float currentFrame = glfwGetTime();
-		if (currentFrame - lastStartWalking >= animation->GetDuration() / 1000)
+		if (currentFrame - lastStartWalking >= animation_walking->GetDuration() / 1000)
 		{
 			lastStartWalking = currentFrame;
 		}
@@ -110,6 +133,15 @@ void DaeObject::move(float i)
 	//	lastStartWalking = currentFrame;
 	//}
 	mvp = glm::translate(mvp, glm::vec3(0, 0, -i));
+}
+
+void DaeObject::doAction()
+{
+	float currentFrame = glfwGetTime();
+	if (currentFrame - lastStartAction >= animation_action->GetDuration() / 1000)
+	{
+		lastStartAction = currentFrame;
+	}
 }
 
 glm::mat4 DaeObject::calculateMoveMVP(float i)
