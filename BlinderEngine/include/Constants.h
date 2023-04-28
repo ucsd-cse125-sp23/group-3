@@ -9,6 +9,9 @@ namespace Constants
 {
 	const std::string static_shader_vert = "./shaders/model_loading.vs";
 	const std::string static_shader_frag = "./shaders/model_loading.fs";
+	
+	const std::string ui_shader_vert = "./shaders/texture2D.vs";
+	const std::string ui_shader_frag = "./shaders/texture2D.fs";
 
 	const std::string dynamic_shader_vert = "./shaders/anim_model.vs";
 	const std::string dynamic_shader_frag = "./shaders/anim_model.fs";

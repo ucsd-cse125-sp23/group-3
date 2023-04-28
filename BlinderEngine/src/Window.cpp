@@ -14,6 +14,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Map* Window::map;
+UI* Window::ui;
 DynamicModel* ourModel;
 ObjObject* objObject1;
 DaeObject* daeObject1;
@@ -33,7 +34,9 @@ const float cameraSpeed = 0.15f;
 const float turningratio=20.0f;
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
-
+StaticShader* uiShader;
+graphic2D* Window::canvas;
+Shader* Window::shaderText2DProgram;
 std::vector<DaeObject*> daeObjectList;
 std::vector<ObjObject*> objObjectList;
 
@@ -49,12 +52,15 @@ GLuint Window::shaderProgram;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
+    std::cout << "ERROR HERE\n";
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
     dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
     staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
 
+    uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
+    shaderText2DProgram = new Shader("./shaders/texture2D.vs", "./shaders/texture2D.fs");
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -67,6 +73,10 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects(int PlayID) {
     // Create a cube
     map = new Map();
+    ui = new UI();
+    canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
+    const char* textfile = "./images/tag.png";
+    canvas->bindTexture(textfile);
     //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     for (int i = 0; i < 4; i++) {
@@ -188,6 +198,7 @@ void Window::displayCallback(GLFWwindow* window) {
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     if (Constants::offline) {
         daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
@@ -196,7 +207,7 @@ void Window::displayCallback(GLFWwindow* window) {
             players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
         }
     }
-
+    canvas->draw(glm::mat4(1.0f), *shaderText2DProgram);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
