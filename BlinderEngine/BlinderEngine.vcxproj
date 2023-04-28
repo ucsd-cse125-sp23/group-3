@@ -159,6 +159,7 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
+    <ClCompile Include="src\PlayerModel.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Submap.cpp" />
     <ClCompile Include="src\Tokenizer.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="include\MapConstants.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
+    <ClInclude Include="include\PlayerModel.h" />
     <ClInclude Include="include\shader_m.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />
