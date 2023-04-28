@@ -8,8 +8,8 @@ LDFLAGS = -framework OpenGL -L$(BREW)/lib -lglfw
 
 RM = /bin/rm -f
 all: menv
-menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o
-	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o $(LDFLAGS)
+menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o
+	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o $(LDFLAGS)
 main.o: main.cpp include/Window.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp
 graphic2D.o: src/graphic2D.cpp include/graphic2D.h
@@ -27,6 +27,8 @@ Submap.o: src/Submap.cpp include/Submap.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Submap.cpp
 Shader.o: src/Shader.cpp include/Shader.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Shader.cpp
+CollisionDetection.o: src/CollisionDetection.cpp include/CollisionDetection.h
+	$(CC) $(CFLAGS) $(INCFLAGS) -c src/CollisionDetection.cpp
 Tokenizer.o: src/Tokenizer.cpp include/Tokenizer.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Tokenizer.cpp
 Window.o: src/Window.cpp include/Window.h

@@ -23,6 +23,7 @@ const float turningratio=30.0f;
 // The shader program id
 GLuint Window::shaderProgram;
 Shader* Window::shaderText2DProgram;
+CollisionDetection collisionDetection;
 
 
 // Constructors and desctructors
@@ -44,6 +45,10 @@ bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
     map=new Map();
+    cube->spin(180);
+    cube->move(-30.0f);
+    Cam->SetSpin(180);
+    Cam->SetMove(-30.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     canvas=new graphic2D(0.8,0.3,-0.4,0.7,true);
     const char* textfile="./images/tag.png";
@@ -139,6 +144,17 @@ void Window::displayCallback(GLFWwindow* window) {
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //std::cout<<"make myself here"<<std::endl;
     canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
+
+    int mapID;
+    float x,y;
+    map->getPosition(cube->getModel(),&mapID,&y,&x);
+
+    std::vector<std::pair<float, float>> points = map->getGrid(mapID,x,y);
+    if (collisionDetection.checkCollisionWithWall(mapID, points)) {
+        // std::cout<<"colliding!"<<std::endl;
+        Cam->SetMove(cameraSpeed);
+        cube->move(cameraSpeed);
+    }
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     // Swap buffers.

@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Map.h"
 #include "graphic2D.h"
+#include "CollisionDetection.h"
 #include "Shader.h"
 #include "core.h"
 #include <iostream>
