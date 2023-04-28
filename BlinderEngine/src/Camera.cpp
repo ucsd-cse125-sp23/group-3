@@ -7,23 +7,33 @@
 #include "glm/gtx/string_cast.hpp"
 #include <glm/glm.hpp>
 
-bool first_pers = false;
 Camera::Camera() {
+    first_person = false;
     Reset();
 }
 void Camera::Update() {
     // Compute camera world matrix
-    glm::mat4 view;
+
+    if (first_person) {
+        CameraTar = glm::vec3(0.0f, 3.0f, 0.0f);
+        CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
+        CameraPos = CameraTar + CameraDir;
+    }
+    else {
+        CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
+        CameraDir = glm::vec3(0.0f, 30.0f, 10.0f);
+        CameraPos = CameraTar + CameraDir;
+    }
+
     glm::vec4 tempTar = model * glm::vec4(CameraTar, 1);
     glm::vec4 tempPos = model * glm::vec4(CameraPos, 1);
-
 
     glm::vec3 upTar, upPos;
     upTar.x = tempTar.x;
     upTar.y = tempTar.y;
     upTar.z = tempTar.z;
 
-    if (first_pers) {
+    if (first_person) {
         upPos.x = tempPos.x;
         upPos.y = tempPos.y;
         upPos.z = tempPos.z;
@@ -43,7 +53,7 @@ void Camera::Update() {
     //glm::mat4 view = glm::inverse(world);
 
     // Compute perspective projection matrix
-    glm::mat4 project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
+    project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
 
     // Compute final view-projection matrix
     ViewProjectMtx = project * view;
@@ -54,20 +64,24 @@ void Camera::Reset() {
     NearClip = 0.1f;
     FarClip = 100.0f;
 
-    model = glm::mat4(1);
+    model = glm::mat4(1.0f);
 
     //first perspective
-    if (first_pers) {
-        CameraTar = glm::vec3(0.0f, 2.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
-        CameraPos = CameraTar + CameraDir;
-    }
-    else {
-        CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 80.0f, 10.0f);
-    }
+
     //third perspective
     //std::cout<<glm::to_string(CameraPos)<<std::endl;
     //TODO:: change back to glm::vec3(0.0f,1.0f,0.0f); for later use
     CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+}
+
+const glm::mat4& Camera::GetProjectMtx()
+{
+    // TODO: insert return statement here
+    return project;
+}
+
+const glm::mat4& Camera::GetViewMtx()
+{
+    // TODO: insert return statement here
+    return view;
 }
