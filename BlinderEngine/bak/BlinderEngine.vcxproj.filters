@@ -56,6 +56,12 @@
     <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\anim_model.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\anim_model.vs">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cube.cpp">
@@ -102,11 +108,22 @@
     </ClCompile>
     <ClCompile Include="src\graphic2D.cpp">
       <Filter>src</Filter>
-    <ClCompile Include="..\shared\GameData.cpp">
-      <Filter>Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\shared\Packet.cpp">
       <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\shared\GameData.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DaeObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CollisionDetection.cpp">
+    <ClCompile Include="src\PlayerModels.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +154,7 @@
     <ClInclude Include="include\Mesh.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Model.h">
+    <ClInclude Include="include\StaticModel.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Shader.h">
@@ -152,17 +169,59 @@
     <ClInclude Include="include\graphic2D.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\MShader.h">
-    <ClInclude Include="..\shared\GameData.h">
+    <ClInclude Include="include\StaticShader.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Packet.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\shared\GlobalVariables.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\GameData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DynamicShader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animdata.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\assimp_glm_helpers.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bone.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animation.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Animator.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DynamicModel.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DaeObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\client\Client.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\shared\GlobalVariables.h">
+    <ClInclude Include="include\Timer.h">
+    <ClInclude Include="include\PlayerModel.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shader_m.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollisionDetection.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MapConstants.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

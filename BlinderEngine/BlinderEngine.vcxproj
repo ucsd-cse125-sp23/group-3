@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;C:\Users\24424\Desktop\group3\group-3\BlinderEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,7 @@
     <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\CollisionDetection.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DaeObject.cpp" />
     <ClCompile Include="src\graphic2D.cpp" />
@@ -158,10 +159,11 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
-    <ClCompile Include="src\PlayerModels.cpp" />
+    <ClCompile Include="src\PlayerModel.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Submap.cpp" />
     <ClCompile Include="src\Tokenizer.cpp" />
+    <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +176,7 @@
     <ClInclude Include="include\Animdata.h" />
     <ClInclude Include="include\assimp_glm_helpers.h" />
     <ClInclude Include="include\Bone.h" />
+    <ClInclude Include="include\CollisionDetection.h" />
     <ClInclude Include="include\DynamicShader.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Constants.h" />
@@ -183,9 +186,11 @@
     <ClInclude Include="include\graphic2D.h" />
     <ClInclude Include="include\Ground.h" />
     <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\MapConstants.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\PlayerModel.h" />
+    <ClInclude Include="include\shader_m.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />
     <ClInclude Include="include\ObjObject.h" />
@@ -193,6 +198,7 @@
     <ClInclude Include="include\Submap.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Tokenizer.h" />
+    <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
