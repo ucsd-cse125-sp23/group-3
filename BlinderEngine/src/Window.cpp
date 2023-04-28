@@ -18,6 +18,7 @@ UI* Window::ui;
 DynamicModel* ourModel;
 ObjObject* objObject1;
 DaeObject* daeObject1;
+Cube* Window::cube;
 int Window::eventChecker;
 int  Window::playerID;
 // Camera Properties
@@ -49,6 +50,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 // The shader program id
 GLuint Window::shaderProgram;
+CollisionDetection collisionDetection;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
@@ -88,6 +90,12 @@ bool Window::initializeObjects(int PlayID) {
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
+
+    cube = new Cube();
+    cube->spin(180);
+    cube->move(-30.0f);
+    Cam->SetSpin(180);
+    Cam->SetMove(-30.0f);
     return true;
 }
 
@@ -174,7 +182,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        Cam->setFirstperson();
+        //Cam->setFirstperson();
     }
     Cam->SetModel(players.at(playerID)->getModel());
     Cam->Update();
@@ -200,7 +208,7 @@ void Window::displayCallback(GLFWwindow* window) {
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     if (Constants::offline) {
-        daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
+        //daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
     else {
         for (int i = 0; i < 4; i++) {
@@ -210,6 +218,19 @@ void Window::displayCallback(GLFWwindow* window) {
     canvas->draw(glm::mat4(1.0f), *shaderText2DProgram);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
+
+    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+
+    int mapID;
+    float x, y;
+    map->getPosition(cube->getModel(), &mapID, &y, &x);
+
+    std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
+    if (collisionDetection.checkCollisionWithWall(mapID, points)) {
+        // std::cout<<"colliding!"<<std::endl;
+        Cam->SetMove(cameraSpeed);
+        cube->move(cameraSpeed);
+    }
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
