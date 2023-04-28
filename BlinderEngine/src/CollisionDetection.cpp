@@ -228,6 +228,7 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             }
         }
     }
+    return false;
 }
 int largerTileIndex(float p1, float p2) {
     if ((int)p1 > (int)p2)

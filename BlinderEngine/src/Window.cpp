@@ -93,10 +93,9 @@ bool Window::initializeObjects(int PlayID) {
 
     cube = new Cube();
     cube->spin(180);
-    cube->move(-8.0f);
-    cube->spin(180);
+    cube->move(-30.0f);
     Cam->SetSpin(180);
-    Cam->SetMove(-8.0f);
+    Cam->SetMove(-30.0f);
     return true;
 }
 
@@ -185,7 +184,10 @@ void Window::idleCallback() {
 
         //Cam->setFirstperson();
     }
-    Cam->SetModel(players.at(playerID)->getModel());
+    if (!Constants::offline) {
+        Cam->SetModel(players.at(playerID)->getModel());
+    }
+    
     Cam->Update();
     map->update();
     int mapID;
@@ -229,8 +231,8 @@ void Window::displayCallback(GLFWwindow* window) {
     std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
     if (collisionDetection.checkCollisionWithWall(mapID, points)) {
          std::cerr<<"colliding!"<<std::endl;
-        //Cam->SetMove(cameraSpeed);
-        //cube->move(cameraSpeed);
+        Cam->SetMove(cameraSpeed);
+        cube->move(cameraSpeed);
     }
 
     // Gets events, including input such as keyboard and mouse or window resizing.

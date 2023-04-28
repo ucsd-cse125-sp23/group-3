@@ -23,9 +23,13 @@ public:
     void SetMove(float i) { model = glm::translate(model, glm::vec3(0, 0, i)); };
     void SetSpin(float deg) { model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f)); };
     void SetModel(glm::mat4 _model) { model = _model; };
-    glm::vec3 GetCamTarget() { return CameraTar; };
 
+    glm::vec3 GetCamTarget() { return CameraTar; };
+    void setFirstperson() { first_person = true; };
     const glm::mat4& GetViewProjectMtx() { return ViewProjectMtx; }
+    const glm::mat4& GetProjectMtx();
+    const glm::mat4& GetViewMtx();
+    bool getPers() { return first_person; };
 
 private:
     // Perspective controls
@@ -36,6 +40,8 @@ private:
     // Polar controls
     glm::vec3 CameraPos, CameraTar, CameraUp, CameraDir;
     // Computed data
+    bool first_person;
+    glm::mat4 project, view;
 
     glm::mat4 model, ViewProjectMtx;
 };
