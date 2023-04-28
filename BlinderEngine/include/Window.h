@@ -6,9 +6,10 @@
 #include "Map.h"
 #include "UI.h"
 #include "Shader.h"
+#include <shader_m.h>
 #include "core.h"
 #include <vector>
-
+#include <graphic2D.h>
 class Window {
 public:
     // Window Properties
@@ -19,6 +20,9 @@ public:
     // Objects to render
     static std::vector<Cube*> players;
     static Map* map;
+    static graphic2D* canvas;
+    static Shader* shaderText2DProgram;
+
     static UI* ui;
     static int eventChecker;
     static int playerID;

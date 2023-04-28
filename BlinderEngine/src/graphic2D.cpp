@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "graphic2D.h"
+#include <shader_m.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <contrib/stb/stb_image.h>
@@ -113,6 +114,34 @@ void graphic2D::draw(const glm::mat4& viewProjMtx, StaticShader shader){
         glEnable(GL_DEPTH_TEST);
         // Related to shaders and z value comparisons for the depth buffer.
         glDepthFunc(GL_LEQUAL);
+}
+
+void graphic2D::draw(const glm::mat4& viewProjMtx, Shader shader) {
+
+    /*glEnable(GL_CULL_FACE);
+glCullFace(GL_BACK);
+    glDisable(GL_DEPTH_TEST);*/
+    //std::cout<<"make myself here"<<std::endl;
+    if (texturemapping) {
+        //std::cout<<"make myself here"<<std::endl;
+
+        //std::cout<<"make myself here"<<std::endl;
+        //glUniformMatrix4fv(glGetUniformLocation(shader, "viewProj"), 1, false, (float*)&viewProjMtx);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        shader.use();
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    }
+    else {
+
+    }
+    //std::cout<<"make myself here"<<std::endl;
+    glEnable(GL_DEPTH_TEST);
+    // Related to shaders and z value comparisons for the depth buffer.
+    glDepthFunc(GL_LEQUAL);
 }
 
 void graphic2D::update(){
