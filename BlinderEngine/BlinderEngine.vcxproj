@@ -151,6 +151,7 @@
     <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\CollisionDetection.cpp" />
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\DaeObject.cpp" />
     <ClCompile Include="src\graphic2D.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="include\Animdata.h" />
     <ClInclude Include="include\assimp_glm_helpers.h" />
     <ClInclude Include="include\Bone.h" />
+    <ClInclude Include="include\CollisionDetection.h" />
     <ClInclude Include="include\DynamicShader.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Constants.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="include\graphic2D.h" />
     <ClInclude Include="include\Ground.h" />
     <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\MapConstants.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\shader_m.h" />

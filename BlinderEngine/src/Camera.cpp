@@ -25,29 +25,29 @@ void Camera::Update() {
         CameraPos = CameraTar + CameraDir;
     }
 
-    glm::vec4 tempTar=model*glm::vec4(CameraTar,1);
-    glm::vec4 tempPos=model*glm::vec4(CameraPos,1);
-    
-    glm::vec3 upTar,upPos;
-    upTar.x=tempTar.x;
-    upTar.y=tempTar.y;
-    upTar.z=tempTar.z;
+    glm::vec4 tempTar = model * glm::vec4(CameraTar, 1);
+    glm::vec4 tempPos = model * glm::vec4(CameraPos, 1);
 
-    if(first_person){
-        upPos.x=tempPos.x;
-        upPos.y=tempPos.y;
-        upPos.z=tempPos.z;
+    glm::vec3 upTar, upPos;
+    upTar.x = tempTar.x;
+    upTar.y = tempTar.y;
+    upTar.z = tempTar.z;
+
+    if (first_person) {
+        upPos.x = tempPos.x;
+        upPos.y = tempPos.y;
+        upPos.z = tempPos.z;
     }
-    else{
-        upPos=upTar+CameraDir;
+    else {
+        upPos = upTar + CameraDir;
     }
 
-    
+
 
     //std::cout<<glm::to_string(tempTar)<<std::endl;
     view = glm::lookAt(upPos, upTar, CameraUp);
     //glm::mat4 world(1);
-    
+
 
     // Compute view matrix (inverse of world matrix)
     //glm::mat4 view = glm::inverse(world);
@@ -67,11 +67,11 @@ void Camera::Reset() {
     model = glm::mat4(1.0f);
 
     //first perspective
-    
+
     //third perspective
     //std::cout<<glm::to_string(CameraPos)<<std::endl;
     //TODO:: change back to glm::vec3(0.0f,1.0f,0.0f); for later use
-    CameraUp=glm::vec3(0.0f,1.0f,0.0f);
+    CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 const glm::mat4& Camera::GetProjectMtx()

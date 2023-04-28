@@ -13,7 +13,7 @@ Ground::Ground() {
         glm::vec3(-10, -2, -10),
         glm::vec3(10,-2, -10),
         glm::vec3(-10, -2, 10),
-        glm::vec3(10, -2, 10)};
+        glm::vec3(10, -2, 10) };
 
     // Specify normals
     normals = {
@@ -21,7 +21,7 @@ Ground::Ground() {
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
         glm::vec3(0, 1, 0),
-        glm::vec3(0, 1, 0)};
+        glm::vec3(0, 1, 0) };
 
     // Specify indices
     indices = {
@@ -58,7 +58,7 @@ Ground::Ground() {
     glBindVertexArray(0);
 }
 
-Ground::~Ground(){
+Ground::~Ground() {
     glDeleteBuffers(1, &VBO_positions);
     glDeleteBuffers(1, &VBO_normals);
     glDeleteBuffers(1, &EBO);
