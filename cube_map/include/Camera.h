@@ -22,7 +22,7 @@ public:
     void SetAspect(float a) { Aspect = a; }
     void SetMove(float i){model = glm::translate(model, glm::vec3(0,0,i));};
     void SetSpin(float deg){model = model * glm::rotate(glm::radians(deg), glm::vec3(0.0f, 1.0f, 0.0f));};
-
+    void setModel(glm::mat4 _model){model=_model;};
     glm::vec3 GetCamTarget(){return CameraTar;};
 
     const glm::mat4 &GetViewProjectMtx() { return ViewProjectMtx; }

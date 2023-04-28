@@ -45,10 +45,10 @@ bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
     map=new Map();
-    cube->spin(180);
-    cube->move(-30.0f);
-    Cam->SetSpin(180);
-    Cam->SetMove(-30.0f);
+    glm::mat4 somerot=glm::mat4(1.0f);
+    somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    cube->setModel(map->getModelOnMap(somerot,0,1,1));
+    Cam->setModel(map->getModelOnMap(somerot,0,1,1));
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     canvas=new graphic2D(0.8,0.3,-0.4,0.7,true);
     const char* textfile="./images/tag.png";

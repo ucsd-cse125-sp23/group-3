@@ -25,5 +25,6 @@ class Map {
         std::vector<std::pair<float, float>> getGrid(int mapID,float x, float y);
         glm::vec4 getPointsCollision(int mapID, float x, float y);
         void update();
+        glm::mat4 getModelOnMap(glm::mat4 original,int mapID, float x, float y);
         void readWallsCoord(int mapId, const char* file,std::vector<glm::vec3> &wallsmin, std::vector<glm::vec3> &wallsmax,glm::vec3 translation);
 };

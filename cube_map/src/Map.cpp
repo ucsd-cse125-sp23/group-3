@@ -258,6 +258,31 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y){
     //glm::vec4 point=glm::vec4(0.0f);
 }
 
+glm::mat4 Map::getModelOnMap(glm::mat4 original,int mapID, float x, float y){
+    float walllength=groundsize/5.0f;
+    glm::vec4 position=glm::vec4(x*walllength,0.0f,y*walllength,0.0f);
+    glm::vec4 MapTranslation;
+    float offsetforwidth=wallwidth/2.0f;
+    if(mapID==2){
+        MapTranslation=glm::vec4(offsetforwidth,0.0f,-(groundsize+offsetforwidth),1.0f);
+        position=position+ MapTranslation;
+        position=(map3->getModel())*position;
+        
+    }else if(mapID==1){
+        MapTranslation=glm::vec4(-(groundsize+offsetforwidth),0.0f,-(groundsize+offsetforwidth),1.0f);
+        position=position+ MapTranslation;
+        position=(map2->getModel())*position;
+    }else{
+        MapTranslation=glm::vec4(-(groundsize+offsetforwidth),0.0f,offsetforwidth,1.0f);
+        position=position+ MapTranslation;
+        position=(map1->getModel())*position;    
+    }
+    float *pSource = (float*)glm::value_ptr(original);
+    pSource[12]=position[0];
+    pSource[13]=position[1];
+    pSource[14]=position[2];
+    return glm::make_mat4(pSource);
+}
 
 void Map::draw(const glm::mat4& viewProjMtx, GLuint shader){
     map1->draw(viewProjMtx,shader);
