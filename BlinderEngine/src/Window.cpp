@@ -77,7 +77,7 @@ bool Window::initializeObjects(int PlayID) {
     map = new Map();
     ui = new UI();
     canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
-    const char* textfile = "./images/tag.png";
+    const char* textfile = "./resources/images/tag.png";
     canvas->bindTexture(textfile);
     //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));

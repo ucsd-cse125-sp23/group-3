@@ -18,7 +18,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin1 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax1 = std::vector<glm::vec3>();
-    const char* file1 = "./scene/map_animal.txt";
+    const char* file1 = "./resources/scene/map_animal.txt";
     readWallsCoord(0, file1, wallsmin1, wallsmax1, glm::vec3(-(groundsize + offsetforwidth), 0.0f, offsetforwidth));
 
     glm::vec3 groundmin1 = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -33,7 +33,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin2 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax2 = std::vector<glm::vec3>();
-    const char* file2 = "./scene/map_clown.txt";
+    const char* file2 = "./resources/scene/map_clown.txt";
     readWallsCoord(1, file2, wallsmin2, wallsmax2, glm::vec3(-(groundsize + offsetforwidth), 0.0f, -(groundsize + offsetforwidth)));
 
     glm::vec3 groundmin2 = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -48,7 +48,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin3 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax3 = std::vector<glm::vec3>();
-    const char* file3 = "./scene/map_sculpture.txt";
+    const char* file3 = "./resources/scene/map_sculpture.txt";
     readWallsCoord(2, file3, wallsmin3, wallsmax3, glm::vec3(offsetforwidth, 0.0f, -(groundsize + offsetforwidth)));
 
     glm::vec3 groundmin3 = glm::vec3(0.0f, 0.0f, 0.0f);
