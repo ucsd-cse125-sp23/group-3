@@ -86,16 +86,19 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    daeObject1 = new DaeObject("./resources/objects/girl/girl.dae", glm::vec3(3.0f));
+    daeObject1 = new DaeObject(Constants::girl_model_path,
+        Constants::girl_walking_animation_path,
+        Constants::girl_action_animation_path,
+        glm::vec3(5.0f));
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
 
     cube = new Cube();
-    cube->spin(180);
-    cube->move(-30.0f);
-    Cam->SetSpin(180);
-    Cam->SetMove(-30.0f);
+    //cube->spin(180);
+    //cube->move(-30.0f);
+    //Cam->SetSpin(180);
+    //Cam->SetMove(-30.0f);
     return true;
 }
 
@@ -211,7 +214,7 @@ void Window::displayCallback(GLFWwindow* window) {
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     if (Constants::offline) {
-        //daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
+        daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
     else {
         for (int i = 0; i < 4; i++) {
@@ -222,18 +225,18 @@ void Window::displayCallback(GLFWwindow* window) {
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
-    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
-    int mapID;
-    float x, y;
-    map->getPosition(cube->getModel(), &mapID, &y, &x);
+    //int mapID;
+    //float x, y;
+    //map->getPosition(cube->getModel(), &mapID, &y, &x);
 
-    std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
-    if (collisionDetection.checkCollisionWithWall(mapID, points)) {
-         std::cerr<<"colliding!"<<std::endl;
-        Cam->SetMove(cameraSpeed);
-        cube->move(cameraSpeed);
-    }
+    //std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
+    //if (collisionDetection.checkCollisionWithWall(mapID, points)) {
+    //     std::cerr<<"colliding!"<<std::endl;
+    //    Cam->SetMove(cameraSpeed);
+    //    cube->move(cameraSpeed);
+    //}
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -286,6 +289,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
         eventChecker = 3;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        daeObject1->doAction();
     }
 
     // Check for a key press.
