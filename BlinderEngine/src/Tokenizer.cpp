@@ -11,12 +11,12 @@ Tokenizer::Tokenizer() {
 Tokenizer::~Tokenizer() {
     if (File) {
         printf("ERROR: Tokenizer::~Tokenizer()- Closing file '%s'\n", FileName);
-        fclose((FILE *)File);
+        fclose((FILE*)File);
     }
 }
 
-bool Tokenizer::Open(const char *fname) {
-    File = (void *)fopen(fname, "r");
+bool Tokenizer::Open(const char* fname) {
+    File = (void*)fopen(fname, "r");
     LineNum = 1;
     if (File == 0) {
         printf("ERROR: Tokenzier::Open()- Can't open file '%s'\n", fname);
@@ -28,7 +28,7 @@ bool Tokenizer::Open(const char *fname) {
 
 bool Tokenizer::Close() {
     if (File)
-        fclose((FILE *)File);
+        fclose((FILE*)File);
     else
         return false;
 
@@ -36,21 +36,21 @@ bool Tokenizer::Close() {
     return true;
 }
 
-bool Tokenizer::Abort(char *error) {
+bool Tokenizer::Abort(char* error) {
     printf("ERROR '%s' line %d: %s\n", FileName, LineNum, error);
     Close();
     return false;
 }
 
 char Tokenizer::GetChar() {
-    char c = char(getc((FILE *)File));
+    char c = char(getc((FILE*)File));
     if (c == '\n') LineNum++;
     return c;
 }
 
 char Tokenizer::CheckChar() {
-    int c = getc((FILE *)File);
-    ungetc(c, (FILE *)File);
+    int c = getc((FILE*)File);
+    ungetc(c, (FILE*)File);
     return char(c);
 }
 
@@ -128,12 +128,12 @@ float Tokenizer::GetFloat() {
     return float(atof(temp));
 }
 
-bool Tokenizer::GetToken(char *str) {
+bool Tokenizer::GetToken(char* str) {
     SkipWhitespace();
 
     int pos = 0;
     char c = CheckChar();
-    while (c != ' ' && c != '\n' && c != '\t' && c != '\r' && !feof((FILE *)File)) {
+    while (c != ' ' && c != '\n' && c != '\t' && c != '\r' && !feof((FILE*)File)) {
         str[pos++] = GetChar();
         c = CheckChar();
     }
@@ -141,10 +141,10 @@ bool Tokenizer::GetToken(char *str) {
     return true;
 }
 
-bool Tokenizer::FindToken(const char *tok) {
+bool Tokenizer::FindToken(const char* tok) {
     int pos = 0;
     while (tok[pos] != '\0') {
-        if (feof((FILE *)File)) return false;
+        if (feof((FILE*)File)) return false;
         char c = GetChar();
         if (c == tok[pos])
             pos++;
@@ -168,14 +168,14 @@ bool Tokenizer::SkipWhitespace() {
 bool Tokenizer::SkipLine() {
     char c = GetChar();
     while (c != '\n') {
-        if (feof((FILE *)File)) return false;
+        if (feof((FILE*)File)) return false;
         c = GetChar();
     }
     return true;
 }
 
 bool Tokenizer::Reset() {
-    if (fseek((FILE *)File, 0, SEEK_SET)) return false;
+    if (fseek((FILE*)File, 0, SEEK_SET)) return false;
     return true;
 }
 
