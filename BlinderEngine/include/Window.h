@@ -19,18 +19,20 @@ public:
     static int height;
     static const char* windowTitle;
 
-    // Objects to render
+    // Objects to render  online
+    static Map* map;
     static std::vector<Cube*> players;
     static Cube* cube;
-    static Map* map;
     static graphic2D* canvas;
-    static Shader* shaderText2DProgram;
-
     static UI* ui;
+
+    // Shader
+    static GLuint shaderProgram;
+
+
+    // Client-server variable
     static int eventChecker;
     static int playerID;
-    // Shader Program
-    static GLuint shaderProgram;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();

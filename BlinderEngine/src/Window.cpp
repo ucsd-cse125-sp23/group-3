@@ -15,31 +15,34 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Map* Window::map;
 UI* Window::ui;
-DynamicModel* ourModel;
+Cube* Window::cube;
+std::vector<Cube*> Window::players = std::vector<Cube*>(4);
 ObjObject* objObject1;
 DaeObject* daeObject1;
-Cube* Window::cube;
-int Window::eventChecker;
-int  Window::playerID;
+std::vector<DaeObject*> daeObjectList;
+std::vector<ObjObject*> objObjectList;
+
+
+
 // Camera Properties
 Camera* Cam;
-std::vector<Cube*> Window::players=std::vector<Cube*>(4);
 
-Animation* animation;
-Animator* animator;
 
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 0.15f;
 const float turningratio=20.0f;
+
+// Shaders
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
 StaticShader* uiShader;
 graphic2D* Window::canvas;
-Shader* Window::shaderText2DProgram;
-std::vector<DaeObject*> daeObjectList;
-std::vector<ObjObject*> objObjectList;
+
+// Client-server
+int Window::eventChecker;
+int  Window::playerID;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -62,7 +65,6 @@ bool Window::initializeProgram() {
     staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
 
     uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
-    shaderText2DProgram = new Shader("./shaders/texture2D.vs", "./shaders/texture2D.fs");
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -221,7 +223,7 @@ void Window::displayCallback(GLFWwindow* window) {
             players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
         }
     }
-    canvas->draw(glm::mat4(1.0f), *shaderText2DProgram);
+    canvas->draw(glm::mat4(1.0f), *uiShader);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
