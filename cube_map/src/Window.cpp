@@ -17,7 +17,7 @@ Camera* Cam;
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
-const float cameraSpeed = 0.10f;
+const float cameraSpeed = 1.0f;
 const float turningratio=30.0f;
 
 // The shader program id
@@ -47,8 +47,8 @@ bool Window::initializeObjects() {
     map=new Map();
     glm::mat4 somerot=glm::mat4(1.0f);
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    cube->setModel(map->getModelOnMap(somerot,0,1,1));
-    Cam->setModel(map->getModelOnMap(somerot,0,1,1));
+    cube->setModel(map->getModelOnMap(somerot,0,0.5,0.5));
+    Cam->setModel(map->getModelOnMap(somerot,0,0.5,0.5));
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     canvas=new graphic2D(0.8,0.3,-0.4,0.7,true);
     const char* textfile="./images/tag.png";
@@ -131,6 +131,8 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
+    canvas->setposition(0.8+rand()/((float)RAND_MAX*10),0.3,-0.4,0.7);
+    canvas->update();
     //cube->update();
 }
 

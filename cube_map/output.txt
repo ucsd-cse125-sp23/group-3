@@ -5,26 +5,3 @@ Successfully compiled vertex shader!
 Successfully compiled fragment shader!
 Linking program
 Successfully linked program!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
-colliding left wall on point 0&1!
