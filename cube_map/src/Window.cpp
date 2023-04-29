@@ -9,7 +9,7 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Cube* Window::cube;
 Map* Window::map;
-graphic2D* Window::canvas;
+Minimap* Window::canvas;
 
 // Camera Properties
 Camera* Cam;
@@ -50,9 +50,7 @@ bool Window::initializeObjects() {
     cube->setModel(map->getModelOnMap(somerot,0,0.5,0.5));
     Cam->setModel(map->getModelOnMap(somerot,0,0.5,0.5));
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    canvas=new graphic2D(0.8,0.3,-0.4,0.7,true);
-    const char* textfile="./images/tag.png";
-    canvas->bindTexture(textfile);
+    canvas=new Minimap(0.4,(800*(0.4*sqrt(3))/2)/600,-0.0,-1.0);
     return true;
 }
 
@@ -131,7 +129,7 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
-    canvas->setposition(0.8+rand()/((float)RAND_MAX*10),0.3,-0.4,0.7);
+    canvas->setPosition(cube->getModel());
     canvas->update();
     //cube->update();
 }

@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Map.h"
 #include "graphic2D.h"
+#include "Minimap.h"
 #include "CollisionDetection.h"
 #include "Shader.h"
 #include "core.h"
@@ -19,7 +20,7 @@ public:
     // Objects to render
     static Cube* cube;
     static Map* map;
-    static graphic2D* canvas;
+    static Minimap* canvas;
 
     // Shader Program
     static GLuint shaderProgram;

@@ -5,6 +5,7 @@
 #include "core.h"
 #include "Map.h"
 #include "graphic2D.h"
+#include "MapConstants.h"
 
 class Minimap {
     private:
