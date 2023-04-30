@@ -10,7 +10,6 @@
 class GameData {
 public:
 	GameData();
-	GameData(glm::mat4 locA); // testing constructor
 	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs);
 
 	std::vector<glm::mat4> getAllLocations();

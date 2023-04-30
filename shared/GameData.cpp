@@ -16,10 +16,6 @@ GameData::GameData() {
 	this->gamestate = GameState::READY;
 }
 
-GameData::GameData(glm::mat4 locA) {
-	this->location_A = locA;
-}
-
 GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs) {
 	this->location_A = locA;
 	this->location_B = locB;

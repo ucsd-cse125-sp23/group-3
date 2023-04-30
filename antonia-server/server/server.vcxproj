@@ -132,11 +132,20 @@
   <ItemGroup>
     <ClCompile Include="..\..\server\main.cpp" />
     <ClCompile Include="..\..\server\Server.cpp" />
+    <ClCompile Include="..\..\server\src\Cube.cpp" />
+    <ClCompile Include="..\..\server\src\Map.cpp" />
+    <ClCompile Include="..\..\server\src\Submap.cpp" />
+    <ClCompile Include="..\..\server\src\Tokenizer.cpp" />
     <ClCompile Include="..\..\shared\Event.cpp" />
     <ClCompile Include="..\..\shared\GameData.cpp" />
     <ClCompile Include="..\..\shared\Packet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\server\include\core.h" />
+    <ClInclude Include="..\..\server\include\Cube.h" />
+    <ClInclude Include="..\..\server\include\Map.h" />
+    <ClInclude Include="..\..\server\include\Submap.h" />
+    <ClInclude Include="..\..\server\include\Tokenizer.h" />
     <ClInclude Include="..\..\server\Server.h" />
     <ClInclude Include="..\..\shared\Event.h" />
     <ClInclude Include="..\..\shared\GameData.h" />

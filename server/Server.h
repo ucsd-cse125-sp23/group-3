@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "include/Map.h"
 #include "../shared/Packet.h"
 
 #include <algorithm>
@@ -38,6 +39,8 @@ public:
 
 	GameData* gd;
 	Event e[NUM_PLAYERS];
+
+	Map* map;
 	
 	void updateByEvent(std::unordered_map<int, std::vector<int>> events);
 	void updateBySingleEvent(EventType e, int character);
