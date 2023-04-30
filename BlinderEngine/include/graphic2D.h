@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <shader_m.h>
 #include "core.h"
 #include "Camera.h"
 #include <StaticShader.h>
@@ -27,7 +26,6 @@ class graphic2D {
 
         void bindTexture(const char* filename);
         void draw(const glm::mat4& viewProjMtx, StaticShader shader);
-        void draw(const glm::mat4& viewProjMtx, Shader shader);
         void update();
         void setColor(glm::vec3 _color);
 };
