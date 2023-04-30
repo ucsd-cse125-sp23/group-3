@@ -163,6 +163,18 @@ int Server::recv_event(int client_id)
 	return -1;
 }
 
+std::vector<int> Server::recv_eventRecords(int client_id)
+{
+	std::vector<int> eventRecord;
+	if (recv(sessions[client_id], buffer[client_id], 512, 0) > 0)
+	{
+		eventRecord = Packet::deserializeEventRecords(buffer[client_id]);
+		this->check_event[client_id] = 1;
+	}
+	return eventRecord;
+}
+
+
 void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::NOEVENT || (int)e == -1)
 		return;
@@ -200,12 +212,17 @@ void Server::updateBySingleEvent(EventType e, int id) {
 
 }
 
-void Server::updateByEvent(EventType e0, EventType e1, EventType e2, EventType e3) {
+void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
-	updateBySingleEvent(e0, 0);
-	updateBySingleEvent(e1, 1);
-	updateBySingleEvent(e2, 2);
-	updateBySingleEvent(e3, 3);
+	for (auto it:events)
+	{
+		int id = it.first;
+		std::vector<int> record = it.second;
+		for (int i = 0; i < record.size(); i++)
+		{
+			if (record[i]) updateBySingleEvent((EventType)(i+1), id);
+		}
+	}
 }

@@ -140,6 +140,12 @@ void Client::send_event(EventType e)
 	send(ConnectSocket, buffer, 512, 0);
 }
 
+void Client::send_eventRecords(std::vector<int> records)
+{
+	Packet::serialize(records, buffer);
+	send(ConnectSocket, buffer, 512, 0);
+}
+
 void Client::updateGameData(GameData gd) {
 	this->gd->location_A = gd.location_A;
 	this->gd->location_B = gd.location_B;

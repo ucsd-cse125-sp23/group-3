@@ -10,6 +10,7 @@
 #include <iterator>
 #include <random>
 #include <vector>
+#include <unordered_map>
 
 #pragma comment (lib, "Ws2_32.lib")
 
@@ -28,6 +29,7 @@ public:
 	void send_init_packet(int client_id, int character_id);
 	void send_gamedata(int client_id);
 	int recv_event(int client_id);
+	std::vector<int> recv_eventRecords(int client_id);
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
@@ -37,8 +39,9 @@ public:
 	GameData* gd;
 	Event e[NUM_PLAYERS];
 	
-	void updateByEvent(EventType, EventType, EventType, EventType);
-	void updateBySingleEvent(EventType, int);
+	void updateByEvent(std::unordered_map<int, std::vector<int>> events);
+	void updateBySingleEvent(EventType e, int character);
 
 	std::vector<int> ids{ 0,1,2,3 };
+	std::vector<int> check_event{ -1, -1, -1, -1 };
 };

@@ -21,6 +21,7 @@ public:
 	int accept_init();
 	int recv_gamedata();
 	void send_event(EventType e);
+	void send_eventRecords(std::vector<int> records);
 
 	void updateGameData(GameData);
 

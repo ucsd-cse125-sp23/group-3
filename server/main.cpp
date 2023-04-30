@@ -1,5 +1,4 @@
 #include "Server.h"
-#include <GLFW/glfw3.h>
 #include <chrono>
 
 int main()
@@ -37,8 +36,15 @@ int main()
 
      SOCKET cp_sessions[NUM_PLAYERS];
 
-     for (int ind = 0; ind < 4; ind ++) {
-         cp_sessions[ind] = serv->sessions[serv->ids[ind]];
+     // Reorder sessions with: A,B,C,D
+     //for (int ind = 0; ind < 4; ind ++) {
+     //    cp_sessions[ind] = serv->sessions[serv->ids[ind]];
+     //}
+     for (int i = 0; i < 4; i++)
+     {
+         auto it = std::find(serv->ids.begin(), serv->ids.end(), i);
+         int client_id_idx = it - serv->ids.begin();
+         cp_sessions[i] = serv->sessions[client_id_idx];
      }
      for (int ind = 0; ind < 4; ind++) {
          serv->sessions[ind] = cp_sessions[ind];
@@ -56,32 +62,29 @@ int main()
          std::chrono::milliseconds start = std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch()
          );
-         //double start = glfwGetTime();
 
          std::chrono::milliseconds end = std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch()
          );
-         //double end = glfwGetTime();
 
-         int events[4] = {-1, -1, -1, -1};
+         serv->check_event = {-1, -1, -1, -1};
+         std::unordered_map<int, std::vector<int>> all_records;
          while (end - start < (std::chrono::milliseconds)LISTEN_TICK) {
 
              for (int i = 0; i < NUM_PLAYERS; i++)
              {
-                 if (events[i] != -1)
+                 if (serv->check_event[i] != -1)
                  {
                      continue; // continue if we already receive 1 event from this client
                  }
-                 int check_event = serv->recv_event(i);
-                 events[i] = check_event;
+                 all_records[i] = serv->recv_eventRecords(i);
              }
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
-             //end = glfwGetTime();
          }
 
-         serv->updateByEvent((EventType)events[0], (EventType)events[1], (EventType)events[2], (EventType)events[3]);
+         serv->updateByEvent(all_records);
          for (int j = 0; j < NUM_PLAYERS; j++)
          {
              serv->send_gamedata(j);
@@ -89,21 +92,13 @@ int main()
          end = std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch()
          );
-         //end = glfwGetTime();
          while (end - start < (std::chrono::milliseconds)TICK_TIME) {
              // wait until tick time
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
-             //end = glfwGetTime();
          }
      }
     
-    /* while(1){
-         int ret = serv->update();
-         if (ret == -1){
-             break;
-         }
-     }*/
      delete serv;
 }
