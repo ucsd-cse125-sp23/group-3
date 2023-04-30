@@ -7,7 +7,7 @@ void Packet::serialize(GameData* gd, char* buffer) {
 	mat2str(gd->location_C, buffer);
 	mat2str(gd->location_D, buffer);
 	
-	vec2str(gd->obstacle_states, buffer);
+	vec2str(gd->obstacle_states, buffer, NUM_OBSTACLE);
 	
 	memcpy(buffer, &gd->level_A, sizeof(int));
 	buffer += sizeof(int);
@@ -34,7 +34,7 @@ GameData Packet::deserializeGameData(char* buffer) {
 	glm::mat4 locC = str2mat(buffer);
 	glm::mat4 locD = str2mat(buffer);
 	
-	std::vector<int> vec = str2vec(buffer);
+	std::vector<int> vec = str2vec(buffer, NUM_OBSTACLE);
 
 	int level_A;
 	memcpy(&level_A, buffer, sizeof(int));
@@ -82,8 +82,8 @@ glm::mat4 Packet::str2mat(char* &buffer) {
 	return mat;
 }
 
-void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
-	int vecSize = NUM_OBSTACLE;
+void Packet::vec2str(const std::vector<int>& states, char* &buffer, int vec_length) {
+	int vecSize = vec_length;
 	for (int i = 0; i < vecSize; i++) {
 		int num = states[i];
 		memcpy(buffer, &num, sizeof(int));
@@ -92,9 +92,9 @@ void Packet::vec2str(const std::vector<int>& states, char* &buffer) {
 	//std::cout << reinterpret_cast<void*>(buffer) << std::endl;
 }
 
-std::vector<int> Packet::str2vec(char* &buffer) {
+std::vector<int> Packet::str2vec(char* &buffer, int vec_length) {
 	std::vector<int> vec;
-	int size = NUM_OBSTACLE;
+	int size = vec_length;
 	for (int i = 0; i < size; i++) {
 		int num;
 		memcpy(&num, buffer, sizeof(int));
@@ -111,4 +111,15 @@ void Packet::serialize(Event* event, char* buffer){
 }
 Event Packet::deserializeEvent(char* buffer){
 	return Event(EventType(buffer[1]));
+}
+
+void Packet::serialize(const std::vector<int>& eventRecord, char* buffer)
+{
+	vec2str(eventRecord, buffer, NUM_EVENT_TYPES);
+}
+
+std::vector<int> Packet::deserializeEventRecords(char* buffer)
+{
+	std::vector<int> vec = str2vec(buffer, NUM_EVENT_TYPES);
+	return vec;
 }

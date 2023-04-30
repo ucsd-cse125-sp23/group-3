@@ -11,6 +11,7 @@
 #include <vector>
 #include <graphic2D.h>
 #include <CollisionDetection.h>
+#include "../../shared/GlobalVariables.h"
 
 class Window {
 public:
@@ -32,6 +33,8 @@ public:
 
     // Client-server variable
     static int eventChecker;
+    static std::vector<int> eventChecker;
+    static bool no_event;
     static int playerID;
 
     // Act as Constructors and desctructors

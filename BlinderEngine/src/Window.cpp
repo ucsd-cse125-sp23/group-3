@@ -21,9 +21,9 @@ ObjObject* objObject1;
 DaeObject* daeObject1;
 std::vector<DaeObject*> daeObjectList;
 std::vector<ObjObject*> objObjectList;
-
-
-
+std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES,0);
+bool Window::no_event;
+int  Window::playerID;
 // Camera Properties
 Camera* Cam;
 
@@ -256,7 +256,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     /*
      * TODO: Modify below to add your key callbacks.
      */
-    eventChecker = 0;
+    std::fill(eventChecker.begin(), eventChecker.end(), 0);
+    no_event = true;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
         cube->move(-cameraSpeed);
@@ -266,7 +267,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
             daeObject1->setModel(newMVP);
         }
-        eventChecker = 1;
+        eventChecker[0] = 1;
+        no_event = false;
     }
 
         
@@ -278,8 +280,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             players.at(playerID)->spin(cameraSpeed * turningratio);
             daeObject1->spin(cameraSpeed * turningratio);
         }
-        eventChecker = 2;
-
+        eventChecker[1] = 1;
+        no_event = false;
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
@@ -290,7 +292,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             players.at(playerID)->spin(-cameraSpeed * turningratio);
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
-        eventChecker = 3;
+        eventChecker[2] = 1;
+        no_event = false;
     }
 
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {

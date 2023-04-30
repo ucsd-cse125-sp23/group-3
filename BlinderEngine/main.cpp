@@ -102,15 +102,16 @@ int main(void) {
     while (!glfwWindowShouldClose(window)) {
 
         // check for event&send
-        Event* event = new Event((EventType)Window::eventChecker);
-        if (event->getEventType()!=EventType::NOEVENT)
+        
+        if (!Window::no_event)
         {
-            cli->send_event(event->getEventType());
+            cli->send_eventRecords(Window::eventChecker);
         }
         
         // listen for updated game data
         check_gd = cli->recv_gamedata();
-        Window::eventChecker = 0; // avoid double action
+        Window::no_event = true;
+        std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
 
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {
