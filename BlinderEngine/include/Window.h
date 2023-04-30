@@ -32,7 +32,6 @@ public:
 
 
     // Client-server variable
-    static int eventChecker;
     static std::vector<int> eventChecker;
     static bool no_event;
     static int playerID;

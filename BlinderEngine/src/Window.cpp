@@ -21,9 +21,7 @@ ObjObject* objObject1;
 DaeObject* daeObject1;
 std::vector<DaeObject*> daeObjectList;
 std::vector<ObjObject*> objObjectList;
-std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES,0);
-bool Window::no_event;
-int  Window::playerID;
+
 // Camera Properties
 Camera* Cam;
 
@@ -41,7 +39,8 @@ StaticShader* uiShader;
 graphic2D* Window::canvas;
 
 // Client-server
-int Window::eventChecker;
+std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
+bool Window::no_event;
 int  Window::playerID;
 
 float deltaTime = 0.0f;
