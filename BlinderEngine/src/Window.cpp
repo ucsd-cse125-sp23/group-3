@@ -5,7 +5,7 @@
 #include "ObjObject.h"
 #include <animation.h>
 #include <animator.h>
-
+#include <Skybox.h>
 #include <DaeObject.h>
 // Window Properties
 int Window::width;
@@ -21,8 +21,7 @@ ObjObject* objObject1;
 DaeObject* daeObject1;
 std::vector<DaeObject*> daeObjectList;
 std::vector<ObjObject*> objObjectList;
-
-
+Skybox* skybox;
 
 // Camera Properties
 Camera* Cam;
@@ -31,14 +30,18 @@ Camera* Cam;
 // Interaction Variables
 bool LeftDown, RightDown;
 int MouseX, MouseY;
-const float cameraSpeed = 0.15f;
+const float cameraSpeed = 1.5f;
 const float turningratio=20.0f;
 
 // Shaders
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
 StaticShader* uiShader;
+StaticShader* skyboxShader;
+
 graphic2D* Window::canvas;
+
+
 
 // Client-server
 int Window::eventChecker;
@@ -63,8 +66,10 @@ bool Window::initializeProgram() {
 
     dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
     staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
-
     uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
+    skyboxShader = new StaticShader("./shaders/skybox.vs", "./shaders/skybox.fs");
+    skyboxShader->use();
+    skyboxShader->setInt("skybox", 0);
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -78,6 +83,7 @@ bool Window::initializeObjects(int PlayID) {
     // Create a cube
     map = new Map();
     ui = new UI();
+    skybox = new Skybox();
     canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
     const char* textfile = "./resources/images/tag.png";
     canvas->bindTexture(textfile);
@@ -91,7 +97,7 @@ bool Window::initializeObjects(int PlayID) {
     daeObject1 = new DaeObject(Constants::girl_model_path,
         Constants::girl_walking_animation_path,
         Constants::girl_action_animation_path,
-        glm::vec3(5.0f));
+        glm::vec3(2.0f));
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
@@ -187,7 +193,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        //Cam->setFirstperson();
+        Cam->setFirstperson();
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
@@ -213,6 +219,9 @@ void Window::displayCallback(GLFWwindow* window) {
     // Render the object.
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+
+
+
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     if (Constants::offline) {
@@ -224,6 +233,9 @@ void Window::displayCallback(GLFWwindow* window) {
         }
     }
     canvas->draw(glm::mat4(1.0f), *uiShader);
+
+
+
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
@@ -239,6 +251,8 @@ void Window::displayCallback(GLFWwindow* window) {
     //    Cam->SetMove(cameraSpeed);
     //    cube->move(cameraSpeed);
     //}
+    //glm::mat4 projection = glm::perspective(glm::radians(Cam->getFOV()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

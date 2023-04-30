@@ -30,7 +30,7 @@ public:
     const glm::mat4& GetProjectMtx();
     const glm::mat4& GetViewMtx();
     bool getPers() { return first_person; };
-
+    float getFOV() { return FOV; };
 private:
     // Perspective controls
     float FOV;       // Field of View Angle (degrees)

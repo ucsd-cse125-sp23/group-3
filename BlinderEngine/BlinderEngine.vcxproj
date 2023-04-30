@@ -134,6 +134,10 @@
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\6.1.skybox.fs" />
+    <None Include="shaders\6.1.skybox.vs" />
+    <None Include="shaders\6.2.skybox.fs" />
+    <None Include="shaders\6.2.skybox.vs" />
     <None Include="shaders\anim_model.fs" />
     <None Include="shaders\anim_model.vs" />
     <None Include="shaders\model_loading.fs" />
@@ -161,6 +165,7 @@
     <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\PlayerModel.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Submap.cpp" />
     <ClCompile Include="src\Tokenizer.cpp" />
     <ClCompile Include="src\UI.cpp" />
@@ -191,6 +196,7 @@
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\PlayerModel.h" />
     <ClInclude Include="include\shader_m.h" />
+    <ClInclude Include="include\Skybox.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />
     <ClInclude Include="include\ObjObject.h" />

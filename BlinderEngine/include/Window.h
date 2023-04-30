@@ -6,11 +6,11 @@
 #include "Map.h"
 #include "UI.h"
 #include "Shader.h"
-#include <shader_m.h>
 #include "core.h"
 #include <vector>
 #include <graphic2D.h>
 #include <CollisionDetection.h>
+#include <Skybox.h>
 
 class Window {
 public:
@@ -54,4 +54,6 @@ public:
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void mouse_callback(GLFWwindow* window, int button, int action, int mods);
     static void cursor_callback(GLFWwindow* window, double currX, double currY);
+
+    static unsigned int loadCubemap(std::vector<std::string> faces);
 };
