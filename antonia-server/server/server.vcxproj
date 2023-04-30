@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BlinderEngine\src\Cube.cpp" />
     <ClCompile Include="..\..\server\main.cpp" />
     <ClCompile Include="..\..\server\Server.cpp" />
     <ClCompile Include="..\..\server\src\Cube.cpp" />
