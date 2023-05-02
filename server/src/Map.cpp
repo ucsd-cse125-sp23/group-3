@@ -18,7 +18,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin1 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax1 = std::vector<glm::vec3>();
-    const char* file1 = "./resources/scene/map_animal.txt";
+    const char* file1 = "../BlinderEngine/resources/scene/map_animal.txt";
     readWallsCoord(0, file1, wallsmin1, wallsmax1, glm::vec3(-(groundsize + offsetforwidth), 0.0f, offsetforwidth));
 
     glm::vec3 groundmin1 = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -33,7 +33,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin2 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax2 = std::vector<glm::vec3>();
-    const char* file2 = "./resources/scene/map_clown.txt";
+    const char* file2 = "../BlinderEngine/resources/scene/map_clown.txt";
     readWallsCoord(1, file2, wallsmin2, wallsmax2, glm::vec3(-(groundsize + offsetforwidth), 0.0f, -(groundsize + offsetforwidth)));
 
     glm::vec3 groundmin2 = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -48,7 +48,7 @@ Map::Map() {
 
     std::vector<glm::vec3> wallsmin3 = std::vector<glm::vec3>();
     std::vector<glm::vec3> wallsmax3 = std::vector<glm::vec3>();
-    const char* file3 = "./resources/scene/map_sculpture.txt";
+    const char* file3 = "../BlinderEngine/resources/scene/map_sculpture.txt";
     readWallsCoord(2, file3, wallsmin3, wallsmax3, glm::vec3(offsetforwidth, 0.0f, -(groundsize + offsetforwidth)));
 
     glm::vec3 groundmin3 = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -273,8 +273,7 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y) {
     //glm::vec4 point=glm::vec4(0.0f);
 }
 
-glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
-{
+glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y) {
     float walllength = groundsize / 5.0f;
     glm::vec4 position = glm::vec4(x * walllength, 0.0f, y * walllength, 0.0f);
     glm::vec4 MapTranslation;
@@ -301,11 +300,3 @@ glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
     pSource[14] = position[2];
     return glm::make_mat4(pSource);
 }
-
-
-void Map::draw(const glm::mat4& viewProjMtx, GLuint shader) {
-    map1->draw(viewProjMtx, shader);
-    map2->draw(viewProjMtx, shader);
-    map3->draw(viewProjMtx, shader);
-}
-

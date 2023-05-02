@@ -1,11 +1,12 @@
-#include "Server.h"
+#include "include/Server.h"
 #include <chrono>
 
 int main()
 {
 
      Server* serv = new Server();
-     
+     for (auto a : serv->ids)
+ 	    std::cout << a << " ";
      // blocks until 4 clients
      for (int id = 0; id < NUM_PLAYERS; id ++){
          SOCKET ss = INVALID_SOCKET;
@@ -13,11 +14,10 @@ int main()
              ss = accept(serv->ListenSocket, NULL, NULL);
          }
          serv->sessions[id] = ss;
-         std::cout << "connected ss " << ss << std::endl;
+         std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
      }
 
      // send initial gamedata to all clients
-     serv->gd = new GameData();
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
          serv->send_gamedata(i);

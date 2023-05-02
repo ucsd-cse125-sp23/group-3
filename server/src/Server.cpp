@@ -1,4 +1,6 @@
-#include "Server.h"
+#include "../include/Server.h"
+
+Map* Server::map;
 
 Server::Server()
 {
@@ -80,7 +82,22 @@ Server::Server()
 	for (int i = 0; i < NUM_PLAYERS; i++) {
 		e[i] = Event(EventType::NOEVENT);
 	}
-	this->gd = new GameData();
+
+	// Initialize map and gamedata
+	map = new Map();
+	glm::mat4 id_mat = {
+		{1,0,0,0},
+		{0,1,0,0},
+		{0,0,1,0},
+		{0,0,0,1}
+	};
+	glm::mat4 locA = map->getModelOnMap(id_mat, 0, 3.0f, 3.0f);  
+	glm::mat4 locB = map->getModelOnMap(id_mat, 0, 0.0f, 0.0f);
+	glm::mat4 locC = map->getModelOnMap(id_mat, 1, 1.0f, 0.0f);
+	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.0f, 4.0f);
+	std::cerr << "loca:" << glm::to_string(locA) << std::endl;
+
+	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY);
 }
 
 Server::~Server(){
