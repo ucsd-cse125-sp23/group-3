@@ -145,10 +145,10 @@
     <ClCompile Include="src\Minimap.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="ObsObject.cpp">
+    <ClCompile Include="src\ObsObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacles.cpp">
+    <ClCompile Include="src\Obstacles.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -258,10 +258,10 @@
     <ClInclude Include="..\shared\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObsObject.h">
+    <ClInclude Include="include\ObsObject.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacles.h">
+    <ClInclude Include="include\Obstacles.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
