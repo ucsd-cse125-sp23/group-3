@@ -60,6 +60,20 @@ Map::Map() {
         {-0.5,0,0.5 * glm::sqrt(3.0f),0},
         {0,0,0,1} };
     map3->setModel(trans3);
+
+    obs = new Obstacles();
+    obs->obstacleCubes();
+    glm::mat4 id_mat = {
+        {1,0,0,0},
+        {0,1,0,0},
+        {0,0,1,0},
+        {0,0,0,1}
+    };
+    for (int ind = 0; ind < obs->cubes.size(); ind++) {
+        Cube* cub = obs->cubes[ind];
+        ObsObject* obj = obs->obs_vec[ind];
+        cub->setModel(this->getModelOnMap(id_mat, obj->map_id, (obj->pos).first, (obj->pos).second));
+    }
 }
 
 Map::~Map() {
@@ -307,5 +321,7 @@ void Map::draw(const glm::mat4& viewProjMtx, GLuint shader) {
     map1->draw(viewProjMtx, shader);
     map2->draw(viewProjMtx, shader);
     map3->draw(viewProjMtx, shader);
+
+    obs->draw(viewProjMtx, shader);
 }
 

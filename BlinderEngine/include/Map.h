@@ -6,6 +6,7 @@
 #include "Cube.h"
 #include "Submap.h"
 #include "Tokenizer.h"
+#include "Obstacles.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338327
@@ -31,4 +32,6 @@ public:
     glm::mat4 getModelOnMap(glm::mat4 original, int mapID, float x, float y);
     void update();
     void readWallsCoord(int mapId, const char* file, std::vector<glm::vec3>& wallsmin, std::vector<glm::vec3>& wallsmax, glm::vec3 translation);
+    
+    Obstacles* obs;
 };
