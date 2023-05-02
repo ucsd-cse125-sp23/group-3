@@ -63,7 +63,7 @@ public:
 	UI();
 	~UI();
 
-	void draw(const glm::mat4& viewProjMtx, Shader shader);
+	void draw(const glm::mat4& viewProjMtx, StaticShader shader);
 	void setSize(const int& width, const int& height);
 	void update();
 	void changeTimebarSizeY(float rate);

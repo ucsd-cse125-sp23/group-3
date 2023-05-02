@@ -42,7 +42,7 @@ UI::~UI() {
 	delete level_bar;
 }
 
-void UI::draw(const glm::mat4& viewProjMtx, Shader shader) {
+void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader) {
 	character->draw(viewProjMtx, shader);
 	skill->draw(viewProjMtx, shader);
 	/*float rate;

@@ -234,9 +234,6 @@
     <ClInclude Include="include\UI.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\shader_m.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\CollisionDetection.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -251,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="include\Minimap.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Event.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

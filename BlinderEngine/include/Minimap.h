@@ -24,7 +24,7 @@ class Minimap {
         Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY);
         ~Minimap();
 
-        void draw(const glm::mat4& viewProjMtx, Shader shader);
+        void draw(const glm::mat4& viewProjMtx, StaticShader shader);
         void setPosition(glm::mat4 model);
         void update();
         graphic2D* getMinimap();

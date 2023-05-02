@@ -198,7 +198,6 @@
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\Minimap.h" />
     <ClInclude Include="include\PlayerModel.h" />
-    <ClInclude Include="include\shader_m.h" />
     <ClInclude Include="include\Skybox.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />

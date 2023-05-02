@@ -36,10 +36,8 @@ const float turningratio=20.0f;
 // Shaders
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
-//StaticShader* uiShader;
 StaticShader* skyboxShader;
-
-Shader* uiShader;
+StaticShader* Window::uiShader;
 graphic2D* Window::canvas;
 
 
@@ -48,11 +46,9 @@ graphic2D* Window::canvas;
 std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
-Shader* Window::uiShader;
+//StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
-Shader* Window::shaderText2DProgram;
-std::vector<DaeObject*> daeObjectList;
-std::vector<ObjObject*> objObjectList;
+StaticShader* Window::shaderText2DProgram;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -72,12 +68,12 @@ bool Window::initializeProgram() {
 
     dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
     staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
-    //uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
+    uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
     skyboxShader = new StaticShader("./shaders/skybox.vs", "./shaders/skybox.fs");
     skyboxShader->use();
     skyboxShader->setInt("skybox", 0);
 
-    uiShader = new Shader(Constants::ui_shader_vert.c_str(), Constants::ui_shader_frag.c_str());
+    //uiShader = new StaticShader(Constants::ui_shader_vert.c_str(), Constants::ui_shader_frag.c_str());
     
     // Check the shader program.
     if (!shaderProgram) {
