@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "../include/Tokenizer.h"
+#include "Tokenizer.h"
 
 Tokenizer::Tokenizer() {
     File = 0;
@@ -178,4 +178,3 @@ bool Tokenizer::Reset() {
     if (fseek((FILE*)File, 0, SEEK_SET)) return false;
     return true;
 }
-

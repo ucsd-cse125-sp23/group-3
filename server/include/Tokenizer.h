@@ -23,28 +23,28 @@ public:
     Tokenizer();
     ~Tokenizer();
 
-    bool Open(const char *file);
+    bool Open(const char* file);
     bool Close();
 
-    bool Abort(char *error);  // Prints error & closes file, and always returns false
+    bool Abort(char* error);  // Prints error & closes file, and always returns false
 
     // Tokenization
     char GetChar();
     char CheckChar();
     int GetInt();
     float GetFloat();
-    bool GetToken(char *str);
-    bool FindToken(const char *tok);
+    bool GetToken(char* str);
+    bool FindToken(const char* tok);
     bool SkipWhitespace();
     bool SkipLine();
     bool Reset();
 
     // Access functions
-    char *GetFileName() { return FileName; }
+    char* GetFileName() { return FileName; }
     int GetLineNum() { return LineNum; }
 
 private:
-    void *File;
+    void* File;
     char FileName[256];
     int LineNum;
 };
