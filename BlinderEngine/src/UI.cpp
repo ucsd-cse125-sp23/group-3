@@ -15,9 +15,9 @@ UI::UI() {
 	time_bar->bindTexture(UI::time_bar_png);
 	time_bar_len = time_bar->getSizeY();
 
-	minimap = new graphic2D(UI::mnmap_sizeX * 600 / 800, UI::mnmap_sizeY,
-		0.995- UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY, true);
-	minimap->bindTexture(UI::minimap_png);
+	minimap = new Minimap(UI::mnmap_sizeX * 600 / 800, UI::mnmap_sizeY,
+		0.995- UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
+	//minimap->bindTexture(UI::minimap_png);
 
 	level = new graphic2D(UI::level_sizeX * 600 / 800, UI::level_sizeY,
 		0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY, true);
@@ -48,9 +48,9 @@ void UI::draw(const glm::mat4& viewProjMtx, Shader shader) {
 	time->draw(viewProjMtx, shader);
 	minimap->draw(viewProjMtx, shader);
 
-	float rate;
+	/*float rate;
 	std::cin >> rate;
-	changeLevelbarSizeY(rate);
+	changeLevelbarSizeY(rate);*/
 
 	level_bar->draw(viewProjMtx, shader);
 	level->draw(viewProjMtx, shader);
@@ -71,6 +71,7 @@ void UI::setSize(const int& width, const int& height) {
 
 	minimap->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
 		0.995 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
+	minimap->setPosition(daeObj->getModel());
 	minimap->update();
 
 	level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
@@ -100,4 +101,8 @@ void UI::changeTimebarSizeY(float rate) {
 void UI::changeLevelbarSizeY(float rate) {
 	level_bar->setposition(level_bar_len * rate, level_bar->getSizeY());
 	level_bar->update();
+}
+
+void UI::setDaeObj(DaeObject* daeObj) {
+	daeObj = daeObj;
 }

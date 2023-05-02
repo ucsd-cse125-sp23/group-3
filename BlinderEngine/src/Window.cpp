@@ -39,6 +39,7 @@ StaticShader* staticShader;
 //StaticShader* uiShader;
 StaticShader* skyboxShader;
 
+Shader* uiShader;
 graphic2D* Window::canvas;
 
 
@@ -95,6 +96,8 @@ bool Window::initializeObjects(int PlayID) {
     canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
     const char* textfile = "./resources/images/tag.png";
     canvas->bindTexture(textfile);
+    //ui->setDaeObj(daeObject1);
+    
     //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     for (int i = 0; i < 4; i++) {

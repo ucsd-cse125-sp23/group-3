@@ -1,8 +1,8 @@
 #pragma once
 
 #include "graphic2D.h"
-
-
+#include "Minimap.h"
+#include "DaeObject.h"
 
 class UI {
 public:
@@ -47,7 +47,9 @@ private:
 	graphic2D* time;
 	graphic2D* time_bar;
 	float time_bar_len;
-	graphic2D* minimap;
+	//graphic2D* minimap;
+	Minimap* minimap;
+	DaeObject* daeObj;
 	graphic2D* level;
 	graphic2D* level_bar;
 	float level_bar_len;
@@ -60,4 +62,5 @@ public:
 	void update();
 	void changeTimebarSizeY(float rate);
 	void changeLevelbarSizeY(float rate);
+	void setDaeObj(DaeObject* daeObj);
 };
