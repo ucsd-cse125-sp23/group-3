@@ -29,4 +29,14 @@ class Minimap {
         void update();
         graphic2D* getMinimap();
         void setposition(float _sizeX, float _sizeY, float _positionX, float _positionY);
+
+        void setPersonX(float personx) {
+            this->personx = personx;
+        }
+        void setPersonY(float persony) {
+            this->persony = persony;
+        }
+        float getSizeX() {
+            return sizeX;
+        }
 };

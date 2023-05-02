@@ -25,6 +25,7 @@ void Minimap::draw(const glm::mat4& viewProjMtx, Shader shader){
 }
 
 void Minimap::update(){
+    minimap->update();
     person->update();
 }
 
@@ -40,7 +41,7 @@ graphic2D* Minimap::getMinimap() {
 }
 
 void Minimap::setposition(float _sizeX, float _sizeY, float _positionX, float _positionY) {
-    minimap->setposition(_sizeX, _sizeY, _positionX, _positionY);
+    this->minimap->setposition(_sizeX, _sizeY, _positionX, _positionY);
     sizeX = _sizeX;
     sizeY = _sizeY;
     positionX = _positionX;

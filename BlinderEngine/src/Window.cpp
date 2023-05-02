@@ -109,6 +109,7 @@ bool Window::initializeObjects(int PlayID) {
         Constants::girl_walking_animation_path,
         Constants::girl_action_animation_path,
         glm::vec3(2.0f));
+
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
@@ -212,6 +213,10 @@ void Window::idleCallback() {
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
+        
+    }
+    else {
+        ui->setPlayerPosition(daeObject1->getModel());
     }
     
     Cam->Update();

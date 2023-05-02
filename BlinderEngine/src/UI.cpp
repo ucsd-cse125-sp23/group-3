@@ -6,6 +6,10 @@ UI::UI() {
 		UI::char_posiX, UI::char_posiY, true);
 	character->bindTexture(UI::char_png);
 
+	skill = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	skill->bindTexture(UI::skill_png);
+
 	time = new graphic2D(UI::time_sizeX, UI::time_sizeY * 800 / 600,
 		UI::time_posiX, -1 + UI::char_sizeY * 800 / 600, true);
 	time->bindTexture(UI::time_png);
@@ -16,8 +20,7 @@ UI::UI() {
 	time_bar_len = time_bar->getSizeY();
 
 	minimap = new Minimap(UI::mnmap_sizeX * 600 / 800, UI::mnmap_sizeY,
-		0.995- UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
-	//minimap->bindTexture(UI::minimap_png);
+		0.995 - UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
 
 	level = new graphic2D(UI::level_sizeX * 600 / 800, UI::level_sizeY,
 		0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY, true);
@@ -31,6 +34,7 @@ UI::UI() {
 
 UI::~UI() {
 	delete character;
+	delete skill;
 	delete time;
 	delete time_bar;
 	delete minimap;
@@ -40,7 +44,7 @@ UI::~UI() {
 
 void UI::draw(const glm::mat4& viewProjMtx, Shader shader) {
 	character->draw(viewProjMtx, shader);
-	
+	skill->draw(viewProjMtx, shader);
 	/*float rate;
 	std::cin >> rate;
 	changeTimebarSizeY(rate);*/
@@ -60,6 +64,9 @@ void UI::setSize(const int& width, const int& height) {
 	character->setposition(UI::char_sizeX, UI::char_sizeY * width / height);
 	character->update();
 
+	skill->setposition(UI::skill_sizeX, UI::skill_sizeY * width / height);
+	skill->update();
+
 	time->setposition(UI::time_sizeX, UI::time_sizeY * width / height, 
 		UI::time_posiX, -1 + UI::char_sizeY * width / height);
 	time->update();
@@ -71,7 +78,6 @@ void UI::setSize(const int& width, const int& height) {
 
 	minimap->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
 		0.995 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
-	minimap->setPosition(daeObj->getModel());
 	minimap->update();
 
 	level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
@@ -86,6 +92,7 @@ void UI::setSize(const int& width, const int& height) {
 
 void UI::update() {
 	character->update();
+	skill->update();
 	time->update();
 	time_bar->update();
 	minimap->update();
@@ -103,6 +110,7 @@ void UI::changeLevelbarSizeY(float rate) {
 	level_bar->update();
 }
 
-void UI::setDaeObj(DaeObject* daeObj) {
-	daeObj = daeObj;
+void UI::setPlayerPosition(glm::mat4 model) {
+	minimap->setPosition(model);
+	minimap->update();
 }

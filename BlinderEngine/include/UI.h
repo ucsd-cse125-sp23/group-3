@@ -3,6 +3,7 @@
 #include "graphic2D.h"
 #include "Minimap.h"
 #include "DaeObject.h"
+#include "core.h"
 
 class UI {
 public:
@@ -11,6 +12,12 @@ public:
 	const double char_posiX = -0.995;
 	const double char_posiY = -0.995;
 	const char* char_png = "./images/Alice.png";
+
+	const double skill_sizeX = 0.1;
+	const double skill_sizeY = 0.1;
+	//const double skill_posiX = -0.995;
+	const double skill_posiY = -0.995;
+	const char* skill_png = "./images/Alice-skill.png";
 
 	const double time_sizeX = 0.15;
 	const double time_sizeY = 0.675;
@@ -24,7 +31,7 @@ public:
 	//const double time_bar_posiY = -0.8;
 	const char* time_bar_png = "./images/timebar-fill.png";
 
-	const double mnmap_sizeX = 0.3;
+	const double mnmap_sizeX = 0.3 * 2 / sqrt(3);
 	const double mnmap_sizeY = 0.3;
 	//const double mnmap_posiX = 0.695;
 	const double mnmap_posiY = 0.695;
@@ -44,12 +51,11 @@ public:
 
 private:
 	graphic2D* character;
+	graphic2D* skill;
 	graphic2D* time;
 	graphic2D* time_bar;
 	float time_bar_len;
-	//graphic2D* minimap;
 	Minimap* minimap;
-	DaeObject* daeObj;
 	graphic2D* level;
 	graphic2D* level_bar;
 	float level_bar_len;
@@ -62,5 +68,5 @@ public:
 	void update();
 	void changeTimebarSizeY(float rate);
 	void changeLevelbarSizeY(float rate);
-	void setDaeObj(DaeObject* daeObj);
+	void setPlayerPosition(glm::mat4 model);
 };
