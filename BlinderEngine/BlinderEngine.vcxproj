@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -161,6 +161,7 @@
     <ClCompile Include="src\graphic2D.cpp" />
     <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Minimap.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\PlayerModel.cpp" />
@@ -195,8 +196,8 @@
     <ClInclude Include="include\MapConstants.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
+    <ClInclude Include="include\Minimap.h" />
     <ClInclude Include="include\PlayerModel.h" />
-    <ClInclude Include="include\shader_m.h" />
     <ClInclude Include="include\Skybox.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />

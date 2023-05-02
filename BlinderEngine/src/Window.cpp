@@ -36,9 +36,8 @@ const float turningratio=20.0f;
 // Shaders
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
-StaticShader* uiShader;
 StaticShader* skyboxShader;
-
+StaticShader* Window::uiShader;
 graphic2D* Window::canvas;
 
 
@@ -47,6 +46,9 @@ graphic2D* Window::canvas;
 std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
+//StaticShader* Window::uiShader;
+//graphic2D* Window::canvas;
+StaticShader* Window::shaderText2DProgram;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -61,7 +63,6 @@ CollisionDetection collisionDetection;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
-    std::cout << "ERROR HERE\n";
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
@@ -71,6 +72,9 @@ bool Window::initializeProgram() {
     skyboxShader = new StaticShader("./shaders/skybox.vs", "./shaders/skybox.fs");
     skyboxShader->use();
     skyboxShader->setInt("skybox", 0);
+
+    //uiShader = new StaticShader(Constants::ui_shader_vert.c_str(), Constants::ui_shader_frag.c_str());
+    
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -88,6 +92,8 @@ bool Window::initializeObjects(int PlayID) {
     canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
     const char* textfile = "./resources/images/tag.png";
     canvas->bindTexture(textfile);
+    //ui->setDaeObj(daeObject1);
+    
     //cube->move(2.0f);
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
     for (int i = 0; i < 4; i++) {
@@ -99,6 +105,7 @@ bool Window::initializeObjects(int PlayID) {
         Constants::girl_walking_animation_path,
         Constants::girl_action_animation_path,
         glm::vec3(2.0f));
+
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
     daeObjectList.push_back(daeObject1);
@@ -119,6 +126,7 @@ void Window::cleanUp() {
         delete players.at(i);
     }*/
     delete map;
+    delete ui;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -182,6 +190,9 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 #endif
     Window::width = width;
     Window::height = height;
+    if (Window::ui != NULL) {
+        Window::ui->setSize(width, height);
+    }
     // Set the viewport size.
     glViewport(0, 0, width, height);
 
@@ -198,6 +209,10 @@ void Window::idleCallback() {
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
+        
+    }
+    else {
+        ui->setPlayerPosition(daeObject1->getModel());
     }
     
     Cam->Update();
@@ -224,7 +239,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
 
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
+    
     if (Constants::offline) {
         daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
@@ -237,6 +252,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
 
 
+    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 

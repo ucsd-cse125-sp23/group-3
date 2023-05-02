@@ -18,7 +18,7 @@ class graphic2D {
         bool texturemapping;
         unsigned char *data;
         glm::vec3 color;
-
+        std::vector<float> vertices;
 
     public:
         graphic2D(float _sizeX,float _sizeY, float _positionX, float _positionY, bool _texturemapping);
@@ -28,4 +28,10 @@ class graphic2D {
         void draw(const glm::mat4& viewProjMtx, StaticShader shader);
         void update();
         void setColor(glm::vec3 _color);
+        void setposition(float _sizeX, float _sizeY, float _positionX, float _positionY);
+        void setposition(float _sizeX, float _sizeY);
+        float getSizeX();
+        float getSizeY();
+        float getPosiX();
+        float getPosiY();
 };
