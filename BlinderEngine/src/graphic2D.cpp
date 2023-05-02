@@ -9,11 +9,11 @@
 
 graphic2D::graphic2D(float _sizeX,float _sizeY, float _positionX, float _positionY, bool _texturemapping){
         sizeX=_sizeX;
-        sizeY=_sizeY;
+        sizeY = _sizeY;
         positionX=_positionX;
         positionY=_positionY;
         texturemapping=_texturemapping;
-        float vertices[] = {
+        vertices = {
                 // positions          // colors           // texture coords
                 positionX+sizeX,  positionY+sizeY, 0.0f,    1.0f, 0.0f,   // top right
                 positionX+sizeX, positionY, 0.0f,           1.0f, 1.0f,   // bottom right
@@ -32,7 +32,8 @@ graphic2D::graphic2D(float _sizeX,float _sizeY, float _positionX, float _positio
         glBindVertexArray(VAO);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (vertices.size()) * sizeof(float), vertices.data(), GL_DYNAMIC_DRAW);
+
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -118,5 +119,42 @@ void graphic2D::draw(const glm::mat4& viewProjMtx, StaticShader shader){
 
 
 void graphic2D::update(){
-
+    vertices = {
+        // positions                 // texture coords
+        positionX + sizeX,  positionY + sizeY, 0.0f,    1.0f, 0.0f,   // top right
+        positionX + sizeX, positionY, 0.0f,           1.0f, 1.0f,   // bottom right
+        positionX, positionY, 0.0f,                 0.0f, 1.0f,   // bottom left
+        positionX, positionY + sizeY, 0.0f,           0.0f, 0.0f    // top left 
+    };
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, (vertices.size()) * sizeof(float), vertices.data());
 }
+
+void graphic2D::setposition(float _sizeX, float _sizeY, float _positionX, float _positionY) {
+    sizeX = _sizeX;
+    sizeY = _sizeY;
+    positionX = _positionX;
+    positionY = _positionY;
+}
+
+void graphic2D::setposition(float _sizeX, float _sizeY) {
+    sizeX = _sizeX;
+    sizeY = _sizeY;
+}
+
+float graphic2D::getSizeX() {
+    return sizeX;
+}
+
+float graphic2D::getSizeY() {
+    return sizeY;
+}
+
+float graphic2D::getPosiX() {
+    return positionX;
+}
+
+float graphic2D::getPosiY() {
+    return positionY;
+}
+

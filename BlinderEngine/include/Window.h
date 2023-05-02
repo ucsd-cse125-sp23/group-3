@@ -35,6 +35,22 @@ public:
     static std::vector<int> eventChecker;
     static bool no_event;
     static int playerID;
+    //static graphic2D* canvas;
+    static Shader* shaderText2DProgram;
+    static UI* ui;
+    static Shader* uiShader;
+
+    static int eventChecker;
+    //static int playerID;
+    // Shader Program
+    //static GLuint shaderProgram;
+
+    int getWindowWidth() {
+        return width;
+    }
+    int getWindowHeight() {
+        return height;
+    }
 
     // Act as Constructors and desctructors
     static bool initializeProgram();

@@ -36,7 +36,7 @@ const float turningratio=20.0f;
 // Shaders
 DynamicShader* dynamicShader;
 StaticShader* staticShader;
-StaticShader* uiShader;
+//StaticShader* uiShader;
 StaticShader* skyboxShader;
 
 graphic2D* Window::canvas;
@@ -47,6 +47,11 @@ graphic2D* Window::canvas;
 std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
+Shader* Window::uiShader;
+//graphic2D* Window::canvas;
+Shader* Window::shaderText2DProgram;
+std::vector<DaeObject*> daeObjectList;
+std::vector<ObjObject*> objObjectList;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -61,16 +66,18 @@ CollisionDetection collisionDetection;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
-    std::cout << "ERROR HERE\n";
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
 
     dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
     staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
-    uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
+    //uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
     skyboxShader = new StaticShader("./shaders/skybox.vs", "./shaders/skybox.fs");
     skyboxShader->use();
     skyboxShader->setInt("skybox", 0);
+
+    uiShader = new Shader(Constants::ui_shader_vert.c_str(), Constants::ui_shader_frag.c_str());
+    
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -119,6 +126,7 @@ void Window::cleanUp() {
         delete players.at(i);
     }*/
     delete map;
+    delete ui;
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -182,6 +190,9 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 #endif
     Window::width = width;
     Window::height = height;
+    if (Window::ui != NULL) {
+        Window::ui->setSize(width, height);
+    }
     // Set the viewport size.
     glViewport(0, 0, width, height);
 
@@ -224,7 +235,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
 
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
+    
     if (Constants::offline) {
         daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
@@ -237,6 +248,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
 
 
+    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
