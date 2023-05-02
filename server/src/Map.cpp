@@ -60,6 +60,15 @@ Map::Map() {
         {-0.5,0,0.5 * glm::sqrt(3.0f),0},
         {0,0,0,1} };
     map3->setModel(trans3);
+    /*for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 6; j++) {
+            for (int k = 0; k < 6; k++) {
+                std::cout << MAP_ENCODING[i][j][k] << " ";
+            }
+        }
+        std::cout <<  " "<<std::endl;
+    }*/
+    
 }
 
 Map::~Map() {
@@ -255,7 +264,10 @@ std::vector<std::pair<float, float>> Map::getGrid(int mapID, float x, float y) {
         }
         std::cout <<" "<<std::endl;
     }*/
-
+    for (int i = 0; i < points.size(); i++) {
+        std::cout << "x " << results.at(i).first << " ";
+        std::cout << "y " << results.at(i).second << " " << std::endl;
+    }
     return results;
 }
 

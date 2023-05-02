@@ -4,8 +4,8 @@
 #define GAME_LENGTH 300000
 #define LISTEN_TICK 10
 #define TICK_TIME 40
-#define CAMERA_SPEED 0.05f
-#define TURNING_RATIO 5.0f
+#define CAMERA_SPEED 0.3f
+#define TURNING_RATIO 4.0f
 #define NUM_EVENT_TYPES 6
 
 //enum class Character

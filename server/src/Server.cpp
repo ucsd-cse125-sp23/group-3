@@ -1,6 +1,7 @@
 #include "../include/Server.h"
 
 Map* Server::map;
+CollisionDetection Server::collisionDetection;
 
 Server::Server()
 {
@@ -91,11 +92,10 @@ Server::Server()
 		{0,0,1,0},
 		{0,0,0,1}
 	};
-	glm::mat4 locA = map->getModelOnMap(id_mat, 0, 3.0f, 3.0f);  
-	glm::mat4 locB = map->getModelOnMap(id_mat, 0, 0.0f, 0.0f);
-	glm::mat4 locC = map->getModelOnMap(id_mat, 1, 1.0f, 0.0f);
-	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.0f, 4.0f);
-	std::cerr << "loca:" << glm::to_string(locA) << std::endl;
+	glm::mat4 locA = map->getModelOnMap(id_mat, 1, 3.5f, 3.5f);  
+	glm::mat4 locB = map->getModelOnMap(id_mat, 1, 0.5f, 0.5f);
+	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
+	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
 	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY);
 }
@@ -215,7 +215,16 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	}
 
 	if (e == EventType::FORWARD) {
+		glm::mat4 old_loc = *loc;
 		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
+		int mapID;
+		float x;
+		float y;
+		map->getPosition(*loc, &mapID, &y, &x);
+		std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
+		if ((collisionDetection.checkCollisionWithWall(mapID, points))) {
+			*loc = old_loc;
+		}
 	}
 	else if (e == EventType::TURN_LEFT) {
 		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));

@@ -6,6 +6,3 @@ const float COLLISION_CHECKER = 0.13f;
 const float BOUNDARY_CHECKER = 0.02f;
 
 extern int MAP_ENCODING[3][6][6];
-extern glm::vec4 map0Transform;
-extern glm::vec4 map1Transform;
-extern glm::vec4 map2Transform;

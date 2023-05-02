@@ -47,6 +47,9 @@
     <ClCompile Include="..\shared\Event.cpp">
       <Filter>shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\CollisionDetection.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core.h">
@@ -80,6 +83,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\MapConstants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollisionDetection.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
