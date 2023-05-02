@@ -1,7 +1,7 @@
 ﻿#include <string>
 #include <iostream>
-#include "../include/Map.h"
-#include "../include/MapConstants.h"
+#include "Map.h"
+#include "MapConstants.h"
 #include <glm/gtx/string_cast.hpp>
 
 int MAP_ENCODING[3][6][6] = { 0 };
@@ -273,8 +273,7 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y) {
     //glm::vec4 point=glm::vec4(0.0f);
 }
 
-glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
-{
+glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y) {
     float walllength = groundsize / 5.0f;
     glm::vec4 position = glm::vec4(x * walllength, 0.0f, y * walllength, 0.0f);
     glm::vec4 MapTranslation;
@@ -301,11 +300,3 @@ glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
     pSource[14] = position[2];
     return glm::make_mat4(pSource);
 }
-
-
-void Map::draw(const glm::mat4& viewProjMtx, GLuint shader) {
-    map1->draw(viewProjMtx, shader);
-    map2->draw(viewProjMtx, shader);
-    map3->draw(viewProjMtx, shader);
-}
-

@@ -5,7 +5,8 @@ int main()
 {
 
      Server* serv = new Server();
-     
+     for (auto a : serv->ids)
+ 	    std::cout << a << " ";
      // blocks until 4 clients
      for (int id = 0; id < NUM_PLAYERS; id ++){
          SOCKET ss = INVALID_SOCKET;
@@ -13,7 +14,7 @@ int main()
              ss = accept(serv->ListenSocket, NULL, NULL);
          }
          serv->sessions[id] = ss;
-         std::cout << "connected ss " << ss << std::endl;
+         std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
      }
 
      // send initial gamedata to all clients
