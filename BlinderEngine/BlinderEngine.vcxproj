@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;C:\Users\24424\Desktop\group3\group-3\BlinderEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;C:\Users\24424\Desktop\group3\group-3\BlinderEngine;C:\Users\yingk\Documents\group-3\BlinderEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +154,8 @@
     <ClCompile Include="..\shared\Packet.cpp" />
     <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObsObject.cpp" />
+    <ClCompile Include="Obstacles.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CollisionDetection.cpp" />
     <ClCompile Include="src\Cube.cpp" />
@@ -208,6 +210,8 @@
     <ClInclude Include="include\Tokenizer.h" />
     <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\Window.h" />
+    <ClInclude Include="ObsObject.h" />
+    <ClInclude Include="Obstacles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
