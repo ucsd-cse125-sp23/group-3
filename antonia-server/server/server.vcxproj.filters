@@ -45,9 +45,6 @@
     <ClCompile Include="..\..\server\src\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BlinderEngine\src\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\server\Server.h">

@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "Tokenizer.h"
+#include "../include/Tokenizer.h"
 
 Tokenizer::Tokenizer() {
     File = 0;
