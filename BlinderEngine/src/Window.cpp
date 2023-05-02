@@ -255,6 +255,9 @@ void Window::displayCallback(GLFWwindow* window) {
     //glm::mat4 projection = glm::perspective(glm::radians(Cam->getFOV()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
 
+
+    map->obs->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     // Swap buffers.

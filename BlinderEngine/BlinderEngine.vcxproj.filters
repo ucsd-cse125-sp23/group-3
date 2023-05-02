@@ -142,6 +142,12 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="ObsObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -244,6 +250,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Skybox.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObsObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacles.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
