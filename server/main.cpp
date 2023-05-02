@@ -18,7 +18,6 @@ int main()
      }
 
      // send initial gamedata to all clients
-     serv->gd = new GameData();
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
          serv->send_gamedata(i);
