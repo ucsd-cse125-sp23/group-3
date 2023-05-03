@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "Submap.h"
+#include "../include/Submap.h"
 
 
 Submap::Submap(std::vector<glm::vec3> wallsmin, std::vector<glm::vec3> wallsmax, glm::vec3 groundmin, glm::vec3 groundmax) {

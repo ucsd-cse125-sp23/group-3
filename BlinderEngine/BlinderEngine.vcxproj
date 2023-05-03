@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;C:\Users\24424\Desktop\group3\group-3\BlinderEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;C:\Users\24424\Desktop\group3\group-3\BlinderEngine;C:\Users\yingk\Documents\group-3\BlinderEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,6 +164,8 @@
     <ClCompile Include="src\Minimap.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
+    <ClCompile Include="src\ObsObject.cpp" />
+    <ClCompile Include="src\Obstacles.cpp" />
     <ClCompile Include="src\PlayerModel.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
@@ -197,6 +199,8 @@
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\Minimap.h" />
+    <ClInclude Include="include\ObsObject.h" />
+    <ClInclude Include="include\Obstacles.h" />
     <ClInclude Include="include\PlayerModel.h" />
     <ClInclude Include="include\Skybox.h" />
     <ClInclude Include="include\StaticModel.h" />

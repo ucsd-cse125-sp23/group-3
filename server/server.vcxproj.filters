@@ -50,6 +50,12 @@
     <ClCompile Include="src\CollisionDetection.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObsObjectSv.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObstaclesSv.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core.h">
@@ -86,6 +92,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\CollisionDetection.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObsObjectSv.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObstaclesSv.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
