@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-
+#include "ObsObjectSv.h"
+#include "GlobalVariables.h"
 #include "core.h"
 
 class CollisionDetection {
