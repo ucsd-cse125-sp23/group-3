@@ -7,6 +7,7 @@
 #define CAMERA_SPEED 0.3f
 #define TURNING_RATIO 4.0f
 #define NUM_EVENT_TYPES 6
+#define PLAYER_RADIUS 2
 
 //enum class Character
 //{
