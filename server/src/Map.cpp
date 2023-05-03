@@ -7,7 +7,6 @@
 int MAP_ENCODING[3][6][6] = { 0 };
 
 Map::Map() {
-
     wallheight = WALL_HEIGHT;
     groundheight = GROUND_HEIGHT;
     wallwidth = WALL_WIDTH;
@@ -60,6 +59,20 @@ Map::Map() {
         {-0.5,0,0.5 * glm::sqrt(3.0f),0},
         {0,0,0,1} };
     map3->setModel(trans3);
+
+    obs = new ObstaclesSv();
+    glm::mat4 id_mat = {
+        {1,0,0,0},
+        {0,1,0,0},
+        {0,0,1,0},
+        {0,0,0,1}
+    };
+    for (int ind = 0; ind < obs->obs_vec.size(); ind++) {
+        ObsObjectSv* obj = obs->obs_vec[ind];
+
+        obs->glm_vec.push_back(this->getModelOnMap(id_mat, obj->map_id, (obj->pos).first, (obj->pos).second));
+    }
+    // std::cout << obs->glm_vec.size() << std::endl;
 }
 
 Map::~Map() {

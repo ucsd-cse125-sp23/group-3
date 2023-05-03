@@ -47,6 +47,12 @@
     <ClCompile Include="..\shared\Event.cpp">
       <Filter>shared</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObsObjectSv.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObstaclesSv.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core.h">
@@ -80,6 +86,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\MapConstants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObsObjectSv.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObstaclesSv.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
