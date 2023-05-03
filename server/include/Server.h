@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "../include/Map.h"
+#include "Map.h"
 #include "../../shared/Packet.h"
+#include "CollisionDetection.h"
 
 #include <algorithm>
 #include <iterator>
@@ -41,6 +42,7 @@ public:
 	Event e[NUM_PLAYERS];
 
 	static Map* map;
+	static CollisionDetection collisionDetection;
 	
 	void updateByEvent(std::unordered_map<int, std::vector<int>> events);
 	void updateBySingleEvent(EventType e, int character);
