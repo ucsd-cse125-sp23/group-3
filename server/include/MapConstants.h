@@ -1,3 +1,5 @@
+#pragma once
+
 const float WALL_HEIGHT = 5.0f;
 const float GROUND_HEIGHT = 0.0f;
 const float WALL_WIDTH = 0.7f;
