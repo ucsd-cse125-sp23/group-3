@@ -321,7 +321,7 @@ bool CheckCollision(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec) // AA
     
     for (ObsObjectSv* obs : obs_vec) {
         // calculate AABB info (center, half-extents)
-        float* pSourceObs = (float*)glm::value_ptr(player);
+        float* pSourceObs = (float*)glm::value_ptr();
         glm::vec2 center(pSourceObs[12], pSourceObs[14]);
         //glm::vec2 aabb_half_extents(two.Size.x / 2.0f, two.Size.y / 2.0f);
         //glm::vec2 aabb_center(two.Position.x + aabb_half_extents.x, two.Position.y + aabb_half_extents.y);
