@@ -39,6 +39,34 @@ ObstaclesSv::ObstaclesSv() {
 		}
 		token.Close();
 	}
+	for (int ind = 0; ind < obs_vec.size(); ind++) {
+		ObsObjectSv* obj = obs_vec[ind];
+
+		float min = 0;
+		float max = 1;
+
+		if (obj->type == 3) {
+			float pos = GROUND_SIZE / 11.0f;
+			float size = GROUND_SIZE / 65.0f;
+
+			obj->width = pos * 2;
+			obj->height = size * 2;
+		}
+		else if (obj->type == 2) {
+			min = -GROUND_SIZE / 28.0f;
+			max = GROUND_SIZE / 28.0f;
+
+			obj->width = max * 2;
+			obj->height = max * 2;
+		}
+		else if (obj->type == 1) {
+			min = -GROUND_SIZE / 42.0f;
+			max = GROUND_SIZE / 42.0f;
+
+			obj->width = max * 2;
+			obj->height = max * 2;
+		}
+	}
 }
 ObstaclesSv::~ObstaclesSv() {
 	for (auto e : obs_vec) {
