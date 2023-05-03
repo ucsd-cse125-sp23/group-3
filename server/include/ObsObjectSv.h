@@ -1,5 +1,9 @@
 #pragma once
+#include "Tokenizer.h"
 
+#include "MapConstants.h"
+
+#include <vector>
 #include <utility>
 
 class ObsObjectSv {
@@ -10,6 +14,7 @@ public:
 	float width;
 	float height;
 	std::pair<float, float> pos;
+	glm::mat4 pSrc;
 
 	ObsObjectSv(int, int, int, float, float);
 };

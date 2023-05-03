@@ -72,6 +72,7 @@ Map::Map() {
 
         obs->glm_vec.push_back(this->getModelOnMap(id_mat, obj->map_id, (obj->pos).first, (obj->pos).second));
     }
+    obs->pairUp();
     // std::cout << obs->glm_vec.size() << std::endl;
 }
 
