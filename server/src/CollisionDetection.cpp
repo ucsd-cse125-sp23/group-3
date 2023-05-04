@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 
+
 int crossingTiles(float x_1, float y_1, float x_2, float y_2) {
     int x_1int = (int)x_1;
     int y_1int = (int)y_1;
@@ -310,4 +311,38 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
     }
     return false;
 
+}
+
+bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec) // AABB - Circle collision
+{
+    // get center point circle first 
+    float* pSource = (float*)glm::value_ptr(player);
+    glm::vec2 center(pSource[12], pSource[14]);
+    // std::cout << "player position " << center.x << " " << center.y << std::endl;
+
+    
+    for (ObsObjectSv* obs : obs_vec) {
+        // calculate AABB info (center, half-extents)
+        float* pSourceObs = (float*)glm::value_ptr(obs->pSrc);
+        glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
+        // std::cout << "obs position " << centerObs.x << " " << centerObs.y << std::endl;
+        glm::vec2 aabb_half_extents(obs->width / 2.0f, obs->height / 2.0f);
+        //glm::vec2 aabb_center(two.Position.x + aabb_half_extents.x, two.Position.y + aabb_half_extents.y);
+        // get difference vector between both centers
+        glm::vec2 difference = center - centerObs;
+        glm::vec2 clamped = glm::clamp(difference, -aabb_half_extents, aabb_half_extents);
+        // now that we know the clamped values, add this to AABB_center and we get the value of box closest to circle
+        glm::vec2 closest = centerObs + clamped;
+        // now retrieve vector between center circle and closest point AABB and check if length < radius
+        difference = closest - center;
+        // std::cout << "diff " << difference.x << "" << difference.y << std::endl;
+        // TODO: change player radius
+        if (glm::length(difference) < 1.42) { // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
+            // std::cout << "colliding with obstacle" << std::endl;
+            return true;
+        }
+    }
+ 
+
+    return false;
 }

@@ -224,6 +224,9 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		if ((collisionDetection.checkCollisionWithWall(mapID, points))) {
 			*loc = old_loc;
 		}
+		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec)) { // collide with obstacle
+			*loc = old_loc;
+		}
 	}
 	else if (e == EventType::TURN_LEFT) {
 		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
