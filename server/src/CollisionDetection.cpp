@@ -346,3 +346,26 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
 
     return false;
 }
+
+std::vector<bool> CollisionDetection::collideBetweenCircles(std::vector<glm::mat4> players) {
+    std::vector<glm::vec2> playersXY;
+    std::vector<bool> colliding;
+
+    for (glm::mat4 p : players) {
+        float* pSource = (float*)glm::value_ptr(p);
+        glm::vec2 pXY(pSource[12], pSource[14]);
+        playersXY.push_back(pXY);
+    }
+
+
+    for (int i = 0; i < playersXY.size(); i++) {
+        for (int j = i + 1; j < playersXY.size(); j++) {
+            glm::vec2 diff = playersXY[i] - playersXY[j];
+            if (diff.length() < PLAYER_RADIUS * 2) {
+                colliding[i] = true;
+                colliding[j] = true;
+            }
+        }
+    }
+    return colliding;
+}
