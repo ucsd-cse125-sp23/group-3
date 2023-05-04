@@ -19,12 +19,13 @@ private:
     Submap* map2;
     Submap* map3;
     float wallheight, groundheight, wallwidth, groundsize;
-    ObstaclesSv* obs;
+    
 
 public:
     Map();
     ~Map();
 
+    ObstaclesSv* obs;
     void getPosition(glm::mat4 model, int* mapID, float* x, float* y);
     std::vector<std::pair<float, float>> getGrid(int mapID, float x, float y);
     glm::vec4 getPointsCollision(int mapID, float x, float y);
