@@ -32,6 +32,7 @@ public:
 	void send_gamedata(int client_id);
 	int recv_event(int client_id);
 	std::vector<int> recv_eventRecords(int client_id);
+	bool check_attackability(int player_id, int obs_id);
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
