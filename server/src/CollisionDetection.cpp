@@ -318,14 +318,14 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
     // get center point circle first 
     float* pSource = (float*)glm::value_ptr(player);
     glm::vec2 center(pSource[12], pSource[14]);
-    std::cout << "player position " << center.x << " " << center.y << std::endl;
+    // std::cout << "player position " << center.x << " " << center.y << std::endl;
 
     
     for (ObsObjectSv* obs : obs_vec) {
         // calculate AABB info (center, half-extents)
         float* pSourceObs = (float*)glm::value_ptr(obs->pSrc);
         glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
-        std::cout << "obs position " << centerObs.x << " " << centerObs.y << std::endl;
+        // std::cout << "obs position " << centerObs.x << " " << centerObs.y << std::endl;
         glm::vec2 aabb_half_extents(obs->width / 2.0f, obs->height / 2.0f);
         //glm::vec2 aabb_center(two.Position.x + aabb_half_extents.x, two.Position.y + aabb_half_extents.y);
         // get difference vector between both centers
@@ -335,10 +335,10 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
         glm::vec2 closest = centerObs + clamped;
         // now retrieve vector between center circle and closest point AABB and check if length < radius
         difference = closest - center;
-        std::cout << "diff " << difference.x << "" << difference.y << std::endl;
+        // std::cout << "diff " << difference.x << "" << difference.y << std::endl;
         // TODO: change player radius
         if (glm::length(difference) < 1.42) { // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
-            std::cout << "colliding with obstacle" << std::endl;
+            // std::cout << "colliding with obstacle" << std::endl;
             return true;
         }
     }
