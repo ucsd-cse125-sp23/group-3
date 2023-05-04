@@ -337,7 +337,7 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
         difference = closest - center;
         // std::cout << "diff " << difference.x << "" << difference.y << std::endl;
         // TODO: change player radius
-        if (glm::length(difference) < 1.42) { // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
+        if (glm::length(difference) < PLAYER_RADIUS) { // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
             // std::cout << "colliding with obstacle" << std::endl;
             return true;
         }
