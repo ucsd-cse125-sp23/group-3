@@ -25,7 +25,7 @@ class graphic2D {
         ~graphic2D();
 
         void bindTexture(const char* filename);
-        void draw(const glm::mat4& viewProjMtx, StaticShader shader);
+        void draw(StaticShader shader);
         void update();
         void setColor(glm::vec3 _color);
         void setposition(float _sizeX, float _sizeY, float _positionX, float _positionY);

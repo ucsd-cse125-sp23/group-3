@@ -131,7 +131,7 @@ void Map::update() {
     map3->update();
 }
 
-void Map::getPosition(glm::mat4 model, int* mapID, float* x, float* y) {
+void Map::getPosition(glm::mat4& model, int* mapID, float* x, float* y) {
     const float* pSource = (const float*)glm::value_ptr(model);
     glm::vec4 position = glm::vec4(pSource[12], pSource[13], pSource[14], pSource[15]);
     float theta = atan2(-pSource[14], pSource[12]);
@@ -287,7 +287,7 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y) {
     //glm::vec4 point=glm::vec4(0.0f);
 }
 
-glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
+glm::mat4 Map::getModelOnMap(glm::mat4& original, int mapID, float x, float y)
 {
     float walllength = groundsize / 5.0f;
     glm::vec4 position = glm::vec4(x * walllength, 0.0f, y * walllength, 0.0f);
