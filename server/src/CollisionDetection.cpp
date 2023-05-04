@@ -349,7 +349,7 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
 
 std::vector<bool> CollisionDetection::collideBetweenCircles(std::vector<glm::mat4> players) {
     std::vector<glm::vec2> playersXY;
-    std::vector<bool> colliding;
+    std::vector<bool> colliding({false, false, false, false});
 
     for (glm::mat4 p : players) {
         float* pSource = (float*)glm::value_ptr(p);
