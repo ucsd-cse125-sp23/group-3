@@ -23,7 +23,6 @@ public:
     // Objects to render  online
     static Map* map;
     static std::vector<Cube*> players;
-    static Cube* cube;
     static graphic2D* canvas;
     static UI* ui;
 

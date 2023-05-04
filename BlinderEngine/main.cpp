@@ -110,8 +110,6 @@ int main(void) {
         
         // listen for updated game data
         check_gd = cli->recv_gamedata();
-        Window::no_event = true;
-        std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
 
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {
@@ -123,12 +121,12 @@ int main(void) {
             Window::players.at(2)->setModel(cli->gd->location_C);
             Window::players.at(3)->setModel(cli->gd->location_D);
         }
-        
-        // Main render display callback. Rendering of objects is done here.
-        Window::displayCallback(window);
-        
+        Window::no_event = true;
+        std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
         // Idle callback. Updating objects, etc. can be done here.
         Window::idleCallback();
+        // Main render display callback. Rendering of objects is done here.
+        Window::displayCallback(window);
     }
 
     Window::cleanUp();

@@ -213,7 +213,6 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	default:
 		break;
 	}
-
 	if (e == EventType::FORWARD) {
 		glm::mat4 old_loc = *loc;
 		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));

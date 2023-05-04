@@ -15,7 +15,6 @@ const char* Window::windowTitle = "Model Environment";
 // Objects to render
 Map* Window::map;
 UI* Window::ui;
-Cube* Window::cube;
 std::vector<Cube*> Window::players = std::vector<Cube*>(4);
 ObjObject* objObject1;
 DaeObject* daeObject1;
@@ -110,7 +109,6 @@ bool Window::initializeObjects(int PlayID) {
 
     daeObjectList.push_back(daeObject1);
 
-    cube = new Cube();
     //cube->spin(180);
     //cube->move(-30.0f);
     //Cam->SetSpin(180);
@@ -290,8 +288,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     std::fill(eventChecker.begin(), eventChecker.end(), 0);
     no_event = true;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-        Cam->SetMove(-cameraSpeed);
-        cube->move(-cameraSpeed);
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             players.at(playerID)->move(-cameraSpeed);
@@ -304,8 +300,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
         
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
-        Cam->SetSpin(cameraSpeed*turningratio);
-        cube->spin(cameraSpeed*turningratio);
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(cameraSpeed * turningratio);
@@ -316,9 +310,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
-        Cam->SetSpin(-cameraSpeed*turningratio);
         //backPackObjectspin(-cameraSpeed * turningratio);
-        cube->spin(-cameraSpeed*turningratio);
         if (Constants::offline) {
             players.at(playerID)->spin(-cameraSpeed * turningratio);
             daeObject1->spin(-cameraSpeed * turningratio); 

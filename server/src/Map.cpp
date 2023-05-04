@@ -269,10 +269,10 @@ std::vector<std::pair<float, float>> Map::getGrid(int mapID, float x, float y) {
         }
         std::cout <<" "<<std::endl;
     }*/
-    for (int i = 0; i < points.size(); i++) {
-        std::cout << "x " << results.at(i).first << " ";
-        std::cout << "y " << results.at(i).second << " " << std::endl;
-    }
+    //for (int i = 0; i < points.size(); i++) {
+    //    std::cout << "x " << results.at(i).first << " ";
+    //    std::cout << "y " << results.at(i).second << " " << std::endl;
+    //}
     return results;
 }
 
