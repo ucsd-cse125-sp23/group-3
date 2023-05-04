@@ -6,5 +6,6 @@ const float WALL_WIDTH = 0.7f;
 const float GROUND_SIZE = 60.0f;
 const float COLLISION_CHECKER = 0.13f;
 const float BOUNDARY_CHECKER = 0.02f;
+const float PLAYER_RADIUS = 1.42f;
 
 extern int MAP_ENCODING[3][6][6];
