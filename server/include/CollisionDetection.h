@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "ObsObjectSv.h"
-#include "GlobalVariables.h"
 #include "core.h"
 
 class CollisionDetection {
@@ -20,4 +19,5 @@ class CollisionDetection {
          * can be obtained by calling Map::getPosition
         */
         bool checkCollisionWithWall(int mapID, std::vector<std::pair<float, float>> points);
+        bool collideWithObstacle(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec);
 };
