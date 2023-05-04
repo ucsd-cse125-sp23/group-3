@@ -191,6 +191,34 @@ std::vector<int> Server::recv_eventRecords(int client_id)
 	return eventRecord;
 }
 
+bool Server::check_attackability(int player_id, int obs_id)
+{
+	glm::mat4* loc = NULL;
+	switch (player_id)
+	{
+	case 0:
+		loc = &this->gd->location_A;
+		break;
+	case 1:
+		loc = &this->gd->location_B;
+		break;
+	case 2:
+		loc = &this->gd->location_C;
+		break;
+	case 3:
+		loc = &this->gd->location_D;
+		break;
+	default:
+		break;
+	}
+	glm::vec4 transf(0, 0, -ATTACK_RANGE, 1);
+	glm::vec4 ahead_point = *loc*transf;
+	glm::vec2 player_pt(ahead_point[0], ahead_point[2]);
+	float* pSourceObs = (float*)glm::value_ptr(map->obs->glm_vec[obs_id]);
+	glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
+	return glm::length(player_pt-centerObs) < ATTACK_RANGE;
+}
+
 
 void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::NOEVENT || (int)e == -1)
