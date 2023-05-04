@@ -246,7 +246,7 @@ void Window::displayCallback(GLFWwindow* window) {
             players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
         }
     }
-    canvas->draw(glm::mat4(1.0f), *uiShader);
+    canvas->draw(*uiShader);
 
 
 

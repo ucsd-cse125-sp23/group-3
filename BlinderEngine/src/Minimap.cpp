@@ -20,8 +20,8 @@ Minimap::~Minimap(){
 }
 
 void Minimap::draw(const glm::mat4& viewProjMtx, StaticShader shader){
-    minimap->draw(viewProjMtx,shader);
-    person->draw(viewProjMtx,shader);
+    minimap->draw(shader);
+    person->draw(shader);
 }
 
 void Minimap::update(){

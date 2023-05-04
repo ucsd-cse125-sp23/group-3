@@ -89,7 +89,7 @@ void graphic2D::bindTexture(const char* filename){
         stbi_image_free(data);
 }
 
-void graphic2D::draw(const glm::mat4& viewProjMtx, StaticShader shader){
+void graphic2D::draw(StaticShader shader){
 
         /*glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
