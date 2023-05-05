@@ -97,7 +97,9 @@ Server::Server()
 	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
 	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
-	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY);
+	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
+
+	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
 Server::~Server(){
@@ -265,17 +267,58 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 	else if (e == EventType::ATTACK) {
-		// Attack!!!
+		for (int i = 0; i < map->obs->glm_vec.size(); i++)
+		{
+			bool attack_success = check_attackability(id, i);
+			if (attack_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
+			{
+				int obs_type = map->obs->obs_vec[i]->type;
+				int cd_time = 0;
+				switch (obs_type)
+				{
+				case 1:
+					cd_time = SMALL_OBS;
+					break;
+				case 2:
+					cd_time = MEDIUM_OBS;
+					break;
+				case 3:
+					cd_time = LARGE_OBS;
+					break;
+				default:
+					break;
+				}
+				std::pair<int, int> obs_data = std::make_pair(i, cd_time);
+				this->obs_countdown[id] = obs_data;
+				this->gd->obstacle_states[i] = (int)ObstacleState::CURRENTLY_DESTROYING;
+				this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
+			}
+		}
 	}
 
 }
 
 void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
+	// Update timer
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
 
+	// Update obs cd
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->obs_countdown[i].first != -1) {
+			this->obs_countdown[i].second -= TICK_TIME;
+			if (this->obs_countdown[i].second <= 0)
+			{
+				this->obs_countdown[i] = std::make_pair(-1, -1);
+				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
+				this->gd->player_status[i] = (int)PlayerStatus::NONE;
+				this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
+			}
+		}
+	}
 	for (auto it:events)
 	{
 		int id = it.first;
