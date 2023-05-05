@@ -244,6 +244,8 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
+	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
+
 	for (auto it:events)
 	{
 		int id = it.first;
@@ -252,5 +254,36 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 		{
 			if (record[i]) updateBySingleEvent((EventType)(i+1), id);
 		}
+	}
+	std::vector<bool> collidingPlayer = this->collisionDetection.collideBetweenCircles(this->gd->getAllLocations());
+
+	if (collidingPlayer[0]) {
+		std::cout << glm::to_string(playersLoc[0]) << std::endl;
+
+		this->gd->location_A = playersLoc[0];
+		std::cout << glm::to_string(playersLoc[0]) << std::endl;
+
+		std::cout << "collide" << std::endl;
+	}
+	if (collidingPlayer[1]) {
+		std::cout << glm::to_string(playersLoc[1]) << std::endl;
+
+		this->gd->location_B = playersLoc[1];
+		std::cout << "collide" << std::endl;
+
+	}
+	if (collidingPlayer[2]) {
+		std::cout << glm::to_string(playersLoc[2]) << std::endl;
+
+		this->gd->location_C = playersLoc[2];
+		std::cout << "collide" << std::endl;
+
+	}
+	if (collidingPlayer[3]) {
+		std::cout << glm::to_string(playersLoc[3]) << std::endl;
+
+		this->gd->location_D = playersLoc[3];
+		std::cout << "collide" << std::endl;
+
 	}
 }

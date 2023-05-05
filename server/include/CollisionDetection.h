@@ -20,4 +20,5 @@ class CollisionDetection {
         */
         bool checkCollisionWithWall(int mapID, std::vector<std::pair<float, float>> points);
         bool collideWithObstacle(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec);
+        std::vector<bool> collideBetweenCircles(std::vector<glm::mat4> players);
 };
