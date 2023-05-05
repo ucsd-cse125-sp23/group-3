@@ -2,6 +2,7 @@
 #include "UI.h"
 
 UI::UI() {
+	assigned_id = -1;
 	character = new graphic2D(UI::char_sizeX, UI::char_sizeY * 800 / 600, 
 		UI::char_posiX, UI::char_posiY, true);
 	character->bindTexture(UI::char_png);
@@ -44,7 +45,9 @@ UI::~UI() {
 
 void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader) {
 	character->draw(viewProjMtx, shader);
-	skill->draw(viewProjMtx, shader);
+	if (assigned_id == 0) {
+		skill->draw(viewProjMtx, shader);
+	}
 	/*float rate;
 	std::cin >> rate;
 	changeTimebarSizeY(rate);*/
@@ -113,4 +116,23 @@ void UI::changeLevelbarSizeY(float rate) {
 void UI::setPlayerPosition(glm::mat4 model) {
 	minimap->setPosition(model);
 	minimap->update();
+}
+
+void UI::setUiByPlayerID(int id) {
+	if (id == 0) {			// Alice
+		char_png = "./images/Alice.png";
+	}
+	else if (id == 1) {		// Bob
+		char_png = "./images/Bob.png";
+	}
+	else if (id == 2) {		// Carol
+		char_png = "./images/Carol.png";
+	}
+	else if (id == 3) {		// Dave
+		char_png = "./images/Dave.png";
+	}
+	else {
+		return;
+	}
+	
 }

@@ -2,7 +2,8 @@
 #include "core.h"
 #include "../client/Client.h"
 #include "../shared/Player.h"
-
+#include <chrono>
+#include <ctime>
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -63,15 +64,22 @@ int main(void) {
     // Client setup
     Client* cli = new Client();
 
+    // TODO(graphics): load story&skill
+
+    // TODO(graphics): load landing page
+    Window::initializeLanding();
+
     // listen for initial game data
     int check_gd = cli->recv_gamedata();
     while (check_gd == -1 && !Constants::offline) {
         check_gd = cli->recv_gamedata();
     }
-
-    // TODO(graphics): load story&skill
-
-    // TODO(graphics): load landing page
+    Window::drawLanding(window);
+    while (Window::state == WindowState::LANDING) {
+        Window::drawLanding(window);
+        std::cout << "draw landing page\n";
+    }
+    
 
     // TODO: check user action(ready for game) & send event packet
     cli->send_event(EventType::READY);
@@ -88,10 +96,19 @@ int main(void) {
 
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
+    //Window::ui->;
+
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
 
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
-    
+    Window::ui->setUiByPlayerID(assigned_id);
+    end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
     // listen for game start
     int check_start = cli->recv_gamedata();
     while (check_start == -1 && !Constants::offline) {
