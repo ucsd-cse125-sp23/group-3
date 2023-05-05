@@ -57,7 +57,7 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[1].first)][(int)(points[1].second)];
             if (tile == 3 || tile == 2) {
-                std::cerr << "colliding left wall on point 0&1!" << std::endl;
+                // std::cerr << "colliding left wall on point 0&1!" << std::endl;
                 return true;
             }
         }
@@ -67,7 +67,7 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile == 3 || tile == 2) {
-                std::cerr << "colliding left wall on point 2&3!" << std::endl;
+                // std::cerr << "colliding left wall on point 2&3!" << std::endl;
                 return true;
             }
         }
@@ -78,7 +78,7 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[2].second)];
             if (tile == 3 || tile == 1) {
-                std::cerr << "colliding top wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding top wall on point 0&2!" << std::endl;
                 return true;
             }
         }
@@ -86,19 +86,19 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //std::cout<<"type02: "<< type02 <<std::endl;
             int tile1 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[2].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type3 top wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type3 top wall on point 0&2!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[0].first)][(int)(points[0].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type3 left wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type3 left wall on point 0&2!" << std::endl;
                 return true;
             }
         }
         else if (type02 == 4) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[0].second)];
             if (tile1 == 3 || tile1 == 1 || tile1 == 2) {
-                std::cerr << "colliding type4 walls on point 0&2!" << std::endl;
+                // std::cerr << "colliding type4 walls on point 0&2!" << std::endl;
                 return true;
             }
         }
@@ -107,26 +107,26 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile == 3 || tile == 1) {
-                std::cerr << "colliding top wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding top wall on point 1&3!" << std::endl;
                 return true;
             }
         }
         else if (type13 == 3) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type3 top wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type3 top wall on point 1&3!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[1].first)][(int)(points[1].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type3 left wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type3 left wall on point 1&3!" << std::endl;
                 return true;
             }
         }
         else if (type13 == 4) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[1].second)];
             if (tile1 == 3 || tile1 == 1 || tile1 == 2) {
-                std::cerr << "colliding type4 walls on point 1&3!" << std::endl;
+                // std::cerr << "colliding type4 walls on point 1&3!" << std::endl;
                 return true;
             }
         }
@@ -139,7 +139,7 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[1].first)][(int)(points[1].second)];
             if (tile == 3 || tile == 2) {
-                std::cerr << "colliding left wall on point 0&1!" << std::endl;
+                // std::cerr << "colliding left wall on point 0&1!" << std::endl;
                 return true;
             }
         }
@@ -149,22 +149,22 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile == 3 || tile == 2) {
-                std::cerr << "colliding left wall on point 2&3!" << std::endl;
+                // std::cerr << "colliding left wall on point 2&3!" << std::endl;
                 return true;
             }
         }
 
         int type02 = crossingTiles(points[0].first, points[0].second, points[2].first, points[2].second);
 
-        if (points[0].first < 0) {
-            std::cerr << "type02: " << type02 << std::endl;
-        }
+        //if (points[0].first < 0) {
+        //    std::cerr << "type02: " << type02 << std::endl;
+        //}
 
         if (type02 == 2) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[2].second)];
             if (tile == 3 || tile == 1) {
-                std::cerr << "colliding top wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding top wall on point 0&2!" << std::endl;
                 return true;
             }
         }
@@ -172,24 +172,24 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //std::cout<<"type02: "<< type02 <<std::endl;
             int tile1 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[0].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type3 top wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type3 top wall on point 0&2!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[2].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type3 left wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type3 left wall on point 0&2!" << std::endl;
                 return true;
             }
         }
         else if (type02 == 4) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[2].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type4 top wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type4 top wall on point 0&2!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[0].first)][(int)(points[2].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type4 left wall on point 0&2!" << std::endl;
+                // std::cerr << "colliding type4 left wall on point 0&2!" << std::endl;
                 return true;
             }
         }
@@ -199,31 +199,31 @@ bool checkerLogic(int mapID, std::vector<std::pair<float, float>> points) {
             //top left wall on point 0&1
             int tile = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile == 3 || tile == 1) {
-                std::cerr << "colliding top wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding top wall on point 1&3!" << std::endl;
                 return true;
             }
         }
         else if (type13 == 3) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[1].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type3 top wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type3 top wall on point 1&3!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type3 left wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type3 left wall on point 1&3!" << std::endl;
                 return true;
             }
         }
         else if (type13 == 4) {
             int tile1 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[3].second)];
             if (tile1 == 3 || tile1 == 1) {
-                std::cerr << "colliding type4 top wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type4 top wall on point 1&3!" << std::endl;
                 return true;
             }
             int tile2 = MAP_ENCODING[mapID][(int)(points[1].first)][(int)(points[3].second)];
             if (tile2 == 3 || tile2 == 2) {
-                std::cerr << "colliding type4 left wall on point 1&3!" << std::endl;
+                // std::cerr << "colliding type4 left wall on point 1&3!" << std::endl;
                 return true;
             }
         }
@@ -261,14 +261,14 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
         if (mapID == 0 && points.at(0).first > 4.0f) {
             returnlogic = checkerLogic(1, points);
             if (returnlogic) {
-                std::cerr << "8 points map1 collision on edge 2" << std::endl;
+                // std::cerr << "8 points map1 collision on edge 2" << std::endl;
                 return true;
             }
             for (int i = 0; i < 4; i++) {
                 points.at(i) = points_org.at(i + 4);
             }
             if (returnlogic) {
-                std::cerr << "8 points map1 collision on edge 2" << std::endl;
+                // std::cerr << "8 points map1 collision on edge 2" << std::endl;
                 return true;
             }
             return checkerLogic(0, points);
@@ -276,7 +276,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
         else if (mapID == 0) {
             returnlogic = checkerLogic(0, points);
             if (returnlogic) {
-                std::cerr << "8 points map0 collision on edge 3" << std::endl;
+                // std::cerr << "8 points map0 collision on edge 3" << std::endl;
                 return true;
             }
             for (int i = 0; i < 4; i++) {
@@ -287,7 +287,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
         else if (mapID == 1) {
             returnlogic = checkerLogic(1, points);
             if (returnlogic) {
-                std::cerr << "8 points map1 collision on edge 1" << std::endl;
+                // std::cerr << "8 points map1 collision on edge 1" << std::endl;
                 return true;
             }
             for (int i = 0; i < 4; i++) {
@@ -298,7 +298,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
         else {
             returnlogic = checkerLogic(0, points);
             if (returnlogic) {
-                std::cerr << "8 points map0 collision on edge 4" << std::endl;
+                // std::cerr << "8 points map0 collision on edge 4" << std::endl;
                 return true;
             }
             for (int i = 0; i < 4; i++) {
@@ -306,7 +306,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
             }
             return checkerLogic(2, points);
         }
-        std::cerr << "Unhandeled?" << std::endl;
+        // std::cerr << "Unhandeled?" << std::endl;
 
     }
     return false;
