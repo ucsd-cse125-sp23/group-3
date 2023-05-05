@@ -9,13 +9,9 @@
 #define NUM_EVENT_TYPES 6
 #define ATTACK_RANGE 2
 
-//enum class Character
-//{
-//	ALICE = 0,
-//	BOB = 1,
-//	CAROL = 2,
-//	DAVE = 3
-//};
+#define SMALL_OBS 1000
+#define MEDIUM_OBS 3000
+#define LARGE_OBS 5000
 
 enum class GameState
 {
@@ -34,4 +30,18 @@ enum class EventType
 	TURN_RIGHT = 3,
 	ATTACK = 5,
 	READY = 6
+};
+
+enum class PlayerStatus
+{
+	NONE = 0,
+	ATTACK = 1,
+	SKILL = 2
+};
+
+enum class ObstacleState
+{
+	DESTROYED = 0,
+	CURRENTLY_DESTROYING = 1,
+	NOT_DESTROYED = 2
 };

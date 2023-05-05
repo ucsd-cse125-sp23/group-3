@@ -50,4 +50,6 @@ public:
 
 	std::vector<int> ids{ 0,1,2,3 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
+
+	std::vector<std::pair<int, int>> obs_countdown;
 };

@@ -24,8 +24,7 @@ void Packet::serialize(GameData* gd, char* buffer) {
 	memcpy(buffer, &gd->gamestate, sizeof(int));
 	buffer += sizeof(int);
 	
-	//memcpy(buffer, '\0', 1);
-	// buffer = '\0';
+	vec2str(gd->player_status, buffer, 4);
 }
 
 GameData Packet::deserializeGameData(char* buffer) {	
@@ -57,8 +56,10 @@ GameData Packet::deserializeGameData(char* buffer) {
 	memcpy(&gamestate, buffer, sizeof(int));
 	buffer += sizeof(int);
 
+	std::vector<int> ps = str2vec(buffer, 4);
+
 	return GameData(locA, locB, locC, locD, vec, 
-		level_A, level_B, level_C, level_D, remaining_time, gamestate);
+		level_A, level_B, level_C, level_D, remaining_time, gamestate, ps);
 }
 
 
