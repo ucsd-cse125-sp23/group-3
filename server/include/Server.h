@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "../../shared/Packet.h"
 #include "CollisionDetection.h"
+#include "core.h"
 
 #include <algorithm>
 #include <iterator>
@@ -46,6 +47,9 @@ public:
 	
 	void updateByEvent(std::unordered_map<int, std::vector<int>> events);
 	void updateBySingleEvent(EventType e, int character);
+
+	void updateInsecurity(int increase);
+	void check_A_Distance();
 
 	std::vector<int> ids{ 0,1,2,3 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
