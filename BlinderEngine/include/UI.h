@@ -5,6 +5,7 @@
 #include "DaeObject.h"
 #include "core.h"
 
+
 class UI {
 public:
 	const double char_sizeX = 0.15;
@@ -59,6 +60,7 @@ private:
 	graphic2D* level;
 	graphic2D* level_bar;
 	float level_bar_len;
+	int assigned_id;
 public:
 	UI();
 	~UI();
@@ -69,4 +71,5 @@ public:
 	void changeTimebarSizeY(float rate);
 	void changeLevelbarSizeY(float rate);
 	void setPlayerPosition(glm::mat4 model);
+	void setUiByPlayerID(int);
 };

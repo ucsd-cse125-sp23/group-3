@@ -12,6 +12,9 @@ int Window::width;
 int Window::height;
 const char* Window::windowTitle = "Model Environment";
 
+// Window state
+WindowState Window::state;
+
 // Objects to render
 Map* Window::map;
 UI* Window::ui;
@@ -38,6 +41,8 @@ StaticShader* staticShader;
 StaticShader* skyboxShader;
 StaticShader* Window::uiShader;
 graphic2D* Window::canvas;
+graphic2D* Window::landing_page;
+graphic2D* Window::ready_btn;
 
 
 
@@ -114,6 +119,29 @@ bool Window::initializeObjects(int PlayID) {
     //Cam->SetSpin(180);
     //Cam->SetMove(-30.0f);
     return true;
+}
+
+bool Window::initializeLanding() {
+    state = WindowState::LANDING;
+    landing_page = new graphic2D(2, 2, -1, -1, true);
+    const char* landing_page_png = "./resources/images/test.png";
+    landing_page->bindTexture(landing_page_png);
+
+    ready_btn = new graphic2D(0.2, 0.2, 0.7, -0.7, true);
+    const char* ready_btn_png = "./resources/images/test.png";
+    ready_btn->bindTexture(ready_btn_png);
+    return true;
+}
+
+void Window::drawLanding(GLFWwindow* window) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    landing_page->draw(glm::mat4(1.0f),*uiShader);
+    ready_btn->draw(glm::mat4(1.0f), *uiShader);
+
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
 }
 
 void Window::cleanUp() {
@@ -348,6 +376,10 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         RightDown = (action == GLFW_PRESS);
     }
+    if (cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+        state = WindowState::INGAME;
+        std::cout << "READY!!\n";
+    }
 }
 
 void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
@@ -355,6 +387,14 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int cameraspeed = 100;
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
+    if (cursorOnReadyBtn(currX, currY)) {
+        const char* ready_btn_png = "./resources/images/test2.png";
+        ready_btn->bindTexture(ready_btn_png);
+    }
+    else {
+        const char* ready_btn_png = "./resources/images/test.png";
+        ready_btn->bindTexture(ready_btn_png);
+    }
 
     MouseX = (int)currX;
     MouseY = (int)currY;
@@ -377,6 +417,19 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
         //Cam->SetOffsetDecrement(cameraspeed);
         cube->move(-cameraspeed/100.0f);
     }*/
+}
+
+bool Window::cursorOnReadyBtn(double currX, double currY) {
+    if (state != WindowState::LANDING) {
+        return false;
+    }
+    std::cout << currX << " " << currY << endl;
+    //std::cout << posiX << " " << posiY << endl;
+    if (width*1.7/2 < currX && currX < width*1.9/2 && height*1.5/2 < currY && currY < height*1.7/2) {
+        std::cout << "On ready btn\n";
+        return true;
+    }
+    return false;
 }
 
 
