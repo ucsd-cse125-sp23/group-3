@@ -37,5 +37,7 @@ namespace Constants
 
 
 	const bool offline = false;
+
+	const int MAX_LEVEL = 100;
 };
 #endif

@@ -96,7 +96,7 @@ int main(void) {
 
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
-    //Window::ui->;
+    
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
@@ -137,6 +137,8 @@ int main(void) {
             Window::players.at(1)->setModel(cli->gd->location_B);
             Window::players.at(2)->setModel(cli->gd->location_C);
             Window::players.at(3)->setModel(cli->gd->location_D);
+            player->updateByGD(cli->gd);
+            Window::updateLevel(player->getLevel());
         }
         Window::no_event = true;
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
