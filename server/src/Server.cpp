@@ -226,6 +226,8 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		}
 		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec)) { // collide with obstacle
 			*loc = old_loc;
+
+			updateInsecurity(5);
 		}
 	}
 	else if (e == EventType::TURN_LEFT) {
@@ -268,5 +270,38 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	}
 	if (collidingPlayer[3]) {
 		this->gd->location_D = playersLoc[3];
+	}
+}
+
+void Server::updateInsecurity(int increase) {
+	if (gd->level_A < Constants::MAX_LEVEL) {
+		gd->level_A += increase;
+	}
+}
+
+void Server::check_A_Distance() {
+	float* aSrc = (float*)glm::value_ptr(gd->location_A);
+	float* bSrc = (float*)glm::value_ptr(gd->location_B);
+	float* cSrc = (float*)glm::value_ptr(gd->location_C);
+	float* dSrc = (float*)glm::value_ptr(gd->location_D);
+
+	glm::vec2 a(aSrc[12], aSrc[14]);
+	glm::vec2 b(bSrc[12], bSrc[14]);
+	glm::vec2 c(cSrc[12], cSrc[14]);
+	glm::vec2 d(dSrc[12], dSrc[14]);
+
+	float dists[3] = {
+		glm::length(b - a),
+		glm::length(c - a),
+		glm::length(d - a)
+	};
+
+	float min_dist = dists[0];
+
+	if (dists[1] < min_dist) min_dist = dists[1];
+	if (dists[2] < min_dist) min_dist = dists[2];
+
+	if (min_dist > Constants::DIST_LIMIT) { 
+		updateInsecurity(1); 
 	}
 }
