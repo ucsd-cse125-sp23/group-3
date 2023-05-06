@@ -136,8 +136,8 @@ bool Window::initializeLanding() {
 void Window::drawLanding(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    landing_page->draw(glm::mat4(1.0f),*uiShader);
-    ready_btn->draw(glm::mat4(1.0f), *uiShader);
+    landing_page->draw(*uiShader);
+    ready_btn->draw(*uiShader);
 
     glfwPollEvents();
     // Swap buffers.
@@ -433,6 +433,6 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
 }
 
 void Window::updateLevel(int curr) {
-    ui->changeLevelbarSizeY((float) curr / MAX_LEVEL);
+    ui->changeLevelbarSizeY((float) curr / Constants::MAX_LEVEL);
 }
 
