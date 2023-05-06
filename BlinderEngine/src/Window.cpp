@@ -440,5 +440,7 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
     return false;
 }
 
-
+void Window::updateLevel(int curr) {
+    ui->changeLevelbarSizeY((float) curr / MAX_LEVEL);
+}
 

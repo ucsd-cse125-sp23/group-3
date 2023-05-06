@@ -90,4 +90,6 @@ public:
     static bool cursorOnReadyBtn(double, double);
 
     static unsigned int loadCubemap(std::vector<std::string> faces);
+
+    static void updateLevel(int);
 };

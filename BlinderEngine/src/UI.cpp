@@ -134,5 +134,6 @@ void UI::setUiByPlayerID(int id) {
 	else {
 		return;
 	}
+	character->bindTexture(UI::char_png);
 	
 }

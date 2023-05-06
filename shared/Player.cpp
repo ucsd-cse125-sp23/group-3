@@ -29,3 +29,22 @@ int Player::getLevel() {
 bool Player::getSeeAliceLocation() {
     return seeAliceLocation;
 }
+
+bool Player::updateByGD(GameData* gd) {
+	if (id == 0) {			// Alice
+		setLevel(gd->level_A);
+	}
+	else if (id == 1) {		// Bob
+		setLevel(gd->level_B);
+	}
+	else if (id == 2) {		// Carol
+		setLevel(gd->level_C);
+	}
+	else if (id == 3) {		// Dave
+		setLevel(gd->level_D);
+	}
+	else {
+		return false;
+	}
+	return true;
+}

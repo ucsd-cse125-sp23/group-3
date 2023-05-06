@@ -1,3 +1,5 @@
+#include "GameData.h"
+
 enum class Character {
     NOT_SELECTED = -1, 
     Alice = 0, 
@@ -25,4 +27,5 @@ class Player {
         Character getCharacter();
         int getLevel();
         bool getSeeAliceLocation();
+        bool updateByGD(GameData*);
 };
