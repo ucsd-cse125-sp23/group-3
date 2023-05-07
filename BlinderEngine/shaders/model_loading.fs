@@ -19,3 +19,4 @@ void main()
     FragColor = vec4(sqrt(reflectance), 1);
     //FragColor=texture(texture_diffuse1, TexCoords);
 }
+

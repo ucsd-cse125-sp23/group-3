@@ -27,3 +27,4 @@ void main()
 	// Gamma correction
 	fragColor = vec4(sqrt(reflectance), 1);
 }
+

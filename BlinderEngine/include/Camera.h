@@ -31,6 +31,8 @@ public:
     const glm::mat4& GetViewMtx();
     bool getPers() { return first_person; };
     float getFOV() { return FOV; };
+    glm::vec3 CameraPos, CameraTar;
+    
 private:
     // Perspective controls
     float FOV;       // Field of View Angle (degrees)
@@ -38,7 +40,7 @@ private:
     float NearClip;  // Near clipping plane distance
     float FarClip;   // Far clipping plane distance
     // Polar controls
-    glm::vec3 CameraPos, CameraTar, CameraUp, CameraDir;
+    glm::vec3 CameraUp, CameraDir;
     // Computed data
     bool first_person;
     glm::mat4 project, view;

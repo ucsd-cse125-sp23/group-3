@@ -1,6 +1,5 @@
 #include "Window.h"
 
-
 // Window Properties
 int Window::width;
 int Window::height;
@@ -24,12 +23,16 @@ const float turningratio=30.0f;
 GLuint Window::shaderProgram;
 Shader* Window::shaderText2DProgram;
 CollisionDetection collisionDetection;
+Mult_Lights* Window::lights;
 
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
+    
+
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
+    //lights.loadToUShader(shaderProgram,Camera);
     //std::cout<<"make myself here"<<std::endl;
     shaderText2DProgram=new Shader("shaders/texture2D.vs", "shaders/texture2D.fs"); 
     // Check the shader program.
@@ -42,6 +45,7 @@ bool Window::initializeProgram() {
 }
 
 bool Window::initializeObjects() {
+    lights=new Mult_Lights(true);
     // Create a cube
     cube = new Cube();
     map=new Map();
@@ -131,13 +135,14 @@ void Window::idleCallback() {
     map->update();
     canvas->setPosition(cube->getModel());
     canvas->update();
+    //lights->update(Cam);
     //cube->update();
 }
 
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    lights->loadToUShader(shaderProgram,*Cam);
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
