@@ -140,7 +140,6 @@ int main(void) {
             Window::players.at(3)->setModel(cli->gd->location_D);
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
-            std::cout << "in game:" << cli->gd->remaining_time << endl;
             Window::updateTime(cli->gd->remaining_time);
         }
         Window::no_event = true;

@@ -3,7 +3,6 @@
 
 int main()
 {
-
      Server* serv = new Server();
      for (auto a : serv->ids)
  	    std::cout << a << " ";

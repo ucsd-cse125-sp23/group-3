@@ -98,7 +98,7 @@ Server::Server()
 	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
 	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
-
+	std::cout << "why " << this->gd->remaining_time << std::endl;
 	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
@@ -252,11 +252,24 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		if ((collisionDetection.checkCollisionWithWall(mapID, points))) {
 			*loc = old_loc;
 		}
-		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec)) { // collide with obstacle
+		int obs_type;
+		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec, &obs_type)) { // collide with obstacle
 			*loc = old_loc;
 			if (id == 0)
 			{
-				updateInsecurity(5);
+				int increase = 0;
+				switch (obs_type)
+				{
+				case 1:
+					increase = SMALL_AWD;
+				case 2:
+					increase = MEDIUM_AWD;
+				case 3:
+					increase = LARGE_AWD;
+				default:
+					break;
+				}
+				updateInsecurity(increase);
 			}
 		}
 	}
