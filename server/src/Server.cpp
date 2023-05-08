@@ -97,7 +97,9 @@ Server::Server()
 	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
 	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
-	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY);
+	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
+
+	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
 Server::~Server(){
@@ -191,6 +193,33 @@ std::vector<int> Server::recv_eventRecords(int client_id)
 	return eventRecord;
 }
 
+bool Server::check_attackability(int player_id, int obs_id)
+{
+	glm::mat4* loc = NULL;
+	switch (player_id)
+	{
+	case 0:
+		return false; // Alice could not attack
+	case 1:
+		loc = &this->gd->location_B;
+		break;
+	case 2:
+		loc = &this->gd->location_C;
+		break;
+	case 3:
+		loc = &this->gd->location_D;
+		break;
+	default:
+		break;
+	}
+	glm::vec4 transf(0, 0, -ATTACK_RANGE, 1);
+	glm::vec4 ahead_point = *loc*transf;
+	glm::vec2 player_pt(ahead_point[0], ahead_point[2]);
+	float* pSourceObs = (float*)glm::value_ptr(map->obs->glm_vec[obs_id]);
+	glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
+	return glm::length(player_pt-centerObs) < ATTACK_RANGE;
+}
+
 
 void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::NOEVENT || (int)e == -1)
@@ -237,20 +266,112 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 	else if (e == EventType::ATTACK) {
-		// Attack!!!
+		if (id != 0)
+		{
+			handleAttack(id);
+		}
+		else {
+			// handle Alice's skill
+		}
 	}
 
 }
 
+void Server::handleAttack(int id)
+{
+	for (int i = 0; i < map->obs->glm_vec.size(); i++)
+	{
+		bool attack_success = check_attackability(id, i);
+		if (attack_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
+		{
+			std::cout << i << "is being attacked by " << id <<"!!!" << std::endl;
+			int obs_type = map->obs->obs_vec[i]->type;
+			int cd_time = 0;
+			switch (obs_type)
+			{
+			case 1:
+				cd_time = SMALL_OBS;
+				break;
+			case 2:
+				cd_time = MEDIUM_OBS;
+				break;
+			case 3:
+				cd_time = LARGE_OBS;
+				break;
+			default:
+				break;
+			}
+			std::pair<int, int> obs_data = std::make_pair(i, cd_time);
+			this->obs_countdown[id] = obs_data;
+			this->gd->obstacle_states[i] = (int)ObstacleState::CURRENTLY_DESTROYING;
+			this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
+		}
+	}
+}
+
+void Server::updateObstacleCountdown()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->obs_countdown[i].first != -1) {
+			this->obs_countdown[i].second -= TICK_TIME;
+			if (this->obs_countdown[i].second <= 0)
+			{
+				// update level of awareness
+				int obs_type = map->obs->obs_vec[this->obs_countdown[i].first]->type;
+				int award = 0;
+				switch (obs_type)
+				{
+				case 1:
+					award = SMALL_AWD;
+					break;
+				case 2:
+					award = MEDIUM_AWD;
+					break;
+				case 3:
+					award = LARGE_AWD;
+					break;
+				default:
+					break;
+				}
+				switch (i)
+				{
+				case 1:
+					this->gd->level_B += award;
+					break;
+				case 2:
+					this->gd->level_C += award;
+					break;
+				case 3:
+					this->gd->level_D += award;
+					break;
+				default:
+					break;
+				}
+				this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
+				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
+				this->gd->player_status[i] = (int)PlayerStatus::NONE;
+				this->obs_countdown[i] = std::make_pair(-1, -1);
+			}
+		}
+	}
+}
+
 void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
+	// Update timer
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
+	// Update obs cd
+	updateObstacleCountdown();
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
-
 	for (auto it:events)
 	{
 		int id = it.first;
+		// Not updating location if attacking
+		if (this->gd->player_status[id] == (int)PlayerStatus::ATTACK) {
+			continue;
+		}
 		std::vector<int> record = it.second;
 		for (int i = 0; i < record.size(); i++)
 		{

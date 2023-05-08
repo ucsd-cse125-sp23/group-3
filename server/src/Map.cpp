@@ -285,7 +285,7 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y) {
         return glm::inverse(map2->getModel()) * point;
     }
     else {
-        return glm::inverse(map2->getModel()) * point;
+        return glm::inverse(map1->getModel()) * point;
     }
     //glm::vec4 point=glm::vec4(0.0f);
 }
