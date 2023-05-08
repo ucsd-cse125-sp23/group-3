@@ -317,11 +317,11 @@ glm::mat4 Map::getModelOnMap(glm::mat4 original, int mapID, float x, float y)
 }
 
 
-void Map::draw(const glm::mat4& viewProjMtx, GLuint shader) {
+void Map::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os) {
     map1->draw(viewProjMtx, shader);
     map2->draw(viewProjMtx, shader);
     map3->draw(viewProjMtx, shader);
 
-    obs->draw(viewProjMtx, shader);
+    obs->draw(viewProjMtx, shader, os);
 }
 

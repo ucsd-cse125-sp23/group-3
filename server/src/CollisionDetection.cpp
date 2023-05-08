@@ -322,6 +322,10 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
 
     
     for (ObsObjectSv* obs : obs_vec) {
+        if (obs == NULL)
+        {
+            continue;
+        }
         // calculate AABB info (center, half-extents)
         float* pSourceObs = (float*)glm::value_ptr(obs->pSrc);
         glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
