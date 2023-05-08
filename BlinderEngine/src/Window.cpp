@@ -429,10 +429,10 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
     if (state != WindowState::LANDING) {
         return false;
     }
-    std::cout << currX << " " << currY << endl;
+    //std::cout << currX << " " << currY << endl;
     //std::cout << posiX << " " << posiY << endl;
     if (width*1.7/2 < currX && currX < width*1.9/2 && height*1.5/2 < currY && currY < height*1.7/2) {
-        std::cout << "On ready btn\n";
+        //std::cout << "On ready btn\n";
         return true;
     }
     return false;

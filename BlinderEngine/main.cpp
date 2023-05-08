@@ -77,7 +77,7 @@ int main(void) {
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
-        std::cout << "draw landing page\n";
+        //std::cout << "draw landing page\n";
     }
     
 
