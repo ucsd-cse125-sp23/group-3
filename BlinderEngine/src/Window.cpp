@@ -203,7 +203,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        Cam->setFirstperson();
+       Cam->setFirstperson();
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
@@ -290,6 +290,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
+            Cam->SetMove(-cameraSpeed);
             players.at(playerID)->move(-cameraSpeed);
             glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
             daeObject1->setModel(newMVP);
@@ -302,6 +303,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
+            Cam->SetSpin(cameraSpeed * turningratio);
             players.at(playerID)->spin(cameraSpeed * turningratio);
             daeObject1->spin(cameraSpeed * turningratio);
         }
@@ -312,6 +314,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         //backPackObjectspin(-cameraSpeed * turningratio);
         if (Constants::offline) {
+            Cam->SetSpin(-cameraSpeed * turningratio);
             players.at(playerID)->spin(-cameraSpeed * turningratio);
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
