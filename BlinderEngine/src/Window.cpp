@@ -95,9 +95,9 @@ bool Window::initializeObjects(int PlayID) {
     ui = new UI();
     skybox = new Skybox();
     end_page = new graphic2D(2, 2, -1, -1, true);
-    canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
+    // canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
     const char* textfile = "./resources/images/tag.png";
-    canvas->bindTexture(textfile);
+    // canvas->bindTexture(textfile);
     //ui->setDaeObj(daeObject1);
     
     //cube->move(2.0f);
@@ -237,7 +237,7 @@ void Window::idleCallback() {
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
-        
+        ui->setPlayerPosition(players.at(playerID)->getModel());
     }
     else {
         ui->setPlayerPosition(daeObject1->getModel());
@@ -276,7 +276,7 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
             players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
         }
     }
-    canvas->draw(*uiShader);
+    // canvas->draw(*uiShader);
 
 
 
