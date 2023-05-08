@@ -114,9 +114,7 @@ int main(void) {
     int check_start = cli->recv_gamedata();
     while (check_start == -1 && !Constants::offline) {
         check_start = cli->recv_gamedata();
-        std::cout << "in while:" << cli->gd->remaining_time << endl;
     }
-    std::cout << "start:" << cli->gd->remaining_time << endl;
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {

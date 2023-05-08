@@ -28,7 +28,7 @@ int main()
      {
          std::cout << "sending id:" << serv->ids[i] << std::endl;
          int check_recv_ready = serv->recv_event(i);
-         while (check_recv_ready == -1) {
+         while (check_recv_ready != (int)EventType::READY) {
              check_recv_ready = serv->recv_event(i);
          }
          serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
@@ -55,7 +55,6 @@ int main()
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
          serv->send_gamedata(i);
-         std::cout << "init: " << serv->gd->remaining_time << std::endl;
      }
 
      while (1) {
@@ -86,7 +85,6 @@ int main()
          }
 
          serv->updateByEvent(all_records);
-         std::cout << "In game: " << serv->gd->remaining_time << std::endl;
          serv->checkGameEndLogic();
          for (int j = 0; j < NUM_PLAYERS; j++)
          {

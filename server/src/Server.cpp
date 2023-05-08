@@ -122,7 +122,6 @@ int Server::update()
 			else{
 				char echo[512] = "echo ";
 				memcpy(&echo[strlen(echo)], buffer[id], strlen(buffer[id]));
-
 				if (send(sessions[id], echo, 512, 0) == SOCKET_ERROR) 
 				{
 					printf("send failed with error: %d\n", WSAGetLastError());
