@@ -199,8 +199,7 @@ bool Server::check_attackability(int player_id, int obs_id)
 	switch (player_id)
 	{
 	case 0:
-		loc = &this->gd->location_A;
-		break;
+		return false; // Alice could not attack
 	case 1:
 		loc = &this->gd->location_B;
 		break;
@@ -267,45 +266,51 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 	else if (e == EventType::ATTACK) {
-		for (int i = 0; i < map->obs->glm_vec.size(); i++)
+		if (id != 0)
 		{
-			bool attack_success = check_attackability(id, i);
-			if (attack_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
-			{
-				int obs_type = map->obs->obs_vec[i]->type;
-				int cd_time = 0;
-				switch (obs_type)
-				{
-				case 1:
-					cd_time = SMALL_OBS;
-					break;
-				case 2:
-					cd_time = MEDIUM_OBS;
-					break;
-				case 3:
-					cd_time = LARGE_OBS;
-					break;
-				default:
-					break;
-				}
-				std::pair<int, int> obs_data = std::make_pair(i, cd_time);
-				this->obs_countdown[id] = obs_data;
-				this->gd->obstacle_states[i] = (int)ObstacleState::CURRENTLY_DESTROYING;
-				this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
-			}
+			handleAttack(id);
+		}
+		else {
+			// handle Alice's skill
 		}
 	}
 
 }
 
-void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
-	// Update timer
-	if (this->gd->remaining_time >= 0) {
-		this->gd->remaining_time -= TICK_TIME;
+void Server::handleAttack(int id)
+{
+	for (int i = 0; i < map->obs->glm_vec.size(); i++)
+	{
+		bool attack_success = check_attackability(id, i);
+		if (attack_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
+		{
+			int obs_type = map->obs->obs_vec[i]->type;
+			int cd_time = 0;
+			switch (obs_type)
+			{
+			case 1:
+				cd_time = SMALL_OBS;
+				break;
+			case 2:
+				cd_time = MEDIUM_OBS;
+				break;
+			case 3:
+				cd_time = LARGE_OBS;
+				break;
+			default:
+				break;
+			}
+			std::pair<int, int> obs_data = std::make_pair(i, cd_time);
+			this->obs_countdown[id] = obs_data;
+			this->gd->obstacle_states[i] = (int)ObstacleState::CURRENTLY_DESTROYING;
+			this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
+		}
 	}
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
+}
 
-	// Update obs cd
+void Server::updateObstacleCountdown()
+{
 	for (int i = 0; i < NUM_PLAYERS; i++)
 	{
 		if (this->obs_countdown[i].first != -1) {
@@ -315,10 +320,51 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 				this->obs_countdown[i] = std::make_pair(-1, -1);
 				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
 				this->gd->player_status[i] = (int)PlayerStatus::NONE;
+				// update level of awareness
+				int obs_type = map->obs->obs_vec[this->obs_countdown[i].first]->type;
+				int award = 0;
+				switch (obs_type)
+				{
+				case 1:
+					award = SMALL_AWD;
+					break;
+				case 2:
+					award = MEDIUM_AWD;
+					break;
+				case 3:
+					award = LARGE_AWD;
+					break;
+				default:
+					break;
+				}
+				switch (i)
+				{
+				case 1:
+					this->gd->level_B += award;
+					break;
+				case 2:
+					this->gd->level_C += award;
+					break;
+				case 3:
+					this->gd->level_D += award;
+					break;
+				default:
+					break;
+				}
 				this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
 			}
 		}
 	}
+}
+
+void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
+	// Update timer
+	if (this->gd->remaining_time >= 0) {
+		this->gd->remaining_time -= TICK_TIME;
+	}
+	// Update obs cd
+	updateObstacleCountdown();
+	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
 	for (auto it:events)
 	{
 		int id = it.first;
