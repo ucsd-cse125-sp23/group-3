@@ -369,6 +369,10 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	for (auto it:events)
 	{
 		int id = it.first;
+		// Not updating location if attacking
+		if (this->gd->player_status[id] == (int)PlayerStatus::ATTACK) {
+			continue;
+		}
 		std::vector<int> record = it.second;
 		for (int i = 0; i < record.size(); i++)
 		{
