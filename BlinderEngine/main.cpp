@@ -161,7 +161,7 @@ int main(void) {
 
     Window::setEndPage(cli->gd->gamestate);
 
-    while (1) {
+    while (!glfwWindowShouldClose(window)) {
         Window::displayEndPage(window);
     }
 
