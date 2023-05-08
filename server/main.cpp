@@ -55,6 +55,7 @@ int main()
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
          serv->send_gamedata(i);
+         std::cout << "init: " << serv->gd->remaining_time << std::endl;
      }
 
      while (1) {
@@ -85,6 +86,7 @@ int main()
          }
 
          serv->updateByEvent(all_records);
+         std::cout << "In game: " << serv->gd->remaining_time << std::endl;
          serv->checkGameEndLogic();
          for (int j = 0; j < NUM_PLAYERS; j++)
          {

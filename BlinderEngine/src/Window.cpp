@@ -464,6 +464,10 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
 }
 
 void Window::updateLevel(int curr) {
-    ui->changeLevelbarSizeY((float) curr / Constants::MAX_LEVEL);
+    ui->changeLevelbarSizeY((float)curr / (float)Constants::MAX_LEVEL);
+}
+
+void Window::updateTime(int curr) {
+    ui->changeTimebarSizeY((float)curr / (float)GAME_LENGTH);
 }
 

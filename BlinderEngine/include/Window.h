@@ -94,4 +94,5 @@ public:
     static unsigned int loadCubemap(std::vector<std::string> faces);
 
     static void updateLevel(int);
+    static void updateTime(int);
 };

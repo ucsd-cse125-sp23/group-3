@@ -114,7 +114,9 @@ int main(void) {
     int check_start = cli->recv_gamedata();
     while (check_start == -1 && !Constants::offline) {
         check_start = cli->recv_gamedata();
+        std::cout << "in while:" << cli->gd->remaining_time << endl;
     }
+    std::cout << "start:" << cli->gd->remaining_time << endl;
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
@@ -140,6 +142,8 @@ int main(void) {
             Window::players.at(3)->setModel(cli->gd->location_D);
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
+            std::cout << "in game:" << cli->gd->remaining_time << endl;
+            Window::updateTime(cli->gd->remaining_time);
         }
         Window::no_event = true;
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
