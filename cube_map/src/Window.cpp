@@ -137,9 +137,9 @@ void Window::idleCallback() {
     map->update();
     canvas->setPosition(cube->getModel());
     canvas->update();
-    //lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
+    lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     
-    lights->updateLightAliceV2(cube->getModel());
+    //lights->updateLightAliceV2(cube->getModel());
     //lights->update(Cam);
     //cube->update();
 }

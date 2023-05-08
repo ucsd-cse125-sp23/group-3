@@ -16,7 +16,7 @@ double time_out_val=3.5;
  float _specular
 */
 Mult_Lights::Mult_Lights(bool _player0){
-    Light* dirLight=new Light(false,false,glm::vec3(0.25f), glm::vec3(-1.0f,-1.0f,0.0f), glm::vec3(0.0f,5.0f,0.0f),0.15f, 0.0f,  0.0f);
+    Light* dirLight=new Light(false,false,glm::vec3(0.2f), glm::vec3(-1.0f,-1.0f,0.0f), glm::vec3(0.0f,5.0f,0.0f),0.15f, 0.0f,  0.0f);
     lights_for_A.push_back(dirLight);
     lights_for_BCD.push_back(dirLight);
     spot_center=std::vector<glm::vec3>();
@@ -53,7 +53,7 @@ void Mult_Lights::AddLightBCD(std::vector<glm::vec3> lightcenters){
 void Mult_Lights::updateLightAlice(glm::vec3 lightcenter,bool onmove){
     glm::vec3 lightpos=glm::vec3(lightcenter.x,5.0f,lightcenter.z);
     if(checkLights(lightpos,spot_center)&&onmove){
-        Light* spotLight=new Light(true,false,glm::vec3(1.0f), glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.3f, 1.8f,  0.2f);
+        Light* spotLight=new Light(true,false,glm::vec3(1.0f), glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.3f, 2.8f,  0.2f);
         spotLight->SetParam(1.0f,0.6f,0.1f);
         spotLight->SetSpot(40.0f,80.0f);
         spot_center.push_back(lightpos);
@@ -102,7 +102,7 @@ void Mult_Lights::updateLightAliceV2(glm::mat4 model){
     
     float *pSource = (float*)glm::value_ptr(model);
     glm::vec3 lightpos=glm::vec3(pSource[12],5.0f,pSource[14]);
-    Light* spotLight=new Light(true,false,glm::vec3(1.0f), glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.3f, 1.8f,  0.2f);
+    Light* spotLight=new Light(true,false,glm::vec3(1.0f), glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.3f, 2.8f,  0.2f);
     spotLight->SetParam(1.0f,0.3f,0.1f);
     spotLight->SetSpot(40.0f,80.0f);
     if(lights_for_A.size()==1){
