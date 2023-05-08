@@ -140,6 +140,7 @@ int main(void) {
             Window::players.at(3)->setModel(cli->gd->location_D);
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
+            Window::updateTime(cli->gd->remaining_time);
         }
         Window::no_event = true;
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
@@ -151,7 +152,18 @@ int main(void) {
         }
         else {
             Window::displayCallback(window, cli->gd->obstacle_states);
+            // check game end logic
+            if (cli->gd->gamestate == GameState::LOSE ||
+                cli->gd->gamestate == GameState::WIN) {
+                break;
+            }
         }
+    }
+
+    Window::setEndPage(cli->gd->gamestate);
+
+    while (!glfwWindowShouldClose(window)) {
+        Window::displayEndPage(window);
     }
 
     Window::cleanUp();

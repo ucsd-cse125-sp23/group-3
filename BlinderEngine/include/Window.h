@@ -37,6 +37,7 @@ public:
     static graphic2D* landing_page;
     static graphic2D* ready_btn;
     static UI* ui;
+    static graphic2D* end_page;
 
     // Shader
     static GLuint shaderProgram;
@@ -77,6 +78,8 @@ public:
     static void idleCallback();
     static void drawLanding(GLFWwindow* window);
     static void displayCallback(GLFWwindow*, std::vector<int> os);
+    static void setEndPage(GameState);
+    static void displayEndPage(GLFWwindow*);
 
     // helper to reset the camera
     static void resetCamera();
@@ -91,4 +94,5 @@ public:
     static unsigned int loadCubemap(std::vector<std::string> faces);
 
     static void updateLevel(int);
+    static void updateTime(int);
 };

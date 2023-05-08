@@ -36,11 +36,13 @@ namespace Constants
 	const std::string girl_action_animation_path = "./resources/objects/girl/animation/girl_dribbling.dae";
 
 
-	const bool offline = true;
+	const bool offline = false;
 
 	const int MAX_LEVEL = 100;
 
 	const int DIST_LIMIT = 20;
+
+	const float MINIMAP_OBJECT_SIZE=0.02;
 
 };
 #endif

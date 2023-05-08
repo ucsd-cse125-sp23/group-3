@@ -308,7 +308,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
 
 }
 
-bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec) // AABB - Circle collision
+bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsObjectSv*>& obs_vec, int* obs_type) // AABB - Circle collision
 {
     // get center point circle first 
     float* pSource = (float*)glm::value_ptr(player);
@@ -337,6 +337,7 @@ bool CollisionDetection::collideWithObstacle(glm::mat4& player, std::vector<ObsO
         // TODO: change player radius
         if (glm::length(difference) < PLAYER_RADIUS) { // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
             // std::cout << "colliding with obstacle" << std::endl;
+            *obs_type = obs->type;
             return true;
         }
     }

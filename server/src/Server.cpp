@@ -97,8 +97,8 @@ Server::Server()
 	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
 	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
-	this->gd = new GameData(locA,locB,locC,locD, std::vector<int>(NUM_OBSTACLE, 2),0,0,0,0,GAME_LENGTH,GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
-
+	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
+	std::cout << "why " << this->gd->remaining_time << std::endl;
 	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
@@ -122,7 +122,6 @@ int Server::update()
 			else{
 				char echo[512] = "echo ";
 				memcpy(&echo[strlen(echo)], buffer[id], strlen(buffer[id]));
-
 				if (send(sessions[id], echo, 512, 0) == SOCKET_ERROR) 
 				{
 					printf("send failed with error: %d\n", WSAGetLastError());
@@ -253,10 +252,25 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		if ((collisionDetection.checkCollisionWithWall(mapID, points))) {
 			*loc = old_loc;
 		}
-		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec)) { // collide with obstacle
+		int obs_type;
+		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec, &obs_type)) { // collide with obstacle
 			*loc = old_loc;
-
-			updateInsecurity(5);
+			if (id == 0)
+			{
+				int increase = 0;
+				switch (obs_type)
+				{
+				case 1:
+					increase = SMALL_AWD;
+				case 2:
+					increase = MEDIUM_AWD;
+				case 3:
+					increase = LARGE_AWD;
+				default:
+					break;
+				}
+				updateInsecurity(increase);
+			}
 		}
 	}
 	else if (e == EventType::TURN_LEFT) {
@@ -362,6 +376,11 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
 	}
+	// check and update Alice's insecurity level every 30s?
+	if (this->gd->remaining_time%ALERT_ALICE == 0)
+	{
+		this->check_A_Distance();
+	}
 	// Update obs cd
 	updateObstacleCountdown();
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
@@ -424,5 +443,29 @@ void Server::check_A_Distance() {
 
 	if (min_dist > Constants::DIST_LIMIT) { 
 		updateInsecurity(1); 
+	}
+}
+
+void Server::checkGameEndLogic() {
+	// game time ends
+	if (this->gd->remaining_time <= 0) {
+		this->gd->gamestate = GameState::LOSE;
+		return;
+	}
+
+	// Alice insecurity level too high
+	if (this->gd->level_A >= Constants::MAX_LEVEL) {
+		this->gd->gamestate = GameState::LOSE;
+		return;
+	}
+
+	// check whether Alice reaches a specific tile
+	int map_id = -1;
+	float x = -1;
+	float y = -1;
+	this->map->getPosition(this->gd->location_A, &map_id, &x, &y);
+	if (map_id == 2 && x >= 0 && x <= 1.0f && y >= 0 && y <= 1.0f) {
+		this->gd->gamestate = GameState::WIN;
+		return;
 	}
 }
