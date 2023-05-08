@@ -255,8 +255,10 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		}
 		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec)) { // collide with obstacle
 			*loc = old_loc;
-
-			updateInsecurity(5);
+			if (id == 0)
+			{
+				updateInsecurity(5);
+			}
 		}
 	}
 	else if (e == EventType::TURN_LEFT) {
@@ -361,6 +363,11 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	// Update timer
 	if (this->gd->remaining_time >= 0) {
 		this->gd->remaining_time -= TICK_TIME;
+	}
+	// check and update Alice's insecurity level every 30s?
+	if (this->gd->remaining_time%ALERT_ALICE == 0)
+	{
+		this->check_A_Distance();
 	}
 	// Update obs cd
 	updateObstacleCountdown();

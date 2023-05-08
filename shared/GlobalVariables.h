@@ -8,6 +8,7 @@
 #define TURNING_RATIO 10.0f
 #define NUM_EVENT_TYPES 6
 #define ATTACK_RANGE 4
+#define ALERT_ALICE 30000
 
 #define SMALL_OBS 1000
 #define MEDIUM_OBS 3000
