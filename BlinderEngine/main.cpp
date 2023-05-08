@@ -104,6 +104,7 @@ int main(void) {
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
     Window::ui->setUiByPlayerID(assigned_id);
+
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
