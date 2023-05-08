@@ -13,6 +13,13 @@
 #include "../../shared/GlobalVariables.h"
 #include <Skybox.h>
 
+enum class WindowState
+{
+    LANDING = 0,
+    INGAME = 1,
+    ENDING = 2
+};
+
 class Window {
 public:
     // Window Properties
@@ -20,10 +27,15 @@ public:
     static int height;
     static const char* windowTitle;
 
+    // Window state
+    static WindowState state;
+
     // Objects to render  online
     static Map* map;
     static std::vector<Cube*> players;
     static graphic2D* canvas;
+    static graphic2D* landing_page;
+    static graphic2D* ready_btn;
     static UI* ui;
 
     // Shader
@@ -54,6 +66,7 @@ public:
     // Act as Constructors and desctructors
     static bool initializeProgram();
     static bool initializeObjects(int PlayID);
+    static bool initializeLanding();
     static void cleanUp();
 
     // for the Window
@@ -62,6 +75,7 @@ public:
 
     // update and draw functions
     static void idleCallback();
+    static void drawLanding(GLFWwindow* window);
     static void displayCallback(GLFWwindow*, std::vector<int> os);
 
     // helper to reset the camera
@@ -72,5 +86,9 @@ public:
     static void mouse_callback(GLFWwindow* window, int button, int action, int mods);
     static void cursor_callback(GLFWwindow* window, double currX, double currY);
 
+    static bool cursorOnReadyBtn(double, double);
+
     static unsigned int loadCubemap(std::vector<std::string> faces);
+
+    static void updateLevel(int);
 };
