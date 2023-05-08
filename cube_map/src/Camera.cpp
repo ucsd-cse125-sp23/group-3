@@ -7,7 +7,7 @@
 #include "glm/gtx/string_cast.hpp"
 #include <glm/glm.hpp>
 
-bool first_pers=false;
+bool first_pers=true;
 Camera::Camera() {
     Reset();
 }

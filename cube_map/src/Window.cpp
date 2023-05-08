@@ -25,7 +25,7 @@ Shader* Window::shaderText2DProgram;
 CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
 
-
+bool onMOVE;
 // Constructors and desctructors
 bool Window::initializeProgram() {
     
@@ -46,9 +46,11 @@ bool Window::initializeProgram() {
 
 bool Window::initializeObjects() {
     lights=new Mult_Lights(true);
+    
     // Create a cube
     cube = new Cube();
     map=new Map();
+    lights->AddLightBCD(map->calculateBCDLightcenter());
     glm::mat4 somerot=glm::mat4(1.0f);
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     cube->setModel(map->getModelOnMap(somerot,2,4.5,4.5));
@@ -135,6 +137,9 @@ void Window::idleCallback() {
     map->update();
     canvas->setPosition(cube->getModel());
     canvas->update();
+    //lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
+    
+    lights->updateLightAliceV2(cube->getModel());
     //lights->update(Cam);
     //cube->update();
 }
@@ -148,7 +153,7 @@ void Window::displayCallback(GLFWwindow* window) {
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //std::cout<<"make myself here"<<std::endl;
-    canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
+    //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
 
     int mapID;
     float x,y;
@@ -176,9 +181,11 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     /*
      * TODO: Modify below to add your key callbacks.
      */
+    onMOVE=false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         Cam->SetMove(-cameraSpeed);
         cube->move(-cameraSpeed);
+        onMOVE=true;
     }
         
     /*if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
