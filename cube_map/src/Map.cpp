@@ -235,7 +235,7 @@ std::vector<std::pair<float, float>> Map::getGrid(int mapID, float x, float y){
         // std::cout <<"x "<<results.at(i).first<<" ";
         // std::cout <<"y "<<results.at(i).second<<" "<<std::endl;
     }
-    /*if(points.size()==8){
+    /*if(points.size()==4){
         for(int i=0;i<points.size();i++){
             std::cout <<"x "<<results.at(i).first<<" ";
             std::cout <<"y "<<results.at(i).second<<" "<<std::endl;
@@ -253,7 +253,7 @@ glm::vec4 Map::getPointsCollision(int mapID, float x, float y){
     }else if(mapID==1){
         return glm::inverse(map2->getModel())*point;
     }else{
-        return glm::inverse(map2->getModel())*point;
+        return glm::inverse(map1->getModel())*point;
     }
     //glm::vec4 point=glm::vec4(0.0f);
 }

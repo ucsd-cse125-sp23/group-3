@@ -92,6 +92,11 @@ bool checkerLogic( int mapID, std::vector<std::pair<float, float>> points){
         }else if(type02==4){
             int tile1 = MAP_ENCODING[mapID][(int)(points[2].first)][(int)(points[0].second)];
             if (tile1 == 3 || tile1 == 1 || tile1 == 2) {
+                /*for(int i=0;i<4;i++){
+                    std::cout << "x " <<points[i].first <<", ";
+                    std::cout << "y " << points[i].second <<std::endl;
+                }
+                std::cout<<"tile encoding "<<tile1<<std::endl;*/
                 std::cout<<"colliding type4 walls on point 0&2!"<<std::endl;
                 return true;
             }
@@ -119,6 +124,11 @@ bool checkerLogic( int mapID, std::vector<std::pair<float, float>> points){
         }else if(type13==4){
             int tile1 = MAP_ENCODING[mapID][(int)(points[3].first)][(int)(points[1].second)];
             if (tile1 == 3 || tile1 == 1 || tile1 == 2) {
+                /*for(int i=0;i<4;i++){
+                    std::cout << "x " <<points[i].first <<", ";
+                    std::cout << "y " << points[i].second <<std::endl;
+                }
+                std::cout<<"tile encoding "<<tile1<<std::endl;*/
                 std::cout<<"colliding type4 walls on point 1&3!"<<std::endl;
                 return true;
             }
@@ -288,6 +298,7 @@ bool CollisionDetection::checkCollisionWithWall(int mapID, std::vector<std::pair
             for(int i=0;i<4;i++){
                 points.at(i)=points_org.at(i+4);
             }
+            //std::cout<< "8 points map2 ckecking on edge 4"<<std::endl;
             return checkerLogic( 2,points);
         }
         
