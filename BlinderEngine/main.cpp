@@ -151,7 +151,18 @@ int main(void) {
         }
         else {
             Window::displayCallback(window, cli->gd->obstacle_states);
+            // check game end logic
+            if (cli->gd->gamestate == GameState::LOSE ||
+                cli->gd->gamestate == GameState::WIN) {
+                break;
+            }
         }
+    }
+
+    Window::setEndPage(cli->gd->gamestate);
+
+    while (1) {
+        Window::displayEndPage(window);
     }
 
     Window::cleanUp();

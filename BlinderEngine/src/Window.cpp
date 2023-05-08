@@ -18,6 +18,7 @@ WindowState Window::state;
 // Objects to render
 Map* Window::map;
 UI* Window::ui;
+graphic2D* Window::end_page;
 std::vector<Cube*> Window::players = std::vector<Cube*>(4);
 ObjObject* objObject1;
 DaeObject* daeObject1;
@@ -93,6 +94,7 @@ bool Window::initializeObjects(int PlayID) {
     map = new Map();
     ui = new UI();
     skybox = new Skybox();
+    end_page = new graphic2D(2, 2, -1, -1, true);
     canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
     const char* textfile = "./resources/images/tag.png";
     canvas->bindTexture(textfile);
@@ -296,6 +298,29 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
     //}
     //glm::mat4 projection = glm::perspective(glm::radians(Cam->getFOV()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
+
+    // Gets events, including input such as keyboard and mouse or window resizing.
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
+}
+
+void Window::setEndPage(GameState gs) {
+    if (gs == GameState::WIN) {
+        const char* win_page_png = "./images/win.png";
+        end_page->bindTexture(win_page_png);
+    }
+    else if (gs == GameState::LOSE) {
+        const char* lose_page_png = "./images/lose.png";
+        end_page->bindTexture(lose_page_png);
+    }
+}
+
+void Window::displayEndPage(GLFWwindow* window) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+    end_page->draw(*uiShader);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

@@ -85,6 +85,7 @@ int main()
          }
 
          serv->updateByEvent(all_records);
+         serv->checkGameEndLogic();
          for (int j = 0; j < NUM_PLAYERS; j++)
          {
              serv->send_gamedata(j);

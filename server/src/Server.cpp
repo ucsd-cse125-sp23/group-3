@@ -426,3 +426,21 @@ void Server::check_A_Distance() {
 		updateInsecurity(1); 
 	}
 }
+
+void Server::checkGameEndLogic() {
+	// game time ends
+	if (this->gd->remaining_time <= 0) {
+		this->gd->gamestate = GameState::LOSE;
+		return;
+	}
+
+	// Alice insecurity level too high
+	if (this->gd->level_A >= Constants::MAX_LEVEL) {
+		this->gd->gamestate = GameState::LOSE;
+		return;
+	}
+
+	// check whether Alice reaches a specific tile
+	//if () {}
+
+}

@@ -53,6 +53,7 @@ public:
 	void check_A_Distance();
 	void handleAttack(int character_id);
 	void updateObstacleCountdown();
+	void checkGameEndLogic();
 
 	std::vector<int> ids{ 0,1,2,3 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
