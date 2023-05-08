@@ -284,6 +284,7 @@ void Server::handleAttack(int id)
 		bool attack_success = check_attackability(id, i);
 		if (attack_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
 		{
+			std::cout << i << "is being attacked by " << id <<"!!!" << std::endl;
 			int obs_type = map->obs->obs_vec[i]->type;
 			int cd_time = 0;
 			switch (obs_type)
@@ -317,9 +318,6 @@ void Server::updateObstacleCountdown()
 			this->obs_countdown[i].second -= TICK_TIME;
 			if (this->obs_countdown[i].second <= 0)
 			{
-				this->obs_countdown[i] = std::make_pair(-1, -1);
-				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
-				this->gd->player_status[i] = (int)PlayerStatus::NONE;
 				// update level of awareness
 				int obs_type = map->obs->obs_vec[this->obs_countdown[i].first]->type;
 				int award = 0;
@@ -352,6 +350,9 @@ void Server::updateObstacleCountdown()
 					break;
 				}
 				this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
+				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
+				this->gd->player_status[i] = (int)PlayerStatus::NONE;
+				this->obs_countdown[i] = std::make_pair(-1, -1);
 			}
 		}
 	}

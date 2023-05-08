@@ -1,13 +1,13 @@
 #pragma once
 
-#define NUM_OBSTACLE 25
+#define NUM_OBSTACLE 26
 #define GAME_LENGTH 300000
 #define LISTEN_TICK 10
 #define TICK_TIME 40
 #define CAMERA_SPEED 0.3f
 #define TURNING_RATIO 4.0f
 #define NUM_EVENT_TYPES 6
-#define ATTACK_RANGE 2
+#define ATTACK_RANGE 4
 
 #define SMALL_OBS 1000
 #define MEDIUM_OBS 3000
@@ -31,7 +31,7 @@ enum class EventType
 	FORWARD = 1,
 	TURN_LEFT = 2,
 	TURN_RIGHT = 3,
-	ATTACK = 5,
+	ATTACK = 4,
 	READY = 6
 };
 

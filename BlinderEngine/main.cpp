@@ -126,7 +126,7 @@ int main(void) {
         // Idle callback. Updating objects, etc. can be done here.
         Window::idleCallback();
         // Main render display callback. Rendering of objects is done here.
-        Window::displayCallback(window);
+        Window::displayCallback(window, cli->gd->obstacle_states);
     }
 
     Window::cleanUp();
