@@ -45,7 +45,7 @@ bool Window::initializeProgram() {
 }
 
 bool Window::initializeObjects() {
-    lights=new Mult_Lights(true);
+    lights=new Mult_Lights(false);
     
     // Create a cube
     cube = new Cube();
@@ -140,6 +140,7 @@ void Window::idleCallback() {
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     
     //lights->updateLightAliceV2(cube->getModel());
+
     //lights->update(Cam);
     //cube->update();
 }

@@ -43,8 +43,8 @@ bool checkLights(glm::vec3 lightcenter,std::vector<glm::vec3> spotcenters){
 
 void Mult_Lights::AddLightBCD(std::vector<glm::vec3> lightcenters){
     for(int i=0;i<lightcenters.size();i++){
-        glm::vec3 lightpos=glm::vec3(lightcenters[i].x,5.0f,lightcenters[i].z);
-        Light* pointLight1=new Light(false,true,BCD_color_array[i], glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.2f, 1.0f,  0.2f);
+        glm::vec3 lightpos=glm::vec3(lightcenters[i].x,20.0f,lightcenters[i].z);
+        Light* pointLight1=new Light(false,true,BCD_color_array[i], glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.2f, 2.0f,  0.2f);
         pointLight1->SetParam(1.0f,0.02f,0.004f);
         lights_for_BCD.push_back(pointLight1);
     }
