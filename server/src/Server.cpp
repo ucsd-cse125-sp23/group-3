@@ -307,7 +307,6 @@ void Server::handleAttack(int id)
 			this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
 		}
 	}
-	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
 }
 
 void Server::updateObstacleCountdown()
