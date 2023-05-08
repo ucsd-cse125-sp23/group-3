@@ -146,7 +146,12 @@ int main(void) {
         // Idle callback. Updating objects, etc. can be done here.
         Window::idleCallback();
         // Main render display callback. Rendering of objects is done here.
-        Window::displayCallback(window);
+        if (Constants::offline) {
+            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2));
+        }
+        else {
+            Window::displayCallback(window, cli->gd->obstacle_states);
+        }
     }
 
     Window::cleanUp();

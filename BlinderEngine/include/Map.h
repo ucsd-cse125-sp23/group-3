@@ -25,7 +25,7 @@ public:
     Map();
     ~Map();
 
-    void draw(const glm::mat4& viewProjMtx, GLuint shader);
+    void draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os);
     void getPosition(glm::mat4& model, int* mapID, float* x, float* y);
     std::vector<std::pair<float, float>> getGrid(int mapID, float x, float y);
     glm::vec4 getPointsCollision(int mapID, float x, float y);

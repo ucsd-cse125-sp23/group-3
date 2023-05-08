@@ -231,7 +231,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
 
-        Cam->setFirstperson();
+       Cam->setFirstperson();
     }
     if (!Constants::offline) {
         Cam->SetModel(players.at(playerID)->getModel());
@@ -249,7 +249,7 @@ void Window::idleCallback() {
     //cube->update();
 }
 
-void Window::displayCallback(GLFWwindow* window) {
+void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
     // Clear the color and depth buffers.
     
     float currentFrame = glfwGetTime();
@@ -264,7 +264,7 @@ void Window::displayCallback(GLFWwindow* window) {
 
 
 
-    map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram, os);
     
     if (Constants::offline) {
         daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
@@ -318,11 +318,12 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
+            Cam->SetMove(-cameraSpeed);
             players.at(playerID)->move(-cameraSpeed);
             glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
             daeObject1->setModel(newMVP);
         }
-        eventChecker[0] = 1;
+        eventChecker[(int)EventType::FORWARD - 1] = 1;
         no_event = false;
     }
 
@@ -330,23 +331,28 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
+            Cam->SetSpin(cameraSpeed * turningratio);
             players.at(playerID)->spin(cameraSpeed * turningratio);
             daeObject1->spin(cameraSpeed * turningratio);
         }
-        eventChecker[1] = 1;
+        eventChecker[(int)EventType::TURN_LEFT - 1] = 1;
         no_event = false;
     }
         
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         //backPackObjectspin(-cameraSpeed * turningratio);
         if (Constants::offline) {
+            Cam->SetSpin(-cameraSpeed * turningratio);
             players.at(playerID)->spin(-cameraSpeed * turningratio);
             daeObject1->spin(-cameraSpeed * turningratio); 
         }
-        eventChecker[2] = 1;
+        eventChecker[(int)EventType::TURN_RIGHT - 1] = 1;
         no_event = false;
     }
-
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        eventChecker[(int)EventType::ATTACK - 1] = 1;
+        no_event = false;
+    }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
         daeObject1->doAction();
     }

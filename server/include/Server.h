@@ -33,6 +33,7 @@ public:
 	void send_gamedata(int client_id);
 	int recv_event(int client_id);
 	std::vector<int> recv_eventRecords(int client_id);
+	bool check_attackability(int player_id, int obs_id);
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
@@ -50,7 +51,12 @@ public:
 
 	void updateInsecurity(int increase);
 	void check_A_Distance();
+	void handleAttack(int character_id);
+	void updateObstacleCountdown();
 
 	std::vector<int> ids{ 0,1,2,3 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
+
+	// index by player_id: 0 -> Alice etc.; each pair represents obstacle_id - countdown time
+	std::vector<std::pair<int, int>> obs_countdown;
 };

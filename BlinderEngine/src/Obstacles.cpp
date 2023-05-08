@@ -46,9 +46,14 @@ Obstacles::~Obstacles() {
 	}
 }
 
-void Obstacles::draw(const glm::mat4& viewProjMtx, GLuint shader) {
+void Obstacles::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os) {
+	int idx = 0;
 	for (std::vector<Cube*>::iterator it = cubes.begin(); it != cubes.end(); it++) {
-		(*it)->draw(viewProjMtx, shader);
+		if (os[idx] != 0)
+		{
+			(*it)->draw(viewProjMtx, shader);
+		}
+		idx++;
 	}
 }
 void Obstacles::obstacleCubes() {

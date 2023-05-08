@@ -75,8 +75,8 @@ public:
 
     // update and draw functions
     static void idleCallback();
-    static void displayCallback(GLFWwindow*);
     static void drawLanding(GLFWwindow* window);
+    static void displayCallback(GLFWwindow*, std::vector<int> os);
 
     // helper to reset the camera
     static void resetCamera();
