@@ -48,8 +48,12 @@ public:
 	void updateByEvent(std::unordered_map<int, std::vector<int>> events);
 	void updateBySingleEvent(EventType e, int character);
 
+	void handleAttack(int character_id);
+	void updateObstacleCountdown();
+
 	std::vector<int> ids{ 0,1,2,3 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
 
+	// index by player_id: 0 -> Alice etc.; each pair represents obstacle_id - countdown time
 	std::vector<std::pair<int, int>> obs_countdown;
 };
