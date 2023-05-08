@@ -4,8 +4,8 @@
 #define GAME_LENGTH 300000
 #define LISTEN_TICK 10
 #define TICK_TIME 40
-#define CAMERA_SPEED 0.3f
-#define TURNING_RATIO 4.0f
+#define CAMERA_SPEED 0.6f
+#define TURNING_RATIO 10.0f
 #define NUM_EVENT_TYPES 6
 #define ATTACK_RANGE 4
 

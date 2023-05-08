@@ -441,6 +441,12 @@ void Server::checkGameEndLogic() {
 	}
 
 	// check whether Alice reaches a specific tile
-	//if () {}
-
+	int map_id = -1;
+	float x = -1;
+	float y = -1;
+	this->map->getPosition(this->gd->location_A, &map_id, &x, &y);
+	if (map_id == 2 && x >= 0 && x <= 1.0f && y >= 0 && y <= 1.0f) {
+		this->gd->gamestate = GameState::LOSE;
+		return;
+	}
 }
