@@ -10,7 +10,7 @@
 // Window Properties
 int Window::width;
 int Window::height;
-const char* Window::windowTitle = "The Invisiable One"
+const char* Window::windowTitle = "The Invisiable One";
 
 // Window state
 WindowState Window::state;

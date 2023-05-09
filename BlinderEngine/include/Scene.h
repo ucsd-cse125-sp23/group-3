@@ -29,7 +29,7 @@ public:
 	Scene();
 	void init(int PlayID);
 	void drawLanding();
-	void setEnd(bool win);
+	void setEnd(bool won);
 	void drawEnd();
 
 private:
