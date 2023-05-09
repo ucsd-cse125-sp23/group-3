@@ -160,9 +160,11 @@
     <ClCompile Include="src\DaeObject.cpp" />
     <ClCompile Include="src\graphic2D.cpp" />
     <ClCompile Include="src\Ground.cpp" />
+    <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Minimap.cpp" />
     <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\Mult_Lights.cpp" />
     <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\ObsObject.cpp" />
     <ClCompile Include="src\Obstacles.cpp" />
@@ -194,11 +196,13 @@
     <ClInclude Include="include\DaeObject.h" />
     <ClInclude Include="include\graphic2D.h" />
     <ClInclude Include="include\Ground.h" />
+    <ClInclude Include="include\Light.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\MapConstants.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\DynamicModel.h" />
     <ClInclude Include="include\Minimap.h" />
+    <ClInclude Include="include\Mult_Lights.h" />
     <ClInclude Include="include\ObsObject.h" />
     <ClInclude Include="include\Obstacles.h" />
     <ClInclude Include="include\PlayerModel.h" />

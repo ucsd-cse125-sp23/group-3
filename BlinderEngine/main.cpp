@@ -61,6 +61,8 @@ int main(void) {
     // Initialize the shader program; exit if initialization fails.
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
 
+    // TODO(graphics): load landing page
+
     // Client setup
     Client* cli = new Client();
 
@@ -73,6 +75,7 @@ int main(void) {
     int check_gd = cli->recv_gamedata();
     while (check_gd == -1 && !Constants::offline) {
         check_gd = cli->recv_gamedata();
+
     }
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
@@ -88,6 +91,7 @@ int main(void) {
     int assigned_id = cli->accept_init();
     while (assigned_id == -1 && !Constants::offline) {
         assigned_id = cli->accept_init();
+
     }
     if (assigned_id == -1) {
         assigned_id = 0;

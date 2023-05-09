@@ -56,9 +56,6 @@
     <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\anim_model.fs">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="shaders\anim_model.vs">
       <Filter>shaders</Filter>
     </None>
@@ -72,6 +69,9 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\6.1.skybox.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\anim_model.fs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
@@ -149,6 +149,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Obstacles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mult_Lights.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -262,6 +268,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Obstacles.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mult_Lights.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Light.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

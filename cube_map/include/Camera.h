@@ -26,6 +26,7 @@ public:
     glm::vec3 GetCamTarget(){return CameraTar;};
 
     const glm::mat4 &GetViewProjectMtx() { return ViewProjectMtx; }
+    glm::vec3 CameraPos, CameraTar;
 
 private:
     // Perspective controls
@@ -34,7 +35,7 @@ private:
     float NearClip;  // Near clipping plane distance
     float FarClip;   // Far clipping plane distance
     // Polar controls
-    glm::vec3 CameraPos, CameraTar, CameraUp,CameraDir;
+    glm::vec3 CameraUp,CameraDir;
     // Computed data
     
     glm::mat4 model,ViewProjectMtx;

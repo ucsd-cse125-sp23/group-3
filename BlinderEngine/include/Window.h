@@ -12,6 +12,7 @@
 #include <CollisionDetection.h>
 #include "../../shared/GlobalVariables.h"
 #include <Skybox.h>
+#include <Mult_Lights.h>
 
 enum class WindowState
 {
@@ -33,12 +34,11 @@ public:
     // Objects to render  online
     static Map* map;
     static std::vector<Cube*> players;
-    static graphic2D* canvas;
     static graphic2D* landing_page;
     static graphic2D* ready_btn;
     static UI* ui;
     static graphic2D* end_page;
-
+    static Mult_Lights* lights;
     // Shader
     static GLuint shaderProgram;
 

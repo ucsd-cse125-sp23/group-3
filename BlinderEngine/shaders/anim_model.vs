@@ -16,11 +16,17 @@ const int MAX_BONES = 100;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBonesMatrices[MAX_BONES];
 
+// Outputs the current position for the Fragment Shader
+out vec3 FragPos;
+// Outputs the normal for the Fragment Shader
+out vec3 Normal;
+// Outputs the texture coordinates to the Fragment Shader
 out vec2 TexCoords;
 
 void main()
 {
     vec4 totalPosition = vec4(0.0f);
+    vec4 totalNormal = vec4(0.0f);
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 
@@ -32,10 +38,14 @@ void main()
         }
         vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(pos,1.0f);
         totalPosition += localPosition * weights[i];
-        vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * norm;
+        vec4 localNormal = transpose(inverse(finalBonesMatrices[boneIds[i]])) * vec4(norm,0.0f);
+        totalNormal += localNormal*weights[i];
    }
-	
+
     mat4 viewModel = view * model;
     gl_Position =  projection * viewModel * totalPosition;
+    FragPos=vec3( model*totalPosition);
+    Normal=vec3(model*normalize(totalNormal));
+    //Normal=vec3(model*normalize(vec4(norm,0.0f)));
 	TexCoords = tex;
 }

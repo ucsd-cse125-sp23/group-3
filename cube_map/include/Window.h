@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "core.h"
 #include <iostream>
+#include "Mult_Lights.h"
 
 class Window {
 public:
@@ -30,6 +31,7 @@ public:
     static bool initializeProgram();
     static bool initializeObjects();
     static void cleanUp();
+    static Mult_Lights* lights;
 
     // for the Window
     static GLFWwindow* createWindow(int width, int height);

@@ -8,8 +8,8 @@ LDFLAGS = -framework OpenGL -L$(BREW)/lib -lglfw
 
 RM = /bin/rm -f
 all: menv
-menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o Minimap.o
-	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o Minimap.o $(LDFLAGS)
+menv: main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o Minimap.o Light.o Mult_Lights.o
+	$(CC) -o menv main.o Camera.o Cube.o Shader.o Tokenizer.o Window.o Ground.o Map.o Submap.o graphic2D.o CollisionDetection.o Minimap.o Light.o Mult_Lights.o $(LDFLAGS)
 main.o: main.cpp include/Window.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp
 graphic2D.o: src/graphic2D.cpp include/graphic2D.h
@@ -26,6 +26,11 @@ Cube.o: src/Cube.cpp include/Cube.h
 Map.o: src/Map.cpp include/Map.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Map.cpp
 
+Light.o: src/Light.cpp include/Light.h
+	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Light.cpp
+
+Mult_Lights.o: src/Mult_Lights.cpp include/Mult_Lights.h
+	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Mult_Lights.cpp
 Submap.o: src/Submap.cpp include/Submap.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c src/Submap.cpp
 Shader.o: src/Shader.cpp include/Shader.h
