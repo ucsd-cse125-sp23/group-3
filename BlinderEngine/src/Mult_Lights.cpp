@@ -44,7 +44,7 @@ bool checkLights(glm::vec3 lightcenter,std::vector<glm::vec3> spotcenters){
 void Mult_Lights::AddLightBCD(std::vector<glm::vec3> lightcenters){
     for(int i=0;i<lightcenters.size();i++){
         glm::vec3 lightpos=glm::vec3(lightcenters[i].x,20.0f,lightcenters[i].z);
-        Light* pointLight1=new Light(false,true,BCD_color_array[i], glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.2f, 2.0f,  0.2f);
+        Light* pointLight1=new Light(false,true,BCD_color_array[i], glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.2f, 0.7f,  0.1f);
         pointLight1->SetParam(1.0f,0.02f,0.004f);
         lights_for_BCD.push_back(pointLight1);
     }
@@ -191,7 +191,9 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
                 shader.setVec3("dirLight.direction", temp->direction);
                 shader.setVec3("dirLight.ambient", temp->ambient * (temp->lightcolor));
                 shader.setVec3("dirLight.diffuse", temp->diffuse * (temp->lightcolor));
-                shader.setVec3("dirLight.specular", temp->specular * (temp->lightcolor));
+                const glm::vec3 color = (temp->specular) * (temp->lightcolor);
+                shader.setVec3("dirLight.specular", color);
+                //std::cout << glm::to_string(color)<<std::endl;
             }
         }
         shader.setInt("NUM_LIGHTS_POINT", num_light_point);
@@ -200,7 +202,90 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
 }
 
 void Mult_Lights::loadToSShader(StaticShader& shader,Camera& cam){
-
+    shader.use();
+    shader.setVec3("viewPos", cam.CameraPos);
+    if (Alice) {
+        int num_light_point = 0;
+        int num_light_spot = 0;
+        for (int i = 0; i < lights_for_A.size(); i++) {
+            Light* temp = lights_for_A[i];
+            if (temp->spotLight) {
+                std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
+                shader.setVec3((Lightpos + ".position").c_str(), temp->position);
+                shader.setVec3((Lightpos + ".direction").c_str(), temp->direction);
+                shader.setVec3((Lightpos + ".ambient").c_str(), temp->ambient * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".diffuse").c_str(), temp->diffuse * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".specular").c_str(), temp->specular * (temp->lightcolor));
+                shader.setFloat((Lightpos + ".constant").c_str(), temp->constant);
+                shader.setFloat((Lightpos + ".linear").c_str(), temp->linear);
+                shader.setFloat((Lightpos + ".quadratic").c_str(), temp->quadratic);
+                shader.setFloat((Lightpos + ".cutOff").c_str(), glm::cos(glm::radians(temp->cutoff)));
+                shader.setFloat((Lightpos + ".outerCutOff").c_str(), glm::cos(glm::radians(temp->outerCutOff)));
+                num_light_spot++;
+            }
+            else if (temp->pointLight) {
+                std::string Lightpos = "pointLights[" + std::to_string(num_light_point) + "]";
+                shader.setVec3((Lightpos + ".position").c_str(), temp->position);
+                shader.setVec3((Lightpos + ".ambient").c_str(), temp->ambient * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".diffuse").c_str(), temp->diffuse * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".specular").c_str(), temp->specular * (temp->lightcolor));
+                shader.setFloat((Lightpos + ".constant").c_str(), temp->constant);
+                shader.setFloat((Lightpos + ".linear").c_str(), temp->linear);
+                shader.setFloat((Lightpos + ".quadratic").c_str(), temp->quadratic);
+                num_light_point++;
+            }
+            else {
+                shader.setVec3("dirLight.direction", temp->direction);
+                shader.setVec3("dirLight.ambient", temp->ambient * (temp->lightcolor));
+                shader.setVec3("dirLight.diffuse", temp->diffuse * (temp->lightcolor));
+                shader.setVec3("dirLight.specular", temp->specular * (temp->lightcolor));
+            }
+        }
+        shader.setInt("NUM_LIGHTS_POINT", num_light_point);
+        shader.setInt("NUM_LIGHTS_SPOT", num_light_spot);
+    }
+    else {
+        int num_light_point = 0;
+        int num_light_spot = 0;
+        for (int i = 0; i < lights_for_BCD.size(); i++) {
+            Light* temp = lights_for_BCD[i];
+            if (temp->spotLight) {
+                std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
+                shader.setVec3((Lightpos + ".position").c_str(), temp->position);
+                shader.setVec3((Lightpos + ".direction").c_str(), temp->direction);
+                shader.setVec3((Lightpos + ".ambient").c_str(), temp->ambient * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".diffuse").c_str(), temp->diffuse * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".specular").c_str(), temp->specular * (temp->lightcolor));
+                shader.setFloat((Lightpos + ".constant").c_str(), temp->constant);
+                shader.setFloat((Lightpos + ".linear").c_str(), temp->linear);
+                shader.setFloat((Lightpos + ".quadratic").c_str(), temp->quadratic);
+                shader.setFloat((Lightpos + ".cutOff").c_str(), glm::cos(glm::radians(temp->cutoff)));
+                shader.setFloat((Lightpos + ".outerCutOff").c_str(), glm::cos(glm::radians(temp->outerCutOff)));
+                num_light_spot++;
+            }
+            else if (temp->pointLight) {
+                std::string Lightpos = "pointLights[" + std::to_string(num_light_point) + "]";
+                shader.setVec3((Lightpos + ".position").c_str(), temp->position);
+                shader.setVec3((Lightpos + ".ambient").c_str(), temp->ambient * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".diffuse").c_str(), temp->diffuse * (temp->lightcolor));
+                shader.setVec3((Lightpos + ".specular").c_str(), temp->specular * (temp->lightcolor));
+                shader.setFloat((Lightpos + ".constant").c_str(), temp->constant);
+                shader.setFloat((Lightpos + ".linear").c_str(), temp->linear);
+                shader.setFloat((Lightpos + ".quadratic").c_str(), temp->quadratic);
+                num_light_point++;
+            }
+            else {
+                shader.setVec3("dirLight.direction", temp->direction);
+                shader.setVec3("dirLight.ambient", temp->ambient * (temp->lightcolor));
+                shader.setVec3("dirLight.diffuse", temp->diffuse * (temp->lightcolor));
+                const glm::vec3 color = (temp->specular) * (temp->lightcolor);
+                shader.setVec3("dirLight.specular", color);
+                //std::cout << glm::to_string(color)<<std::endl;
+            }
+        }
+        shader.setInt("NUM_LIGHTS_POINT", num_light_point);
+        shader.setInt("NUM_LIGHTS_SPOT", num_light_spot);
+    }
 }
 
 

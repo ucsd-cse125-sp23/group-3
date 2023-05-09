@@ -113,7 +113,7 @@ bool Window::initializeObjects(int PlayID) {
     daeObject1 = new DaeObject(Constants::girl_model_path,
         Constants::girl_walking_animation_path,
         Constants::girl_action_animation_path,
-        glm::vec3(8.0f));
+        glm::vec3(4.0f));
 
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
@@ -268,6 +268,7 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     lights->loadToUShader(shaderProgram, *Cam);
     lights->loadToDShader(*dynamicShader, *Cam);
+    lights->loadToSShader(*staticShader, *Cam);
     // Render the object.
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
