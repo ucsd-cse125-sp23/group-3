@@ -10,7 +10,7 @@
 // Window Properties
 int Window::width;
 int Window::height;
-const char* Window::windowTitle = "The Invisiable One"
+const char* Window::windowTitle = "Model Environment";
 
 // Window state
 WindowState Window::state;
@@ -53,6 +53,7 @@ bool Window::no_event;
 int  Window::playerID;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
+StaticShader* Window::shaderText2DProgram;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -63,6 +64,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 // The shader program id
 GLuint Window::shaderProgram;
+CollisionDetection collisionDetection;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
@@ -136,11 +138,6 @@ bool Window::initializeLanding() {
     return true;
 }
 
-void Window::cleanLanding() {
-    delete landing_page;
-    delete ready_btn;
-}
-
 void Window::drawLanding(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -156,13 +153,11 @@ void Window::cleanUp() {
     // Deallcoate the objects.
     //delete cube;
     //delete ground;
-    for (int i = 0; i < 4; i++) {
+    /*for (int i = 0; i < 4; i++) {
         delete players.at(i);
-    }
+    }*/
     delete map;
     delete ui;
-    delete end_page;
-    cleanLanding();
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
 }
@@ -227,7 +222,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
     Window::width = width;
     Window::height = height;
     if (Window::ui != NULL) {
-        Window::ui->setSize(width, height, playerID);
+        Window::ui->setSize(width, height);
     }
     // Set the viewport size.
     glViewport(0, 0, width, height);
@@ -300,7 +295,7 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
 
 
 
-    ui->draw(Cam->GetViewProjectMtx(), *uiShader, playerID);
+    ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     // Draw static objObject
     //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
@@ -487,18 +482,10 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
 }
 
 void Window::updateLevel(int curr) {
-    if (playerID == 0) {        // Alice
-        ui->changeLevelbarSizeY((float)curr / (float)MAX_INSECURE);
-    }
-    else {                      // Others
-        ui->changeLevelbarSizeY((float)curr / (float)MAX_AWARENESS);
-    }
+    ui->changeLevelbarSizeY((float)curr / (float)Constants::MAX_LEVEL);
 }
 
 void Window::updateTime(int curr) {
     ui->changeTimebarSizeY((float)curr / (float)GAME_LENGTH);
 }
 
-void Window::setUiByPlayerID() {
-    ui->setUiByPlayerID(playerID);
-}
