@@ -110,10 +110,10 @@ bool Window::initializeObjects(int PlayID) {
         players.at(i)=temp;
     }
     playerID = PlayID;
-    daeObject1 = new DaeObject(Constants::girl_model_path,
-        Constants::girl_walking_animation_path,
-        Constants::girl_action_animation_path,
-        glm::vec3(4.0f));
+    daeObject1 = new DaeObject("./resources/objects/alice/alice.dae",
+        "./resources/objects/alice/animation/walking.dae",
+        "./resources/objects/alice/animation/dancing.dae",
+        glm::vec3(0.7f));
 
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
@@ -291,7 +291,7 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
 
     ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     // Draw static objObject
-    objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
+    //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 

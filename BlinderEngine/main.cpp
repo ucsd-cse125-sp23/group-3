@@ -163,8 +163,9 @@ int main(void) {
             }
         }
     }
-
-    Window::setEndPage(cli->gd->gamestate);
+    if (!Constants::offline) {
+        Window::setEndPage(cli->gd->gamestate);
+    }
 
     while (!glfwWindowShouldClose(window)) {
         Window::displayEndPage(window);
