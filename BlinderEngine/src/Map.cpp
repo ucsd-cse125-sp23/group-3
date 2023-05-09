@@ -325,3 +325,25 @@ void Map::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os)
     obs->draw(viewProjMtx, shader, os);
 }
 
+glm::vec3 Map::calculateLightcenter(glm::mat4 model) {
+    float x, y;
+    int mapID;
+    getPosition(model, &mapID, &x, &y);
+    x = (int)x + 0.5f;
+    y = (int)y + 0.5f;
+    glm::mat4 identity = glm::mat4(1.0f);
+    glm::mat4 newPosition = getModelOnMap(identity, mapID, x, y);
+    float* pSource = (float*)glm::value_ptr(newPosition);
+    return glm::vec3(pSource[12], pSource[13], pSource[14]);
+}
+
+std::vector<glm::vec3> Map::calculateBCDLightcenter() {
+    std::vector<glm::vec3> result = std::vector<glm::vec3>();
+    for (int mapID = 0; mapID < 3; mapID++) {
+        glm::mat4 identity = glm::mat4(1.0f);
+        glm::mat4 newPosition = getModelOnMap(identity, mapID, 2.5, 2.5);
+        float* pSource = (float*)glm::value_ptr(newPosition);
+        result.push_back(glm::vec3(pSource[12], pSource[13], pSource[14]));
+    }
+    return result;
+}

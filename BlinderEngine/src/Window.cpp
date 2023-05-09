@@ -41,9 +41,9 @@ DynamicShader* dynamicShader;
 StaticShader* staticShader;
 StaticShader* skyboxShader;
 StaticShader* Window::uiShader;
-graphic2D* Window::canvas;
 graphic2D* Window::landing_page;
 graphic2D* Window::ready_btn;
+Mult_Lights* Window::lights;
 
 
 
@@ -92,6 +92,8 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects(int PlayID) {
     // Create a cube
     map = new Map();
+    lights = new Mult_Lights(PlayID==0);
+    lights->AddLightBCD(map->calculateBCDLightcenter());
     ui = new UI();
     skybox = new Skybox();
     end_page = new graphic2D(2, 2, -1, -1, true);
@@ -232,19 +234,23 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     
     if (playerID == 0) {
-
+       
        Cam->setFirstperson();
     }
     if (!Constants::offline) {
+        lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
         Cam->SetModel(players.at(playerID)->getModel());
         ui->setPlayerPosition(players.at(playerID)->getModel());
+
     }
     else {
         ui->setPlayerPosition(daeObject1->getModel());
+        lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), false);
     }
     
     Cam->Update();
     map->update();
+    //lights->updateLightAliceV2(daeObject1->getModel());
     int mapID;
     float x, y;
 
@@ -259,7 +265,8 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
 
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+    lights->loadToUShader(shaderProgram, *Cam);
+    lights->loadToDShader(*dynamicShader, *Cam);
     // Render the object.
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
@@ -282,7 +289,7 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
 
     ui->draw(Cam->GetViewProjectMtx(), *uiShader);
     // Draw static objObject
-    //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
+    objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
 
     //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
 
@@ -297,7 +304,10 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
     //    cube->move(cameraSpeed);
     //}
     //glm::mat4 projection = glm::perspective(glm::radians(Cam->getFOV()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
+    if (playerID != 0) {
+        skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
+    }
+    
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

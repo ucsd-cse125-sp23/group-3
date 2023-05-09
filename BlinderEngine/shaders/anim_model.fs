@@ -1,5 +1,4 @@
 #version 330 core
-#indent "off"
 out vec4 FragColor;
 
 in vec3 FragPos;
@@ -14,7 +13,6 @@ struct Material {
 
 struct DirLight {
     vec3 direction;
-	
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -26,7 +24,7 @@ struct PointLight {
     float constant;
     float linear;
     float quadratic;
-	
+    
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -47,15 +45,14 @@ struct SpotLight {
     vec3 specular;       
 };
 
-#define NR_POINT_LIGHTS 4
 
-uniform int NUM_LIGHTS
+uniform int NUM_LIGHTS;
 uniform float shininess=0.0f;
 uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
 // Gets the color of the light from the main function
 uniform DirLight dirLight;
-uniform PointLight pointLights[NR_POINT_LIGHTS];
+uniform PointLight pointLights[8];
 uniform SpotLight spotLight;
 uniform vec3 viewPos;
 
@@ -68,7 +65,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {    
     // properties
-	
+    
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
     
