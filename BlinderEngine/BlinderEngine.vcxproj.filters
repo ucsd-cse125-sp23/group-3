@@ -50,9 +50,6 @@
     <None Include="shaders\model_loading.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\texture2D.fs">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="shaders\texture2D.vs">
       <Filter>shaders</Filter>
     </None>
@@ -71,7 +68,8 @@
     <None Include="shaders\6.1.skybox.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\anim_model.fs">
+    <None Include="shaders\anim_model.fs" />
+    <None Include="shaders\texture2D.fs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

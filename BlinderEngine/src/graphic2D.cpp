@@ -89,7 +89,8 @@ void graphic2D::bindTexture(const char* filename){
         stbi_image_free(data);
 }
 
-void graphic2D::draw(StaticShader shader){
+
+void graphic2D::draw(StaticShader shader,float a){
 
         /*glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -105,6 +106,7 @@ void graphic2D::draw(StaticShader shader){
                 glBindTexture(GL_TEXTURE_2D, texture);
                 
                 shader.use();
+                shader.setFloat("transparency", a);
                 glBindVertexArray(VAO);
                 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }else{

@@ -44,21 +44,21 @@ UI::~UI() {
 }
 
 void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader) {
-	character->draw(shader);
-	skill->draw(shader);
+	character->draw(shader,1.0f);
+	skill->draw(shader, 1.0f);
 	/*float rate;
 	std::cin >> rate;
 	changeTimebarSizeY(rate);*/
-	time_bar->draw(shader);
-	time->draw(shader);
+	time_bar->draw(shader, 1.0f);
+	time->draw(shader, 1.0f);
 	minimap->draw(viewProjMtx, shader);
 
 	/*float rate;
 	std::cin >> rate;
 	changeLevelbarSizeY(rate);*/
 
-	level_bar->draw(shader);
-	level->draw(shader);
+	level_bar->draw(shader, 1.0f);
+	level->draw(shader, 1.0f);
 }
 
 void UI::setSize(const int& width, const int& height) {
