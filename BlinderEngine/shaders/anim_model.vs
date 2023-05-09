@@ -45,6 +45,6 @@ void main()
     mat4 viewModel = view * model;
     gl_Position =  projection * viewModel * totalPosition;
     FragPos=vec3( model*totalPosition);
-    Normal=vec3(model*totalNormal);
+    Normal=vec3(model*normalize(totalNormal));
 	TexCoords = tex;
 }
