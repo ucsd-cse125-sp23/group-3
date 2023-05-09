@@ -399,9 +399,6 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	}
 	std::vector<bool> collidingPlayer = this->collisionDetection.collideBetweenCircles(this->gd->getAllLocations());
 
-	if (collidingPlayer[0]) {
-		this->gd->location_A = playersLoc[0];
-	}
 	if (collidingPlayer[1]) {
 		this->gd->location_B = playersLoc[1];
 	}

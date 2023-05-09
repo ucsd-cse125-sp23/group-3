@@ -357,7 +357,7 @@ std::vector<bool> CollisionDetection::collideBetweenCircles(std::vector<glm::mat
     }
 
 
-    for (int i = 0; i < playersXY.size(); i++) {
+    for (int i = 1; i < playersXY.size(); i++) {
         for (int j = i + 1; j < playersXY.size(); j++) {
             if (glm::length(playersXY[i] - playersXY[j]) < PLAYER_RADIUS * 2) {
                 colliding[i] = true;

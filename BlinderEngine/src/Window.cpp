@@ -92,8 +92,8 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects(int PlayID) {
     // Create a cube
     map = new Map();
-    //lights = new Mult_Lights(PlayID==0);
-    lights = new Mult_Lights(false);
+    lights = new Mult_Lights(PlayID==0);
+    //lights = new Mult_Lights(false);
     lights->AddLightBCD(map->calculateBCDLightcenter());
     ui = new UI();
     skybox = new Skybox();
@@ -236,7 +236,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
        
-       //Cam->setFirstperson();
+       Cam->setFirstperson();
     }
     if (!Constants::offline) {
         lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
@@ -281,9 +281,15 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
         daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
     }
     else {
-        for (int i = 0; i < 4; i++) {
-            players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+        if (playerID == 0) {
+            players.at(0)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
         }
+        else {
+            for (int i = 1; i < 4; i++) {
+                players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+            }
+        }
+        
     }
     // canvas->draw(*uiShader);
 
