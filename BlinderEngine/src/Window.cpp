@@ -92,7 +92,8 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects(int PlayID) {
     // Create a cube
     map = new Map();
-    lights = new Mult_Lights(PlayID==0);
+    //lights = new Mult_Lights(PlayID==0);
+    lights = new Mult_Lights(false);
     lights->AddLightBCD(map->calculateBCDLightcenter());
     ui = new UI();
     skybox = new Skybox();
@@ -112,7 +113,7 @@ bool Window::initializeObjects(int PlayID) {
     daeObject1 = new DaeObject(Constants::girl_model_path,
         Constants::girl_walking_animation_path,
         Constants::girl_action_animation_path,
-        glm::vec3(2.0f));
+        glm::vec3(8.0f));
 
     objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
 
@@ -235,7 +236,7 @@ void Window::idleCallback() {
     
     if (playerID == 0) {
        
-       Cam->setFirstperson();
+       //Cam->setFirstperson();
     }
     if (!Constants::offline) {
         lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
@@ -245,7 +246,7 @@ void Window::idleCallback() {
     }
     else {
         ui->setPlayerPosition(daeObject1->getModel());
-        lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), false);
+        lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), true);
     }
     
     Cam->Update();

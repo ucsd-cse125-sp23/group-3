@@ -138,6 +138,7 @@
     <None Include="shaders\6.1.skybox.vs" />
     <None Include="shaders\6.2.skybox.fs" />
     <None Include="shaders\6.2.skybox.vs" />
+    <None Include="shaders\anim_model.fs" />
     <None Include="shaders\anim_model.vs" />
     <None Include="shaders\model_loading.fs" />
     <None Include="shaders\model_loading.vs" />

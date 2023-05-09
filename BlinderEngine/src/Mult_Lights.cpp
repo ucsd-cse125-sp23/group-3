@@ -51,11 +51,12 @@ void Mult_Lights::AddLightBCD(std::vector<glm::vec3> lightcenters){
 }
 
 void Mult_Lights::updateLightAlice(glm::vec3 lightcenter,bool onmove){
-    glm::vec3 lightpos=glm::vec3(lightcenter.x,5.0f,lightcenter.z);
+    glm::vec3 lightpos=glm::vec3(lightcenter.x,30.0f,lightcenter.z);
     if(checkLights(lightpos,spot_center)&&onmove){
         Light* spotLight=new Light(true,false,glm::vec3(1.0f), glm::vec3(0.0f,-1.0f,0.0f), lightpos,0.3f, 2.8f,  0.2f);
-        spotLight->SetParam(1.0f,0.6f,0.1f);
-        spotLight->SetSpot(40.0f,80.0f);
+        //spotLight->SetParam(1.0f,0.6f,0.1f);
+        spotLight->SetParam(1.0f, 0.07f, 0.03f);
+        spotLight->SetSpot(40.0f,100.0f);
         spot_center.push_back(lightpos);
         lights_for_A.push_back(spotLight);
         timeout_alice.push_back(glfwGetTime());

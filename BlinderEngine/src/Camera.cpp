@@ -21,7 +21,7 @@ void Camera::Update() {
     }
     else {
         CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 30.0f, 10.0f);
+        CameraDir = glm::vec3(0.0f, 10.0f, 10.0f);
         CameraPos = CameraTar + CameraDir;
     }
 
