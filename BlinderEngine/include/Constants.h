@@ -36,7 +36,7 @@ namespace Constants
 	const std::string girl_action_animation_path = "./resources/objects/girl/animation/girl_dribbling.dae";
 
 
-	const bool offline = false;
+	const bool offline = true;
 
 
 	const int DIST_LIMIT = 20;

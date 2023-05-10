@@ -28,13 +28,13 @@ public:
 
 	const double time_sizeX = 0.15;
 	const double time_sizeY = 0.675;
-	const double time_posiX = -0.995;
+	const double time_posiX = -0.96;
 	//const double time_posiY = -0.8;
 	const char* time_png = "./images/timebar-fillempty.png";
 
 	const double time_bar_sizeX = time_sizeX / 1.8;
 	const double time_bar_sizeY = time_sizeY;
-	const double time_bar_posiX = -0.995;
+	const double time_bar_posiX = time_posiX;
 	//const double time_bar_posiY = -0.8;
 	const char* time_bar_png = "./images/timebar-fill.png";
 	const char* time_bar_cut = "./images/timebar-fill-cut.png";
