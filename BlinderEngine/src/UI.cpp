@@ -2,7 +2,7 @@
 #include "UI.h"
 
 UI::UI() {
-	assigned_id = -1;
+	//assigned_id = -1;
 	character = new graphic2D(UI::char_sizeX, UI::char_sizeY * 800 / 600, 
 		UI::char_posiX, UI::char_posiY, true);
 	character->bindTexture(UI::char_png);
@@ -10,6 +10,10 @@ UI::UI() {
 	skill = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
 	skill->bindTexture(UI::skill_png);
+
+	skill_cd = new graphic2D(UI::skill_cd_sizeX, UI::skill_cd_sizeY * 800 / 600,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	skill_cd->bindTexture(UI::skill_cd_png);
 
 	time = new graphic2D(UI::time_sizeX, UI::time_sizeY * 800 / 600,
 		UI::time_posiX, -1 + UI::char_sizeY * 800 / 600, true);
@@ -25,10 +29,10 @@ UI::UI() {
 
 	level = new graphic2D(UI::level_sizeX * 600 / 800, UI::level_sizeY,
 		0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY, true);
-	level->bindTexture(UI::level_png);
+	level->bindTexture(UI::insec_png);
 
-	level_bar = new graphic2D(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 600 / 800 / 5, UI::level_bar_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX*4/5) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
+	level_bar = new graphic2D(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.1 * 600 / 800, UI::level_bar_sizeY,
+		0.995 - (UI::mnmap_sizeX + UI::level_sizeX*0.86) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
 	level_bar->bindTexture(UI::level_bar_png);
 	level_bar_len = level_bar->getSizeX();
 }
@@ -36,6 +40,7 @@ UI::UI() {
 UI::~UI() {
 	delete character;
 	delete skill;
+	delete skill_cd;
 	delete time;
 	delete time_bar;
 	delete minimap;
@@ -43,32 +48,32 @@ UI::~UI() {
 	delete level_bar;
 }
 
-void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader) {
+void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID) {
 	character->draw(shader,1.0f);
 	skill->draw(shader, 1.0f);
-	/*float rate;
-	std::cin >> rate;
-	changeTimebarSizeY(rate);*/
+	skill_cd->draw(shader, 1.0f);
+
 	time_bar->draw(shader, 1.0f);
 	time->draw(shader, 1.0f);
-	minimap->draw(viewProjMtx, shader);
-
-	/*float rate;
-	std::cin >> rate;
-	changeLevelbarSizeY(rate);*/
+	if (playerID != 0) {			// not Alice
+		minimap->draw(viewProjMtx, shader);
+	}
 
 	level_bar->draw(shader, 1.0f);
 	level->draw(shader, 1.0f);
 }
 
-void UI::setSize(const int& width, const int& height) {
+void UI::setSize(const int& width, const int& height, int playerId) {
 	character->setposition(UI::char_sizeX, UI::char_sizeY * width / height);
 	character->update();
 
 	skill->setposition(UI::skill_sizeX, UI::skill_sizeY * width / height);
 	skill->update();
 
-	time->setposition(UI::time_sizeX, UI::time_sizeY * width / height, 
+	skill_cd->setposition(UI::skill_cd_sizeX, UI::skill_cd_sizeY * width / height);
+	skill_cd->update();
+
+	time->setposition(UI::time_sizeX, UI::time_sizeY * width / height,
 		UI::time_posiX, -1 + UI::char_sizeY * width / height);
 	time->update();
 
@@ -81,12 +86,24 @@ void UI::setSize(const int& width, const int& height) {
 		0.995 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
 	minimap->update();
 
-	level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * height / width, UI::level_posiY);
+	if (playerId == 0) {		// Alice
+		level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
+			0.995 - (UI::level_sizeX) * height / width, UI::level_posiY);
+	}
+	else {
+		level->setposition(UI::level_sizeX * height / width, UI::level_sizeY + 0.1,
+			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * height / width, UI::level_posiY - 0.07);
+	}
 	level->update();
-
-	level_bar->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * height/width/5, UI::level_bar_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX*4/5) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+	
+	if (playerId == 0) {		// Alice
+		level_bar->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.19 * height / width, UI::level_bar_sizeY,
+			0.995 - (UI::level_sizeX * 0.81) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+	}
+	else {
+		level_bar->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.1 * height / width, UI::level_bar_sizeY,
+			0.995 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+	}
 	level_bar->update();
 	level_bar_len = level_bar->getSizeX();
 }
@@ -102,11 +119,23 @@ void UI::update() {
 }
 
 void UI::changeTimebarSizeY(float rate) {
+	if (rate < 0.5) {
+		time_bar->bindTexture(time_bar_cut);
+	}
+	else {
+		time_bar->bindTexture(time_bar_png);
+	}
 	time_bar->setposition(time_bar->getSizeX(), time_bar_len * rate);
 	time_bar->update();
 }
 
 void UI::changeLevelbarSizeY(float rate) {
+	if (rate < 0.5) {
+		level_bar->bindTexture(level_bar_cut);
+	}
+	else {
+		level_bar->bindTexture(level_bar_png);
+	}
 	level_bar->setposition(level_bar_len * rate, level_bar->getSizeY());
 	level_bar->update();
 }
@@ -119,15 +148,34 @@ void UI::setPlayerPosition(glm::mat4 model) {
 void UI::setUiByPlayerID(int id) {
 	if (id == 0) {			// Alice
 		char_png = "./images/Alice.png";
+		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY,
+			0.995 - (UI::level_sizeX) * 600 / 800, UI::level_posiY);
+		level->update();
+		level_bar->setposition(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.19 * 600 / 800, UI::level_bar_sizeY,
+			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
+		level_bar_len = level_bar->getSizeX();
+		level_bar->update();
 	}
 	else if (id == 1) {		// Bob
 		char_png = "./images/Bob.png";
+		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
+			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+		level->bindTexture(aware_png);
+		level->update();
 	}
 	else if (id == 2) {		// Carol
 		char_png = "./images/Carol.png";
+		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
+			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+		level->bindTexture(aware_png);
+		level->update();
 	}
 	else if (id == 3) {		// Dave
 		char_png = "./images/Dave.png";
+		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
+			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+		level->bindTexture(aware_png);
+		level->update();
 	}
 	else {
 		return;

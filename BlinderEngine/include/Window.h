@@ -68,7 +68,9 @@ public:
     static bool initializeProgram();
     static bool initializeObjects(int PlayID);
     static bool initializeLanding();
+    static void cleanLanding();
     static void cleanUp();
+
 
     // for the Window
     static GLFWwindow* createWindow(int width, int height);
@@ -95,4 +97,6 @@ public:
 
     static void updateLevel(int);
     static void updateTime(int);
+    
+    static void setUiByPlayerID();
 };

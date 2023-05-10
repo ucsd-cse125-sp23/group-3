@@ -80,7 +80,6 @@ int main(void) {
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
-        //std::cout << "draw landing page\n";
     }
     
 
@@ -97,7 +96,6 @@ int main(void) {
         assigned_id = 0;
     }
     // TODO(graphics): render things based on assigned_id & player setup
-
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
     
@@ -107,7 +105,7 @@ int main(void) {
 
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
-    Window::ui->setUiByPlayerID(assigned_id);
+    Window::setUiByPlayerID();
 
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
@@ -152,6 +150,11 @@ int main(void) {
         Window::idleCallback();
         // Main render display callback. Rendering of objects is done here.
         if (Constants::offline) {
+            /*float rate;
+            cin >> rate;
+            Window::ui->changeLevelbarSizeY(rate);
+            Window::ui->changeTimebarSizeY(rate);*/
+
             Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2));
         }
         else {

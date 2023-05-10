@@ -38,7 +38,6 @@ namespace Constants
 
 	const bool offline = false;
 
-	const int MAX_LEVEL = 100;
 
 	const int DIST_LIMIT = 20;
 

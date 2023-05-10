@@ -348,16 +348,23 @@ void Server::updateObstacleCountdown()
 				default:
 					break;
 				}
+				int sum = 0;
 				switch (i)
 				{
 				case 1:
-					this->gd->level_B += award;
+					sum = this->gd->level_B + award;
+					this->gd->level_B = sum >= MAX_AWARENESS ? MAX_AWARENESS : sum;
+					//this->gd->level_B += award;
 					break;
 				case 2:
-					this->gd->level_C += award;
+					sum = this->gd->level_C + award;
+					this->gd->level_C = sum >= MAX_AWARENESS ? MAX_AWARENESS : sum;
+					//this->gd->level_C += award;
 					break;
 				case 3:
-					this->gd->level_D += award;
+					sum = this->gd->level_D + award;
+					this->gd->level_D = sum >= MAX_AWARENESS ? MAX_AWARENESS : sum;
+					//this->gd->level_D += award;
 					break;
 				default:
 					break;
@@ -411,7 +418,7 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 }
 
 void Server::updateInsecurity(int increase) {
-	if (gd->level_A < Constants::MAX_LEVEL) {
+	if (gd->level_A < MAX_INSECURE) {
 		gd->level_A += increase;
 	}
 }
@@ -451,7 +458,7 @@ void Server::checkGameEndLogic() {
 	}
 
 	// Alice insecurity level too high
-	if (this->gd->level_A >= Constants::MAX_LEVEL) {
+	if (this->gd->level_A >= MAX_INSECURE) {
 		this->gd->gamestate = GameState::LOSE;
 		return;
 	}
