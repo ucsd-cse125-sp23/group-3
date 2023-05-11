@@ -10,7 +10,7 @@
 #define ATTACK_RANGE 4
 #define ALERT_ALICE 30000
 #define MAX_INSECURE 100
-#define MAX_AWARENESS 20
+#define MAX_AWARENESS 100
 
 #define SMALL_OBS 1000
 #define MEDIUM_OBS 3000
@@ -21,7 +21,7 @@
 #define SMALL_AWD 5
 #define MEDIUM_AWD 10
 #define LARGE_AWD 15
-#define AWARENESS_THRESHOLD 60
+#define AWARENESS_THRESHOLD 50
 
 enum class GameState
 {
