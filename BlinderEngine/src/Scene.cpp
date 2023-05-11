@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <thread>
 
 Scene::Scene()
 {
@@ -170,32 +171,14 @@ void Scene::loadShaders()
 
 void Scene::loadGameObjects()
 {
-	// Initialize game character
-	std::cerr << "loading Alice" << std::endl;
-	daeObjectAlice = std::make_shared<DaeObject>(Constants::alice_model_path,
-		Constants::alice_walking_animation_path,
-		Constants::alice_action_animation_path,
-		glm::vec3(0.3f));
-	std::cerr << "loaded Alice" << std::endl;
-	std::cerr << "loading Bob" << std::endl;
-	// HACK, using girl model and animation
-	daeObjectBob = std::make_shared<DaeObject>(Constants::alice_model_path,
-		Constants::alice_walking_animation_path,
-		Constants::alice_action_animation_path,
-		Constants::alice_scaling_factor);
-	std::cerr << "loaded Bob" << std::endl;
-	std::cerr << "loading Carlo" << std::endl;
-	daeObjectCarlo = std::make_shared<DaeObject>(Constants::alice_model_path,
-		Constants::alice_walking_animation_path,
-		Constants::alice_action_animation_path,
-		Constants::alice_scaling_factor);
-	std::cerr << "loaded Carlo" << std::endl;
-	std::cerr << "loading David" << std::endl;
-	daeObjectDavid = std::make_shared<DaeObject>(Constants::alice_model_path,
-		Constants::alice_walking_animation_path,
-		Constants::alice_action_animation_path,
-		Constants::alice_scaling_factor);
-	std::cerr << "loaded David" << std::endl;
+	std::vector<std::thread> threads(4);
+	for (int i = 0; i < 4; i++) {
+		threads[i] = std::thread(&Scene::initPlayerObject, this, i);
+	}
+	for (int i = 0; i < 4; i++) {
+		threads[i].join();
+	}
+	 
 	playersObjects.push_back(daeObjectAlice);
 	playersObjects.push_back(daeObjectBob);
 	playersObjects.push_back(daeObjectCarlo);
@@ -213,5 +196,42 @@ void Scene::loadEssentials()
 	camera = std::make_shared<Camera>();
 	camera->SetAspect(float(WINDOW_WIDTH) / float(WINDOW_HEIGHT));
 
+}
+
+void Scene::initPlayerObject(int playerID)
+{
+	if (0 == playerID) 
+	{
+		daeObjectAlice = std::make_shared<DaeObject>(Constants::alice_model_path,
+			Constants::alice_walking_animation_path,
+			Constants::alice_action_animation_path,
+			glm::vec3(0.3f));
+		std::cerr << "loaded Alice" << std::endl;
+	}
+	else if (1 == playerID)
+	{
+		daeObjectBob = std::make_shared<DaeObject>(Constants::alice_model_path,
+			Constants::alice_walking_animation_path,
+			Constants::alice_action_animation_path,
+			Constants::alice_scaling_factor);
+		std::cerr << "loaded Bob" << std::endl;
+	}
+	else if (2 == playerID)
+	{
+		daeObjectCarlo = std::make_shared<DaeObject>(Constants::alice_model_path,
+			Constants::alice_walking_animation_path,
+			Constants::alice_action_animation_path,
+			Constants::alice_scaling_factor);
+		std::cerr << "loaded Carlo" << std::endl;
+	}
+	else if (3 == playerID)
+	{
+		daeObjectDavid = std::make_shared<DaeObject>(Constants::alice_model_path,
+			Constants::alice_walking_animation_path,
+			Constants::alice_action_animation_path,
+			Constants::alice_scaling_factor);
+		std::cerr << "loaded David" << std::endl;
+	}
+	
 }
 

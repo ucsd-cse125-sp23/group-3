@@ -57,6 +57,7 @@ private:
 	void loadShaders();
 	void loadGameObjects();
 	void loadEssentials();
+	void initPlayerObject(int playerID);
 
 public:
 	// Control variables
