@@ -13,6 +13,7 @@
 #include "../../shared/GlobalVariables.h"
 #include <Skybox.h>
 #include <Mult_Lights.h>
+#include <Scene.h>
 
 enum class WindowState
 {
@@ -31,16 +32,11 @@ public:
     // Window state
     static WindowState state;
 
+    // Scene !!!
+    static std::shared_ptr<Scene> scene;
+
     // Objects to render  online
-    static Map* map;
-    static std::vector<Cube*> players;
-    static graphic2D* landing_page;
-    static graphic2D* ready_btn;
-    static UI* ui;
-    static graphic2D* end_page;
-    static Mult_Lights* lights;
     // Shader
-    static GLuint shaderProgram;
 
 
     // Client-server variable
@@ -48,9 +44,7 @@ public:
     static bool no_event;
     static int playerID;
     //static graphic2D* canvas;
-    static StaticShader* shaderText2DProgram;
     //static UI* ui;
-    static StaticShader* uiShader;
 
     //static int eventChecker;
     //static int playerID;
@@ -93,7 +87,7 @@ public:
 
     static bool cursorOnReadyBtn(double, double);
 
-    static unsigned int loadCubemap(std::vector<std::string> faces);
+    //static unsigned int loadCubemap(std::vector<std::string> faces);
 
     static void updateLevel(int);
     static void updateTime(int);

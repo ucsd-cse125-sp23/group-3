@@ -7,27 +7,18 @@
 #include <animator.h>
 #include <Skybox.h>
 #include <DaeObject.h>
+
 // Window Properties
 int Window::width;
 int Window::height;
 const char* Window::windowTitle = "The Invisiable One";
-
+std::shared_ptr<Scene> Window::scene;
 // Window state
 WindowState Window::state;
 
 // Objects to render
-Map* Window::map;
-UI* Window::ui;
-graphic2D* Window::end_page;
-std::vector<Cube*> Window::players = std::vector<Cube*>(4);
-ObjObject* objObject1;
-DaeObject* daeObject1;
-std::vector<DaeObject*> daeObjectList;
-std::vector<ObjObject*> objObjectList;
-Skybox* skybox;
 
 // Camera Properties
-Camera* Cam;
 
 
 // Interaction Variables
@@ -37,13 +28,6 @@ const float cameraSpeed = 1.5f;
 const float turningratio=20.0f;
 
 // Shaders
-DynamicShader* dynamicShader;
-StaticShader* staticShader;
-StaticShader* skyboxShader;
-StaticShader* Window::uiShader;
-graphic2D* Window::landing_page;
-graphic2D* Window::ready_btn;
-Mult_Lights* Window::lights;
 
 
 
@@ -54,85 +38,24 @@ int  Window::playerID;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
-
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
 
 // The shader program id
-GLuint Window::shaderProgram;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
-    // Create a shader program with a vertex shader and a fragment shader.
-    shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
-
-    dynamicShader = new DynamicShader(Constants::dynamic_shader_vert, Constants::dynamic_shader_frag);
-    staticShader = new StaticShader(Constants::static_shader_vert, Constants::static_shader_frag);
-    uiShader = new StaticShader(Constants::ui_shader_vert, Constants::ui_shader_frag);
-    skyboxShader = new StaticShader("./shaders/skybox.vs", "./shaders/skybox.fs");
-    skyboxShader->use();
-    skyboxShader->setInt("skybox", 0);
-
-    //uiShader = new StaticShader(Constants::ui_shader_vert.c_str(), Constants::ui_shader_frag.c_str());
-    
-    // Check the shader program.
-    if (!shaderProgram) {
-        std::cerr << "Failed to initialize shader program" << std::endl;
-        return false;
-    }
+    scene = std::make_shared<Scene>();
 
     return true;
 }
 
 bool Window::initializeObjects(int PlayID) {
-    // Create a cube
-    map = new Map();
-    lights = new Mult_Lights(PlayID==0);
-    //lights = new Mult_Lights(false);
-    lights->AddLightBCD(map->calculateBCDLightcenter());
-    ui = new UI();
-    skybox = new Skybox();
-    end_page = new graphic2D(2, 2, -1, -1, true);
-    // canvas = new graphic2D(0.8, 0.3, -0.4, 0.7, true);
-    const char* textfile = "./resources/images/tag.png";
-    // canvas->bindTexture(textfile);
-    //ui->setDaeObj(daeObject1);
-    
-    //cube->move(2.0f);
-    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    for (int i = 0; i < 4; i++) {
-        Cube* temp = new Cube();
-        players.at(i)=temp;
-    }
-    playerID = PlayID;
-    daeObject1 = new DaeObject("./resources/objects/alice/alice.dae",
-        "./resources/objects/alice/animation/walking.dae",
-        "./resources/objects/alice/animation/dancing.dae",
-        glm::vec3(0.7f));
-
-    objObject1 = new ObjObject("./resources/objects/ucsd_asset/bear.obj", glm::vec3(0.4f, 0.4f, 0.4f));
-
-    daeObjectList.push_back(daeObject1);
-
-    //cube->spin(180);
-    //cube->move(-30.0f);
-    //Cam->SetSpin(180);
-    //Cam->SetMove(-30.0f);
+    scene->init(PlayID);
     return true;
 }
 
 bool Window::initializeLanding() {
     state = WindowState::LANDING;
-    landing_page = new graphic2D(2, 2, -1, -1, true);
-    const char* landing_page_png = "./resources/images/test.png";
-    landing_page->bindTexture(landing_page_png);
-
-    ready_btn = new graphic2D(0.2, 0.2, 0.7, -0.7, true);
-    const char* ready_btn_png = "./resources/images/test.png";
-    ready_btn->bindTexture(ready_btn_png);
+    scene->initLandingPage();
     return true;
 }
 
@@ -144,27 +67,16 @@ void Window::cleanLanding() {
 void Window::drawLanding(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    landing_page->draw(*uiShader,1.0f);
-    ready_btn->draw(*uiShader,1.0f);
+    scene->drawLanding();
 
     glfwPollEvents();
-    // Swap buffers.
     glfwSwapBuffers(window);
 }
 
 void Window::cleanUp() {
-    // Deallcoate the objects.
-    //delete cube;
-    //delete ground;
-    for (int i = 0; i < 4; i++) {
-        delete players.at(i);
-    }
-    delete map;
-    delete ui;
-    delete end_page;
-    cleanLanding();
+    // TODO: delete objects
+
     // Delete the shader program.
-    glDeleteProgram(shaderProgram);
 }
 
 // for the Window
@@ -203,12 +115,6 @@ GLFWwindow* Window::createWindow(int width, int height) {
     // Set swap interval to 1.
     glfwSwapInterval(0);
 
-    // set up the camera
-    
-    Cam = new Camera();
-    
-    Cam->SetAspect(float(width) / float(height));
-
     // initialize the interaction variables
     LeftDown = RightDown = false;
     MouseX = MouseY = 0;
@@ -226,124 +132,42 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 #endif
     Window::width = width;
     Window::height = height;
-    if (Window::ui != NULL) {
-        Window::ui->setSize(width, height, playerID);
+    if (scene != nullptr)
+    {
+        scene->resizeScene(width, height);
     }
     // Set the viewport size.
-    glViewport(0, 0, width, height);
-
-    Cam->SetAspect(float(width) / float(height));
 }
 
 // update and draw functions
 void Window::idleCallback() {
-    // Perform any updates as necessary.
-    
-    if (playerID == 0) {
-       
-       Cam->setFirstperson();
-    }
-    if (!Constants::offline) {
-        lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
-        Cam->SetModel(players.at(playerID)->getModel());
-        ui->setPlayerPosition(players.at(playerID)->getModel());
-
-    }
-    else {
-        ui->setPlayerPosition(daeObject1->getModel());
-        lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), true);
-    }
-    
-    Cam->Update();
-    map->update();
-    //lights->updateLightAliceV2(daeObject1->getModel());
-    int mapID;
-    float x, y;
-
-    //cube->update();
+    scene->updateWorld();
 }
 
 void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
     // Clear the color and depth buffers.
-    
-    float currentFrame = glfwGetTime();
-
 
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    lights->loadToUShader(shaderProgram, *Cam);
-    lights->loadToDShader(*dynamicShader, *Cam);
-    lights->loadToSShader(*staticShader, *Cam);
-    // Render the object.
-    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-    //ground->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-
-
-
-    map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram, os);
-    
-    if (Constants::offline) {
-        daeObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *dynamicShader);
-    }
-    else {
-        if (playerID == 0) {
-            players.at(0)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-        }
-        else {
-            for (int i = 1; i < 4; i++) {
-                players.at(i)->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-            }
-        }
-        
-    }
-    // canvas->draw(*uiShader);
-
-
-
-    ui->draw(Cam->GetViewProjectMtx(), *uiShader, playerID);
-    // Draw static objObject
-    //objObject1->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *staticShader);
-
-    //cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
-
-    //int mapID;
-    //float x, y;
-    //map->getPosition(cube->getModel(), &mapID, &y, &x);
-
-    //std::vector<std::pair<float, float>> points = map->getGrid(mapID, x, y);
-    //if (collisionDetection.checkCollisionWithWall(mapID, points)) {
-    //     std::cerr<<"colliding!"<<std::endl;
-    //    Cam->SetMove(cameraSpeed);
-    //    cube->move(cameraSpeed);
-    //}
-    //glm::mat4 projection = glm::perspective(glm::radians(Cam->getFOV()), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    if (playerID != 0) {
-        skybox->draw(Cam->GetProjectMtx(), Cam->GetViewMtx(), *skyboxShader);
-    }
-    
-
+    scene->displayWorld(os);   
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
-    // Swap buffers.
     glfwSwapBuffers(window);
 }
 
 void Window::setEndPage(GameState gs) {
     if (gs == GameState::WIN) {
-        const char* win_page_png = "./images/win.png";
-        end_page->bindTexture(win_page_png);
+        scene->setEnd(true);
     }
     else if (gs == GameState::LOSE) {
-        const char* lose_page_png = "./images/lose.png";
-        end_page->bindTexture(lose_page_png);
+        scene->setEnd(false);
     }
 }
 
 void Window::displayEndPage(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-    end_page->draw(*uiShader,1.0f);
+    scene->drawEnd();
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -354,8 +178,9 @@ void Window::displayEndPage(GLFWwindow* window) {
 // helper to reset the camera
 void Window::resetCamera() {
     //Cam->Reset();
-    Cam->SetAspect(float(Window::width) / float(Window::height));
+    scene->setAspect(float(Window::width) / float(Window::height));
 }
+
 // callbacks - for Interaction
 void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     /*
@@ -366,10 +191,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
-            Cam->SetMove(-cameraSpeed);
-            players.at(playerID)->move(-cameraSpeed);
-            glm::mat4 newMVP = daeObject1->calculateMoveMVP(-cameraSpeed);
-            daeObject1->setModel(newMVP);
+            scene->move();
         }
         eventChecker[(int)EventType::FORWARD - 1] = 1;
         no_event = false;
@@ -379,9 +201,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
-            Cam->SetSpin(cameraSpeed * turningratio);
-            players.at(playerID)->spin(cameraSpeed * turningratio);
-            daeObject1->spin(cameraSpeed * turningratio);
+            scene->spin(1);
         }
         eventChecker[(int)EventType::TURN_LEFT - 1] = 1;
         no_event = false;
@@ -390,9 +210,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
         //backPackObjectspin(-cameraSpeed * turningratio);
         if (Constants::offline) {
-            Cam->SetSpin(-cameraSpeed * turningratio);
-            players.at(playerID)->spin(-cameraSpeed * turningratio);
-            daeObject1->spin(-cameraSpeed * turningratio); 
+            scene->spin(-1);
         }
         eventChecker[(int)EventType::TURN_RIGHT - 1] = 1;
         no_event = false;
@@ -402,7 +220,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        daeObject1->doAction();
+        // TODO:
     }
 
     // Check for a key press.
@@ -442,12 +260,10 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
     if (cursorOnReadyBtn(currX, currY)) {
-        const char* ready_btn_png = "./resources/images/test2.png";
-        ready_btn->bindTexture(ready_btn_png);
+        scene->updateReadyBtn("./resources/images/test2.png");
     }
     else {
-        const char* ready_btn_png = "./resources/images/test.png";
-        ready_btn->bindTexture(ready_btn_png);
+        scene->updateReadyBtn("./resources/images/test.png");
     }
 
     MouseX = (int)currX;
@@ -487,16 +303,17 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
 }
 
 void Window::updateLevel(int curr) {
+    // TODO: 
     if (playerID == 0) {        // Alice
-        ui->changeLevelbarSizeY((float)curr / (float)MAX_INSECURE);
+        scene->updateLevel(curr);
     }
     else {                      // Others
-        ui->changeLevelbarSizeY((float)curr / (float)MAX_AWARENESS);
+        scene->updateLevel(curr);
     }
 }
 
 void Window::updateTime(int curr) {
-    ui->changeTimebarSizeY((float)curr / (float)GAME_LENGTH);
+    scene->updateTime(curr);
 }
 
 void Window::setUiByPlayerID() {

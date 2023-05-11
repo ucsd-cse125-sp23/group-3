@@ -22,15 +22,35 @@
 #include <Skybox.h>
 #include <DaeObject.h>
 
+#define CAMERA_SPEED 1.5f
+#define TURNING_RATIO 20.0f
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
 
 class Scene
 {
 public:
 	Scene();
+	// Rendering
 	void init(int PlayID);
+	void initLandingPage();
 	void drawLanding();
 	void setEnd(bool won);
 	void drawEnd();
+	void updateWorld();
+	void displayWorld(std::vector<int> os);
+	// Control
+	void setModel(glm::mat4 model);
+	void updateLevel(int curr);
+	void updateTime(int curr);
+	void move();
+	void spin(float i);
+	void updateReadyBtn(const char* imagePath);
+	void setAspect(float a);
+	void resizeScene(int width, int height);
+	void setUiByPlayerID(int id);
 
 private:
 	void loadLanding();
@@ -44,7 +64,6 @@ public:
 
 	// Object to render
 	std::shared_ptr<Map> map;
-	std::vector<Cube*> players;
 	std::shared_ptr<UI> ui;
 	std::shared_ptr<graphic2D> landingPage;
 	std::shared_ptr<graphic2D> readyBtn;
@@ -64,6 +83,6 @@ public:
 	std::shared_ptr<StaticShader> uiShader;
 
 	// Essentials
-	std::shared_ptr<Camera*> camera;
-	std::shared_ptr<Mult_Lights*> lights;
+	std::shared_ptr<Camera> camera;
+	std::shared_ptr<Mult_Lights> lights;
 };

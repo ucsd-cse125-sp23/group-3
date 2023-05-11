@@ -77,6 +77,7 @@ int main(void) {
         check_gd = cli->recv_gamedata();
 
     }
+
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
@@ -96,6 +97,7 @@ int main(void) {
         assigned_id = 0;
     }
     // TODO(graphics): render things based on assigned_id & player setup
+    assigned_id = 1;
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
     
@@ -105,7 +107,7 @@ int main(void) {
 
     // Initialize objects/pointers for rendering; exit if initialization fails.
     if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
-    Window::setUiByPlayerID();
+    Window::scene->setUiByPlayerID(assigned_id);
 
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
@@ -136,10 +138,10 @@ int main(void) {
             
         }
         else if(check_gd != -1) {
-            Window::players.at(0)->setModel(cli->gd->location_A);
-            Window::players.at(1)->setModel(cli->gd->location_B);
-            Window::players.at(2)->setModel(cli->gd->location_C);
-            Window::players.at(3)->setModel(cli->gd->location_D);
+            Window::scene->playersObjects.at(0)->setModel(cli->gd->location_A);
+            Window::scene->playersObjects.at(1)->setModel(cli->gd->location_B);
+            Window::scene->playersObjects.at(2)->setModel(cli->gd->location_C);
+            Window::scene->playersObjects.at(3)->setModel(cli->gd->location_D);
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
             Window::updateTime(cli->gd->remaining_time);
