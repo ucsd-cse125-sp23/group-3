@@ -197,9 +197,9 @@ void Scene::loadGameObjects()
 		Constants::alice_scaling_factor);
 	std::cerr << "loaded David" << std::endl;
 	playersObjects.push_back(daeObjectAlice);
-	playersObjects.push_back(daeObjectAlice);
-	playersObjects.push_back(daeObjectAlice);
-	playersObjects.push_back(daeObjectAlice);
+	playersObjects.push_back(daeObjectBob);
+	playersObjects.push_back(daeObjectCarlo);
+	playersObjects.push_back(daeObjectDavid);
 }
 
 void Scene::loadEssentials()
