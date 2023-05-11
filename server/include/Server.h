@@ -34,6 +34,7 @@ public:
 	int recv_event(int client_id);
 	std::vector<int> recv_eventRecords(int client_id);
 	bool check_attackability(int player_id, int obs_id);
+	bool check_detectability(int obs_id);
 
 	char buffer[NUM_PLAYERS][512];
 	SOCKET ListenSocket;
@@ -52,6 +53,7 @@ public:
 	void updateInsecurity(int increase);
 	void check_A_Distance();
 	void handleAttack(int character_id);
+	void handleDetect();
 	void updateObstacleCountdown();
 	void checkGameEndLogic();
 

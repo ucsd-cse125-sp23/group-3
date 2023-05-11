@@ -53,5 +53,6 @@ enum class ObstacleState
 {
 	DESTROYED = 0,
 	CURRENTLY_DESTROYING = 1,
-	NOT_DESTROYED = 2
+	NOT_DESTROYED = 2,
+	DETECTED = 3
 };
