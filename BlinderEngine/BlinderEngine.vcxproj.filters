@@ -155,6 +155,9 @@
     <ClCompile Include="src\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -272,6 +275,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Light.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scene.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

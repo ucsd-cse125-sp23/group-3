@@ -169,6 +169,7 @@
     <ClCompile Include="src\ObsObject.cpp" />
     <ClCompile Include="src\Obstacles.cpp" />
     <ClCompile Include="src\PlayerModel.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Submap.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="include\ObsObject.h" />
     <ClInclude Include="include\Obstacles.h" />
     <ClInclude Include="include\PlayerModel.h" />
+    <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Skybox.h" />
     <ClInclude Include="include\StaticModel.h" />
     <ClInclude Include="include\StaticShader.h" />
