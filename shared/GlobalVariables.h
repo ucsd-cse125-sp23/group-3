@@ -10,14 +10,18 @@
 #define ATTACK_RANGE 4
 #define ALERT_ALICE 30000
 #define MAX_INSECURE 100
-#define MAX_AWARENESS 20
+#define MAX_AWARENESS 100
 
 #define SMALL_OBS 1000
 #define MEDIUM_OBS 3000
 #define LARGE_OBS 5000
-#define SMALL_AWD 1
-#define MEDIUM_AWD 3
-#define LARGE_AWD 5
+#define SMALL_ALERT 5
+#define MEDIUM_ALERT 7
+#define LARGE_ALERT 10
+#define SMALL_AWD 5
+#define MEDIUM_AWD 10
+#define LARGE_AWD 15
+#define AWARENESS_THRESHOLD 50
 
 enum class GameState
 {
@@ -49,5 +53,6 @@ enum class ObstacleState
 {
 	DESTROYED = 0,
 	CURRENTLY_DESTROYING = 1,
-	NOT_DESTROYED = 2
+	NOT_DESTROYED = 2,
+	DETECTED = 3
 };

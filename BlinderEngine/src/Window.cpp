@@ -141,6 +141,35 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 // update and draw functions
 void Window::idleCallback() {
     scene->updateWorld();
+// void Window::idleCallback(int awareness) {
+//     // Perform any updates as necessary.
+    
+//     if (playerID == 0) {
+       
+//        Cam->setFirstperson();
+//     }
+//     if (!Constants::offline) {
+//         lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
+//         Cam->SetModel(players.at(playerID)->getModel());
+//         ui->setPlayerPosition(players.at(playerID)->getModel());
+
+//     }
+//     else {
+//         if (awareness >= AWARENESS_THRESHOLD && playerID != 0)
+//         {
+//             // TODO(Crystal): draw Alice's location
+//         }
+//         ui->setPlayerPosition(daeObject1->getModel());
+//         lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), true);
+//     }
+    
+//     Cam->Update();
+//     map->update();
+//     //lights->updateLightAliceV2(daeObject1->getModel());
+//     int mapID;
+//     float x, y;
+
+//     //cube->update();
 }
 
 void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {

@@ -219,6 +219,17 @@ bool Server::check_attackability(int player_id, int obs_id)
 	return glm::length(player_pt-centerObs) < ATTACK_RANGE;
 }
 
+bool Server::check_detectability(int obs_id)
+{
+	glm::mat4* loc = &this->gd->location_A;
+	glm::vec4 transf(0, 0, -2*ATTACK_RANGE, 1);
+	glm::vec4 ahead_point = *loc * transf;
+	glm::vec2 player_pt(ahead_point[0], ahead_point[2]);
+	float* pSourceObs = (float*)glm::value_ptr(map->obs->glm_vec[obs_id]);
+	glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
+	return glm::length(player_pt - centerObs) < 2*ATTACK_RANGE;
+}
+
 
 void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::NOEVENT || (int)e == -1)
@@ -261,11 +272,11 @@ void Server::updateBySingleEvent(EventType e, int id) {
 				switch (obs_type)
 				{
 				case 1:
-					increase = SMALL_AWD;
+					increase = SMALL_ALERT;
 				case 2:
-					increase = MEDIUM_AWD;
+					increase = MEDIUM_ALERT;
 				case 3:
-					increase = LARGE_AWD;
+					increase = LARGE_ALERT;
 				default:
 					break;
 				}
@@ -286,6 +297,7 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		}
 		else {
 			// handle Alice's skill
+			handleDetect();
 		}
 	}
 
@@ -319,6 +331,23 @@ void Server::handleAttack(int id)
 			this->obs_countdown[id] = obs_data;
 			this->gd->obstacle_states[i] = (int)ObstacleState::CURRENTLY_DESTROYING;
 			this->gd->player_status[id] = (int)PlayerStatus::ATTACK;
+		}
+	}
+}
+
+void Server::handleDetect()
+{
+	for (int i = 0; i < map->obs->glm_vec.size(); i++)
+	{
+		bool detect_success = check_detectability(i);
+		if (detect_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
+		{
+			std::cout << i << "is being detected" << "!!!" << std::endl;
+			int obs_type = map->obs->obs_vec[i]->type;
+			std::pair<int, int> obs_data = std::make_pair(i, 2000);
+			this->obs_countdown[0] = obs_data;
+			this->gd->obstacle_states[i] = (int)ObstacleState::DETECTED;
+			this->gd->player_status[0] = (int)PlayerStatus::SKILL;
 		}
 	}
 }
@@ -369,8 +398,13 @@ void Server::updateObstacleCountdown()
 				default:
 					break;
 				}
-				this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
-				this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
+				if (i != 0) { // BCD attack
+					this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
+					this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
+				}
+				else if (this->gd->obstacle_states[this->obs_countdown[0].first] == (int)ObstacleState::DETECTED) {
+					this->gd->obstacle_states[this->obs_countdown[0].first] = (int)ObstacleState::NOT_DESTROYED;
+				}
 				this->gd->player_status[i] = (int)PlayerStatus::NONE;
 				this->obs_countdown[i] = std::make_pair(-1, -1);
 			}
