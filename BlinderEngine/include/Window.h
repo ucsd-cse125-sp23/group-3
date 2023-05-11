@@ -71,7 +71,7 @@ public:
     static void resizeCallback(GLFWwindow* window, int width, int height);
 
     // update and draw functions
-    static void idleCallback();
+    static void idleCallback(int level_awareness);
     static void drawLanding(GLFWwindow* window);
     static void displayCallback(GLFWwindow*, std::vector<int> os);
     static void setEndPage(GameState);

@@ -261,11 +261,11 @@ void Server::updateBySingleEvent(EventType e, int id) {
 				switch (obs_type)
 				{
 				case 1:
-					increase = SMALL_AWD;
+					increase = SMALL_ALERT;
 				case 2:
-					increase = MEDIUM_AWD;
+					increase = MEDIUM_ALERT;
 				case 3:
-					increase = LARGE_AWD;
+					increase = LARGE_ALERT;
 				default:
 					break;
 				}
