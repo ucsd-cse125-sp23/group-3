@@ -43,7 +43,7 @@ public:
 	void displayWorld(std::vector<int> os);
 	// Control
 	void setModel(glm::mat4 model);
-	void updateLevel(int curr);
+	void updateLevel(float level);
 	void updateTime(int curr);
 	void move();
 	void spin(float i);

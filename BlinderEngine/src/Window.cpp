@@ -60,8 +60,7 @@ bool Window::initializeLanding() {
 }
 
 void Window::cleanLanding() {
-    delete landing_page;
-    delete ready_btn;
+    // shared_ptr automaticly free up memory
 }
 
 void Window::drawLanding(GLFWwindow* window) {
@@ -305,10 +304,10 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
 void Window::updateLevel(int curr) {
     // TODO: 
     if (playerID == 0) {        // Alice
-        scene->updateLevel(curr);
+        scene->updateLevel((float)curr / (float)MAX_INSECURE);
     }
     else {                      // Others
-        scene->updateLevel(curr);
+        scene->updateLevel((float)curr / (float)MAX_INSECURE);
     }
 }
 
@@ -317,5 +316,5 @@ void Window::updateTime(int curr) {
 }
 
 void Window::setUiByPlayerID() {
-    ui->setUiByPlayerID(playerID);
+    scene->setUiByPlayerID(playerID);
 }

@@ -67,7 +67,7 @@ void Scene::displayWorld(std::vector<int> os)
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
 
-	ui->draw(camera->GetViewProjectMtx(), *uiShader);
+	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os);
 
 
@@ -97,9 +97,9 @@ void Scene::setModel(glm::mat4 model)
 	playersObjects[playerID]->setModel(model);
 }
 
-void Scene::updateLevel(int curr)
+void Scene::updateLevel(float level)
 {
-	ui->changeLevelbarSizeY((float)curr / (float)Constants::MAX_LEVEL);
+	ui->changeLevelbarSizeY(level);
 
 }
 
@@ -135,7 +135,7 @@ void Scene::setAspect(float a)
 void Scene::resizeScene(int width, int height)
 {
 	if (ui != nullptr) {
-		ui->setSize(width, height);
+		ui->setSize(width, height, playerID);
 	}
 	glViewport(0, 0, width, height);
 	setAspect(float(width) / float(height));
@@ -175,27 +175,27 @@ void Scene::loadGameObjects()
 	daeObjectAlice = std::make_shared<DaeObject>(Constants::alice_model_path,
 		Constants::alice_walking_animation_path,
 		Constants::alice_action_animation_path,
+		glm::vec3(0.3f));
+	std::cerr << "loaded Alice" << std::endl;
+	std::cerr << "loading Bob" << std::endl;
+	// HACK, using girl model and animation
+	daeObjectBob = std::make_shared<DaeObject>(Constants::alice_model_path,
+		Constants::alice_walking_animation_path,
+		Constants::alice_action_animation_path,
 		Constants::alice_scaling_factor);
-	//std::cerr << "loaded Alice" << std::endl;
-	//std::cerr << "loading Bob" << std::endl;
-	//// HACK, using girl model and animation
-	//daeObjectBob = std::make_shared<DaeObject>(Constants::alice_model_path,
-	//	Constants::alice_walking_animation_path,
-	//	Constants::alice_action_animation_path,
-	//	Constants::alice_scaling_factor);
-	//std::cerr << "loaded Bob" << std::endl;
-	//std::cerr << "loading Carlo" << std::endl;
-	//daeObjectCarlo = std::make_shared<DaeObject>(Constants::alice_model_path,
-	//	Constants::alice_walking_animation_path,
-	//	Constants::alice_action_animation_path,
-	//	Constants::alice_scaling_factor);
-	//std::cerr << "loaded Carlo" << std::endl;
-	//std::cerr << "loading David" << std::endl;
-	//daeObjectDavid = std::make_shared<DaeObject>(Constants::alice_model_path,
-	//	Constants::alice_walking_animation_path,
-	//	Constants::alice_action_animation_path,
-	//	Constants::alice_scaling_factor);
-	//std::cerr << "loaded David" << std::endl;
+	std::cerr << "loaded Bob" << std::endl;
+	std::cerr << "loading Carlo" << std::endl;
+	daeObjectCarlo = std::make_shared<DaeObject>(Constants::alice_model_path,
+		Constants::alice_walking_animation_path,
+		Constants::alice_action_animation_path,
+		Constants::alice_scaling_factor);
+	std::cerr << "loaded Carlo" << std::endl;
+	std::cerr << "loading David" << std::endl;
+	daeObjectDavid = std::make_shared<DaeObject>(Constants::alice_model_path,
+		Constants::alice_walking_animation_path,
+		Constants::alice_action_animation_path,
+		Constants::alice_scaling_factor);
+	std::cerr << "loaded David" << std::endl;
 	playersObjects.push_back(daeObjectAlice);
 	playersObjects.push_back(daeObjectAlice);
 	playersObjects.push_back(daeObjectAlice);
