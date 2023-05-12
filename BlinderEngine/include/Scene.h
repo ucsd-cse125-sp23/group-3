@@ -51,13 +51,13 @@ public:
 	void setAspect(float a);
 	void resizeScene(int width, int height);
 	void setUiByPlayerID(int id);
+	void loadGameObjects();
 
 private:
 	void loadLanding();
 	void loadShaders();
-	void loadGameObjects();
 	void loadEssentials();
-	void initPlayerObject(int playerID);
+	std::shared_ptr<DaeObject> initPlayerObject(int playerID);
 
 public:
 	// Control variables
