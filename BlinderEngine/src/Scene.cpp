@@ -1,12 +1,12 @@
 #include "Scene.h"
 #include <thread>
+#include <omp.h>
 
 Scene::Scene()
 {
 	loadShaders();
-	loadGameObjects();
-
 	loadEssentials();
+	loadGameObjects();
 }
 
 void Scene::init(int PlayID)
@@ -74,6 +74,7 @@ void Scene::displayWorld(std::vector<int> os)
 
 	if (Constants::offline) {
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
 	else {
 		if (playerID == 0) {
@@ -171,18 +172,12 @@ void Scene::loadShaders()
 
 void Scene::loadGameObjects()
 {
-	std::vector<std::thread> threads(4);
+
+	std::fill_n(std::back_inserter(playersObjects), 4, nullptr);
 	for (int i = 0; i < 4; i++) {
-		threads[i] = std::thread(&Scene::initPlayerObject, this, i);
+		playersObjects[i] = (initPlayerObject(i));
 	}
-	for (int i = 0; i < 4; i++) {
-		threads[i].join();
-	}
-	 
-	playersObjects.push_back(daeObjectAlice);
-	playersObjects.push_back(daeObjectBob);
-	playersObjects.push_back(daeObjectCarlo);
-	playersObjects.push_back(daeObjectDavid);
+	//objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall.obj", glm::vec3(5.0f));
 }
 
 void Scene::loadEssentials()
@@ -198,7 +193,7 @@ void Scene::loadEssentials()
 
 }
 
-void Scene::initPlayerObject(int playerID)
+std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 {
 	if (0 == playerID) 
 	{
@@ -207,6 +202,8 @@ void Scene::initPlayerObject(int playerID)
 			Constants::alice_action_animation_path,
 			glm::vec3(0.3f));
 		std::cerr << "loaded Alice" << std::endl;
+		return daeObjectAlice;
+
 	}
 	else if (1 == playerID)
 	{
@@ -215,6 +212,8 @@ void Scene::initPlayerObject(int playerID)
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
 		std::cerr << "loaded Bob" << std::endl;
+		return daeObjectBob;
+
 	}
 	else if (2 == playerID)
 	{
@@ -223,6 +222,7 @@ void Scene::initPlayerObject(int playerID)
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
 		std::cerr << "loaded Carlo" << std::endl;
+		return daeObjectCarlo;
 	}
 	else if (3 == playerID)
 	{
@@ -231,7 +231,8 @@ void Scene::initPlayerObject(int playerID)
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
 		std::cerr << "loaded David" << std::endl;
+		return daeObjectDavid;
 	}
-	
+	return nullptr;
 }
 

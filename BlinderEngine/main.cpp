@@ -96,6 +96,7 @@ int main(void) {
     if (assigned_id == -1) {
         assigned_id = 0;
     }
+    assigned_id = 1;
     // TODO(graphics): render things based on assigned_id & player setup
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
