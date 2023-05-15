@@ -31,6 +31,10 @@ void Scene::drawLanding()
 {
 	landingPage->draw(*uiShader, 1.0f);
 	readyBtn->draw(*uiShader, 1.0f);
+	aBtn->draw(*uiShader, 1.0f);
+	bBtn->draw(*uiShader, 1.0f);
+	cBtn->draw(*uiShader, 1.0f);
+	dBtn->draw(*uiShader, 1.0f);
 }
 
 void Scene::setEnd(bool won)
@@ -129,6 +133,10 @@ void Scene::updateReadyBtn(const char* imagePath)
 {
 	readyBtn->bindTexture(imagePath);
 }
+void Scene::updateCharBtn(int character, const char* imagePath) {
+	std::shared_ptr<graphic2D> charBtns[4] = { aBtn, bBtn, cBtn, dBtn };
+	charBtns[character]->bindTexture(imagePath);
+}
 
 void Scene::setAspect(float a)
 {
@@ -156,6 +164,18 @@ void Scene::loadLanding()
 
 	readyBtn = std::make_shared<graphic2D>(0.2, 0.2, 0.7, -0.7, true);
 	readyBtn->bindTexture("./resources/images/test.png");
+
+	aBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.9, -0.7, true);
+	aBtn->bindTexture("./resources/images/test.png");
+
+	bBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.5, -0.7, true);
+	bBtn->bindTexture("./resources/images/test.png");
+
+	cBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.1, -0.7, true);
+	cBtn->bindTexture("./resources/images/test.png");
+
+	dBtn = std::make_shared<graphic2D>(0.2, 0.2, 0.3, -0.7, true);
+	dBtn->bindTexture("./resources/images/test.png");
 }
 
 void Scene::loadShaders()

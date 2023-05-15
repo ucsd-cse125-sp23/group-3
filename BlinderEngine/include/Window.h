@@ -86,6 +86,10 @@ public:
     static void cursor_callback(GLFWwindow* window, double currX, double currY);
 
     static bool cursorOnReadyBtn(double, double);
+    static bool cursorOnABtn(double, double);
+    static bool cursorOnBBtn(double, double);
+    static bool cursorOnCBtn(double, double);
+    static bool cursorOnDBtn(double, double);
 
     //static unsigned int loadCubemap(std::vector<std::string> faces);
 

@@ -4,8 +4,8 @@
 int main()
 {
      Server* serv = new Server();
-     for (auto a : serv->ids)
- 	    std::cout << a << " ";
+     //for (auto a : serv->ids)
+ 	 //   std::cout << a << " ";
      // blocks until 4 clients
      for (int id = 0; id < NUM_PLAYERS; id ++){
          SOCKET ss = INVALID_SOCKET;
@@ -22,6 +22,7 @@ int main()
      while (num_selection < 4)
      {
          int character = serv->handle_acq(serv->sessions[idx % NUM_PLAYERS]);
+         // int character = serv->handle_acq(idx % NUM_PLAYERS);
          if (character != -1)
          {
              serv->send_init_packet(idx % NUM_PLAYERS, character);

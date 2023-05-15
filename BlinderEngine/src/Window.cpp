@@ -280,6 +280,19 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
         state = WindowState::INGAME;
         std::cout << "READY!!\n";
     }
+    if (cursorOnABtn(MouseX, MouseY) && LeftDown) {
+        scene->updateCharBtn(0, "./resources/images/test2.png");
+    }
+    if (cursorOnBBtn(MouseX, MouseY) && LeftDown) {
+        scene->updateCharBtn(1, "./resources/images/test2.png");
+    }
+    if (cursorOnCBtn(MouseX, MouseY) && LeftDown) {
+        scene->updateCharBtn(2, "./resources/images/test2.png");
+    }
+    if (cursorOnDBtn(MouseX, MouseY) && LeftDown) {
+        scene->updateCharBtn(3, "./resources/images/test2.png");
+    }
+    
 }
 
 void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
@@ -328,6 +341,27 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
         return true;
     }
     return false;
+}
+
+bool Window::cursorOnABtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.1 / 2 < x && width * 0.3 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnBBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.5 / 2 < x && width * 0.7 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnCBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.9 / 2 < x && width * 1.1 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnDBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 1.5 / 2 < x && width * 1.7 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
 }
 
 void Window::updateLevel(int curr) {

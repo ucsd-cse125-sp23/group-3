@@ -48,6 +48,7 @@ public:
 	void move();
 	void spin(float i);
 	void updateReadyBtn(const char* imagePath);
+	void updateCharBtn(int character, const char* imagePath);
 	void setAspect(float a);
 	void resizeScene(int width, int height);
 	void setUiByPlayerID(int id);
@@ -68,6 +69,10 @@ public:
 	std::shared_ptr<UI> ui;
 	std::shared_ptr<graphic2D> landingPage;
 	std::shared_ptr<graphic2D> readyBtn;
+	std::shared_ptr<graphic2D> aBtn;
+	std::shared_ptr<graphic2D> bBtn;
+	std::shared_ptr<graphic2D> cBtn;
+	std::shared_ptr<graphic2D> dBtn;
 	std::shared_ptr<graphic2D> endPage;
 	std::shared_ptr<Skybox> skybox;
 	std::vector<std::shared_ptr<DaeObject>> playersObjects;
