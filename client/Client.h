@@ -26,9 +26,11 @@ public:
 	void updateGameData(GameData);
 
 	void acq_character(int char_id);
+	int recv_buttonStatus();
 
 	GameData* gd;
 
+	std::vector<int> buttonStatus{ 0,0,0,0 };
 private:
 	SOCKET ConnectSocket;
     char buffer[512];

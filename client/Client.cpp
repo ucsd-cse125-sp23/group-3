@@ -173,3 +173,12 @@ void Client::acq_character(int char_id)
 	send(ConnectSocket, buf_init, 2, 0);
 }
 
+int Client::recv_buttonStatus()
+{
+	if (recv(ConnectSocket, buffer, 512, 0) <= 0)
+		return -1;
+	std::vector<int> buttons = Packet::deserializeButtonStatus(buffer);
+	this->buttonStatus = buttons;
+	return 0;
+}
+
