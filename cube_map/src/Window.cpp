@@ -24,6 +24,7 @@ GLuint Window::shaderProgram;
 Shader* Window::shaderText2DProgram;
 CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
+Particles* Window::particles;
 
 bool onMOVE;
 // Constructors and desctructors
@@ -34,7 +35,7 @@ bool Window::initializeProgram() {
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
     //lights.loadToUShader(shaderProgram,Camera);
     //std::cout<<"make myself here"<<std::endl;
-    shaderText2DProgram=new Shader("shaders/texture2D.vs", "shaders/texture2D.fs"); 
+    shaderText2DProgram=new Shader("shaders/particles.vs", "shaders/particles.fs"); 
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
@@ -50,13 +51,14 @@ bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
     map=new Map();
+    particles=new Particles(100);
     lights->AddLightBCD(map->calculateBCDLightcenter());
     glm::mat4 somerot=glm::mat4(1.0f);
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    cube->setModel(map->getModelOnMap(somerot,2,4.5,4.5));
-    Cam->setModel(map->getModelOnMap(somerot,2,4.5,4.5));
+    cube->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
+    Cam->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
     // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
-    canvas=new Minimap(0.4,(800*(0.4*sqrt(3))/2)/600,-0.0,-1.0);
+    //canvas=new Minimap(0.4,(800*(0.4*sqrt(3))/2)/600,-0.0,-1.0);
     return true;
 }
 
@@ -135,10 +137,10 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
-    canvas->setPosition(cube->getModel());
-    canvas->update();
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
-    
+    //std::cout<<"error here"<<std::endl;
+    particles->Update(0.01f,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
+    //std::cout<<"error here"<<std::endl;
     //lights->updateLightAliceV2(cube->getModel());
 
     //lights->update(Cam);
@@ -155,7 +157,8 @@ void Window::displayCallback(GLFWwindow* window) {
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //std::cout<<"make myself here"<<std::endl;
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
-
+    particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
+    //std::cout<<"error here"<<std::endl;
     int mapID;
     float x,y;
     map->getPosition(cube->getModel(),&mapID,&y,&x);

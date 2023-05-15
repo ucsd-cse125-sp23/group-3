@@ -5,7 +5,7 @@
 #include "core.h"
 
 struct Particle {
-    glm::vec2 Position, Velocity;
+    glm::vec3 Position, Velocity;
     glm::vec4 Color;
     float     Life;
 
