@@ -30,7 +30,7 @@ private:
     // initializes buffer and vertex attributes
     void init();
     // returns the first Particle index that's currently unused e.g. Life <= 0.0f or 0 if no particle is currently inactive
-    unsigned int firstUnusedParticle();
+    unsigned int firstUnusedParticle(bool &noDied);
     // respawns particle
     void respawnParticle(Particle &particle, glm::vec3 objectVelocity, glm::vec3 objectPosition,  glm::vec3 offset = glm::vec3(0.0f));
 };

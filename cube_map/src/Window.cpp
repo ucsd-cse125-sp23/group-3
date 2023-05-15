@@ -25,7 +25,7 @@ Shader* Window::shaderText2DProgram;
 CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
 Particles* Window::particles;
-
+struct Particle* leading=new Particle();
 bool onMOVE;
 // Constructors and desctructors
 bool Window::initializeProgram() {
@@ -51,9 +51,10 @@ bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
     map=new Map();
-    particles=new Particles(100);
+    particles=new Particles(1000);
     lights->AddLightBCD(map->calculateBCDLightcenter());
     glm::mat4 somerot=glm::mat4(1.0f);
+    leading->Velocity=glm::vec3(0.1f,0.1f,0.1f)*5.0f;
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     cube->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
     Cam->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
@@ -139,7 +140,10 @@ void Window::idleCallback() {
     map->update();
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     //std::cout<<"error here"<<std::endl;
-    particles->Update(0.01f,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
+    float dt=0.01f;
+    leading->Position+=leading->Velocity*dt;
+    particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+    //particles->Update(dt,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
     //std::cout<<"error here"<<std::endl;
     //lights->updateLightAliceV2(cube->getModel());
 
