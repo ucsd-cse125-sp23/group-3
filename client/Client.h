@@ -25,6 +25,8 @@ public:
 
 	void updateGameData(GameData);
 
+	void acq_character(int char_id);
+
 	GameData* gd;
 
 private:

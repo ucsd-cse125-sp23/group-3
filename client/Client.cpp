@@ -164,3 +164,12 @@ void Client::updateGameData(GameData gd) {
 	this->gd->gamestate = gd.gamestate;
 }
 
+void Client::acq_character(int char_id)
+{
+	std::string init_str;
+	// Init packet
+	init_str.append(std::to_string(char_id));
+	const char* buf_init = init_str.c_str();
+	send(ConnectSocket, buf_init, 2, 0);
+}
+
