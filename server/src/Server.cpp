@@ -5,9 +5,9 @@ CollisionDetection Server::collisionDetection;
 
 Server::Server()
 {
-	std::random_device rd;
-	std::mt19937 g(rd());
-	std::shuffle(ids.begin(), ids.end(), g);
+	//std::random_device rd;
+	//std::mt19937 g(rd());
+	//std::shuffle(ids.begin(), ids.end(), g);
 
 	//for (auto a : ids)
 	//	std::cout << a << " ";
@@ -506,4 +506,38 @@ void Server::checkGameEndLogic() {
 		this->gd->gamestate = GameState::WIN;
 		return;
 	}
+}
+
+void Server::broadcast_button_status()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (sessions[i] != INVALID_SOCKET)
+		{
+			Packet::serializeButtonStatus(this->button_status, buffer[i]);
+			if (send(sessions[i], buffer[i], 512, 0) == SOCKET_ERROR)
+			{
+				printf("send failed with error: %d\n", WSAGetLastError());
+				closesocket(sessions[i]);
+			}
+		}
+	}
+}
+
+int Server::handle_acq(int client)
+{
+	if (this->ids[client] != -1) // already got a character
+	{
+		return -1;
+	}
+	if (recv(sessions[client], buffer[client], 512, 0) <= 0)
+		return -1;
+	int character = (int)(buffer[client][0] - '0');
+	if (this->button_status[character] == 0)
+	{
+		this->button_status[character] = 1;
+		this->ids[client] = character;
+		return character;
+	}
+	return -1;
 }

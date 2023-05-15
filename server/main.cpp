@@ -16,6 +16,21 @@ int main()
          std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
      }
 
+     // character selection
+     int num_selection = 0;
+     int idx = 0;
+     while (num_selection < 4)
+     {
+         int character = serv->handle_acq(serv->sessions[idx % NUM_PLAYERS]);
+         if (character != -1)
+         {
+             serv->send_init_packet(idx % NUM_PLAYERS, character);
+             serv->broadcast_button_status();
+             num_selection++;
+         }
+         idx++;
+     }
+
      // send initial gamedata to all clients
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
@@ -30,7 +45,7 @@ int main()
          while (check_recv_ready != (int)EventType::READY) {
              check_recv_ready = serv->recv_event(i);
          }
-         serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
+         // serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
      }
 
      SOCKET cp_sessions[NUM_PLAYERS];

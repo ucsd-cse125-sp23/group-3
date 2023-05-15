@@ -124,3 +124,14 @@ std::vector<int> Packet::deserializeEventRecords(char* buffer)
 	std::vector<int> vec = str2vec(buffer, NUM_EVENT_TYPES);
 	return vec;
 }
+
+void Packet::serializeButtonStatus(const std::vector<int>& buttonStatus, char* buffer)
+{
+	vec2str(buttonStatus, buffer, 4);
+}
+
+std::vector<int> Packet::deserializeButtonStatus(char* buffer)
+{
+	std::vector<int> vec = str2vec(buffer, 4);
+	return vec;
+}
