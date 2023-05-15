@@ -15,7 +15,7 @@ struct Particle {
 class Particles {
 public:
     // constructor
-    Particles( unsigned int amount);
+    Particles( unsigned int amount,bool scatter);
     // update all particles
     void Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset = glm::vec3(0.0f));
     // render all particles
@@ -26,6 +26,7 @@ private:
     unsigned int amount;
 
     unsigned int VAO;
+    bool scatter;
     GLuint EBO;
     // initializes buffer and vertex attributes
     void init();

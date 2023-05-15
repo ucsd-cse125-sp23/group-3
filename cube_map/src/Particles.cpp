@@ -2,8 +2,8 @@
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
 
-Particles::Particles(unsigned int amount)
-    : amount(amount)
+Particles::Particles(unsigned int amount,bool scatter)
+    : amount(amount), scatter(scatter)
 {
     this->init();
 }
@@ -136,13 +136,17 @@ unsigned int Particles::firstUnusedParticle(bool &noDied)
 
 void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, glm::vec3 objectPosition, glm::vec3 offset)
 {
-    float random1 = ((rand() % 1000) - 5) / 1000.0f;
-    float random2 = ((rand() % 1000) - 5) / 1000.0f;
-    float random3 = ((rand() % 1000) - 5) / 1000.0f;
-    glm::vec3 random=glm::vec3(random1,random2,random3);
+    float random1 = ((rand() % 1000) - 5) / 2000.0f;
+    float random2 = ((rand() % 1000) - 5) / 2000.0f;
+    float random3 = ((rand() % 1000) - 5) / 2000.0f;
+    float factor=((rand() % 1000) - 5) / 2000.0f;
+    glm::vec3 random=glm::vec3(random1,random2,random3)*factor*factor;
     //float random=0.0f;
     float rColor = 0.5f + ((rand() % 100) / 100.0f);
     particle.Position = objectPosition  + offset;
+    if(scatter){
+        particle.Position+=random;
+    }
     particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
     //particle.Life = 1.0f;
     //particle.Velocity = objectVelocity* 0.1f;

@@ -25,6 +25,7 @@ Shader* Window::shaderText2DProgram;
 CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
 Particles* Window::particles;
+Particles* particles_2;
 struct Particle* leading=new Particle();
 bool onMOVE;
 // Constructors and desctructors
@@ -51,7 +52,8 @@ bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
     map=new Map();
-    particles=new Particles(1000);
+    particles=new Particles(1000,false);
+    particles_2=new Particles(1000,true);
     lights->AddLightBCD(map->calculateBCDLightcenter());
     glm::mat4 somerot=glm::mat4(1.0f);
     leading->Velocity=glm::vec3(0.1f,0.1f,0.1f)*5.0f;
@@ -143,6 +145,7 @@ void Window::idleCallback() {
     float dt=0.01f;
     leading->Position+=leading->Velocity*dt;
     particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+    particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
     //particles->Update(dt,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
     //std::cout<<"error here"<<std::endl;
     //lights->updateLightAliceV2(cube->getModel());
@@ -161,7 +164,8 @@ void Window::displayCallback(GLFWwindow* window) {
     map->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     //std::cout<<"make myself here"<<std::endl;
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
-    particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
+    //particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
+    particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
     //std::cout<<"error here"<<std::endl;
     int mapID;
     float x,y;
