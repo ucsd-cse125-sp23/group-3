@@ -282,18 +282,22 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
         std::cout << "READY!!\n";
     }
     if (cursorOnABtn(MouseX, MouseY) && LeftDown) {
+        std::cout << "a" << std::endl;
         acq_char_id = 0;
         // scene->updateCharBtn(0, "./resources/images/test2.png");
     }
     if (cursorOnBBtn(MouseX, MouseY) && LeftDown) {
+        std::cout << "b" << std::endl;
         acq_char_id = 1;
         // scene->updateCharBtn(1, "./resources/images/test2.png");
     }
     if (cursorOnCBtn(MouseX, MouseY) && LeftDown) {
+        std::cout << "c" << std::endl;
         acq_char_id = 2;
         // scene->updateCharBtn(2, "./resources/images/test2.png");
     }
     if (cursorOnDBtn(MouseX, MouseY) && LeftDown) {
+        std::cout << "d" << std::endl;
         acq_char_id = 3;
         // scene->updateCharBtn(3, "./resources/images/test2.png");
     }
@@ -365,7 +369,7 @@ bool Window::cursorOnCBtn(double x, double y) {
 }
 bool Window::cursorOnDBtn(double x, double y) {
     return state != WindowState::LANDING ||
-        width * 1.5 / 2 < x && width * 1.7 / 2 > x &&
+        width * 1.3 / 2 < x && width * 1.5 / 2 > x &&
         height * 1.5 / 2 < y && y < height * 1.7 / 2;
 }
 
@@ -388,6 +392,7 @@ void Window::setUiByPlayerID() {
 }
 
 void Window::updateButtons(std::vector<int> buttonAssignment) {
+    //std::cout << playerID << std::endl;
     for (int i = 0; i < buttonAssignment.size(); i++)
     {
         int buttonNum = buttonAssignment[i];
@@ -407,6 +412,10 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
             break;
         default:
             break;
+        }
+
+        if (i == playerID && buttonAssignment[i] >= 0) {
+            scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
 }

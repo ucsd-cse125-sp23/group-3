@@ -31,6 +31,9 @@ int main()
          int character = serv->handle_acq(idx % NUM_PLAYERS);
          if (character != -1) num_selection++;
          idx++;
+
+         //if (idx % 500000 == 0)
+         //std::cout << serv->ids[0] << " " << serv->ids[1] << " " << serv->ids[2] << " " << serv->ids[3] << std::endl;
      }
 
      // wait for ready action and send init packet;blocks until 4 connect

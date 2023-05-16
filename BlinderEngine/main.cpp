@@ -76,6 +76,8 @@ int main(void) {
         }
     }
 
+    Window::playerID = client_id;
+
     // TODO(graphics): load story&skill
 
     // listen for initial game data
