@@ -15,8 +15,8 @@ public:
 	static void serialize(const std::vector<int>& eventRecord, char* buffer);
 	static std::vector<int> deserializeEventRecords(char* buffer);
 
-	static void serializeButtonStatus(const std::vector<int>& buttonStatus, char* buffer);
-	static std::vector<int> deserializeButtonStatus(char* buffer);
+	static void serializeButtonAssignment(const std::vector<int>& buttonAssignment, char* buffer);
+	static std::vector<int> deserializeButtonAssignment(char* buffer);
 
 	// Used in serialize and deserialize functions
 	static void mat2str(const glm::mat4&, char*& buffer);

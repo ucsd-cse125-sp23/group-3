@@ -125,12 +125,12 @@ std::vector<int> Packet::deserializeEventRecords(char* buffer)
 	return vec;
 }
 
-void Packet::serializeButtonStatus(const std::vector<int>& buttonStatus, char* buffer)
+void Packet::serializeButtonAssignment(const std::vector<int>& buttonAssignment, char* buffer)
 {
-	vec2str(buttonStatus, buffer, 4);
+	vec2str(buttonAssignment, buffer, 4);
 }
 
-std::vector<int> Packet::deserializeButtonStatus(char* buffer)
+std::vector<int> Packet::deserializeButtonAssignment(char* buffer)
 {
 	std::vector<int> vec = str2vec(buffer, 4);
 	return vec;

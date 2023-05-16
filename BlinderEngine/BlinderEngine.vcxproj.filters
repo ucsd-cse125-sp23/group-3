@@ -152,10 +152,10 @@
     <ClCompile Include="src\Mult_Lights.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Light.cpp">
+    <ClCompile Include="src\Scene.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene.cpp">
+    <ClCompile Include="src\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

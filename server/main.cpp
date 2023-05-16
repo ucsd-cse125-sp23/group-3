@@ -13,7 +13,14 @@ int main()
              ss = accept(serv->ListenSocket, NULL, NULL);
          }
          serv->sessions[id] = ss;
+         serv->send_init_packet(id, id);
          std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
+     }
+
+     // send initial gamedata to all clients
+     for (int i = 0; i < NUM_PLAYERS; i++)
+     {
+         serv->send_gamedata(i);
      }
 
      // character selection
@@ -21,21 +28,9 @@ int main()
      int idx = 0;
      while (num_selection < 4)
      {
-         int character = serv->handle_acq(serv->sessions[idx % NUM_PLAYERS]);
-         // int character = serv->handle_acq(idx % NUM_PLAYERS);
-         if (character != -1)
-         {
-             serv->send_init_packet(idx % NUM_PLAYERS, character);
-             serv->broadcast_button_status();
-             num_selection++;
-         }
+         int character = serv->handle_acq(idx % NUM_PLAYERS);
+         if (character != -1) num_selection++;
          idx++;
-     }
-
-     // send initial gamedata to all clients
-     for (int i = 0; i < NUM_PLAYERS; i++)
-     {
-         serv->send_gamedata(i);
      }
 
      // wait for ready action and send init packet;blocks until 4 connect

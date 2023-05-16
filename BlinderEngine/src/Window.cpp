@@ -35,6 +35,7 @@ const float turningratio=20.0f;
 std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
+int  Window::acq_char_id = -1;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -281,16 +282,20 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
         std::cout << "READY!!\n";
     }
     if (cursorOnABtn(MouseX, MouseY) && LeftDown) {
-        scene->updateCharBtn(0, "./resources/images/test2.png");
+        acq_char_id = 0;
+        // scene->updateCharBtn(0, "./resources/images/test2.png");
     }
     if (cursorOnBBtn(MouseX, MouseY) && LeftDown) {
-        scene->updateCharBtn(1, "./resources/images/test2.png");
+        acq_char_id = 1;
+        // scene->updateCharBtn(1, "./resources/images/test2.png");
     }
     if (cursorOnCBtn(MouseX, MouseY) && LeftDown) {
-        scene->updateCharBtn(2, "./resources/images/test2.png");
+        acq_char_id = 2;
+        // scene->updateCharBtn(2, "./resources/images/test2.png");
     }
     if (cursorOnDBtn(MouseX, MouseY) && LeftDown) {
-        scene->updateCharBtn(3, "./resources/images/test2.png");
+        acq_char_id = 3;
+        // scene->updateCharBtn(3, "./resources/images/test2.png");
     }
     
 }
@@ -380,4 +385,28 @@ void Window::updateTime(int curr) {
 
 void Window::setUiByPlayerID() {
     scene->setUiByPlayerID(playerID);
+}
+
+void Window::updateButtons(std::vector<int> buttonAssignment) {
+    for (int i = 0; i < buttonAssignment.size(); i++)
+    {
+        int buttonNum = buttonAssignment[i];
+        switch (buttonNum)
+        {
+        case 0:
+            scene->updateCharBtn(0, "./resources/images/test2.png");
+            break;
+        case 1:
+            scene->updateCharBtn(1, "./resources/images/test2.png");
+            break;
+        case 2:
+            scene->updateCharBtn(2, "./resources/images/test2.png");
+            break;
+        case 3:
+            scene->updateCharBtn(3, "./resources/images/test2.png");
+            break;
+        default:
+            break;
+        }
+    }
 }

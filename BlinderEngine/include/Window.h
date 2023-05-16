@@ -43,6 +43,7 @@ public:
     static std::vector<int> eventChecker;
     static bool no_event;
     static int playerID;
+    static int acq_char_id;
     //static graphic2D* canvas;
     //static UI* ui;
 
@@ -95,6 +96,7 @@ public:
 
     static void updateLevel(int);
     static void updateTime(int);
+    static void updateButtons(std::vector<int> buttonAssignment);
     
     static void setUiByPlayerID();
 };

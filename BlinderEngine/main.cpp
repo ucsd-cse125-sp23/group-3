@@ -66,11 +66,17 @@ int main(void) {
 
     // Client setup
     Client* cli = new Client();
+    int client_id = -1; // where to find corresponding character id
+    if (!Constants::offline)
+    {
+        client_id = cli->accept_init();
+        while (client_id == -1 && !Constants::offline) {
+            client_id = cli->accept_init();
+
+        }
+    }
 
     // TODO(graphics): load story&skill
-
-    // TODO(graphics): load landing page
-    Window::initializeLanding();
 
     // listen for initial game data
     int check_gd = cli->recv_gamedata();
@@ -79,9 +85,20 @@ int main(void) {
 
     }
 
+    // TODO(graphics): load landing page
+    Window::initializeLanding();
+
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
+        if (Window::acq_char_id != -1) {
+            cli->acq_character(Window::acq_char_id);
+            std::cout << "sending acq..." << std::endl;
+            Window::acq_char_id = -1;
+        }
+        if (cli->recv_buttonAssignment()!= -1) {
+            Window::updateButtons(cli->buttonAssignment);
+        }
     }
     
 
@@ -89,16 +106,14 @@ int main(void) {
     cli->send_event(EventType::READY);
     // listen for init packet
     
-    int assigned_id = cli->accept_init();
-    while (assigned_id == -1 && !Constants::offline) {
-        assigned_id = cli->accept_init();
-
-    }
-    if (assigned_id == -1) {
+    int assigned_id;
+    if (Constants::offline) {
         assigned_id = 0;
     }
-    // assigned_id = 1;
-    
+    else {
+        assigned_id = cli->buttonAssignment[client_id];
+    }
+
     // render things based on assigned_id & player setup
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);

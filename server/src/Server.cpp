@@ -508,13 +508,13 @@ void Server::checkGameEndLogic() {
 	}
 }
 
-void Server::broadcast_button_status()
+void Server::broadcast_button_assignment()
 {
 	for (int i = 0; i < NUM_PLAYERS; i++)
 	{
 		if (sessions[i] != INVALID_SOCKET)
 		{
-			Packet::serializeButtonStatus(this->button_status, buffer[i]);
+			Packet::serializeButtonAssignment(this->button_assignment, buffer[i]);
 			if (send(sessions[i], buffer[i], 512, 0) == SOCKET_ERROR)
 			{
 				printf("send failed with error: %d\n", WSAGetLastError());
@@ -533,10 +533,12 @@ int Server::handle_acq(int client)
 	if (recv(sessions[client], buffer[client], 512, 0) <= 0)
 		return -1;
 	int character = (int)(buffer[client][0] - '0');
-	if (this->button_status[character] == 0)
+	if (this->button_assignment[client] == -1)
 	{
-		this->button_status[character] = 1;
+		std::cout << client << " is trying to acquire " << character << std::endl;
+		this->button_assignment[client] = character;
 		this->ids[client] = character;
+		this->broadcast_button_assignment();
 		return character;
 	}
 	return -1;
