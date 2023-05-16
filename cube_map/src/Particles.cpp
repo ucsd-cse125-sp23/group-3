@@ -21,6 +21,8 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         
     }
     // update all particles
+    glm::vec3 Lightpos=glm::vec3(0.0f);
+    int intensity=0;
     for (unsigned int i = 0; i < this->amount; ++i)
     {
         Particle &p = this->particles[i];
@@ -29,9 +31,20 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         {	// particle is alive, thus update
             p.Position -= p.Velocity * dt; 
             p.Color.a -= dt*0.5f ;
+            Lightpos+=p.Position;
+            intensity++;
         }
         p.Life = p.Color.a;
     }
+    if(intensity!=0){
+        Lightpos/=(float)intensity;
+        //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
+        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),Lightpos,0.0f,0.7f*intensity/((float)1000.0f),0.0f);
+        light->SetParam(1.0f,0.1f,0.03f);
+    }else{
+        light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),Lightpos,0.0f,0.0f,0.0f);
+    }
+    
 }
 
 // render all particles
@@ -50,7 +63,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx)
             //std::cout<<"error here"<<std::endl;
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-    
+            shader.setFloat("scale",(rand()%10)/200.0f+0.05);
+            //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
             //std::cout<<"particle.color "<<glm::to_string(particle.Color)<<std::endl;
 
@@ -105,6 +119,7 @@ void Particles::init()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
     glBindVertexArray(0);
+    light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
     // create this->amount default particle instances
     for (unsigned int i = 0; i < this->amount; ++i)
         this->particles.push_back(Particle());

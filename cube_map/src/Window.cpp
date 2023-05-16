@@ -47,16 +47,19 @@ bool Window::initializeProgram() {
 }
 
 bool Window::initializeObjects() {
-    lights=new Mult_Lights(false);
+    lights=new Mult_Lights(true);
     
     // Create a cube
     cube = new Cube();
     map=new Map();
     particles=new Particles(1000,false);
     particles_2=new Particles(1000,true);
+    
     lights->AddLightBCD(map->calculateBCDLightcenter());
+    lights->particles_light.push_back(particles_2->light);
     glm::mat4 somerot=glm::mat4(1.0f);
-    leading->Velocity=glm::vec3(0.1f,0.1f,0.1f)*5.0f;
+    leading->Position=glm::vec3(0.0f,3.0f,0.0f);
+    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*5.0f;
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     cube->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
     Cam->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
@@ -140,12 +143,16 @@ void Window::idleCallback() {
     // Perform any updates as necessary.
     Cam->Update();
     map->update();
+    //std::cout<<"error here"<<std::endl;
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     //std::cout<<"error here"<<std::endl;
     float dt=0.01f;
+    //std::cout<<"error here"<<std::endl;
     leading->Position+=leading->Velocity*dt;
+    //std::cout<<"error here"<<std::endl;
     particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
     particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+    lights->particles_light[0]=particles_2->light;
     //particles->Update(dt,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
     //std::cout<<"error here"<<std::endl;
     //lights->updateLightAliceV2(cube->getModel());
@@ -157,6 +164,7 @@ void Window::idleCallback() {
 void Window::displayCallback(GLFWwindow* window) {
     // Clear the color and depth buffers.
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //std::cout<<"error here"<<std::endl;
     lights->loadToUShader(shaderProgram,*Cam);
     // Render the object.
     cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
@@ -165,7 +173,9 @@ void Window::displayCallback(GLFWwindow* window) {
     //std::cout<<"make myself here"<<std::endl;
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
     //particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
+   // std::cout<<"error here"<<std::endl;
     particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
+    //std::cout<<"error here"<<std::endl;
     //std::cout<<"error here"<<std::endl;
     int mapID;
     float x,y;
