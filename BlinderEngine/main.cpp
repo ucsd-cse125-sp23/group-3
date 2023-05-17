@@ -4,6 +4,7 @@
 #include "../shared/Player.h"
 #include <chrono>
 #include <ctime>
+#include "Audio.h"
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -96,7 +97,7 @@ int main(void) {
     if (assigned_id == -1) {
         assigned_id = 0;
     }
-    assigned_id = 1;
+    //assigned_id = 1;
     // TODO(graphics): render things based on assigned_id & player setup
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);
@@ -119,6 +120,9 @@ int main(void) {
     while (check_start == -1 && !Constants::offline) {
         check_start = cli->recv_gamedata();
     }
+
+    Audio::init();
+    Audio::playBgm();
 
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
@@ -170,8 +174,9 @@ int main(void) {
     }
     if (!Constants::offline) {
         Window::setEndPage(cli->gd->gamestate);
+        Audio::playEnd(cli->gd->gamestate);
     }
-
+    
     while (!glfwWindowShouldClose(window)) {
         Window::displayEndPage(window);
     }
@@ -182,5 +187,6 @@ int main(void) {
     // Terminate GLFW.
     glfwTerminate();
 
+    Audio::deinit();
     exit(EXIT_SUCCESS);
 }
