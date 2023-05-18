@@ -4,7 +4,7 @@
 #include "../shared/Player.h"
 #include <chrono>
 #include <ctime>
-#include "Audio.h"
+#include "include/Audio.h"
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -93,7 +93,9 @@ int main(void) {
     Window::drawLanding(window);
     while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
-        if (Window::acq_char_id != -1) {
+        if (Window::acq_char_id != -1 
+            && cli->buttonAssignment[client_id] == -1 
+            && cli->button_available(Window::acq_char_id)) {
             cli->acq_character(Window::acq_char_id);
             std::cout << "sending acq..." << std::endl;
             Window::acq_char_id = -1;

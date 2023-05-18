@@ -154,8 +154,8 @@
     <ClCompile Include="..\shared\GameData.cpp" />
     <ClCompile Include="..\shared\Packet.cpp" />
     <ClCompile Include="..\shared\Player.cpp" />
-    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CollisionDetection.cpp" />
     <ClCompile Include="src\Cube.cpp" />

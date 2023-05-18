@@ -182,3 +182,14 @@ int Client::recv_buttonAssignment()
 	return 0;
 }
 
+bool Client::button_available(int button_num)
+{
+	for (int i = 0; i < buttonAssignment.size(); i++)
+	{
+		if (button_num == buttonAssignment[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+

@@ -28,6 +28,8 @@ public:
 	void acq_character(int char_id);
 	int recv_buttonAssignment();
 
+	bool button_available(int button_num);
+
 	GameData* gd;
 
 	std::vector<int> buttonAssignment{ -1,-1,-1,-1 };
