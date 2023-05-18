@@ -163,7 +163,7 @@ void Scene::loadLanding()
 	landingPage->bindTexture("./resources/images/test.png");
 
 	readyBtn = std::make_shared<graphic2D>(0.2, 0.2, 0.7, -0.7, true);
-	readyBtn->bindTexture("./resources/images/test.png");
+	readyBtn->bindTexture("./resources/images/testS.png");
 
 	aBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.9, -0.7, true);
 	aBtn->bindTexture("./resources/images/test.png");
