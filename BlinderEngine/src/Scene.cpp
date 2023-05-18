@@ -222,6 +222,7 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::alice_walking_animation_path,
 			Constants::alice_action_animation_path,
 			glm::vec3(0.3f));
+		//daeObjectAlice->spin(180);
 		std::cerr << "loaded Alice" << std::endl;
 		return daeObjectAlice;
 
@@ -232,6 +233,7 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::alice_walking_animation_path,
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
+		//daeObjectBob->spin(180);
 		std::cerr << "loaded Bob" << std::endl;
 		return daeObjectBob;
 
@@ -242,6 +244,7 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::alice_walking_animation_path,
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
+		//daeObjectCarlo->spin(180);
 		std::cerr << "loaded Carlo" << std::endl;
 		return daeObjectCarlo;
 	}
@@ -251,6 +254,7 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::alice_walking_animation_path,
 			Constants::alice_action_animation_path,
 			Constants::alice_scaling_factor);
+		//daeObjectDavid->spin(180);
 		std::cerr << "loaded David" << std::endl;
 		return daeObjectDavid;
 	}

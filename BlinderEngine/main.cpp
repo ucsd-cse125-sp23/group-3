@@ -115,7 +115,7 @@ int main(void) {
     else {
         assigned_id = cli->buttonAssignment[client_id];
     }
-
+    Window::playerID = assigned_id;
     // render things based on assigned_id & player setup
     Player* player = new Player(assigned_id);
     player->setCharacter((Character)assigned_id);

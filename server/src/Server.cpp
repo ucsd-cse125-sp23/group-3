@@ -254,7 +254,7 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	}
 	if (e == EventType::FORWARD) {
 		glm::mat4 old_loc = *loc;
-		*loc = glm::translate(*loc, glm::vec3(0, 0, CAMERA_SPEED));
+		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
 		int mapID;
 		float x;
 		float y;

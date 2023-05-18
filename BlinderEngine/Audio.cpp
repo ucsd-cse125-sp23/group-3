@@ -27,7 +27,7 @@ void Audio::loadWin() {
 }
 
 void Audio::loadLose() {
-	Audio::gwave.load(Audio::lose_wav);
+	Audio::gwave.load(Audio::win_wav);
 }
 
 void Audio::playBgm() {
@@ -39,6 +39,7 @@ void Audio::playBgm() {
 
 void Audio::playEnd(GameState gs) {
 	Audio::gSoloud.stopAll();
+	Audio::init();
 	if (gs == GameState::WIN) {
 		Audio::loadWin();
 	}
