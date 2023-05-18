@@ -57,7 +57,13 @@ public:
 	void updateObstacleCountdown();
 	void checkGameEndLogic();
 
-	std::vector<int> ids{ 0,1,2,3 };
+	void broadcast_button_assignment();
+	int handle_acq(int client);
+
+	// index by player_id: 0 -> Alice
+	std::vector<int> button_assignment{ -1, -1, -1, -1 };
+
+	std::vector<int> ids{ -1,-1,-1,-1 };
 	std::vector<int> check_event{ -1, -1, -1, -1 };
 
 	// index by player_id: 0 -> Alice etc.; each pair represents obstacle_id - countdown time

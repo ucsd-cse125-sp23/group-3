@@ -25,8 +25,12 @@ public:
 
 	void updateGameData(GameData);
 
+	void acq_character(int char_id);
+	int recv_buttonAssignment();
+
 	GameData* gd;
 
+	std::vector<int> buttonAssignment{ -1,-1,-1,-1 };
 private:
 	SOCKET ConnectSocket;
     char buffer[512];

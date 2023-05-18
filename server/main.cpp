@@ -4,8 +4,8 @@
 int main()
 {
      Server* serv = new Server();
-     for (auto a : serv->ids)
- 	    std::cout << a << " ";
+     //for (auto a : serv->ids)
+ 	 //   std::cout << a << " ";
      // blocks until 4 clients
      for (int id = 0; id < NUM_PLAYERS; id ++){
          SOCKET ss = INVALID_SOCKET;
@@ -13,6 +13,7 @@ int main()
              ss = accept(serv->ListenSocket, NULL, NULL);
          }
          serv->sessions[id] = ss;
+         serv->send_init_packet(id, id);
          std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
      }
 
@@ -22,15 +23,27 @@ int main()
          serv->send_gamedata(i);
      }
 
+     // character selection
+     int num_selection = 0;
+     int idx = 0;
+     while (num_selection < 4)
+     {
+         int character = serv->handle_acq(idx % NUM_PLAYERS);
+         if (character != -1) num_selection++;
+         idx++;
+
+         //if (idx % 500000 == 0)
+         //std::cout << serv->ids[0] << " " << serv->ids[1] << " " << serv->ids[2] << " " << serv->ids[3] << std::endl;
+     }
+
      // wait for ready action and send init packet;blocks until 4 connect
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
-         std::cout << "sending id:" << serv->ids[i] << std::endl;
          int check_recv_ready = serv->recv_event(i);
          while (check_recv_ready != (int)EventType::READY) {
              check_recv_ready = serv->recv_event(i);
          }
-         serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
+         // serv->send_init_packet(i, serv->ids[i]); // TODO: add randomly assign character logic
      }
 
      SOCKET cp_sessions[NUM_PLAYERS];

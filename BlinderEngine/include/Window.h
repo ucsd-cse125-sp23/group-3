@@ -43,6 +43,7 @@ public:
     static std::vector<int> eventChecker;
     static bool no_event;
     static int playerID;
+    static int acq_char_id;
     //static graphic2D* canvas;
     //static UI* ui;
 
@@ -86,11 +87,16 @@ public:
     static void cursor_callback(GLFWwindow* window, double currX, double currY);
 
     static bool cursorOnReadyBtn(double, double);
+    static bool cursorOnABtn(double, double);
+    static bool cursorOnBBtn(double, double);
+    static bool cursorOnCBtn(double, double);
+    static bool cursorOnDBtn(double, double);
 
     //static unsigned int loadCubemap(std::vector<std::string> faces);
 
     static void updateLevel(int);
     static void updateTime(int);
+    static void updateButtons(std::vector<int> buttonAssignment);
     
     static void setUiByPlayerID();
 };

@@ -80,7 +80,7 @@ Client::Client()
 
 	this->gd = new GameData();
 
-	send(ConnectSocket, "start", 512, 0);
+	// send(ConnectSocket, "start", 512, 0);
 }
 
 void Client::update()
@@ -162,5 +162,23 @@ void Client::updateGameData(GameData gd) {
 	this->gd->remaining_time = gd.remaining_time;
 
 	this->gd->gamestate = gd.gamestate;
+}
+
+void Client::acq_character(int char_id)
+{
+	std::string init_str;
+	// Init packet
+	init_str.append(std::to_string(char_id));
+	const char* buf_init = init_str.c_str();
+	send(ConnectSocket, buf_init, 2, 0);
+}
+
+int Client::recv_buttonAssignment()
+{
+	if (recv(ConnectSocket, buffer, 512, 0) <= 0)
+		return -1;
+	std::vector<int> buttons = Packet::deserializeButtonAssignment(buffer);
+	this->buttonAssignment = buttons;
+	return 0;
 }
 
