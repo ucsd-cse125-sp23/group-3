@@ -82,4 +82,5 @@ public:
 	void changeLevelbarSizeY(float rate);
 	void setPlayerPosition(glm::mat4 model);
 	void setUiByPlayerID(int);
+	void setPlayerAlicePosition(glm::mat4 model);
 };
