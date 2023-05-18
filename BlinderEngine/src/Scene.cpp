@@ -52,10 +52,11 @@ void Scene::updateWorld()
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
-
+		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 	}
 	else {
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
+		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 	}
 	camera->Update();

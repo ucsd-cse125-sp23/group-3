@@ -13,9 +13,10 @@ Minimap::Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY){
     positionY=_positionY;
     person=new graphic2D( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*_sizeY,  _positionX+0.5*sizeX-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  _positionY+0.5*sizeY-Constants::MINIMAP_OBJECT_SIZE/2*sizeY,true);
     const char* persontextfile="./images/person.png";
-    person2=new graphic2D( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*_sizeY,  _positionX+0.5*sizeX-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  _positionY+0.5*sizeY-Constants::MINIMAP_OBJECT_SIZE/2*sizeY,true);
-    const char* persontextfile="./images/person_Alice.png";
     person->bindTexture(persontextfile);
+    person2=new graphic2D( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*_sizeY,  _positionX+0.5*sizeX-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  _positionY+0.5*sizeY-Constants::MINIMAP_OBJECT_SIZE/2*sizeY,true);
+    persontextfile="./images/person_Alice.png";
+    person2->bindTexture(persontextfile);
     Alice_shown=false;
 }
 
@@ -46,8 +47,8 @@ void Minimap::setPosition(glm::mat4 model){
 
 void Minimap::setPositionAlice(glm::mat4 model){
     float *pSource = (float*)glm::value_ptr(model);
-    personx2=(pSource[12]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeX;
-    persony2=(-pSource[14]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeY;
+    float personx2=(pSource[12]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeX;
+    float persony2=(-pSource[14]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeY;
     person2->setposition( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*sizeY,  positionX+personx2-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  positionY+persony2-Constants::MINIMAP_OBJECT_SIZE/2*sizeY);
 }
 
