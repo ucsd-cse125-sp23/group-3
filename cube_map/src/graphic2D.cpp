@@ -52,12 +52,14 @@ void graphic2D::setColor(glm::vec3 _color){
 }
 
 void graphic2D::bindTexture(const char* filename){
-        
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         // set the texture wrapping/filtering options (on the currently bound texture object)
         int width, height, nrComponents;
-        unsigned char *data = stbi_load(filename, &width, &height, &nrComponents, 0);
+        Image* newimg=new Image();
+        newimg->load(filename, width, height, nrComponents, 0);
+        data=newimg->getData();
+        //unsigned char *data = stbi_load(filename, &width, &height, &nrComponents, 0);
         // load and generate the texture
         if (data){
                 GLenum format;
@@ -80,7 +82,7 @@ void graphic2D::bindTexture(const char* filename){
         else{
                 std::cout << "Failed to load texture" << std::endl;
         }
-        stbi_image_free(data);
+        delete newimg;
 }
 
 void graphic2D::draw(const glm::mat4& viewProjMtx, Shader shader){

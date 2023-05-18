@@ -4,6 +4,7 @@
 #include <utility>
 #include "core.h"
 #include "Light.h"
+#include "Image.h"
 
 struct Particle {
     glm::vec3 Position, Velocity;

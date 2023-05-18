@@ -47,14 +47,14 @@ bool Window::initializeProgram() {
 }
 
 bool Window::initializeObjects() {
-    lights=new Mult_Lights(true);
+    lights=new Mult_Lights(false);
     
     // Create a cube
     cube = new Cube();
     map=new Map();
     particles=new Particles(1000,false);
     particles_2=new Particles(1000,true);
-    particles_2->bindTexture("../images/fog.png");
+    particles_2->bindTexture("./images/blue.png");
     
     lights->AddLightBCD(map->calculateBCDLightcenter());
     lights->particles_light.push_back(particles_2->light);
@@ -152,8 +152,9 @@ void Window::idleCallback() {
     leading->Position+=leading->Velocity*dt;
     //std::cout<<"error here"<<std::endl;
     particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
-    //particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
-    particles_2->Update(dt,glm::vec3(0.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
+    particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+    //particles_2->Update(dt,glm::vec3(0.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
+    //std::cout<<"error here"<<std::endl;
     lights->particles_light[0]=particles_2->light;
     //particles->Update(dt,glm::vec3(1.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
     //std::cout<<"error here"<<std::endl;

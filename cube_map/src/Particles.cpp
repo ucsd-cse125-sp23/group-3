@@ -1,8 +1,7 @@
 #include "Particles.h"
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
-#define STB_IMAGE_IMPLEMENTATION
-#include "./stb-master/stb_image.h"
+
 
 Particles::Particles(unsigned int amount,bool scatter)
     : amount(amount), scatter(scatter)
@@ -66,7 +65,7 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
             glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-            //shader.setFloat("scale",(rand()%10)/200.0f+0.05);
+            shader.setFloat("scale",(rand()%10)/200.0f+0.05);
             shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
@@ -83,13 +82,14 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
 }
 
 void Particles::bindTexture(const char* filename){
-        
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         // set the texture wrapping/filtering options (on the currently bound texture object)
         int width, height, nrComponents;
-        unsigned char *data = stbi_load(filename, &width, &height, &nrComponents, 0);
+        Image* newimg=new Image();
+        newimg->load(filename, width, height, nrComponents, 0);
         // load and generate the texture
+        data=newimg->getData();
         if (data){
                 GLenum format;
                 if (nrComponents == 1)
@@ -111,7 +111,7 @@ void Particles::bindTexture(const char* filename){
         else{
                 std::cout << "Failed to load texture" << std::endl;
         }
-        stbi_image_free(data);
+        delete newimg;
 }
 
 void Particles::init()
