@@ -44,6 +44,7 @@ public:
     static bool no_event;
     static int playerID;
     static int acq_char_id;
+    static bool toReady;
     //static graphic2D* canvas;
     //static UI* ui;
 
@@ -99,4 +100,5 @@ public:
     static void updateButtons(std::vector<int> buttonAssignment);
     
     static void setUiByPlayerID();
+    static bool checkSelects();
 };

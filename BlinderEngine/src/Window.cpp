@@ -36,6 +36,7 @@ std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
 int  Window::acq_char_id = -1;
+bool Window::toReady = false;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -277,7 +278,7 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         RightDown = (action == GLFW_PRESS);
     }
-    if (cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+    if (toReady && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
         state = WindowState::INGAME;
         LeftDown = false;
         std::cout << "READY!!\n";
@@ -306,8 +307,11 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int cameraspeed = 100;
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
-    if (cursorOnReadyBtn(currX, currY)) {
+    if (toReady && cursorOnReadyBtn(currX, currY)) {
         scene->updateReadyBtn("./resources/images/test2.png");
+    }
+    else if (!toReady){
+        scene->updateReadyBtn("./resources/images/testS.png");
     }
     else {
         scene->updateReadyBtn("./resources/images/test.png");
@@ -386,12 +390,14 @@ void Window::updateTime(int curr) {
 void Window::setUiByPlayerID() {
     scene->setUiByPlayerID(playerID);
 }
-
 void Window::updateButtons(std::vector<int> buttonAssignment) {
     //std::cout << playerID << std::endl;
+    toReady = true;
     for (int i = 0; i < buttonAssignment.size(); i++)
     {
         int buttonNum = buttonAssignment[i];
+        if (buttonNum < 0 || buttonNum > 3) toReady = false;
+
         switch (buttonNum)
         {
         case 0:
@@ -414,4 +420,5 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
             scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
+    if (toReady) scene->updateReadyBtn("./resources/images/test.png");
 }
