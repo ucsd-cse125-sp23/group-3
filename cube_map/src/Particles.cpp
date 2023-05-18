@@ -1,6 +1,8 @@
 #include "Particles.h"
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
+#define STB_IMAGE_IMPLEMENTATION
+#include "./stb-master/stb_image.h"
 
 Particles::Particles(unsigned int amount,bool scatter)
     : amount(amount), scatter(scatter)
@@ -48,7 +50,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
 }
 
 // render all particles
-void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx)
+void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camView)
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);
@@ -61,15 +63,17 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx)
         if (particle.Life > 0.0f)
         {
             //std::cout<<"error here"<<std::endl;
+            glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-            shader.setFloat("scale",(rand()%10)/200.0f+0.05);
+            //shader.setFloat("scale",(rand()%10)/200.0f+0.05);
+            shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
             //std::cout<<"particle.color "<<glm::to_string(particle.Color)<<std::endl;
 
             glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             
         }
     }
@@ -78,11 +82,43 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx)
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void Particles::bindTexture(const char* filename){
+        
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        // set the texture wrapping/filtering options (on the currently bound texture object)
+        int width, height, nrComponents;
+        unsigned char *data = stbi_load(filename, &width, &height, &nrComponents, 0);
+        // load and generate the texture
+        if (data){
+                GLenum format;
+                if (nrComponents == 1)
+                format = GL_RED;
+                else if (nrComponents == 3)
+                format = GL_RGB;
+                else if (nrComponents == 4)
+                format = GL_RGBA;
+
+                glBindTexture(GL_TEXTURE_2D, texture);
+                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                glGenerateMipmap(GL_TEXTURE_2D);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA ? GL_CLAMP_TO_EDGE : GL_REPEAT);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        }
+        else{
+                std::cout << "Failed to load texture" << std::endl;
+        }
+        stbi_image_free(data);
+}
+
 void Particles::init()
 {
     // set up mesh and attribute properties
     unsigned int VBO;
-    float particle_quad[] = {
+    /*float particle_quad[] = {
         -0.5f,  0.5f,-0.5f,//0
         0.5f, 0.5f,-0.5f, //1
         0.5f,  0.5f,0.5f,//2
@@ -91,14 +127,23 @@ void Particles::init()
         0.5f, -0.5f,-0.5f,//5
         0.5f,  -0.5f,0.5f,//6
         -0.5f,   -0.5f,0.5f,//7
+    }; */
+    float particle_quad[] = {
+        -0.5f,  -0.5f,0.0f,0.0f,1.0f,//0 
+        0.5f, -0.5f,0.0f,1.0f,1.0f, //1
+        0.5f,  0.5f,0.0f,1.0f,0.0f, //2
+        -0.5f,   0.5f,0.0f,0.0f,0.0f,//3
     }; 
-    unsigned int indices[] = {
+    /*unsigned int indices[] = {
 		0, 1, 2, 2, 3, 0, //top
         7, 6, 2, 7, 2, 3, //front
         5, 4, 0, 5, 0, 1, //back
         4, 5, 6, 6, 7, 4, //bottom
         4, 7, 3, 4, 3, 0, //left
         6, 5, 1, 6, 1, 2, 
+	};*/
+    unsigned int indices[] = {
+		0, 1, 2, 2, 3, 0, //top
 	};
 
     glGenVertexArrays(1, &VAO);
@@ -117,7 +162,10 @@ void Particles::init()
 
     //glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5* sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+
     glBindVertexArray(0);
     light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
     // create this->amount default particle instances

@@ -5,7 +5,6 @@
 #include "core.h"
 #include "Camera.h"
 
-
 class graphic2D {
     private:
         GLuint VAO;

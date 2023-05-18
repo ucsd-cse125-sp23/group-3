@@ -2,9 +2,6 @@
 #include <string>
 #include <iostream>
 #include "graphic2D.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "./stb-master/stb_image.h"
-
 
 graphic2D::graphic2D(float _sizeX,float _sizeY, float _positionX, float _positionY, bool _texturemapping){
         sizeX=_sizeX;

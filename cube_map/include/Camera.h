@@ -27,6 +27,7 @@ public:
 
     const glm::mat4 &GetViewProjectMtx() { return ViewProjectMtx; }
     glm::vec3 CameraPos, CameraTar;
+    glm::mat4 Projection;
 
 private:
     // Perspective controls
