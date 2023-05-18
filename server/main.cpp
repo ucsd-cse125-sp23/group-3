@@ -39,7 +39,6 @@ int main()
      // wait for ready action and send init packet;blocks until 4 connect
      for (int i = 0; i < NUM_PLAYERS; i++)
      {
-         std::cout << "sending id:" << serv->ids[i] << std::endl;
          int check_recv_ready = serv->recv_event(i);
          while (check_recv_ready != (int)EventType::READY) {
              check_recv_ready = serv->recv_event(i);

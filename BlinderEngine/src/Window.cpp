@@ -279,27 +279,24 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     }
     if (cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
         state = WindowState::INGAME;
+        LeftDown = false;
         std::cout << "READY!!\n";
     }
     if (cursorOnABtn(MouseX, MouseY) && LeftDown) {
-        std::cout << "a" << std::endl;
         acq_char_id = 0;
-        // scene->updateCharBtn(0, "./resources/images/test2.png");
+        LeftDown = false;
     }
     if (cursorOnBBtn(MouseX, MouseY) && LeftDown) {
-        std::cout << "b" << std::endl;
         acq_char_id = 1;
-        // scene->updateCharBtn(1, "./resources/images/test2.png");
+        LeftDown = false;
     }
     if (cursorOnCBtn(MouseX, MouseY) && LeftDown) {
-        std::cout << "c" << std::endl;
         acq_char_id = 2;
-        // scene->updateCharBtn(2, "./resources/images/test2.png");
+        LeftDown = false;
     }
     if (cursorOnDBtn(MouseX, MouseY) && LeftDown) {
-        std::cout << "d" << std::endl;
         acq_char_id = 3;
-        // scene->updateCharBtn(3, "./resources/images/test2.png");
+        LeftDown = false;
     }
     
 }
@@ -374,9 +371,8 @@ bool Window::cursorOnDBtn(double x, double y) {
 }
 
 void Window::updateLevel(int curr) {
-    // TODO: 
     if (playerID == 0) {        // Alice
-        scene->updateLevel((float)curr / (float)MAX_INSECURE);
+        scene->updateLevel(1.0 - (float)curr / (float)MAX_INSECURE);
     }
     else {                      // Others
         scene->updateLevel((float)curr / (float)MAX_INSECURE);

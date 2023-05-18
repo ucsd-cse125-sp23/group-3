@@ -103,7 +103,7 @@ int main(void) {
         }
     }
     
-
+    std::cout << "sending ready" << std::endl;
     // TODO: check user action(ready for game) & send event packet
     cli->send_event(EventType::READY);
     // listen for init packet
