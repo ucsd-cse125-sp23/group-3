@@ -16,9 +16,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
     {
         bool noDied=false;
         int unusedParticle = this->firstUnusedParticle(noDied);
-        if(noDied==false){
-            this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, offset);
-        }
+        this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, offset);
         
     }
     // update all particles
@@ -30,17 +28,23 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
          // reduce life
         if (p.Life > 0.0f)
         {	// particle is alive, thus update
-            p.Position -= p.Velocity * dt; 
+            p.Position += p.Velocity * dt; 
             p.Color.a -= dt*0.5f ;
+            p.Life = p.Color.a;
             Lightpos+=p.Position;
+            //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
             intensity++;
         }
-        p.Life = p.Color.a;
+        
     }
+    //std::cout<<"alive particles "<<intensity<<std::endl;
+    
     if(intensity!=0){
-        Lightpos/=(float)intensity;
+        Lightpos=Lightpos/((float)intensity);
         //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
-        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),Lightpos,0.0f,0.7f*intensity/((float)1000.0f),0.0f);
+        //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
+        //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
+        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),objectPosition,0.0f,0.7f*intensity/((float)1000.0f),0.0f);
         light->SetParam(1.0f,0.1f,0.03f);
     }else{
         light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),Lightpos,0.0f,0.0f,0.0f);
@@ -65,7 +69,7 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
             glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-            shader.setFloat("scale",(rand()%10)/200.0f+0.05);
+            shader.setFloat("scale",(rand()%10)/100.0f+0.05);
             shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
@@ -167,10 +171,13 @@ void Particles::init()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
     glBindVertexArray(0);
-    light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
+    light=new Light(false,false,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
     // create this->amount default particle instances
-    for (unsigned int i = 0; i < this->amount; ++i)
+    for (unsigned int i = 0; i < this->amount; ++i){
         this->particles.push_back(Particle());
+        //std::cout<<"life band"<<particles[i].Life<<std::endl;
+    }
+        
 }
 
 // stores the index of the last particle used (for quick access to next dead particle)
@@ -214,5 +221,5 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
     //particle.Life = 1.0f;
     //particle.Velocity = objectVelocity* 0.1f;
     particle.Velocity = glm::vec3(0.0f);
-    
+    particle.Life=1.0f;
 }
