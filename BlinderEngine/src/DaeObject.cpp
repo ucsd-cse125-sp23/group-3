@@ -12,7 +12,7 @@ DaeObject::DaeObject(const std::string model_path,
 	animator->UpdateAnimation(0.0f);
 
 	mvp = glm::mat4(1.0f);
-	mvp = mvp * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	
 	translate = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = scalingFactor;
 	currentStatus = Action::idle;
@@ -54,6 +54,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		mvp = glm::translate(mvp, translate);
 	}
 	glm::mat4 currMVP = glm::scale(mvp, scale);
+	currMVP = currMVP * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	shader.setMat4("model", currMVP);
 
 	// Animation

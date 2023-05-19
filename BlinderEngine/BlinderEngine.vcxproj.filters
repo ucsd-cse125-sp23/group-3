@@ -152,10 +152,13 @@
     <ClCompile Include="src\Mult_Lights.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene.cpp">
+    <ClCompile Include="src\Audio.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -262,9 +265,6 @@
     <ClInclude Include="include\Minimap.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\shared\Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ObsObject.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -278,6 +278,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Scene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\Event.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

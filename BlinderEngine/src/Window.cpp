@@ -35,6 +35,8 @@ const float turningratio=20.0f;
 std::vector<int> Window::eventChecker = std::vector<int>(NUM_EVENT_TYPES, 0);
 bool Window::no_event;
 int  Window::playerID;
+int  Window::acq_char_id = -1;
+bool Window::toReady = false;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -276,10 +278,28 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         RightDown = (action == GLFW_PRESS);
     }
-    if (cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+    if (toReady && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
         state = WindowState::INGAME;
+        LeftDown = false;
         std::cout << "READY!!\n";
     }
+    if (cursorOnABtn(MouseX, MouseY) && LeftDown) {
+        acq_char_id = 0;
+        LeftDown = false;
+    }
+    if (cursorOnBBtn(MouseX, MouseY) && LeftDown) {
+        acq_char_id = 1;
+        LeftDown = false;
+    }
+    if (cursorOnCBtn(MouseX, MouseY) && LeftDown) {
+        acq_char_id = 2;
+        LeftDown = false;
+    }
+    if (cursorOnDBtn(MouseX, MouseY) && LeftDown) {
+        acq_char_id = 3;
+        LeftDown = false;
+    }
+    
 }
 
 void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
@@ -287,8 +307,11 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int cameraspeed = 100;
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
-    if (cursorOnReadyBtn(currX, currY)) {
+    if (toReady && cursorOnReadyBtn(currX, currY)) {
         scene->updateReadyBtn("./resources/images/test2.png");
+    }
+    else if (!toReady){
+        scene->updateReadyBtn("./resources/images/testS.png");
     }
     else {
         scene->updateReadyBtn("./resources/images/test.png");
@@ -330,10 +353,30 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
     return false;
 }
 
+bool Window::cursorOnABtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.1 / 2 < x && width * 0.3 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnBBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.5 / 2 < x && width * 0.7 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnCBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 0.9 / 2 < x && width * 1.1 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+bool Window::cursorOnDBtn(double x, double y) {
+    return state != WindowState::LANDING ||
+        width * 1.3 / 2 < x && width * 1.5 / 2 > x &&
+        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+}
+
 void Window::updateLevel(int curr) {
-    // TODO: 
     if (playerID == 0) {        // Alice
-        scene->updateLevel((float)curr / (float)MAX_INSECURE);
+        scene->updateLevel(1.0 - (float)curr / (float)MAX_INSECURE);
     }
     else {                      // Others
         scene->updateLevel((float)curr / (float)MAX_INSECURE);
@@ -346,4 +389,36 @@ void Window::updateTime(int curr) {
 
 void Window::setUiByPlayerID() {
     scene->setUiByPlayerID(playerID);
+}
+void Window::updateButtons(std::vector<int> buttonAssignment) {
+    //std::cout << playerID << std::endl;
+    toReady = true;
+    for (int i = 0; i < buttonAssignment.size(); i++)
+    {
+        int buttonNum = buttonAssignment[i];
+        if (buttonNum < 0 || buttonNum > 3) toReady = false;
+
+        switch (buttonNum)
+        {
+        case 0:
+            scene->updateCharBtn(0, "./resources/images/test2.png");
+            break;
+        case 1:
+            scene->updateCharBtn(1, "./resources/images/test2.png");
+            break;
+        case 2:
+            scene->updateCharBtn(2, "./resources/images/test2.png");
+            break;
+        case 3:
+            scene->updateCharBtn(3, "./resources/images/test2.png");
+            break;
+        default:
+            break;
+        }
+
+        if (i == playerID && buttonAssignment[i] >= 0) {
+            scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
+        }
+    }
+    if (toReady) scene->updateReadyBtn("./resources/images/test.png");
 }

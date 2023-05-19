@@ -114,6 +114,7 @@ void UI::update() {
 	time->update();
 	time_bar->update();
 	minimap->update();
+	
 	level->update();
 	level_bar->update();
 }
@@ -144,6 +145,11 @@ void UI::setPlayerPosition(glm::mat4 model) {
 	minimap->setPosition(model);
 	minimap->update();
 }
+
+void UI::setPlayerAlicePosition(glm::mat4 model) {
+	minimap->setAlice(model);
+}
+
 
 void UI::setUiByPlayerID(int id) {
 	if (id == 0) {			// Alice

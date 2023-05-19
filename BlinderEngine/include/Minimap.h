@@ -12,6 +12,7 @@ class Minimap {
 
         graphic2D* minimap;
         graphic2D* person;
+        graphic2D* person2;
         float personx;
         float persony;
         Map* map;
@@ -19,6 +20,7 @@ class Minimap {
         float sizeY;
         float positionX;
         float positionY;
+        bool Alice_shown;
 
     public:
         Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY);
@@ -29,7 +31,13 @@ class Minimap {
         void update();
         graphic2D* getMinimap();
         void setposition(float _sizeX, float _sizeY, float _positionX, float _positionY);
+        void setPositionAlice(glm::mat4 model);
 
+        void setAlice(glm::mat4 model){
+            Alice_shown=true;
+            setPositionAlice(model);
+            person2->update();
+        }
         void setPersonX(float personx) {
             this->personx = personx;
         }
