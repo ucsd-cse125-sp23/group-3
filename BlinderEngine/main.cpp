@@ -89,21 +89,25 @@ int main(void) {
 
     // TODO(graphics): load landing page
     Window::initializeLanding();
+    if (!Constants::offline) {
+        
 
-    Window::drawLanding(window);
-    while (Window::state == WindowState::LANDING) {
         Window::drawLanding(window);
-        if (Window::acq_char_id != -1 
-            && cli->buttonAssignment[client_id] == -1 
-            && cli->button_available(Window::acq_char_id)) {
-            cli->acq_character(Window::acq_char_id);
-            std::cout << "sending acq..." << std::endl;
-            Window::acq_char_id = -1;
-        }
-        if (cli->recv_buttonAssignment()!= -1) {
-            Window::updateButtons(cli->buttonAssignment);
+        while (Window::state == WindowState::LANDING) {
+            Window::drawLanding(window);
+            if (Window::acq_char_id != -1
+                && cli->buttonAssignment[client_id] == -1
+                && cli->button_available(Window::acq_char_id)) {
+                cli->acq_character(Window::acq_char_id);
+                std::cout << "sending acq..." << std::endl;
+                Window::acq_char_id = -1;
+            }
+            if (cli->recv_buttonAssignment() != -1) {
+                Window::updateButtons(cli->buttonAssignment);
+            }
         }
     }
+    
     
     std::cout << "sending ready" << std::endl;
     // TODO: check user action(ready for game) & send event packet
@@ -112,7 +116,7 @@ int main(void) {
     
     int assigned_id;
     if (Constants::offline) {
-        assigned_id = 0;
+        assigned_id = 1;
     }
     else {
         assigned_id = cli->buttonAssignment[client_id];
