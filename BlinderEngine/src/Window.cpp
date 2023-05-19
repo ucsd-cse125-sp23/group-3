@@ -278,7 +278,7 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         RightDown = (action == GLFW_PRESS);
     }
-    if (toReady && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+    if ((Constants::offline || toReady) && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
         state = WindowState::INGAME;
         LeftDown = false;
         std::cout << "READY!!\n";
