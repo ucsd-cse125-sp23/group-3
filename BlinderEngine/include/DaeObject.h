@@ -14,6 +14,9 @@ public:
 		const std::string action_animation_path,
 		glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
 
+	DaeObject(const std::string model_path,
+		glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
+
 	void draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, DynamicShader& shader);
 	void draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader);
 
@@ -44,6 +47,8 @@ private:
 	float lastFrame;
 	float lastStartWalking;
 	float lastStartAction;
+
+	bool animated;
 
 	Action currentStatus;
 };

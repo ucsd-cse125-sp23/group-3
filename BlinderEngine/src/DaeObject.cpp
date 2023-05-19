@@ -16,6 +16,17 @@ DaeObject::DaeObject(const std::string model_path,
 	translate = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = scalingFactor;
 	currentStatus = Action::idle;
+	animated = true;
+}
+
+DaeObject::DaeObject(const std::string model_path, glm::vec3 scalingFactor)
+{
+	objModel = new DynamicModel(model_path);
+	mvp = glm::mat4(1.0f);
+	translate = glm::vec3(0.0f, 0.0f, 0.0f);
+	scale = scalingFactor;
+	currentStatus = Action::idle;
+	animated = false;
 }
 
 void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const glm::vec3& translate, DynamicShader& shader)
@@ -39,57 +50,79 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const g
 
 void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader)
 {
-	shader.use();
-
-	auto transforms = animator->GetFinalBoneMatrices();
-	for (int i = 0; i < transforms.size(); ++i)
-		shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-
-	shader.setMat4("projection", projection);
-	shader.setMat4("view", view);
-
-	// If mvp is not calculated
-	if (mvp == glm::mat4(1.0f))
+	if (animated)
 	{
-		mvp = glm::translate(mvp, translate);
-	}
-	glm::mat4 currMVP = glm::scale(mvp, scale);
-	if (!Constants::offline) {
-		currMVP = currMVP * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		shader.use();
 
-	}
-	shader.setMat4("model", currMVP);
+		auto transforms = animator->GetFinalBoneMatrices();
+		for (int i = 0; i < transforms.size(); ++i)
+			shader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 
-	// Animation
-	float currentFrame = glfwGetTime();
-	float deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-	//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
-	//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
-	if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
-	{
-		if (currentStatus != Action::action)
+		shader.setMat4("projection", projection);
+		shader.setMat4("view", view);
+
+		// If mvp is not calculated
+		if (mvp == glm::mat4(1.0f))
 		{
-			animator->PlayAnimation(animation_action);
-			currentStatus = Action::action;
+			mvp = glm::translate(mvp, translate);
 		}
-		updateAnimation(deltaTime);
-	}
-	else if (currentFrame - lastStartWalking < animation_walking->GetDuration() / 1000)
-	{
-		if (currentStatus != Action::walking)
+		glm::mat4 currMVP = glm::scale(mvp, scale);
+		if (!Constants::offline) {
+			currMVP = currMVP * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		shader.setMat4("model", currMVP);
+
+		// Animation
+		float currentFrame = glfwGetTime();
+		float deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
+		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
+		if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
 		{
+			if (currentStatus != Action::action)
+			{
+				animator->PlayAnimation(animation_action);
+				currentStatus = Action::action;
+			}
+			updateAnimation(deltaTime);
+		}
+		else if (currentFrame - lastStartWalking < animation_walking->GetDuration() / 1000)
+		{
+			if (currentStatus != Action::walking)
+			{
+				animator->PlayAnimation(animation_walking);
+				currentStatus = Action::walking;
+			}
+			updateAnimation(deltaTime);
+		}
+		else {
 			animator->PlayAnimation(animation_walking);
-			currentStatus = Action::walking;
+			updateAnimation(0.0f);
+			currentStatus = Action::idle;
 		}
-		updateAnimation(deltaTime);
+		objModel->Draw(shader);
 	}
-	else {
-		animator->PlayAnimation(animation_walking);
-		updateAnimation(0.0f);
-		currentStatus = Action::idle;
+	else 
+	{
+		shader.use();
+
+		shader.setMat4("projection", projection);
+		shader.setMat4("view", view);
+
+		// If mvp is not calculated
+		if (mvp == glm::mat4(1.0f))
+		{
+			mvp = glm::translate(mvp, translate);
+		}
+		glm::mat4 currMVP = glm::scale(mvp, scale);
+		if (!Constants::offline) {
+			currMVP = currMVP * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		shader.setMat4("model", currMVP);
+		objModel->Draw(shader);
 	}
-	objModel->Draw(shader);
+	
 }
 
 void DaeObject::updateAnimation(float deltaTime)
