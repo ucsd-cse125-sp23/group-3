@@ -175,6 +175,9 @@
     <ClCompile Include="src\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\AliceSkill.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -304,6 +307,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Image.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AliceSkill.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
