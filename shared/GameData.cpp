@@ -15,6 +15,7 @@ GameData::GameData() {
 	this->remaining_time = GAME_LENGTH;
 	this->gamestate = GameState::READY;
 	this->player_status = std::vector<int>(4, 0);
+	this->skill_cd = std::vector<int>(4, 0);
 }
 
 GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs, std::vector<int> ps, std::vector<int> cd) {
@@ -39,6 +40,9 @@ std::string GameData::gamestate_to_string() {
 
 	std::stringstream ps;
 	std::copy(this->player_status.begin(), this->player_status.end(), std::ostream_iterator<int>(result, " "));
+
+	std::stringstream cd;
+	std::copy(this->skill_cd.begin(), this->skill_cd.end(), std::ostream_iterator<int>(result, " "));
 	
 	return "locA: " + glm::to_string(this->location_A) + "\n"
 		+ "locB: " + glm::to_string(this->location_B) + "\n"
@@ -51,7 +55,8 @@ std::string GameData::gamestate_to_string() {
 		+ "level_D: " + std::to_string(this->level_D) + "\n"
 		+ "remaining_time: " + std::to_string(this->remaining_time) + "\n"
 		+ "GameState: " + std::to_string((int)this->gamestate) + "\n"
-		+ "player_status: " + ps.str().c_str() + "\n";
+		+ "player_status: " + ps.str().c_str() + "\n"
+		+ "skill_cd: " + cd.str().c_str() + "\n";
 }
 
 std::vector<glm::mat4> GameData::getAllLocations() {
