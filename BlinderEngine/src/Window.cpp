@@ -250,7 +250,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        // TODO:
+        eventChecker[(int)EventType::SKILL - 1] = 1;
+        no_event = false;
     }
 
     // Check for a key press.

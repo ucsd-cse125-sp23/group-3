@@ -39,6 +39,7 @@ enum class EventType
 	TURN_LEFT = 2,
 	TURN_RIGHT = 3,
 	ATTACK = 4,
+	SKILL = 5,
 	READY = 6
 };
 
