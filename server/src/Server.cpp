@@ -294,12 +294,18 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		{
 			handleAttack(id);
 		}
+	}
+	else if (e == EventType::SKILL)
+	{
+		if (id != 0)
+		{
+			// BCD skill
+		}
 		else {
 			// handle Alice's skill
 			handleDetect();
 		}
 	}
-
 }
 
 void Server::handleAttack(int id)

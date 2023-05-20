@@ -254,6 +254,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         {
             scene->playersObjects[playerID]->doAction();
         }
+        eventChecker[(int)EventType::SKILL - 1] = 1;
+        no_event = false;
     }
 
     // Check for a key press.
