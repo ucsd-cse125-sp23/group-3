@@ -143,6 +143,8 @@
     <None Include="shaders\anim_model.vs" />
     <None Include="shaders\model_loading.fs" />
     <None Include="shaders\model_loading.vs" />
+    <None Include="shaders\particles.fs" />
+    <None Include="shaders\particles.vs" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
     <None Include="shaders\texture2D.fs" />
@@ -162,6 +164,7 @@
     <ClCompile Include="src\DaeObject.cpp" />
     <ClCompile Include="src\graphic2D.cpp" />
     <ClCompile Include="src\Ground.cpp" />
+    <ClCompile Include="src\Image.cpp" />
     <ClCompile Include="src\Light.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Minimap.cpp" />
@@ -170,6 +173,7 @@
     <ClCompile Include="src\ObjObject.cpp" />
     <ClCompile Include="src\ObsObject.cpp" />
     <ClCompile Include="src\Obstacles.cpp" />
+    <ClCompile Include="src\Particles.cpp" />
     <ClCompile Include="src\PlayerModel.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -200,6 +204,7 @@
     <ClInclude Include="include\DaeObject.h" />
     <ClInclude Include="include\graphic2D.h" />
     <ClInclude Include="include\Ground.h" />
+    <ClInclude Include="include\Image.h" />
     <ClInclude Include="include\Light.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\MapConstants.h" />
@@ -209,6 +214,7 @@
     <ClInclude Include="include\Mult_Lights.h" />
     <ClInclude Include="include\ObsObject.h" />
     <ClInclude Include="include\Obstacles.h" />
+    <ClInclude Include="include\Particles.h" />
     <ClInclude Include="include\PlayerModel.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Skybox.h" />

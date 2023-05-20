@@ -20,7 +20,7 @@ class Mult_Lights {
         ~Mult_Lights();
 
         //void update(Camera& cam);
-
+        std::vector<Light*> particles_light;
         void loadToDShader(DynamicShader& shader,Camera& cam);
         void loadToSShader(StaticShader& shader,Camera& cam);
         void loadToUShader(GLuint shader,Camera& cam);

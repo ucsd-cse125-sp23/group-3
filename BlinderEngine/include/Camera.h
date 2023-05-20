@@ -43,7 +43,7 @@ private:
     glm::vec3 CameraUp, CameraDir;
     // Computed data
     bool first_person;
-    glm::mat4 project, view;
+    glm::mat4 project, view, projection_particles;
 
     glm::mat4 model, ViewProjectMtx;
 };
