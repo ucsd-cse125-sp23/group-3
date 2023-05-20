@@ -17,7 +17,7 @@ GameData::GameData() {
 	this->player_status = std::vector<int>(4, 0);
 }
 
-GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs, std::vector<int> ps) {
+GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs, std::vector<int> ps, std::vector<int> cd) {
 	this->location_A = locA;
 	this->location_B = locB;
 	this->location_C = locC;
@@ -30,6 +30,7 @@ GameData::GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 loc
 	this->remaining_time = rt;
 	this->gamestate = gs;
 	this->player_status = ps;
+	this->skill_cd = cd;
 }
 
 std::string GameData::gamestate_to_string() {

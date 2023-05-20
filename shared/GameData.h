@@ -11,7 +11,7 @@
 class GameData {
 public:
 	GameData();
-	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs, std::vector<int> ps);
+	GameData(glm::mat4 locA, glm::mat4 locB, glm::mat4 locC, glm::mat4 locD, std::vector<int> os, int levA, int levB, int levC, int levD, int rt, GameState gs, std::vector<int> ps, std::vector<int> cd);
 
 	std::vector<glm::mat4> getAllLocations();
 
@@ -29,4 +29,5 @@ public:
 	int remaining_time; // in ms
 	GameState gamestate;
 	std::vector<int> player_status;
+	std::vector<int> skill_cd;
 };
