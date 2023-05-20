@@ -68,8 +68,16 @@
     <None Include="shaders\6.1.skybox.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\anim_model.fs" />
     <None Include="shaders\texture2D.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\anim_model.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\particles.fs">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\particles.vs">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
@@ -159,6 +167,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -284,6 +298,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Event.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Particles.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Image.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
