@@ -4,7 +4,7 @@
 
 #include "core.h"
 #include "Camera.h"
-
+#include "Image.h"
 
 class graphic2D {
     private:

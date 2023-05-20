@@ -54,7 +54,15 @@ void Camera::Update() {
 
     // Compute perspective projection matrix
     project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
-
+    if (first_person) {
+        auto axis = glm::cross(glm::normalize(glm::vec3(upPos - upTar)), glm::vec3(0.0f, 0.0f, 1.0f));
+        auto angle = glm::acos( glm::dot(glm::normalize(glm::vec3(upPos - upTar)), glm::vec3(0.0f, 0.0f, 1.0f)));
+        projection_particles = glm::rotate(-angle, axis);
+    }
+    else {
+        projection_particles = glm::lookAt(glm::vec3(0.0f), CameraDir, CameraUp);
+    }
+    
     // Compute final view-projection matrix
     ViewProjectMtx = project * view;
 }

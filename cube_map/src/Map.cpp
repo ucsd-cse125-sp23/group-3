@@ -21,8 +21,8 @@ Map::Map() {
     const char* file1="./scene/map_animal.txt";
     readWallsCoord(0, file1,wallsmin1,wallsmax1,glm::vec3(-(groundsize+offsetforwidth),0.0f,offsetforwidth));
 
-    glm::vec3 groundmin1=glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 groundmax1=glm::vec3(-groundsize-wallwidth,-0.2f,groundsize+wallwidth);
+    glm::vec3 groundmin1=glm::vec3(0.0f,-0.2f,0.0f);
+    glm::vec3 groundmax1=glm::vec3(-groundsize-wallwidth,-0.0f,groundsize+wallwidth);
     map1=new Submap(wallsmin1,wallsmax1,groundmin1,groundmax1);
     glm::mat4 trans1 = {
         {1,0,0,0},
@@ -36,8 +36,8 @@ Map::Map() {
     const char* file2="./scene/map_clown.txt";
     readWallsCoord(1, file2,wallsmin2,wallsmax2,glm::vec3(-(groundsize+offsetforwidth),0.0f,-(groundsize+offsetforwidth)));
 
-    glm::vec3 groundmin2=glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 groundmax2=glm::vec3(-(groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
+    glm::vec3 groundmin2=glm::vec3(0.0f,-0.2f,0.0f);
+    glm::vec3 groundmax2=glm::vec3(-(groundsize+wallwidth),-0.0f,-(groundsize+wallwidth));
     map2=new Submap(wallsmin2,wallsmax2,groundmin2,groundmax2);
     glm::mat4 trans2 = {
         {1,0,0,0},
@@ -51,8 +51,8 @@ Map::Map() {
     const char* file3="./scene/map_sculpture.txt";
     readWallsCoord(2, file3,wallsmin3,wallsmax3,glm::vec3(offsetforwidth,0.0f,-(groundsize+offsetforwidth)));
 
-    glm::vec3 groundmin3=glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 groundmax3=glm::vec3((groundsize+wallwidth),-0.2f,-(groundsize+wallwidth));
+    glm::vec3 groundmin3=glm::vec3(0.0f,-0.2f,0.0f);
+    glm::vec3 groundmax3=glm::vec3((groundsize+wallwidth),-0.0f,-(groundsize+wallwidth));
     map3=new Submap(wallsmin3,wallsmax3,groundmin3,groundmax3);
     glm::mat4 trans3 = {
         {0.5,0,0.5*glm::sqrt(3.0f),0},

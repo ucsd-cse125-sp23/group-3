@@ -10,6 +10,7 @@
 #include "core.h"
 #include <iostream>
 #include "Mult_Lights.h"
+#include "Particles.h"
 
 class Window {
 public:
@@ -22,6 +23,7 @@ public:
     static Cube* cube;
     static Map* map;
     static Minimap* canvas;
+    static Particles* particles;
 
     // Shader Program
     static GLuint shaderProgram;
