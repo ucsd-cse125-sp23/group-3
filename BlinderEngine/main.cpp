@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "core.h"
-#include "../client/Client.h"
 #include "../shared/Player.h"
 #include <chrono>
 #include <ctime>
@@ -87,7 +86,7 @@ int main(void) {
 
     }
 
-    // TODO(graphics): load landing page
+    // load landing&character selection page
     Window::initializeLanding();
     if (!Constants::offline) {
         
@@ -107,7 +106,6 @@ int main(void) {
             }
         }
     }
-    
     
     std::cout << "sending ready" << std::endl;
     // TODO: check user action(ready for game) & send event packet
@@ -182,6 +180,7 @@ int main(void) {
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
             Window::updateTime(cli->gd->remaining_time);
+            Window::updateBySkill(cli->gd);
         }
         Window::no_event = true;
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action

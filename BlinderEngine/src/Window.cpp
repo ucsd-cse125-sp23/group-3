@@ -246,6 +246,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        if (Constants::offline) {
+            scene->daeObjectBob->doAction();
+        }
         eventChecker[(int)EventType::ATTACK - 1] = 1;
         no_event = false;
     }
@@ -422,4 +425,20 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
         }
     }
     if (toReady) scene->updateReadyBtn("./resources/images/test.png");
+}
+
+void Window::updateBySkill(GameData* gd) {
+    if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
+        
+    }
+    if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
+        // TODO:: place sign/label at locB
+        Window::scene->playersObjects.at(1)->doAction();
+    }
+    if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
+        // TODO:: place light at locC
+    }
+    if (gd->player_status[3] == (int)PlayerStatus::SKILL) {
+
+    }
 }
