@@ -60,7 +60,7 @@ public:
 	void broadcast_button_assignment();
 	int handle_acq(int client);
 
-	void handleBCskill(int id);
+	void handleBCDskill(int id);
 	void updateSkillCD();
 	// This function guarantees that each client will only receive one gamedata 
 	// containing status == skill for one usage of skill to avoid double action

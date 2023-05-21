@@ -23,7 +23,7 @@
 #define LARGE_AWD 15
 #define AWARENESS_THRESHOLD 50
 
-#define BC_SKILL_CD 30000
+#define SKILL_CD 30000
 
 enum class GameState
 {
