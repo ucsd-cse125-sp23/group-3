@@ -78,6 +78,10 @@ public:
     static void displayCallback(GLFWwindow*, std::vector<int> os);
     static void setEndPage(GameState);
     static void displayEndPage(GLFWwindow*);
+    /*static void signSkill(gd) {
+        gd
+    }*/
+    static GameData* gd;
 
     // helper to reset the camera
     static void resetCamera();

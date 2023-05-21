@@ -86,6 +86,9 @@ void Scene::displayWorld(std::vector<int> os)
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		for (int i = 0; i < signs.size(); i++) {
+			signs[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		}
 	}
 	else {
 		if (playerID == 0) {
@@ -272,3 +275,14 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 	return nullptr;
 }
 
+
+std::shared_ptr<ObjObject> Scene::initSignObject() {
+	signs.push_back(std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj"));
+	return;
+}
+
+void Scene::setSignModel(glm::mat4 model) {
+
+	// set the position of the last sign
+	signs.back()->update(model);
+}
