@@ -297,13 +297,22 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	}
 	else if (e == EventType::SKILL)
 	{
-		if (id != 0)
+		switch (id)
 		{
-			// BCD skill
-		}
-		else {
+		case 0:
 			// handle Alice's skill
 			handleDetect();
+			break;
+		case 1:
+			handleBCskill(id);
+			break;
+		case 2:
+			handleBCskill(id);
+			break;
+		case 3:
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -342,6 +351,15 @@ void Server::handleAttack(int id)
 
 void Server::handleDetect()
 {
+	if (this->gd->skill_cd[0] > 0)
+	{
+		return;
+	}
+
+	// TODO: Alice skill cd
+	this->gd->skill_cd[0] = BC_SKILL_CD;
+	this->gd->player_status[0] = (int)PlayerStatus::SKILL;
+
 	for (int i = 0; i < map->obs->glm_vec.size(); i++)
 	{
 		bool detect_success = check_detectability(i);
@@ -352,7 +370,6 @@ void Server::handleDetect()
 			std::pair<int, int> obs_data = std::make_pair(i, 2000);
 			this->obs_countdown[0] = obs_data;
 			this->gd->obstacle_states[i] = (int)ObstacleState::DETECTED;
-			this->gd->player_status[0] = (int)PlayerStatus::SKILL;
 		}
 	}
 }
@@ -429,6 +446,10 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	}
 	// Update obs cd
 	updateObstacleCountdown();
+
+	// Update skill cd
+	updateSkillCD();
+
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
 	for (auto it:events)
 	{
@@ -547,4 +568,34 @@ int Server::handle_acq(int client)
 		return character;
 	}
 	return -1;
+}
+
+void Server::handleBCskill(int id)
+{
+	if (this->gd->skill_cd[id] == 0) // Skill ready!
+	{
+		this->gd->player_status[id] = (int)PlayerStatus::SKILL;
+		this->gd->skill_cd[id] = BC_SKILL_CD;
+	}
+}
+
+void Server::updateSkillCD()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->gd->skill_cd[i] > 0) {
+			this->gd->skill_cd[i] -= TICK_TIME;
+			this->gd->skill_cd[i] = this->gd->skill_cd[i] < 0 ? 0 : this->gd->skill_cd[i];
+		}
+	}
+}
+
+void Server::cleanUpSkillStatus()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->gd->player_status[i] == (int)PlayerStatus::SKILL) {
+			this->gd->player_status[i] = (int)PlayerStatus::NONE;
+		}
+	}
 }

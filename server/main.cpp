@@ -95,7 +95,7 @@ int main()
                  std::chrono::system_clock::now().time_since_epoch()
              );
          }
-
+         serv->cleanUpSkillStatus();
          serv->updateByEvent(all_records);
          serv->checkGameEndLogic();
          for (int j = 0; j < NUM_PLAYERS; j++)
