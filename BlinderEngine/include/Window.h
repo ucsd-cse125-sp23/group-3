@@ -14,6 +14,7 @@
 #include <Skybox.h>
 #include <Mult_Lights.h>
 #include <Scene.h>
+#include "../../client/Client.h"
 
 enum class WindowState
 {
@@ -103,4 +104,6 @@ public:
     
     static void setUiByPlayerID();
     static bool checkSelects();
+
+    static void updateBySkill(GameData * gd);
 };
