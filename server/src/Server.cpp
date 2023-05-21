@@ -297,22 +297,12 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	}
 	else if (e == EventType::SKILL)
 	{
-		switch (id)
-		{
-		case 0:
+		if (id == 0) {
 			// handle Alice's skill
 			handleDetect();
-			break;
-		case 1:
-			handleBCskill(id);
-			break;
-		case 2:
-			handleBCskill(id);
-			break;
-		case 3:
-			break;
-		default:
-			break;
+		}
+		else {
+			handleBCDskill(id);
 		}
 	}
 }
@@ -357,7 +347,7 @@ void Server::handleDetect()
 	}
 
 	// TODO: Alice skill cd
-	this->gd->skill_cd[0] = BC_SKILL_CD;
+	this->gd->skill_cd[0] = SKILL_CD;
 	this->gd->player_status[0] = (int)PlayerStatus::SKILL;
 
 	for (int i = 0; i < map->obs->glm_vec.size(); i++)
@@ -570,12 +560,12 @@ int Server::handle_acq(int client)
 	return -1;
 }
 
-void Server::handleBCskill(int id)
+void Server::handleBCDskill(int id)
 {
 	if (this->gd->skill_cd[id] == 0) // Skill ready!
 	{
 		this->gd->player_status[id] = (int)PlayerStatus::SKILL;
-		this->gd->skill_cd[id] = BC_SKILL_CD;
+		this->gd->skill_cd[id] = SKILL_CD;
 	}
 }
 
