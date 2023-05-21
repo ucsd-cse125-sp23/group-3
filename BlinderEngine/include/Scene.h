@@ -54,12 +54,14 @@ public:
 	void resizeScene(int width, int height);
 	void setUiByPlayerID(int id);
 	void loadGameObjects();
+	void setSignModel(glm::mat4 model);
 
 private:
 	void loadLanding();
 	void loadShaders();
 	void loadEssentials();
 	std::shared_ptr<DaeObject> initPlayerObject(int playerID);
+	std::shared_ptr<ObjObject> initSignObject();
 
 public:
 	// Control variables
@@ -84,6 +86,7 @@ public:
 	std::shared_ptr<ObjObject> objObjectWall;
 	std::shared_ptr<ObjObject> objObjectCage;
 	std::shared_ptr<ObjObject> objObjectTest;
+	std::vector<std::shared_ptr<ObjObject>> signs;
 
 	// Shaders
 	GLuint shaderProgram;

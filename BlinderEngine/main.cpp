@@ -161,9 +161,18 @@ int main(void) {
         // listen for updated game data
         check_gd = cli->recv_gamedata();
 
+        // Window::gd = cli->gd;
+        Window::skill();
+        
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {
-            
+            glm::mat4 mat = {
+                1,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                10,5,1,1
+            };
+            Window::scene->setSignModel(mat);
         }
         else if(check_gd != -1) {
             Window::scene->playersObjects.at(0)->setModel(cli->gd->location_A);

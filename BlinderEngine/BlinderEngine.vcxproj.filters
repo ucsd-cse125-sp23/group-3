@@ -166,7 +166,11 @@
     <ClCompile Include="src\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="src\Audio.cpp">
+=======
+    <ClCompile Include="Audio.cpp">
+>>>>>>> Stashed changes
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Particles.cpp">
@@ -298,10 +302,14 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
+<<<<<<< Updated upstream
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Event.h">
       <Filter>include</Filter>
+=======
+      <Filter>Header Files</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
     <ClInclude Include="include\Particles.h">
       <Filter>include</Filter>
