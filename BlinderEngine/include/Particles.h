@@ -5,6 +5,7 @@
 #include "core.h"
 #include "Light.h"
 #include "Image.h"
+#include <StaticShader.h>
 
 struct Particle {
     glm::vec3 Position, Velocity;
@@ -23,7 +24,7 @@ public:
     // update all particles
     void Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset = glm::vec3(0.0f));
     // render all particles
-    void Draw(Shader shader, const glm::mat4& viewProjMtx, glm::mat4 camView);
+    void Draw(StaticShader shader, const glm::mat4& viewProjMtx, glm::mat4 camView);
     void bindTexture(const char* filename);
     Light* light;
 private:

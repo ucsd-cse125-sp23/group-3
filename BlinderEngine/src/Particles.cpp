@@ -58,7 +58,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
 }
 
 // render all particles
-void Particles::Draw(Shader shader, const glm::mat4& viewProjMtx, glm::mat4 camView)
+void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx, glm::mat4 camView)
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);

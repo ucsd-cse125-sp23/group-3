@@ -10,8 +10,8 @@ AliceSkill::AliceSkill() {
 }
 
 void AliceSkill::SetUp(glm::mat4 model) {
-    leading1->position = vec3(model * glm::vec4(-1.5f, 1.0f, 2.0f, 1.0f));
+    /*leading1->position = vec3(model * glm::vec4(-1.5f, 1.0f, 2.0f, 1.0f));
     leading2->position = vec3(model * glm::vec4(-0.5f, 1.0f, 2.0f, 1.0f));
     leading3->position = vec3(model * glm::vec4(0.5f, 1.0f, 2.0f, 1.0f));
-    leading4->position = vec3(model * glm::vec4(1.5f, 1.0f, 2.0f, 1.0f));
+    leading4->position = vec3(model * glm::vec4(1.5f, 1.0f, 2.0f, 1.0f));*/
 }
