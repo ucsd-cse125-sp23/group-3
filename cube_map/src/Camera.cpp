@@ -43,8 +43,17 @@ void Camera::Update() {
     //glm::mat4 view = glm::inverse(world);
 
     // Compute perspective projection matrix
+    
+    
     glm::mat4 project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
-    Projection=glm::lookAt(glm::vec3(0.0f), CameraDir, CameraUp);
+    if(first_pers){
+       // std::cout<<glm::to_string(glm::vec3(upPos-upTar))<<std::endl;
+        auto axis=glm::cross(glm::normalize(glm::vec3(upPos-upTar)),glm::vec3(0.0f,0.0f,1.0f));
+        auto angle=glm::acos(glm::dot(glm::normalize(glm::vec3(upPos-upTar)),glm::vec3(0.0f,0.0f,1.0f)));
+        Projection=glm::rotate(-angle,axis);
+    }else{
+        Projection=glm::lookAt(glm::vec3(0.0f),CameraDir , CameraUp);
+    }
     // Compute final view-projection matrix
     ViewProjectMtx = project * view;
 }
