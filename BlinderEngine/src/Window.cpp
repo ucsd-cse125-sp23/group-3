@@ -433,6 +433,7 @@ void Window::updateBySkill(GameData* gd) {
     }
     if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
         // TODO:: place sign/label at locB
+        Window::scene->setSignModel(gd->location_B);
         Window::scene->playersObjects.at(1)->doAction();
     }
     if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
