@@ -54,6 +54,7 @@ void Camera::Update() {
     }else{
         Projection=glm::lookAt(glm::vec3(0.0f),CameraDir , CameraUp);
     }
+    Projection=project;
     // Compute final view-projection matrix
     ViewProjectMtx = project * view;
 }

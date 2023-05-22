@@ -16,7 +16,10 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
     {
         bool noDied=false;
         int unusedParticle = this->firstUnusedParticle(noDied);
-        this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, offset);
+        if(!noDied){
+            this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, (1.0f-((float)unusedParticle/amount))*glm::vec3(1.0f));
+        }
+        
         
     }
     // update all particles
@@ -29,8 +32,8 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         if (p.Life > 0.0f)
         {	// particle is alive, thus update
             p.Position += p.Velocity * dt; 
-            p.Color.a -= dt*0.5f ;
-            p.Life = p.Color.a;
+            //p.Color.a -= dt*0.5f ;
+            //p.Life = p.Color.a;
             Lightpos+=p.Position;
             //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
             intensity++;
@@ -57,7 +60,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     shader.use();
     shader.setMat4("projection",viewProjMtx);
     //std::cout<<"round "<<std::endl;
@@ -69,7 +73,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
             glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-            shader.setFloat("scale",(rand()%10)/50.0f+0.05);
+            //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
+            shader.setFloat("scale",0.2f);
             shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
@@ -82,6 +87,7 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
     }
     //std::cout<<"error here"<<std::endl;
     // don't forget to reset to default blending mode
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -192,16 +198,21 @@ unsigned int Particles::firstUnusedParticle(bool &noDied)
         }
     }
     // otherwise, do a linear search
+    int lowest=0;
+    float lowest_life=1.0f;
     for (unsigned int i = 0; i < lastUsedParticle; ++i){
         if (this->particles[i].Life <= 0.0f){
             lastUsedParticle = i;
             return i;
+        }else if(this->particles[i].Life <= lowest_life){
+            lowest=i;
+            lowest_life=this->particles[i].Life;
         }
     }
     // all particles are taken, override the first one (note that if it repeatedly hits this case, more particles should be reserved)
     lastUsedParticle = 0;
     noDied=true;
-    return 0;
+    return lowest;
 }
 
 void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, glm::vec3 objectPosition, glm::vec3 offset)
@@ -213,13 +224,14 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
     glm::vec3 random=glm::vec3(random1,0.0f,random3)*factor*factor;
     //float random=0.0f;
     float rColor = 0.5f;
-    particle.Position = objectPosition  + offset;
+    particle.Position = objectPosition;
     if(scatter){
         particle.Position+=random;
     }
-    particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
+    //std::cout<<offset.x<<std::endl;
+    particle.Color = glm::vec4(rColor, rColor, rColor, offset.x);
     //particle.Life = 1.0f;
-    //particle.Velocity = objectVelocity* 0.1f;
-    // particle.Velocity = glm::vec3(0.0f);
+    particle.Velocity = objectVelocity* 1.0f;
+    //particle.Velocity = glm::vec3(0.0f);
     particle.Life=1.0f;
 }
