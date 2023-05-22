@@ -61,8 +61,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     shader.use();
     shader.setMat4("projection",viewProjMtx);
     //std::cout<<"round "<<std::endl;
@@ -99,7 +99,7 @@ void Particles::bindTexture(const char* filename){
         // set the texture wrapping/filtering options (on the currently bound texture object)
         int width, height, nrComponents;
         Image* newimg=new Image();
-        newimg->load(filename, width, height, nrComponents, 0);
+        newimg->load(filename, width, height, nrComponents, 4);
         // load and generate the texture
         data=newimg->getData();
         if (data){

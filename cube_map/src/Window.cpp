@@ -59,7 +59,7 @@ bool Window::initializeObjects() {
 
     //EVERTHING NEED FOR SETUP A PARTICLE SYSTEM
     particles_2=new Particles(1000,true,5.0f,0.1f,0.8f,glm::vec3(0.8f,0.8f,1.0f));
-    particles_2->bindTexture("./images/blue.png");
+    particles_2->bindTexture("./images/particle.png");
     
     lights->AddLightBCD(map->calculateBCDLightcenter());
     lights->particles_light.push_back(particles_2->light);

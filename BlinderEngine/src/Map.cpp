@@ -7,12 +7,11 @@
 int MAP_ENCODING[3][6][6] = { 0 };
 
 Map::Map() {
-
+    objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.064f, 0.08f, 0.04f));
     wallheight = WALL_HEIGHT;
     groundheight = GROUND_HEIGHT;
     wallwidth = WALL_WIDTH;
     groundsize = GROUND_SIZE;
-
 
     float offsetforwidth = wallwidth / 2.0f;
 
@@ -108,16 +107,24 @@ void Map::readWallsCoord(int mapId, const char* file, std::vector<glm::vec3>& wa
             else if (tempint == 1) {
                 wallsmin.push_back(topwallmin);
                 wallsmax.push_back(topwallmax);
+                walls_left_top.push_back(true);
+                walls.push_back(std::make_tuple(mapId, (float)i + 0.5f, (float)j));
             }
             else if (tempint == 2) {
                 wallsmin.push_back(leftwallmin);
                 wallsmax.push_back(leftwallmax);
+                walls_left_top.push_back(false);
+                walls.push_back(std::make_tuple(mapId, (float)i , (float)j+0.5f));
             }
             else if (tempint == 3) {
                 wallsmin.push_back(topwallmin);
                 wallsmax.push_back(topwallmax);
                 wallsmin.push_back(leftwallmin);
                 wallsmax.push_back(leftwallmax);
+                walls.push_back(std::make_tuple(mapId, i + 0.5f, (float)j));
+                walls.push_back(std::make_tuple(mapId, (float)i, (float)j + 0.5f));
+                walls_left_top.push_back(true);
+                walls_left_top.push_back(false);
             }
         }
     }
@@ -323,6 +330,31 @@ void Map::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os)
     map3->draw(viewProjMtx, shader);
 
     obs->draw(viewProjMtx, shader, os);
+}
+
+void Map::draw(const glm::mat4& projection, const glm::mat4& view, StaticShader& shader) {
+    for (int i = 0; i < walls.size(); i++) {
+        glm::mat4 model_for_wall = glm::mat4(1.0f);
+        model_for_wall=getModelOnMap(model_for_wall, get<0>(walls[i]), get<1>(walls[i]), get<2>(walls[i]));
+        int mapId = get<0>(walls[i]);
+        if (mapId == 0) {
+            model_for_wall *= map1->getModel();
+            //model_for_wall *= glm::rotate(glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        else if (mapId == 1) {
+            model_for_wall *= map2->getModel();
+            //model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        else {
+            model_for_wall *= map3->getModel();
+            //model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        if (!walls_left_top[i]) {
+            model_for_wall *= glm::rotate(glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        objObjectWall->setModel(model_for_wall);
+        objObjectWall->draw(projection, view, shader);
+    }
 }
 
 glm::vec3 Map::calculateLightcenter(glm::mat4 model) {

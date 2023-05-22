@@ -38,7 +38,7 @@ void main()
         }
         vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(pos,1.0f);
         totalPosition += localPosition * weights[i];
-        vec4 localNormal = transpose(inverse(finalBonesMatrices[boneIds[i]])) * vec4(norm,0.0f);
+        vec4 localNormal = finalBonesMatrices[boneIds[i]] * vec4(norm,0.0f);
         totalNormal += localNormal*weights[i];
    }
 
