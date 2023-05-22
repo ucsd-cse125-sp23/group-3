@@ -78,6 +78,10 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
 
+	lights->loadToUShaderSkill(shaderProgram, *camera);
+	lights->loadToDShaderSkill(*dynamicShader, *camera);
+	lights->loadToSShaderSkill(*staticShader, *camera);
+
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os);
 	map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
