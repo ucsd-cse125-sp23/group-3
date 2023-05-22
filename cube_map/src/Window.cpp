@@ -160,7 +160,7 @@ void Window::idleCallback() {
     timer=newtimer;
     //std::cout<<"error here"<<std::endl;
 
-    //leading->Position+=leading->Velocity*dt;
+    leading->Position+=leading->Velocity*dt;
 
     //std::cout<<"error here"<<std::endl;
     //particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
