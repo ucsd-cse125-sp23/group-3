@@ -3,8 +3,8 @@
 #include <glm/gtx/string_cast.hpp>
 
 
-Particles::Particles(unsigned int amount,bool scatter)
-    : amount(amount), scatter(scatter)
+Particles::Particles(unsigned int amount,bool scatter,float range,float size,float lightintensity)
+    : amount(amount), scatter(scatter), range(range), size(size),lightintensity(lightintensity)
 {
     this->init();
 }
@@ -17,7 +17,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         bool noDied=false;
         int unusedParticle = this->firstUnusedParticle(noDied);
         //if(!noDied){
-            this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, (1.0f-((float)unusedParticle/amount))*glm::vec3(1.0f));
+            this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, glm::vec3(0.0f));
        // }
         
         
@@ -47,10 +47,11 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
-        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),objectPosition,0.0f,0.7f*intensity/((float)1000.0f),0.0f);
+        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),Lightpos,0.0f,lightintensity*0.7f*intensity/((float)1000.0f),0.0f);
         light->SetParam(1.0f,0.1f,0.03f);
     }else{
-        light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),Lightpos,0.0f,0.0f,0.0f);
+        light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
+        light->SetParam(1.0f,0.1f,0.03f);
     }
     
 }
@@ -74,7 +75,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
             //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
-            shader.setFloat("scale",0.2f);
+            int size_int=(int)(size*10000);
+            shader.setFloat("scale",(rand()%size_int)/((float)10000)+size);
             shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
@@ -177,7 +179,8 @@ void Particles::init()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
     glBindVertexArray(0);
-    light=new Light(false,false,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
+    light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
+    light->SetParam(1.0f,0.1f,0.03f);
     // create this->amount default particle instances
     for (unsigned int i = 0; i < this->amount; ++i){
         this->particles.push_back(Particle());
@@ -217,11 +220,12 @@ unsigned int Particles::firstUnusedParticle(bool &noDied)
 
 void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, glm::vec3 objectPosition, glm::vec3 offset)
 {
-    float random1 = ((rand() % 1000) - 5) / 2000.0f;
-    float random2 = ((rand() % 1000) - 5) / 2000.0f;
-    float random3 = ((rand() % 1000) - 5) / 2000.0f;
-    float factor=((rand() % 1000) - 5) / 2000.0f;
-    glm::vec3 random=glm::vec3(random1,0.0f,random3)*factor*factor;
+    float random1 = ((rand() % 2000) - 1000) / (range*2000.0f);
+    float random2 = ((rand() % 2000) - 1000) / (range*2000.0f);
+    float random3 = ((rand() % 2000) - 1000) / (range*2000.0f);
+    float factor1=(rand() % 2000) / 2000.0f;
+    float factor2=(rand() % 2000) / 2000.0f;
+    glm::vec3 random=glm::vec3(random1,random2,random3)*factor1*factor2;
     //float random=0.0f;
     float rColor = 0.5f;
     particle.Position = objectPosition;
