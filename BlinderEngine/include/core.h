@@ -14,3 +14,4 @@
 
 // Our libs
 #include "Constants.h"
+#include "../../shared/GlobalVariables.h"

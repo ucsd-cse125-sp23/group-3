@@ -191,10 +191,10 @@ int main(void) {
             Window::ui->changeLevelbarSizeY(rate);
             Window::ui->changeTimebarSizeY(rate);*/
 
-            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2));
+            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2), SKILL_CD);
         }
         else {
-            Window::displayCallback(window, cli->gd->obstacle_states);
+            Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
             // check game end logic
             if (cli->gd->gamestate == GameState::LOSE ||
                 cli->gd->gamestate == GameState::WIN) {

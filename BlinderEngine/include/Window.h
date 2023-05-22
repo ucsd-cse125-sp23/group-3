@@ -76,7 +76,7 @@ public:
     // update and draw functions
     static void idleCallback();
     static void drawLanding(GLFWwindow* window);
-    static void displayCallback(GLFWwindow*, std::vector<int> os);
+    static void displayCallback(GLFWwindow*, std::vector<int> os, int cd_remain);
     static void setEndPage(GameState);
     static void displayEndPage(GLFWwindow*);
 

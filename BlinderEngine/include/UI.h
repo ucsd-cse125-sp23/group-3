@@ -18,13 +18,9 @@ public:
 	const double skill_sizeY = 0.1;
 	//const double skill_posiX = -0.995;
 	const double skill_posiY = -0.995;
-	const char* skill_png = "./images/Alice-skill.png";
-
-	const double skill_cd_sizeX = 0.1;
-	const double skill_cd_sizeY = 0.1;
-	//const double skill_cd_posiX = -0.995;
-	const double skill_cd_posiY = -0.995;
-	const char* skill_cd_png = "./images/Alice-skill-cd.png";
+	const char* skill_png = "./images/skill.png";
+	const char* skill_frame_png = "./images/frame.png";
+	const char* skill_cd_png = "./images/oc.png";
 
 	const double time_sizeX = 0.15;
 	const double time_sizeY = 0.675;
@@ -62,6 +58,7 @@ public:
 private:
 	graphic2D* character;
 	graphic2D* skill;
+	graphic2D* skill_frame;
 	graphic2D* skill_cd;
 	graphic2D* time;
 	graphic2D* time_bar;
@@ -75,7 +72,7 @@ public:
 	UI();
 	~UI();
 
-	void draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID);
+	void draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID, int cd_remain);
 	void setSize(const int& width, const int& height, int playerId);
 	void update();
 	void changeTimebarSizeY(float rate);
