@@ -60,7 +60,7 @@ bool Window::initializeObjects() {
     particles_2->bindTexture("./images/blue.png");
     
     lights->AddLightBCD(map->calculateBCDLightcenter());
-    lights->particles_light.push_back(particles_2->light);
+    // lights->particles_light.push_back(particles_2->light);
     /*std::cout<<particles_2->light->diffuse<<std::endl;
     std::cout<<particles_2->light->ambient<<std::endl;
     std::cout<<particles_2->light->specular<<std::endl;*/
@@ -181,8 +181,9 @@ void Window::idleCallback() {
         skillTime -= 0.001f;
         leading->Position+=leading->Velocity*dt;
         particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
-        lights->particles_light[0]=particles_2->light;
+        // lights->particles_light[0]=particles_2->light;
     } else {
+        particles_2->Update(dt,leading->Velocity,leading->Position,0,glm::vec3(0.0f));
         usingSkill = false;
         skillTime = 1.0f;
     }
@@ -204,10 +205,7 @@ void Window::displayCallback(GLFWwindow* window) {
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
     //particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
    // std::cout<<"error here"<<std::endl;
-    if (usingSkill && skillTime > 0) {
-        particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
-    }
-    // particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
+    particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
 
     //std::cout<<"error here"<<std::endl;
     //std::cout<<"error here"<<std::endl;
@@ -261,8 +259,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
         // eventChecker[(int)EventType::ATTACK - 1] = 1;
-        if (skillTime == 1)
+        if (skillTime == 1) {
             usingSkill = true;
+            leading->Position=glm::vec3(3.0f,3.0f,0.0f);
+        }
         // no_event = false;
     }
 

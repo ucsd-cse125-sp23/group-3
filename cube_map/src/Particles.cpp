@@ -69,7 +69,7 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
             glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
             shader.setVec4("color", particle.Color);
-            shader.setFloat("scale",(rand()%10)/100.0f+0.05);
+            shader.setFloat("scale",(rand()%10)/50.0f+0.05);
             shader.setMat4("view",camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
@@ -210,9 +210,9 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
     float random2 = ((rand() % 1000) - 5) / 2000.0f;
     float random3 = ((rand() % 1000) - 5) / 2000.0f;
     float factor=((rand() % 1000) - 5) / 2000.0f;
-    glm::vec3 random=glm::vec3(random1,random2,random3)*factor*factor;
+    glm::vec3 random=glm::vec3(random1,0.0f,random3)*factor*factor;
     //float random=0.0f;
-    float rColor = 0.5f + ((rand() % 100) / 100.0f);
+    float rColor = 0.5f;
     particle.Position = objectPosition  + offset;
     if(scatter){
         particle.Position+=random;
@@ -220,6 +220,6 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
     particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
     //particle.Life = 1.0f;
     //particle.Velocity = objectVelocity* 0.1f;
-    particle.Velocity = glm::vec3(0.0f);
+    // particle.Velocity = glm::vec3(0.0f);
     particle.Life=1.0f;
 }
