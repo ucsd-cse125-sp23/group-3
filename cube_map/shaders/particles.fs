@@ -10,6 +10,5 @@ void main()
     texColor.a=texColor.a*ParticleColor.a;
     if(texColor.a < 0.1)
         discard;
-    
     color = texColor;
 }
