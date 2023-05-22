@@ -48,7 +48,7 @@ namespace Constants
 
 	const int DIST_LIMIT = 20;
 
-	const float MINIMAP_OBJECT_SIZE=0.02;
+	const float MINIMAP_OBJECT_SIZE=0.02f;
 
 };
 #endif

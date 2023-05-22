@@ -16,6 +16,7 @@ public:
 
 	void update(glm::mat4 world);
 	glm::mat4 getModel() { return mvp; };
+	void setModel(glm::mat4 model) { mvp=model; };
 	void spin(float deg);
 	void move(float i);
 private:

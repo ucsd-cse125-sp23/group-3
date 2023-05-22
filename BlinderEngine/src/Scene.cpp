@@ -75,7 +75,7 @@ void Scene::displayWorld(std::vector<int> os)
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os);
-
+	map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 
 	if (Constants::offline) {
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
@@ -198,12 +198,13 @@ void Scene::loadGameObjects()
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));
 	}
-	//objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall.obj", glm::vec3(5.0f));
+	//objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.05f));
 }
 
 void Scene::loadEssentials()
 {
 	// Initialize object to render
+	
 	map = std::make_shared<Map>();
 
 	ui = std::make_shared<UI>();
