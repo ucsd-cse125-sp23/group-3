@@ -61,7 +61,7 @@ private:
 	void loadShaders();
 	void loadEssentials();
 	std::shared_ptr<DaeObject> initPlayerObject(int playerID);
-	std::shared_ptr<ObjObject> initSignObject();
+	void initSignObject();
 
 public:
 	// Control variables
