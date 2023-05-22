@@ -60,8 +60,8 @@ void Particles::Draw(Shader shader,const glm::mat4& viewProjMtx,glm::mat4 camVie
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     shader.use();
     shader.setMat4("projection",viewProjMtx);
     //std::cout<<"round "<<std::endl;
@@ -229,7 +229,7 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
         particle.Position+=random;
     }
     //std::cout<<offset.x<<std::endl;
-    particle.Color = glm::vec4(rColor, rColor, rColor, offset.x);
+    particle.Color = glm::vec4(rColor, rColor, rColor,offset.x);
     //particle.Life = 1.0f;
     particle.Velocity = objectVelocity* 1.0f;
     //particle.Velocity = glm::vec3(0.0f);

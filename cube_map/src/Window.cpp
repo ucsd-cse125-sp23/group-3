@@ -9,7 +9,6 @@ const char* Window::windowTitle = "Model Environment";
 Cube* Window::cube;
 Map* Window::map;
 Minimap* Window::canvas;
-
 // Camera Properties
 Camera* Cam;
 
@@ -57,7 +56,7 @@ bool Window::initializeObjects() {
     cube = new Cube();
     map=new Map();
     //particles=new Particles(1000,false);
-    particles_2=new Particles(100,false);
+    particles_2=new Particles(1000,true);
     particles_2->bindTexture("./images/blue.png");
     
     lights->AddLightBCD(map->calculateBCDLightcenter());
@@ -67,7 +66,7 @@ bool Window::initializeObjects() {
     std::cout<<particles_2->light->specular<<std::endl;*/
     glm::mat4 somerot=glm::mat4(1.0f);
     leading->Position=glm::vec3(3.0f,3.0f,0.0f);
-    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*1.0f;
+    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*3.0f;
 
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     cube->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
@@ -181,9 +180,11 @@ void Window::idleCallback() {
     //lights->updateLightAliceV2(cube->getModel());
 
     if (usingSkill && skillTime > 0) {
+
         skillTime -= 0.000001f;
         //leading->Position+=leading->Velocity*dt;
         particles_2->Update(dt,leading->Velocity,leading->Position,1,glm::vec3(0.0f));
+        
         // lights->particles_light[0]=particles_2->light;
     } else {
         particles_2->Update(dt,leading->Velocity,leading->Position,0,glm::vec3(0.0f));
