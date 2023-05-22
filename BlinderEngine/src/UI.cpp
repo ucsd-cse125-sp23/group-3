@@ -11,7 +11,11 @@ UI::UI() {
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
 	skill->bindTexture(UI::skill_png);
 
-	skill_cd = new graphic2D(UI::skill_cd_sizeX, UI::skill_cd_sizeY * 800 / 600,
+	skill_frame = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	skill_frame->bindTexture(UI::skill_frame_png);
+
+	skill_cd = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
 	skill_cd->bindTexture(UI::skill_cd_png);
 
@@ -48,10 +52,11 @@ UI::~UI() {
 	delete level_bar;
 }
 
-void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID) {
+void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID, int cd_remain) {
 	character->draw(shader,1.0f);
 	skill->draw(shader, 1.0f);
-	skill_cd->draw(shader, 1.0f);
+	skill_cd->draw(shader, (float)cd_remain/(float)SKILL_CD);
+	skill_frame->draw(shader, 1.0f);
 
 	time_bar->draw(shader, 1.0f);
 	time->draw(shader, 1.0f);
@@ -70,7 +75,10 @@ void UI::setSize(const int& width, const int& height, int playerId) {
 	skill->setposition(UI::skill_sizeX, UI::skill_sizeY * width / height);
 	skill->update();
 
-	skill_cd->setposition(UI::skill_cd_sizeX, UI::skill_cd_sizeY * width / height);
+	skill_frame->setposition(UI::skill_sizeX, UI::skill_sizeY * width / height);
+	skill_frame->update();
+
+	skill_cd->setposition(UI::skill_sizeX, UI::skill_sizeY * width / height);
 	skill_cd->update();
 
 	time->setposition(UI::time_sizeX, UI::time_sizeY * width / height,
@@ -111,6 +119,8 @@ void UI::setSize(const int& width, const int& height, int playerId) {
 void UI::update() {
 	character->update();
 	skill->update();
+	skill_cd->update();
+	skill_frame->update();
 	time->update();
 	time_bar->update();
 	minimap->update();
@@ -152,6 +162,8 @@ void UI::setPlayerAlicePosition(glm::mat4 model) {
 
 
 void UI::setUiByPlayerID(int id) {
+	// TO DO: update skill png
+
 	if (id == 0) {			// Alice
 		char_png = "./images/Alice.png";
 		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY,

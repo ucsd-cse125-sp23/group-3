@@ -174,12 +174,12 @@ void Window::idleCallback() {
 //     //cube->update();
 }
 
-void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
+void Window::displayCallback(GLFWwindow* window, std::vector<int> os, int cd_remain) {
     // Clear the color and depth buffers.
 
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    scene->displayWorld(os);   
+    scene->displayWorld(os, cd_remain);
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     glfwSwapBuffers(window);

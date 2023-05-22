@@ -41,7 +41,7 @@ public:
 	void setEnd(bool won);
 	void drawEnd();
 	void updateWorld();
-	void displayWorld(std::vector<int> os);
+	void displayWorld(std::vector<int> os, int cd_remain);
 	// Control
 	void setModel(glm::mat4 model);
 	void updateLevel(float level);
