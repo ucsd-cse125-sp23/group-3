@@ -183,7 +183,7 @@ void Window::idleCallback() {
 
     if (usingSkill && skillTime > 0) {
         
-        skillTime -= 0.001f;
+        skillTime -= 0.0003f;
         //leading->Position+=leading->Velocity*dt;
         //UPDATION FOR SYSTEM +LIGHT AT END
         leading->Position+=leading->Velocity*dt;
