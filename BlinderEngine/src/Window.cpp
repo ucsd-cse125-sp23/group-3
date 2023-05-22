@@ -443,8 +443,9 @@ void Window::updateBySkill(GameData* gd) {
     if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
         Window::scene->lights->updateSkillLight(gd->location_C);
         Window::scene->playersObjects.at(2)->doAction();
+        // TODO:: place light at locC  
     }
-    if (gd->player_status[3] == (int)PlayerStatus::SKILL) {
-
+    if (gd->skill_cd[3] >= 25 && playerID == 0) {
+		Window::scene->playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
     }
 }
