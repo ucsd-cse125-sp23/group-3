@@ -441,7 +441,8 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->playersObjects.at(1)->doAction();
     }
     if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
-        // TODO:: place light at locC
+        Window::scene->lights->updateSkillLight(gd->location_C);
+        Window::scene->playersObjects.at(2)->doAction();
     }
     if (gd->player_status[3] == (int)PlayerStatus::SKILL) {
 
