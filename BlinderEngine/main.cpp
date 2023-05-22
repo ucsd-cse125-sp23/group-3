@@ -159,8 +159,6 @@ int main(void) {
         // listen for updated game data
         check_gd = cli->recv_gamedata();
 
-        // Window::gd = cli->gd;
-        //Window::skill();
         
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {

@@ -80,8 +80,6 @@ public:
     static void setEndPage(GameState);
     static void displayEndPage(GLFWwindow*);
 
-    static GameData* gd;
-
     // helper to reset the camera
     static void resetCamera();
 

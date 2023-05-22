@@ -103,6 +103,10 @@ void Scene::displayWorld(std::vector<int> os)
 				playersObjects[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 			}
 		}
+		// draw Bob's skill
+		for (int i = 0; i < signs.size(); i++) {
+			signs[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		}
 
 	}
 	if (playerID != 0) {
@@ -278,13 +282,13 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 }
 
 
-std::shared_ptr<ObjObject> Scene::initSignObject() {
+void Scene::initSignObject() {
 	signs.push_back(std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj"));
 	return;
 }
 
 void Scene::setSignModel(glm::mat4 model) {
-
+	Scene::initSignObject();
 	// set the position of the last sign
 	signs.back()->update(model);
 }
