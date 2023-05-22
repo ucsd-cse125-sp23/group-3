@@ -16,9 +16,9 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
     {
         bool noDied=false;
         int unusedParticle = this->firstUnusedParticle(noDied);
-        if(!noDied){
+        //if(!noDied){
             this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, (1.0f-((float)unusedParticle/amount))*glm::vec3(1.0f));
-        }
+       // }
         
         
     }
@@ -32,8 +32,8 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         if (p.Life > 0.0f)
         {	// particle is alive, thus update
             p.Position += p.Velocity * dt; 
-            //p.Color.a -= dt*0.5f ;
-            //p.Life = p.Color.a;
+            p.Color.a -= dt*0.5f ;
+            p.Life = p.Color.a;
             Lightpos+=p.Position;
             //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
             intensity++;
@@ -229,9 +229,9 @@ void Particles::respawnParticle(Particle &particle, glm::vec3 objectVelocity, gl
         particle.Position+=random;
     }
     //std::cout<<offset.x<<std::endl;
-    particle.Color = glm::vec4(rColor, rColor, rColor,offset.x);
+    particle.Color = glm::vec4(rColor, rColor, rColor,1.0f);
     //particle.Life = 1.0f;
-    particle.Velocity = objectVelocity* 1.0f;
+    particle.Velocity = objectVelocity* 0.0f;
     //particle.Velocity = glm::vec3(0.0f);
     particle.Life=1.0f;
 }
