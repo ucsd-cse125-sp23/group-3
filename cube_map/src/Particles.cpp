@@ -3,8 +3,8 @@
 #include <glm/gtx/string_cast.hpp>
 
 
-Particles::Particles(unsigned int amount,bool scatter,float range,float size,float lightintensity)
-    : amount(amount), scatter(scatter), range(range), size(size),lightintensity(lightintensity)
+Particles::Particles(unsigned int amount,bool scatter,float range,float size,float lightintensity,glm::vec3 lightcolor)
+    : amount(amount), scatter(scatter), range(range), size(size),lightintensity(lightintensity),lightcolor(lightcolor)
 {
     this->init();
 }
@@ -47,7 +47,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
         //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
-        light=new Light(false,true,glm::vec3(1.0f),glm::vec3(1.0f),Lightpos,0.0f,lightintensity*0.7f*intensity/((float)1000.0f),0.0f);
+        light=new Light(false,true,lightcolor,glm::vec3(1.0f),Lightpos,0.0f,lightintensity*0.7f*intensity/((float)1000.0f),0.0f);
         light->SetParam(1.0f,0.1f,0.03f);
     }else{
         light=new Light(false,true,glm::vec3(0.0f),glm::vec3(1.0f),glm::vec3(0.0f),0.0f,0.0f,0.0f);
