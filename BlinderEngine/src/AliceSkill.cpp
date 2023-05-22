@@ -42,3 +42,20 @@ void AliceSkill::SetUp(glm::mat4 model) {
     }
     lights->particles_light[0] = particles_2->light;*/
 }
+
+/*
+* 
+* Ending position of the particle
+
+bool Server::check_detectability(int obs_id)
+{
+    glm::mat4* loc = &this->gd->location_A;
+    glm::vec4 transf(0, 0, -2*ATTACK_RANGE, 1);
+    glm::vec4 ahead_point = *loc * transf;
+    glm::vec2 player_pt(ahead_point[0], ahead_point[2]);
+    float* pSourceObs = (float*)glm::value_ptr(map->obs->glm_vec[obs_id]);
+    glm::vec2 centerObs(pSourceObs[12], pSourceObs[14]);
+    return glm::length(player_pt - centerObs) < 2*ATTACK_RANGE;
+}
+
+*/
