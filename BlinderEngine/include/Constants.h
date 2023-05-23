@@ -30,12 +30,6 @@ namespace Constants
 	const glm::vec3 rock_scaling_factor = glm::vec3(5.0f, 5.0f, 5.0f);
 	const glm::vec3 drone_scaling_factor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	// Girl model & animation
-	const std::string girl_model_path = "./resources/objects/girl/girl.dae";
-	const std::string girl_walking_animation_path = "./resources/objects/girl/animation/girl_walking.dae";
-	const std::string girl_action_animation_path = "./resources/objects/girl/animation/girl_dribbling.dae";
-	const glm::vec3 girl_scaling_factor = glm::vec3(3.0f);
-
 
 	// Alice model & anmiation
 	const std::string alice_model_path = "./resources/objects/alice/alice.dae";
@@ -45,7 +39,7 @@ namespace Constants
 
 	const std::string bob_model_path = "./resources/objects/bob/bob.dae";
 	const std::string bob_walking_animation_path = "./resources/objects/bob/animation/bob_walking.dae";
-	const std::string bob_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
+	const std::string bob_action_animation_path = "./resources/objects/bob/animation/bob_walking.dae";
 	const glm::vec3 bob_scaling_factor = glm::vec3(0.7f);
 
 	const std::string carol_model_path = "./resources/objects/carol/carol.dae";
@@ -55,8 +49,9 @@ namespace Constants
 
 	const std::string dave_model_path = "./resources/objects/david/david.dae";
 	const std::string dave_walking_animation_path = "./resources/objects/david/animation/david_walking.dae";
-	const std::string dave_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
+	const std::string dave_action_animation_path = "./resources/objects/david/animation/david_walking.dae";
 	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
+
 
 	const bool offline =true;
 
