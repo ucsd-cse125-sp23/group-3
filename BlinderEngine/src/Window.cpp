@@ -441,7 +441,9 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->playersObjects.at(2)->doAction();
         // TODO:: place light at locC  
     }
-    if (gd->skill_cd[3] >= 25 && playerID == 0) {
+    std::cout << "skill" << std::endl;
+    if (gd->skill_cd[3] >= 25000 && playerID == 0) {
         Window::scene->drawDaveSkill();
+        std::cout << "dave skill" << std::endl;
     }
 }
