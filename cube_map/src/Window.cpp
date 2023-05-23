@@ -9,7 +9,6 @@ const char* Window::windowTitle = "Model Environment";
 Cube* Window::cube;
 Map* Window::map;
 Minimap* Window::canvas;
-
 // Camera Properties
 Camera* Cam;
 
@@ -19,6 +18,10 @@ int MouseX, MouseY;
 const float cameraSpeed = 1.0f;
 const float turningratio=30.0f;
 
+bool usingSkill;
+float skillTime = 1.0f;
+double timer=0.0f;
+
 // The shader program id
 GLuint Window::shaderProgram;
 Shader* Window::shaderText2DProgram;
@@ -26,6 +29,7 @@ CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
 Particles* Window::particles;
 Particles* particles_2;
+AliceSkill* skill;
 struct Particle* leading=new Particle();
 bool onMOVE;
 // Constructors and desctructors
@@ -53,17 +57,24 @@ bool Window::initializeObjects() {
     cube = new Cube();
     map=new Map();
     //particles=new Particles(1000,false);
-    particles_2=new Particles(1000,true);
-    particles_2->bindTexture("./images/blue.png");
-    
     lights->AddLightBCD(map->calculateBCDLightcenter());
+
+    //EVERTHING NEED FOR SETUP A PARTICLE SYSTEM
+    /*
+    particles_2=new Particles(1000,true,5.0f,0.1f,0.8f,glm::vec3(0.8f,0.8f,1.0f));
+    particles_2->bindTexture("./images/particle.png");
+    
+    
     lights->particles_light.push_back(particles_2->light);
+    leading->Position=glm::vec3(3.0f,3.0f,0.0f);
+    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*5.0f;*/
+
+    skill=new AliceSkill(lights->particles_light);
+
     /*std::cout<<particles_2->light->diffuse<<std::endl;
     std::cout<<particles_2->light->ambient<<std::endl;
     std::cout<<particles_2->light->specular<<std::endl;*/
     glm::mat4 somerot=glm::mat4(1.0f);
-    leading->Position=glm::vec3(3.0f,3.0f,0.0f);
-    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*5.0f;
     somerot=somerot*glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     cube->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
     Cam->setModel(map->getModelOnMap(somerot,2,0.5,4.5));
@@ -150,15 +161,25 @@ void Window::idleCallback() {
     //std::cout<<"error here"<<std::endl;
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     //std::cout<<"error here"<<std::endl;
-    float dt=0.01f;
+
+    double newtimer=glfwGetTime();
+    float dt=(newtimer-timer);
+    //std::cout<<dt<<std::endl;
+    timer=newtimer;
     //std::cout<<"error here"<<std::endl;
-    leading->Position+=leading->Velocity*dt;
+
+    
+
     //std::cout<<"error here"<<std::endl;
     //particles->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
-    particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+
+    //particles_2->Update(dt,leading->Velocity,leading->Position,3,glm::vec3(0.0f));
+
     //particles_2->Update(dt,glm::vec3(0.0f),glm::vec3(1.0f),3,glm::vec3(0.0f));
     //std::cout<<"error here"<<std::endl;
-    lights->particles_light[0]=particles_2->light;
+
+    
+
     /*std::cout<<particles_2->light->diffuse<<std::endl;
     std::cout<<particles_2->light->ambient<<std::endl;
     std::cout<<particles_2->light->specular<<std::endl;*/
@@ -166,6 +187,28 @@ void Window::idleCallback() {
     //std::cout<<"error here"<<std::endl;
     //lights->updateLightAliceV2(cube->getModel());
 
+    if (usingSkill && skillTime > 0) {
+        
+        skillTime -= 0.0003f;
+        skill->SetUp(cube->getModel());
+        //leading->Position+=leading->Velocity*dt;
+        //UPDATION FOR SYSTEM +LIGHT AT END
+        /*leading->Position+=leading->Velocity*dt;
+        particles_2->Update(dt,leading->Velocity,leading->Position,1,glm::vec3(0.0f));*/
+        //lights->particles_light[0]=particles_2->light;
+        // lights->particles_light[0]=particles_2->light;
+    } else {
+        skillTime = 1.0f;
+        skill->start=false;
+        skill->setup=false;
+        usingSkill = false;
+        /*particles_2->Update(dt,leading->Velocity,leading->Position,0,glm::vec3(0.0f));
+        usingSkill = false;
+        skillTime = 1.0f;*/
+        
+    }
+    skill->update(dt);
+    //lights->particles_light[0]=particles_2->light;
     //lights->update(Cam);
     //cube->update();
 }
@@ -183,7 +226,8 @@ void Window::displayCallback(GLFWwindow* window) {
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
     //particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
    // std::cout<<"error here"<<std::endl;
-    particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
+    //particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
+    skill->draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
     //std::cout<<"error here"<<std::endl;
     //std::cout<<"error here"<<std::endl;
     int mapID;
@@ -233,6 +277,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         Cam->SetSpin(-cameraSpeed*turningratio);
         cube->spin(-cameraSpeed*turningratio);
     }
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        // eventChecker[(int)EventType::ATTACK - 1] = 1;
+        if (skillTime == 1.0f) {
+            usingSkill = true;
+            //leading->Position=glm::vec3(3.0f,3.0f,0.0f);
+        }
+        // no_event = false;
+    }
+
     // Check for a key press.
     if (action == GLFW_PRESS) {
         switch (key) {

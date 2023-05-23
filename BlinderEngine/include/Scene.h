@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "UI.h"
 #include "Shader.h"
+#include "AliceSkill.h"
 #include "core.h"
 #include <vector>
 #include <graphic2D.h>
@@ -63,7 +64,7 @@ private:
 public:
 	// Control variables
 	int playerID;
-
+	double timer;
 	// Object to render
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
@@ -88,7 +89,8 @@ public:
 	std::shared_ptr<StaticShader> staticShader;
 	std::shared_ptr<StaticShader> skyboxShader;
 	std::shared_ptr<StaticShader> uiShader;
-
+	std::shared_ptr<StaticShader> particleShader;
+	std::shared_ptr<AliceSkill> skill_for_alice;
 	// Essentials
 	std::shared_ptr<Camera> camera;
 	std::shared_ptr<Mult_Lights> lights;
