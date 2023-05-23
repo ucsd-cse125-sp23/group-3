@@ -31,7 +31,7 @@ void Submap::draw(const glm::mat4& viewProjMtx, GLuint shader) {
 void Submap::setModel(glm::mat4 _model) {
     model = _model;
     ground->update(_model);
-    ground->setColor(glm::vec3(0.4f, 0.5f, 0.2f));
+    ground->setColor(glm::vec3(115/255.0f, 147 / 255.0f, 179 / 255.0f));
     for (std::vector<Cube*>::iterator it = walls.begin(); it != walls.end(); it++) {
         (*it)->setColor(glm::vec3(1.0f, 0.2f, 0.2f));
         (*it)->update(_model);

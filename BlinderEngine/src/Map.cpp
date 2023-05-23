@@ -8,7 +8,7 @@ int MAP_ENCODING[3][6][6] = { 0 };
 
 Map::Map() {
     //objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.064f, 0.08f, 0.04f));
-    objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall2.obj", glm::vec3(0.31f, 0.4f, 0.45f));
+    objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall2.obj", glm::vec3(0.31f, 0.6f, 0.45f));
     wallheight = WALL_HEIGHT;
     groundheight = GROUND_HEIGHT;
     wallwidth = WALL_WIDTH;
