@@ -162,6 +162,7 @@
     <ClCompile Include="..\shared\Packet.cpp" />
     <ClCompile Include="..\shared\Player.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\AliceSkill.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CollisionDetection.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="..\shared\GlobalVariables.h" />
     <ClInclude Include="..\shared\Packet.h" />
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="include\AliceSkill.h" />
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Animator.h" />
     <ClInclude Include="include\Animdata.h" />

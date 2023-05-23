@@ -19,7 +19,7 @@ void Scene::init(int PlayID)
 	}
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
-
+	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 }
 
 void Scene::initLandingPage()
@@ -52,7 +52,11 @@ void Scene::drawEnd()
 
 void Scene::updateWorld()
 {
+	double newtimer = glfwGetTime();
+	float dt = (newtimer - timer);
+	timer = newtimer;
 	if (!Constants::offline) {
+		skill_for_alice->SetUp(playersObjects[playerID]->getModel());
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
@@ -63,6 +67,7 @@ void Scene::updateWorld()
 		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 	}
+	skill_for_alice->update(dt);
 	camera->Update();
 	map->update();
 }
@@ -86,6 +91,7 @@ void Scene::displayWorld(std::vector<int> os)
 		if (playerID == 0) {
 			// Draw Alice herself
 			playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+			skill_for_alice->draw(*(particleShader), camera->GetViewProjectMtx());
 		}
 		else {
 			// Draw all players except Alice
@@ -190,6 +196,7 @@ void Scene::loadShaders()
 	staticShader = std::make_shared<StaticShader>(Constants::static_shader_vert, Constants::static_shader_frag);
 	uiShader = std::make_shared<StaticShader>(Constants::ui_shader_vert, Constants::ui_shader_frag);
 	skyboxShader = std::make_shared<StaticShader>("./shaders/skybox.vs", "./shaders/skybox.fs");
+	particleShader = std::make_shared<StaticShader>("./shaders/particles.vs", "./shaders/particles.fs");
 }
 
 void Scene::loadGameObjects()
@@ -199,7 +206,9 @@ void Scene::loadGameObjects()
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));
 	}
+	
 	//objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.05f));
+	timer = glfwGetTime();
 }
 
 void Scene::loadEssentials()

@@ -15,5 +15,5 @@ void main()
 {
     ParticleColor = color;
     TexCoords = text;
-    gl_Position = projection *((view*vec4((vertex * scale) , 1.0))+ vec4(offset,0.0f));
+    gl_Position = projection*vec4(offset, 1.0)+ vec4(vertex*scale,0.0);
 }
