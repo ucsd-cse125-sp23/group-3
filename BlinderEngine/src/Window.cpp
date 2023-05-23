@@ -441,7 +441,7 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->playersObjects.at(2)->doAction();
         // TODO:: place light at locC  
     }
-    if (gd->skill_cd[3] >= 25000 && playerID == 0) {
+    if (gd->skill_cd[3] >= 20000) {
         Window::scene->drawDaveSkill = true;
     }
     else {
