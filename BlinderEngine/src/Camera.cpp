@@ -15,7 +15,7 @@ void Camera::Update() {
     // Compute camera world matrix
 
     if (first_person) {
-        CameraTar = glm::vec3(0.0f, 3.0f, 0.0f);
+        CameraTar = glm::vec3(0.0f, 4.0f, 0.0f);
         CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
         CameraPos = CameraTar + CameraDir;
     }
