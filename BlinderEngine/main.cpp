@@ -116,7 +116,7 @@ int main(void) {
     
     int assigned_id;
     if (Constants::offline) {
-        assigned_id = 1;
+        assigned_id = 0;
     }
     else {
         assigned_id = cli->buttonAssignment[client_id];
