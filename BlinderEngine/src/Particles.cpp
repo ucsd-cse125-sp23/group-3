@@ -58,7 +58,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
 }
 
 // render all particles
-void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx, glm::mat4 camView)
+void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx)
 {
     // use additive blending to give it a 'glow' effect
     glEnable(GL_BLEND);
@@ -78,7 +78,6 @@ void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx, glm::mat
             //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
             int size_int = (int)(size * 10000);
             shader.setFloat("scale", (rand() % size_int) / ((float)10000) + size);
-            shader.setMat4("view", camView);
             //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
             //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
             //std::cout<<"particle.color "<<glm::to_string(particle.Color)<<std::endl;
@@ -235,7 +234,7 @@ void Particles::respawnParticle(Particle& particle, glm::vec3 objectVelocity, gl
         particle.Position += random;
     }
     //std::cout<<offset.x<<std::endl;
-    particle.Color = glm::vec4(rColor, rColor, 0.8f, 1.0f);
+    particle.Color = glm::vec4(rColor, rColor, rColor, 1.0f);
     //particle.Life = 1.0f;
     particle.Velocity = objectVelocity * 0.0f;
     //particle.Velocity = glm::vec3(0.0f);
