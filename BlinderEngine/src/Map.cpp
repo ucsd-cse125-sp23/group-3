@@ -338,21 +338,29 @@ void Map::draw(const glm::mat4& projection, const glm::mat4& view, StaticShader&
         glm::mat4 model_for_wall = glm::mat4(1.0f);
         model_for_wall=getModelOnMap(model_for_wall, get<0>(walls[i]), get<1>(walls[i]), get<2>(walls[i]));
         int mapId = get<0>(walls[i]);
-        if (mapId == 0) {
-            model_for_wall *= map1->getModel();
-            //model_for_wall *= glm::rotate(glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        }
-        else if (mapId == 1) {
-            model_for_wall *= map2->getModel();
-            //model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        if (!walls_left_top[i]) {
+            if (mapId == 0) {
+                //model_for_wall *= map1->getModel();
+                model_for_wall *= glm::rotate(glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            }
+            else if (mapId == 1) {
+                //model_for_wall *= map2->getModel();
+                model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            }
+            else {
+                //model_for_wall *= map3->getModel();
+                model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            }
         }
         else {
-            model_for_wall *= map3->getModel();
-            //model_for_wall *= glm::rotate(glm::radians(60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            if (mapId == 2) {
+                //model_for_wall *= map1->getModel();
+                model_for_wall *= glm::rotate(glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            }
         }
-        if (!walls_left_top[i]) {
+        /*if (!walls_left_top[i]) {
             model_for_wall *= glm::rotate(glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        }
+        }*/
         objObjectWall->setModel(model_for_wall);
         objObjectWall->draw(projection, view, shader);
     }
