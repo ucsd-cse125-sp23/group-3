@@ -43,7 +43,22 @@ namespace Constants
 	const std::string alice_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
 	const glm::vec3 alice_scaling_factor = glm::vec3(0.7f);
 
-	const bool offline = true;
+	const std::string bob_model_path = "./resources/objects/bob/bob.dae";
+	const std::string bob_walking_animation_path = "./resources/objects/bob/animation/bob_walking.dae";
+	const std::string bob_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
+	const glm::vec3 bob_scaling_factor = glm::vec3(0.7f);
+
+	const std::string carol_model_path = "./resources/objects/carol/carol.dae";
+	const std::string carol_walking_animation_path = "./resources/objects/carol/animation/carol_walking.dae";
+	const std::string carol_action_animation_path = "./resources/objects/carol/animation/carol_spell.dae";
+	const glm::vec3 carol_scaling_factor = glm::vec3(0.4f);
+
+	const std::string dave_model_path = "./resources/objects/david/david.dae";
+	const std::string dave_walking_animation_path = "./resources/objects/david/animation/david_walking.dae";
+	const std::string dave_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
+	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
+
+	const bool offline =true;
 
 
 	const int DIST_LIMIT = 20;

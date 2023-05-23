@@ -24,7 +24,7 @@ Submap::~Submap() {
 void Submap::draw(const glm::mat4& viewProjMtx, GLuint shader) {
     ground->draw(viewProjMtx, shader);
     for (int i = 0; i < walls.size(); i++) {
-       // walls[i]->draw(viewProjMtx, shader);
+       //walls[i]->draw(viewProjMtx, shader);
     }
 }
 
