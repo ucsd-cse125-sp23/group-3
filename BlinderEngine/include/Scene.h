@@ -81,6 +81,7 @@ public:
 	std::shared_ptr<DaeObject> daeObjectCarlo;
 	std::shared_ptr<DaeObject> daeObjectDavid;
 	std::shared_ptr<ObjObject> objObjectWall;
+	std::shared_ptr<ObjObject> objObjectCage;
 
 	// Shaders
 	GLuint shaderProgram;
