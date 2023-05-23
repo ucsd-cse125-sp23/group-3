@@ -11,6 +11,7 @@
 #include <iostream>
 #include "Mult_Lights.h"
 #include "Particles.h"
+#include "AliceSkill.h"
 
 class Window {
 public:

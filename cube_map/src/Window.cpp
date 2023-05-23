@@ -29,6 +29,7 @@ CollisionDetection collisionDetection;
 Mult_Lights* Window::lights;
 Particles* Window::particles;
 Particles* particles_2;
+AliceSkill* skill;
 struct Particle* leading=new Particle();
 bool onMOVE;
 // Constructors and desctructors
@@ -56,15 +57,19 @@ bool Window::initializeObjects() {
     cube = new Cube();
     map=new Map();
     //particles=new Particles(1000,false);
+    lights->AddLightBCD(map->calculateBCDLightcenter());
 
     //EVERTHING NEED FOR SETUP A PARTICLE SYSTEM
+    /*
     particles_2=new Particles(1000,true,5.0f,0.1f,0.8f,glm::vec3(0.8f,0.8f,1.0f));
     particles_2->bindTexture("./images/particle.png");
     
-    lights->AddLightBCD(map->calculateBCDLightcenter());
+    
     lights->particles_light.push_back(particles_2->light);
     leading->Position=glm::vec3(3.0f,3.0f,0.0f);
-    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*5.0f;
+    leading->Velocity=glm::vec3(0.1f,0.0f,0.1f)*5.0f;*/
+
+    skill=new AliceSkill(lights->particles_light);
 
     /*std::cout<<particles_2->light->diffuse<<std::endl;
     std::cout<<particles_2->light->ambient<<std::endl;
@@ -156,6 +161,7 @@ void Window::idleCallback() {
     //std::cout<<"error here"<<std::endl;
     lights->updateLightAlice(map->calculateLightcenter(cube->getModel()),onMOVE);
     //std::cout<<"error here"<<std::endl;
+
     double newtimer=glfwGetTime();
     float dt=(newtimer-timer);
     //std::cout<<dt<<std::endl;
@@ -184,19 +190,25 @@ void Window::idleCallback() {
     if (usingSkill && skillTime > 0) {
         
         skillTime -= 0.0003f;
+        skill->SetUp(cube->getModel());
         //leading->Position+=leading->Velocity*dt;
         //UPDATION FOR SYSTEM +LIGHT AT END
-        leading->Position+=leading->Velocity*dt;
-        particles_2->Update(dt,leading->Velocity,leading->Position,1,glm::vec3(0.0f));
+        /*leading->Position+=leading->Velocity*dt;
+        particles_2->Update(dt,leading->Velocity,leading->Position,1,glm::vec3(0.0f));*/
         //lights->particles_light[0]=particles_2->light;
         // lights->particles_light[0]=particles_2->light;
     } else {
-        particles_2->Update(dt,leading->Velocity,leading->Position,0,glm::vec3(0.0f));
-        usingSkill = false;
         skillTime = 1.0f;
+        skill->start=false;
+        skill->setup=false;
+        usingSkill = false;
+        /*particles_2->Update(dt,leading->Velocity,leading->Position,0,glm::vec3(0.0f));
+        usingSkill = false;
+        skillTime = 1.0f;*/
         
     }
-    lights->particles_light[0]=particles_2->light;
+    skill->update(dt);
+    //lights->particles_light[0]=particles_2->light;
     //lights->update(Cam);
     //cube->update();
 }
@@ -214,8 +226,8 @@ void Window::displayCallback(GLFWwindow* window) {
     //canvas->draw(glm::mat4 (1.0f), *shaderText2DProgram);
     //particles->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx());
    // std::cout<<"error here"<<std::endl;
-    particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
-
+    //particles_2->Draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
+    skill->draw(*(Window::shaderText2DProgram), Cam->GetViewProjectMtx(),Cam->Projection);
     //std::cout<<"error here"<<std::endl;
     //std::cout<<"error here"<<std::endl;
     int mapID;
@@ -268,9 +280,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
         // eventChecker[(int)EventType::ATTACK - 1] = 1;
-        if (skillTime == 1) {
+        if (skillTime == 1.0f) {
             usingSkill = true;
-            leading->Position=glm::vec3(3.0f,3.0f,0.0f);
+            //leading->Position=glm::vec3(3.0f,3.0f,0.0f);
         }
         // no_event = false;
     }
