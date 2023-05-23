@@ -55,7 +55,6 @@ public:
 	void setUiByPlayerID(int id);
 	void loadGameObjects();
 	void setSignModel(glm::mat4 model);
-	void drawDaveSkill();
 
 private:
 	void loadLanding();
@@ -68,6 +67,9 @@ public:
 	// Control variables
 	int playerID;
 	double timer;
+
+	bool drawDaveSkill = false;
+
 	// Object to render
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
