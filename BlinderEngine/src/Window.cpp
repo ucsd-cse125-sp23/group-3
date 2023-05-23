@@ -446,6 +446,6 @@ void Window::updateBySkill(GameData* gd) {
         // TODO:: place light at locC  
     }
     if (gd->skill_cd[3] >= 25 && playerID == 0) {
-		Window::scene->playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+        Window::scene->drawDaveSkill();
     }
 }

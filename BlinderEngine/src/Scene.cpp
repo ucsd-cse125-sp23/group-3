@@ -118,6 +118,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	}
 }
 
+void Scene::drawDaveSkill()
+{
+	playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+}
+
 void Scene::setModel(glm::mat4 model)
 {
 	playersObjects[playerID]->setModel(model);

@@ -55,6 +55,7 @@ public:
 	void setUiByPlayerID(int id);
 	void loadGameObjects();
 	void setSignModel(glm::mat4 model);
+	void drawDaveSkill();
 
 private:
 	void loadLanding();
