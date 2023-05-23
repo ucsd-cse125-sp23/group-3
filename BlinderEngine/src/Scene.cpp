@@ -230,10 +230,10 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 	}
 	else if (1 == playerID)
 	{
-		daeObjectBob = std::make_shared<DaeObject>(Constants::alice_model_path,
-			Constants::alice_walking_animation_path,
-			Constants::alice_action_animation_path,
-			Constants::alice_scaling_factor);
+		daeObjectBob = std::make_shared<DaeObject>(Constants::bob_model_path,
+			Constants::bob_walking_animation_path,
+			Constants::bob_action_animation_path,
+			Constants::bob_scaling_factor);
 		//daeObjectBob->spin(180);
 		std::cerr << "loaded Bob" << std::endl;
 		return daeObjectBob;
@@ -241,20 +241,20 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 	}
 	else if (2 == playerID)
 	{
-		daeObjectCarlo = std::make_shared<DaeObject>(Constants::alice_model_path,
-			Constants::alice_walking_animation_path,
-			Constants::alice_action_animation_path,
-			Constants::alice_scaling_factor);
+		daeObjectCarlo = std::make_shared<DaeObject>(Constants::carol_model_path,
+			Constants::carol_walking_animation_path,
+			Constants::carol_action_animation_path,
+			Constants::carol_scaling_factor);
 		//daeObjectCarlo->spin(180);
 		std::cerr << "loaded Carlo" << std::endl;
 		return daeObjectCarlo;
 	}
 	else if (3 == playerID)
 	{
-		daeObjectDavid = std::make_shared<DaeObject>(Constants::alice_model_path,
-			Constants::alice_walking_animation_path,
-			Constants::alice_action_animation_path,
-			Constants::alice_scaling_factor);
+		daeObjectDavid = std::make_shared<DaeObject>(Constants::dave_model_path,
+			Constants::dave_walking_animation_path,
+			Constants::dave_action_animation_path,
+			Constants::dave_scaling_factor);
 		//daeObjectDavid->spin(180);
 		std::cerr << "loaded David" << std::endl;
 		return daeObjectDavid;
