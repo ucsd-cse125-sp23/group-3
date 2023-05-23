@@ -100,6 +100,9 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			// Draw Alice herself
 			playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 			skill_for_alice->draw(*(particleShader), camera->GetViewProjectMtx());
+			if (drawDaveSkill) {
+				playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+			}
 		}
 		else {
 			// Draw all players except Alice
@@ -116,11 +119,6 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	if (playerID != 0) {
 		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	}
-}
-
-void Scene::drawDaveSkill()
-{
-	playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 }
 
 void Scene::setModel(glm::mat4 model)
