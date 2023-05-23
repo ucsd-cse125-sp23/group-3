@@ -58,7 +58,7 @@ namespace Constants
 	const std::string dave_action_animation_path = "./resources/objects/alice/animation/dancing.dae";
 	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
 
-	const bool offline = false;
+	const bool offline =true;
 
 
 	const int DIST_LIMIT = 20;
