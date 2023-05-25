@@ -59,12 +59,12 @@ Skybox::Skybox()
 
     std::vector<std::string> faces
     {
-        "./resources/textures/skybox/right.jpg",
-        "./resources/textures/skybox/left.jpg",
-        "./resources/textures/skybox/top.jpg",
-        "./resources/textures/skybox/bottom.jpg",
-        "./resources/textures/skybox/front.jpg",
-        "./resources/textures/skybox/back.jpg",
+        "./resources/skybox/right.jpg",
+        "./resources/skybox/left.jpg",
+        "./resources/skybox/top.jpg",
+        "./resources/skybox/bottom.jpg",
+        "./resources/skybox/front.jpg",
+        "./resources/skybox/back.jpg",
     };
 
     glGenTextures(1, &skyboxTextureID);
