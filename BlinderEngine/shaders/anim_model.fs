@@ -48,7 +48,7 @@ uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
 // Gets the color of the light from the main function
 uniform DirLight dirLight;
-uniform PointLight pointLights[8];
+uniform PointLight pointLights[12];
 uniform SpotLight spotLight[8];
 uniform vec3 viewPos;
 
