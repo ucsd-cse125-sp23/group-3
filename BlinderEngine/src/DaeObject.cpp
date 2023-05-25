@@ -142,7 +142,7 @@ void DaeObject::update(glm::mat4 world)
 	mvp = world;
 }
 
-void DaeObject::setModel(glm::mat4 model)
+void DaeObject::setModel(glm::mat4 &model)
 {
 	// If there is no delta between 2 frames, do nothing,
 	// If not, update the mvp and set walk fram
