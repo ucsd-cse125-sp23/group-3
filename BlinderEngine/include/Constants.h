@@ -53,7 +53,7 @@ namespace Constants
 	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
 
 
-	const bool offline =true;
+	const bool offline =false;
 
 
 	const int DIST_LIMIT = 20;
