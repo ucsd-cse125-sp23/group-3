@@ -20,6 +20,7 @@ void Scene::init(int PlayID)
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
+	initSignObject();
 }
 
 void Scene::initLandingPage()
@@ -96,9 +97,9 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
-		objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
-		for (int i = 0; i < signs.size(); i++) {
-			signs[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		for (int i = 0; i < sign_pos.size(); i++) {
+			sign->setModel((glm::mat4)sign_pos.at(i));
+			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		}
 	}
 	else {
@@ -117,8 +118,9 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			}
 		}
 		// draw Bob's skill
-		for (int i = 0; i < signs.size(); i++) {
-			signs[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		for (int i = 0; i < sign_pos.size(); i++) {
+			sign->setModel((glm::mat4)sign_pos.at(i));
+			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		}
 
 	}
@@ -333,12 +335,10 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 
 
 void Scene::initSignObject() {
-	signs.push_back(std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj"));
-	return;
+	sign = std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj");
 }
 
 void Scene::setSignModel(glm::mat4 model) {
-	Scene::initSignObject();
-	// set the position of the last sign
-	signs.back()->update(model);
+	// add one more sign position to vector for drawing
+	sign_pos.push_back(model);
 }

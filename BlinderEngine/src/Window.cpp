@@ -253,6 +253,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        eventChecker[(int)EventType::SKILL - 1] = 1;
+        no_event = false;
         if (Constants::offline)
         {
             scene->playersObjects[playerID]->doAction();
@@ -439,7 +441,7 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
         //    scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
-    if (toReady) scene->updateReadyBtn("./resources/images/test.png");
+    if (toReady) scene->ready_state = 1;//scene->updateReadyBtn("./resources/images/test.png");
 }
 
 void Window::updateBySkill(GameData* gd) {
@@ -463,5 +465,4 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->drawDaveSkill = false;
 
     }
-    if (toReady) scene->ready_state = 1;//scene->updateReadyBtn("./resources/images/test.png");
 }
