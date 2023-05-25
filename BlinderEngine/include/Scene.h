@@ -88,7 +88,8 @@ public:
 	std::shared_ptr<DaeObject> daeObjectDavid;
 	std::shared_ptr<ObjObject> objObjectWall;
 	std::shared_ptr<ObjObject> objObjectCage;
-	std::vector<std::shared_ptr<ObjObject>> signs;
+	std::shared_ptr<ObjObject> sign;
+	std::vector<glm::mat4> sign_pos;
 
 	// Shaders
 	GLuint shaderProgram;
