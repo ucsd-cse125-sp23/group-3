@@ -86,6 +86,7 @@ void Scene::displayWorld(std::vector<int> os)
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
 	else {
 		if (playerID == 0) {
@@ -202,6 +203,7 @@ void Scene::loadShaders()
 void Scene::loadGameObjects()
 {
 	objObjectCage = std::make_shared<ObjObject>("./resources/objects/cage/cage_sketchfab.obj", glm::vec3(15.0f));
+	objObjectTest = std::make_shared<ObjObject>("./resources/objects/exit/Exitdoor_tri.obj");
 	std::fill_n(std::back_inserter(playersObjects), 4, nullptr);
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));
