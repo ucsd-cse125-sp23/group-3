@@ -62,11 +62,15 @@ private:
 	graphic2D* skill_cd;
 	graphic2D* time;
 	graphic2D* time_bar;
+	graphic2D* time_bar_s;
 	float time_bar_len;
+	bool shorter_timer;
 	Minimap* minimap;
 	graphic2D* level;
 	graphic2D* level_bar;
+	graphic2D* level_bar_s;
 	float level_bar_len;
+	bool shorter_level;
 	//int assigned_id;
 public:
 	UI();
