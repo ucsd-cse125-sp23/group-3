@@ -217,7 +217,7 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
     }
 }
 
-void Mult_Lights::loadToSShader(StaticShader& shader,Camera& cam){
+void Mult_Lights::loadToSShader(StaticShader& shader, Camera& cam) {
     shader.use();
     shader.setVec3("viewPos", cam.CameraPos);
     if (Alice) {

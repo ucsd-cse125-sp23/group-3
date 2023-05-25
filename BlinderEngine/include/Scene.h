@@ -70,6 +70,8 @@ public:
 
 	bool drawDaveSkill = false;
 
+	bool drawDaveSkill = false;
+
 	// Object to render
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
