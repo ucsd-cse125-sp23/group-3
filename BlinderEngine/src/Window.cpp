@@ -316,13 +316,16 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
     if (toReady && cursorOnReadyBtn(currX, currY)) {
-        scene->updateReadyBtn("./resources/images/test2.png");
+        //scene->updateReadyBtn("./resources/images/test2.png");
+        scene->ready_state = 2;
     }
     else if (!toReady){
-        scene->updateReadyBtn("./resources/images/testS.png");
+        //scene->updateReadyBtn("./resources/images/testS.png");
+        scene->ready_state = 0;
     }
     else {
-        scene->updateReadyBtn("./resources/images/test.png");
+        //scene->updateReadyBtn("./resources/images/test.png");
+        scene->ready_state = 1;
     }
 
     MouseX = (int)currX;
@@ -409,23 +412,31 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
         switch (buttonNum)
         {
         case 0:
-            scene->updateCharBtn(0, "./resources/images/test2.png");
+            //scene->updateCharBtn(0, "./resources/images/test2.png");
+            scene->a_state = 1;
             break;
         case 1:
-            scene->updateCharBtn(1, "./resources/images/test2.png");
+            //scene->updateCharBtn(1, "./resources/images/test2.png");
+            scene->b_state = 1;
             break;
         case 2:
-            scene->updateCharBtn(2, "./resources/images/test2.png");
+            //scene->updateCharBtn(2, "./resources/images/test2.png");
+            scene->c_state = 1;
             break;
         case 3:
-            scene->updateCharBtn(3, "./resources/images/test2.png");
+            //scene->updateCharBtn(3, "./resources/images/test2.png");
+            scene->d_state = 1;
             break;
         default:
             break;
         }
 
         if (i == playerID && buttonAssignment[i] >= 0) {
-            scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
+            if (buttonAssignment[i] == 0) scene->a_state = 2;
+            if (buttonAssignment[i] == 1) scene->b_state = 2;
+            if (buttonAssignment[i] == 2) scene->c_state = 2;
+            if (buttonAssignment[i] == 3) scene->d_state = 2;
+        //    scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
     if (toReady) scene->updateReadyBtn("./resources/images/test.png");
@@ -452,4 +463,5 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->drawDaveSkill = false;
 
     }
+    if (toReady) scene->ready_state = 1;//scene->updateReadyBtn("./resources/images/test.png");
 }

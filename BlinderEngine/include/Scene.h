@@ -74,11 +74,35 @@ public:
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
 	std::shared_ptr<graphic2D> landingPage;
+
+	
+	int ready_state = 0;
+	std::shared_ptr<graphic2D> readyBtnGray;
 	std::shared_ptr<graphic2D> readyBtn;
+	std::shared_ptr<graphic2D> readyBtnSelected;
+	std::vector<std::shared_ptr<graphic2D>> rbtn_vec;
+
+	int a_state = 0;
 	std::shared_ptr<graphic2D> aBtn;
+	std::shared_ptr<graphic2D> aBtnSelectedO;
+	std::shared_ptr<graphic2D> aBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> abtn_vec;
+	int b_state = 0;
 	std::shared_ptr<graphic2D> bBtn;
+	std::shared_ptr<graphic2D> bBtnSelectedO;
+	std::shared_ptr<graphic2D> bBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> bbtn_vec;
+	int c_state = 0;
 	std::shared_ptr<graphic2D> cBtn;
+	std::shared_ptr<graphic2D> cBtnSelectedO;
+	std::shared_ptr<graphic2D> cBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> cbtn_vec;
+	int d_state = 0;
 	std::shared_ptr<graphic2D> dBtn;
+	std::shared_ptr<graphic2D> dBtnSelectedO;
+	std::shared_ptr<graphic2D> dBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> dbtn_vec;
+
 	std::shared_ptr<graphic2D> endPage;
 	std::shared_ptr<Skybox> skybox;
 	std::vector<std::shared_ptr<DaeObject>> playersObjects;
