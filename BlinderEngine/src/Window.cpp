@@ -250,7 +250,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        // TODO:
+        if (Constants::offline)
+        {
+            scene->playersObjects[playerID]->doAction();
+        }
     }
 
     // Check for a key press.
