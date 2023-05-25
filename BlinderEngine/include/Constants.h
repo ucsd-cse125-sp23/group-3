@@ -52,6 +52,19 @@ namespace Constants
 	const std::string dave_action_animation_path = "./resources/objects/dave/animation/dave_walking.dae";
 	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
 
+	// Obstacles model path
+	const std::string bowlingpin_model_path = "./resources/objects/bowlingpin/bowlingpin.obj";
+	const glm::vec3 bowlingpin_scaling_factor = glm::vec3(2.0f);
+
+	const std::string cage_model_path = "./resources/objects/cage/cage_sketchfab.obj";
+	const glm::vec3 cage_scaling_factor = glm::vec3(15.0f);
+
+	const std::string door_model_path = "./resources/objects/door/door.obj";
+	const glm::vec3 door_scaling_factor = glm::vec3(1.0f);
+
+	// Scene model path
+	const std::string exitdoor_model_path = "./resources/objects/exit/Exitdoor_tri.obj";
+	const glm::vec3 exitdoor_scaling_factor = glm::vec3(1.0f);
 
 	const bool offline = true;
 
