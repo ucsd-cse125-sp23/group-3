@@ -23,6 +23,8 @@
 #define LARGE_AWD 15
 #define AWARENESS_THRESHOLD 50
 
+#define SKILL_CD 30000
+
 enum class GameState
 {
 	READY = 0,
@@ -39,6 +41,7 @@ enum class EventType
 	TURN_LEFT = 2,
 	TURN_RIGHT = 3,
 	ATTACK = 4,
+	SKILL = 5,
 	READY = 6
 };
 

@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "core.h"
-#include "../client/Client.h"
 #include "../shared/Player.h"
 #include <chrono>
 #include <ctime>
@@ -87,7 +86,7 @@ int main(void) {
 
     }
 
-    // TODO(graphics): load landing page
+    // load landing&character selection page
     Window::initializeLanding();
     if (!Constants::offline) {
         
@@ -107,7 +106,6 @@ int main(void) {
             }
         }
     }
-    
     
     std::cout << "sending ready" << std::endl;
     // TODO: check user action(ready for game) & send event packet
@@ -161,9 +159,16 @@ int main(void) {
         // listen for updated game data
         check_gd = cli->recv_gamedata();
 
+        
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {
-            
+            /*glm::mat4 mat = {
+                1,0,0,0,
+                0,1,0,0,
+                0,0,1,0,
+                10,5,1,1
+            };*/
+           //Window::scene->setSignModel(mat);
         }
         else if(check_gd != -1) {
             Window::scene->playersObjects.at(0)->setModel(cli->gd->location_A);
@@ -173,6 +178,7 @@ int main(void) {
             player->updateByGD(cli->gd);
             Window::updateLevel(player->getLevel());
             Window::updateTime(cli->gd->remaining_time);
+            Window::updateBySkill(cli->gd);
         }
         Window::no_event = true;
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
@@ -185,10 +191,10 @@ int main(void) {
             Window::ui->changeLevelbarSizeY(rate);
             Window::ui->changeTimebarSizeY(rate);*/
 
-            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2));
+            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2), SKILL_CD);
         }
         else {
-            Window::displayCallback(window, cli->gd->obstacle_states);
+            Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
             // check game end logic
             if (cli->gd->gamestate == GameState::LOSE ||
                 cli->gd->gamestate == GameState::WIN) {

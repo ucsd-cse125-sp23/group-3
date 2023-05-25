@@ -174,12 +174,12 @@ void Window::idleCallback() {
 //     //cube->update();
 }
 
-void Window::displayCallback(GLFWwindow* window, std::vector<int> os) {
+void Window::displayCallback(GLFWwindow* window, std::vector<int> os, int cd_remain) {
     // Clear the color and depth buffers.
 
     //std::cerr << deltaTime << std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    scene->displayWorld(os);   
+    scene->displayWorld(os, cd_remain);
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
     glfwSwapBuffers(window);
@@ -246,14 +246,21 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        if (Constants::offline) {
+            scene->daeObjectBob->doAction();
+        }
         eventChecker[(int)EventType::ATTACK - 1] = 1;
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        eventChecker[(int)EventType::SKILL - 1] = 1;
+        no_event = false;
         if (Constants::offline)
         {
             scene->playersObjects[playerID]->doAction();
         }
+        eventChecker[(int)EventType::SKILL - 1] = 1;
+        no_event = false;
     }
 
     // Check for a key press.
@@ -311,13 +318,16 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
     int dx = glm::clamp((int)currX - MouseX, -maxDelta, maxDelta);
     int dy = glm::clamp(-((int)currY - MouseY), -maxDelta, maxDelta);
     if (toReady && cursorOnReadyBtn(currX, currY)) {
-        scene->updateReadyBtn("./resources/images/test2.png");
+        //scene->updateReadyBtn("./resources/images/test2.png");
+        scene->ready_state = 2;
     }
     else if (!toReady){
-        scene->updateReadyBtn("./resources/images/testS.png");
+        //scene->updateReadyBtn("./resources/images/testS.png");
+        scene->ready_state = 0;
     }
     else {
-        scene->updateReadyBtn("./resources/images/test.png");
+        //scene->updateReadyBtn("./resources/images/test.png");
+        scene->ready_state = 1;
     }
 
     MouseX = (int)currX;
@@ -404,24 +414,55 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
         switch (buttonNum)
         {
         case 0:
-            scene->updateCharBtn(0, "./resources/images/test2.png");
+            //scene->updateCharBtn(0, "./resources/images/test2.png");
+            scene->a_state = 1;
             break;
         case 1:
-            scene->updateCharBtn(1, "./resources/images/test2.png");
+            //scene->updateCharBtn(1, "./resources/images/test2.png");
+            scene->b_state = 1;
             break;
         case 2:
-            scene->updateCharBtn(2, "./resources/images/test2.png");
+            //scene->updateCharBtn(2, "./resources/images/test2.png");
+            scene->c_state = 1;
             break;
         case 3:
-            scene->updateCharBtn(3, "./resources/images/test2.png");
+            //scene->updateCharBtn(3, "./resources/images/test2.png");
+            scene->d_state = 1;
             break;
         default:
             break;
         }
 
         if (i == playerID && buttonAssignment[i] >= 0) {
-            scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
+            if (buttonAssignment[i] == 0) scene->a_state = 2;
+            if (buttonAssignment[i] == 1) scene->b_state = 2;
+            if (buttonAssignment[i] == 2) scene->c_state = 2;
+            if (buttonAssignment[i] == 3) scene->d_state = 2;
+        //    scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
-    if (toReady) scene->updateReadyBtn("./resources/images/test.png");
+    if (toReady) scene->ready_state = 1;//scene->updateReadyBtn("./resources/images/test.png");
+}
+
+void Window::updateBySkill(GameData* gd) {
+    if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
+        
+    }
+    if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
+        // TODO:: place sign/label at locB
+        Window::scene->setSignModel(gd->location_B);
+        Window::scene->playersObjects.at(1)->doAction();
+    }
+    if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
+        Window::scene->lights->updateSkillLight(gd->location_C);
+        Window::scene->playersObjects.at(2)->doAction();
+        // TODO:: place light at locC  
+    }
+    if (gd->skill_cd[3] >= 20000) {
+        Window::scene->drawDaveSkill = true;
+    }
+    else {
+        Window::scene->drawDaveSkill = false;
+
+    }
 }

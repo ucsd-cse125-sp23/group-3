@@ -97,8 +97,7 @@ Server::Server()
 	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
 	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
 
-	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0));
-	std::cout << "why " << this->gd->remaining_time << std::endl;
+	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0), std::vector<int>(NUM_PLAYERS, 0));
 	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
@@ -295,12 +294,17 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		{
 			handleAttack(id);
 		}
-		else {
+	}
+	else if (e == EventType::SKILL)
+	{
+		if (id == 0) {
 			// handle Alice's skill
 			handleDetect();
 		}
+		else {
+			handleBCDskill(id);
+		}
 	}
-
 }
 
 void Server::handleAttack(int id)
@@ -337,6 +341,15 @@ void Server::handleAttack(int id)
 
 void Server::handleDetect()
 {
+	if (this->gd->skill_cd[0] > 0)
+	{
+		return;
+	}
+
+	// TODO: Alice skill cd
+	this->gd->skill_cd[0] = SKILL_CD;
+	this->gd->player_status[0] = (int)PlayerStatus::SKILL;
+
 	for (int i = 0; i < map->obs->glm_vec.size(); i++)
 	{
 		bool detect_success = check_detectability(i);
@@ -347,7 +360,6 @@ void Server::handleDetect()
 			std::pair<int, int> obs_data = std::make_pair(i, 2000);
 			this->obs_countdown[0] = obs_data;
 			this->gd->obstacle_states[i] = (int)ObstacleState::DETECTED;
-			this->gd->player_status[0] = (int)PlayerStatus::SKILL;
 		}
 	}
 }
@@ -424,6 +436,10 @@ void Server::updateByEvent(std::unordered_map<int, std::vector<int>>events) {
 	}
 	// Update obs cd
 	updateObstacleCountdown();
+
+	// Update skill cd
+	updateSkillCD();
+
 	std::vector<glm::mat4> playersLoc = this->gd->getAllLocations();
 	for (auto it:events)
 	{
@@ -542,4 +558,34 @@ int Server::handle_acq(int client)
 		return character;
 	}
 	return -1;
+}
+
+void Server::handleBCDskill(int id)
+{
+	if (this->gd->skill_cd[id] == 0) // Skill ready!
+	{
+		this->gd->player_status[id] = (int)PlayerStatus::SKILL;
+		this->gd->skill_cd[id] = SKILL_CD;
+	}
+}
+
+void Server::updateSkillCD()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->gd->skill_cd[i] > 0) {
+			this->gd->skill_cd[i] -= TICK_TIME;
+			this->gd->skill_cd[i] = this->gd->skill_cd[i] < 0 ? 0 : this->gd->skill_cd[i];
+		}
+	}
+}
+
+void Server::cleanUpSkillStatus()
+{
+	for (int i = 0; i < NUM_PLAYERS; i++)
+	{
+		if (this->gd->player_status[i] == (int)PlayerStatus::SKILL) {
+			this->gd->player_status[i] = (int)PlayerStatus::NONE;
+		}
+	}
 }

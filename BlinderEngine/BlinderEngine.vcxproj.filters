@@ -175,6 +175,12 @@
     <ClCompile Include="src\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Particles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Image.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\AliceSkill.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -301,6 +307,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\shared\Event.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Particles.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Image.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Particles.h">

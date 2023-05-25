@@ -41,7 +41,7 @@ public:
 	void setEnd(bool won);
 	void drawEnd();
 	void updateWorld();
-	void displayWorld(std::vector<int> os);
+	void displayWorld(std::vector<int> os, int cd_remain);
 	// Control
 	void setModel(glm::mat4 model);
 	void updateLevel(float level);
@@ -54,26 +54,55 @@ public:
 	void resizeScene(int width, int height);
 	void setUiByPlayerID(int id);
 	void loadGameObjects();
+	void setSignModel(glm::mat4 model);
 
 private:
 	void loadLanding();
 	void loadShaders();
 	void loadEssentials();
 	std::shared_ptr<DaeObject> initPlayerObject(int playerID);
+	void initSignObject();
 
 public:
 	// Control variables
 	int playerID;
 	double timer;
+
+	bool drawDaveSkill = false;
+
 	// Object to render
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
 	std::shared_ptr<graphic2D> landingPage;
+
+	
+	int ready_state = 0;
+	std::shared_ptr<graphic2D> readyBtnGray;
 	std::shared_ptr<graphic2D> readyBtn;
+	std::shared_ptr<graphic2D> readyBtnSelected;
+	std::vector<std::shared_ptr<graphic2D>> rbtn_vec;
+
+	int a_state = 0;
 	std::shared_ptr<graphic2D> aBtn;
+	std::shared_ptr<graphic2D> aBtnSelectedO;
+	std::shared_ptr<graphic2D> aBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> abtn_vec;
+	int b_state = 0;
 	std::shared_ptr<graphic2D> bBtn;
+	std::shared_ptr<graphic2D> bBtnSelectedO;
+	std::shared_ptr<graphic2D> bBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> bbtn_vec;
+	int c_state = 0;
 	std::shared_ptr<graphic2D> cBtn;
+	std::shared_ptr<graphic2D> cBtnSelectedO;
+	std::shared_ptr<graphic2D> cBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> cbtn_vec;
+	int d_state = 0;
 	std::shared_ptr<graphic2D> dBtn;
+	std::shared_ptr<graphic2D> dBtnSelectedO;
+	std::shared_ptr<graphic2D> dBtnSelectedU;
+	std::vector<std::shared_ptr<graphic2D>> dbtn_vec;
+
 	std::shared_ptr<graphic2D> endPage;
 	std::shared_ptr<Skybox> skybox;
 	std::vector<std::shared_ptr<DaeObject>> playersObjects;
@@ -84,6 +113,9 @@ public:
 	std::shared_ptr<ObjObject> objObjectWall;
 	std::shared_ptr<ObjObject> objObjectCage;
 	std::shared_ptr<ObjObject> objObjectTest;
+	std::vector<std::shared_ptr<ObjObject>> signs;
+	std::shared_ptr<ObjObject> sign;
+	std::vector<glm::mat4> sign_pos;
 
 	// Shaders
 	GLuint shaderProgram;

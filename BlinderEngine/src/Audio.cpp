@@ -12,6 +12,7 @@ void Audio::init() {
 	Audio::gSoloud.init();
 	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
+	//Audio::lose_wav = "resources/audio/WinningSound.wav";
 }
 
 void Audio::deinit() {
@@ -44,6 +45,7 @@ void Audio::playEnd(GameState gs) {
 		Audio::loadWin();
 	}
 	else if (gs == GameState::LOSE) {
+		return;
 		Audio::loadLose();
 	}
 	int h = Audio::gSoloud.play(Audio::gwave);

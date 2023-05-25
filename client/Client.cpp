@@ -162,6 +162,9 @@ void Client::updateGameData(GameData gd) {
 	this->gd->remaining_time = gd.remaining_time;
 
 	this->gd->gamestate = gd.gamestate;
+
+	this->gd->player_status = gd.player_status;
+	this->gd->skill_cd = gd.skill_cd;
 }
 
 void Client::acq_character(int char_id)

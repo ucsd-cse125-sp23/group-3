@@ -60,6 +60,12 @@ public:
 	void broadcast_button_assignment();
 	int handle_acq(int client);
 
+	void handleBCDskill(int id);
+	void updateSkillCD();
+	// This function guarantees that each client will only receive one gamedata 
+	// containing status == skill for one usage of skill to avoid double action
+	void cleanUpSkillStatus();
+
 	// index by player_id: 0 -> Alice
 	std::vector<int> button_assignment{ -1, -1, -1, -1 };
 
