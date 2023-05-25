@@ -64,8 +64,9 @@ void Scene::updateWorld()
 	float dt = (newtimer - timer);
 	timer = newtimer;
 	if (!Constants::offline) {
-		if (false) {
-			skill_for_alice->SetUp(playersObjects[playerID]->getModel());
+		if (drawAliceParticle) {
+			skill_for_alice->SetUp(playersObjects[0]->getModel());
+			drawAliceParticle = false;
 		}
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());

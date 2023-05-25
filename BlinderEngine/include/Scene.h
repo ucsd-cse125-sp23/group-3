@@ -69,6 +69,7 @@ public:
 	double timer;
 
 	bool drawDaveSkill = false;
+	bool drawAliceParticle = false;
 
 	// Object to render
 	std::shared_ptr<Map> map;
