@@ -18,9 +18,9 @@ public:
 	const double skill_sizeY = 0.1;
 	//const double skill_posiX = -0.995;
 	const double skill_posiY = -0.995;
-	const char* skill_png = "./images/skill.png";
+	const char* skill_png = "./images/cane.png";
 	const char* skill_frame_png = "./images/frame.png";
-	const char* skill_cd_png = "./images/oc.png";
+	const char* skill_cd_png = "./images/black.png";
 
 	const double time_sizeX = 0.15;
 	const double time_sizeY = 0.675;
