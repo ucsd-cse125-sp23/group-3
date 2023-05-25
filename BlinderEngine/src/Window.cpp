@@ -446,7 +446,7 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
 
 void Window::updateBySkill(GameData* gd) {
     if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
-        
+        Window::scene->drawAliceParticle = true;  
     }
     if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
         // TODO:: place sign/label at locB

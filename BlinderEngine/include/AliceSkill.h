@@ -12,8 +12,10 @@ public:
     std::vector<struct Particle* > leadingparticles;
     bool start;
     bool setup;
+    glm::vec3 dest;
     std::vector<Particles*> systems;
     std::vector<Light*> particles_light;
+    std::vector<glm::vec3> initial_pos;
     int light_index_start, light_index_end;
 
 

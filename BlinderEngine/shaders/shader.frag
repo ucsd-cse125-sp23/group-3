@@ -46,7 +46,7 @@ uniform int NUM_LIGHTS_POINT;
 uniform int NUM_LIGHTS_SPOT;
 uniform float shininess=0.1f;
 uniform DirLight dirLight;
-uniform PointLight pointLights[8];
+uniform PointLight pointLights[12];
 uniform SpotLight spotLight[8];
 uniform vec3 viewPos;
 uniform vec3 DiffuseColor;
