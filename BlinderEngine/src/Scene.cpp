@@ -56,7 +56,9 @@ void Scene::updateWorld()
 	float dt = (newtimer - timer);
 	timer = newtimer;
 	if (!Constants::offline) {
-		skill_for_alice->SetUp(playersObjects[playerID]->getModel());
+		if (false) {
+			skill_for_alice->SetUp(playersObjects[playerID]->getModel());
+		}
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
@@ -78,9 +80,6 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
 
-	lights->loadToUShaderSkill(shaderProgram, *camera);
-	lights->loadToDShaderSkill(*dynamicShader, *camera);
-	lights->loadToSShaderSkill(*staticShader, *camera);
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os);
@@ -118,11 +117,6 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	if (playerID != 0) {
 		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	}
-}
-
-void Scene::drawDaveSkill()
-{
-	playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 }
 
 void Scene::setModel(glm::mat4 model)

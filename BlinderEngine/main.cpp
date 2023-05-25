@@ -162,13 +162,13 @@ int main(void) {
         
         // TODO(graphics): update graphics based on cli->gd
         if (Constants::offline) {
-            glm::mat4 mat = {
+            /*glm::mat4 mat = {
                 1,0,0,0,
                 0,1,0,0,
                 0,0,1,0,
                 10,5,1,1
-            };
-            Window::scene->setSignModel(mat);
+            };*/
+           //Window::scene->setSignModel(mat);
         }
         else if(check_gd != -1) {
             Window::scene->playersObjects.at(0)->setModel(cli->gd->location_A);
