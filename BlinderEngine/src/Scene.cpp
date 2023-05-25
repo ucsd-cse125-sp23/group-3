@@ -203,7 +203,7 @@ void Scene::loadShaders()
 void Scene::loadGameObjects()
 {
 	objObjectCage = std::make_shared<ObjObject>("./resources/objects/cage/cage_sketchfab.obj", glm::vec3(15.0f));
-	objObjectTest = std::make_shared<ObjObject>("./resources/objects/exit/Exitdoor_tri.obj");
+	objObjectTest = std::make_shared<ObjObject>("./resources/objects/door/door.obj");
 	std::fill_n(std::back_inserter(playersObjects), 4, nullptr);
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));
