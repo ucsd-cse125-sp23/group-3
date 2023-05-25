@@ -64,7 +64,7 @@ UI::~UI() {
 void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID, int cd_remain) {
 	character->draw(shader,1.0f);
 	skill->draw(shader, 1.0f);
-	skill_cd->draw(shader, (float)cd_remain/(float)SKILL_CD);
+	skill_cd->draw(shader, 0.9 * (float)cd_remain/(float)SKILL_CD);
 	skill_frame->draw(shader, 1.0f);
 	if (shorter_timer) {
 		time_bar_s->draw(shader, 1.0f);
