@@ -9,11 +9,11 @@ UI::UI() {
 
 	skill = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
-	skill->bindTexture(UI::skill_png);
+	//skill->bindTexture(UI::skill_png);
 
 	skill_frame = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
-	skill_frame->bindTexture(UI::skill_frame_png);
+	//skill_frame->bindTexture(UI::skill_frame_png);
 
 	skill_cd = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * 800 / 600,
 		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
@@ -208,6 +208,10 @@ void UI::setUiByPlayerID(int id) {
 			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_len = level_bar->getSizeX();
 		level_bar->update();
+		skill->bindTexture(alice_skill_png);
+		skill->update();
+		skill_frame->bindTexture(alice_skill_frame_png);
+		skill_frame->update();
 	}
 	else if (id == 1) {		// Bob
 		char_png = "./images/Bob.png";
@@ -215,6 +219,10 @@ void UI::setUiByPlayerID(int id) {
 			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
+		skill->bindTexture(bob_skill_png);
+		skill->update();
+		skill_frame->bindTexture(bob_skill_frame_png);
+		skill_frame->update();
 	}
 	else if (id == 2) {		// Carol
 		char_png = "./images/Carol.png";
@@ -222,6 +230,10 @@ void UI::setUiByPlayerID(int id) {
 			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
+		skill->bindTexture(carol_skill_png);
+		skill->update();
+		skill_frame->bindTexture(carol_skill_frame_png);
+		skill_frame->update();
 	}
 	else if (id == 3) {		// Dave
 		char_png = "./images/Dave.png";
@@ -229,6 +241,10 @@ void UI::setUiByPlayerID(int id) {
 			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
+		skill->bindTexture(dave_skill_png);
+		skill->update();
+		skill_frame->bindTexture(dave_skill_frame_png);
+		skill_frame->update();
 	}
 	else {
 		return;

@@ -18,9 +18,15 @@ public:
 	const double skill_sizeY = 0.1;
 	//const double skill_posiX = -0.995;
 	const double skill_posiY = -0.995;
-	const char* skill_png = "./images/cane.png";
-	const char* skill_frame_png = "./images/frame.png";
-	const char* skill_cd_png = "./images/black.png";
+	const char* alice_skill_png = "./images/Alice_skill.png";
+	const char* alice_skill_frame_png = "./images/Alice_frame.png";
+	const char* bob_skill_png = "./images/stop_skill.png";
+	const char* bob_skill_frame_png = "./images/stop_frame.png";
+	const char* carol_skill_png = "./images/Light_skill.png";
+	const char* carol_skill_frame_png = "./images/Light_frame.png";
+	const char* dave_skill_png = "./images/pass_skill.png";
+	const char* dave_skill_frame_png = "./images/pass_frame.png";
+	const char* skill_cd_png = "./images/oc.png";
 
 	const double time_sizeX = 0.15;
 	const double time_sizeY = 0.675;
