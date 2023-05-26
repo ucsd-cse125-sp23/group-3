@@ -120,10 +120,15 @@ void Mult_Lights::updateLightAliceV2(glm::mat4 model) {
 void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
     shader.use();
     shader.setVec3("viewPos", cam.CameraPos);
+
+    std::vector<Light*> sub_lights;
+    for (auto l : particles_light) sub_lights.push_back(l);
+    for (auto l : skill_light) sub_lights.push_back(l);
     if(Alice){
         int num_light_point=0;
         int num_light_spot = 0;
-        for(int i=0;i<lights_for_A.size()+particles_light.size();i++){
+        for (auto l : lights_for_A) sub_lights.push_back(l);
+        /*for (int i = 0; i<lights_for_A.size() + particles_light.size(); i++) {
             Light* temp;
             if (i < lights_for_A.size()) {
                  temp= lights_for_A[i];
@@ -132,7 +137,8 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
                 temp = particles_light[i - lights_for_A.size()];
             }
 
-            
+           */
+        for(auto temp : sub_lights){
             if(temp->spotLight){
                 std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
                 shader.setVec3((Lightpos + ".position").c_str(), temp->position);
@@ -170,6 +176,9 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
     else{
         int num_light_point = 0;
         int num_light_spot = 0;
+
+        for (auto l : lights_for_BCD) sub_lights.push_back(l);
+        /*
         for(int i=0;i<lights_for_BCD.size() + particles_light.size();i++){
             Light* temp;
             if (i < lights_for_BCD.size()) {
@@ -178,6 +187,8 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
             else {
                 temp = particles_light[i - lights_for_BCD.size()];
             }
+        */
+        for(auto temp : sub_lights){
             if (temp->spotLight) {
                 std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
                 shader.setVec3((Lightpos + ".position").c_str(), temp->position);
@@ -220,9 +231,17 @@ void Mult_Lights::loadToDShader(DynamicShader& shader,Camera& cam){
 void Mult_Lights::loadToSShader(StaticShader& shader, Camera& cam) {
     shader.use();
     shader.setVec3("viewPos", cam.CameraPos);
+
+    std::vector<Light*> sub_lights;
+    for (auto l : particles_light) sub_lights.push_back(l);
+    for (auto l : skill_light) sub_lights.push_back(l);
     if (Alice) {
         int num_light_point = 0;
         int num_light_spot = 0;
+
+        for (auto l : lights_for_A) sub_lights.push_back(l);
+
+        /*
         for (int i = 0; i < lights_for_A.size() + particles_light.size(); i++) {
             Light* temp;
             if (i < lights_for_A.size()) {
@@ -230,7 +249,8 @@ void Mult_Lights::loadToSShader(StaticShader& shader, Camera& cam) {
             }
             else {
                 temp = particles_light[i - lights_for_A.size()];
-            }
+            }*/
+        for (auto temp : sub_lights){
             if (temp->spotLight) {
                 std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
                 shader.setVec3((Lightpos + ".position").c_str(), temp->position);
@@ -269,14 +289,17 @@ void Mult_Lights::loadToSShader(StaticShader& shader, Camera& cam) {
     else {
         int num_light_point = 0;
         int num_light_spot = 0;
-        for (int i = 0; i < lights_for_BCD.size() + particles_light.size(); i++) {
+
+        for (auto l : lights_for_BCD) sub_lights.push_back(l);
+        /*for (int i = 0; i < lights_for_BCD.size() + particles_light.size(); i++) {
             Light* temp;
             if (i < lights_for_BCD.size()) {
                 temp = lights_for_BCD[i];
             }
             else {
                 temp = particles_light[i - lights_for_BCD.size()];
-            }
+            }*/
+        for (auto temp : sub_lights){
             if (temp->spotLight) {
                 std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
                 shader.setVec3((Lightpos + ".position").c_str(), temp->position);
@@ -320,18 +343,26 @@ void Mult_Lights::loadToSShader(StaticShader& shader, Camera& cam) {
 void Mult_Lights::loadToUShader(GLuint shader, Camera& cam) {
     glUseProgram(shader);
     glUniform3fv(glGetUniformLocation(shader, "viewPos"), 1, &cam.CameraPos[0]);
+
+    std::vector<Light*> sub_lights;
+    for (auto l : particles_light) sub_lights.push_back(l);
+    for (auto l : skill_light) sub_lights.push_back(l);
+
     if (Alice) {
         int num_light_point = 0;
         int num_light_spot = 0;
-        for (int i = 0; i < lights_for_A.size() + particles_light.size(); i++) {
+
+        for (auto l : lights_for_A) sub_lights.push_back(l);
+        /*for (int i = 0; i < lights_for_A.size() + particles_light.size(); i++) {
             Light* temp;
             if (i < lights_for_A.size()) {
                 temp = lights_for_A[i];
             }
             else {
                 temp = particles_light[i - lights_for_A.size()];
-            }
+            }*/
             //std::cout<<lights_for_A.size()<<std::endl;
+        for (auto temp : sub_lights){
             if (temp->spotLight) {
                 std::string Lightpos = "spotLight[" + std::to_string(num_light_spot) + "]";
                 glUniform3fv(glGetUniformLocation(shader, (Lightpos + ".position").c_str()), 1, &(temp->position)[0]);
@@ -372,14 +403,17 @@ void Mult_Lights::loadToUShader(GLuint shader, Camera& cam) {
     else{
         int num_light_point=0;
         int num_light_spot=0;
-        for(int i=0;i<lights_for_BCD.size() + particles_light.size();i++){
+
+        for (auto l : lights_for_BCD) sub_lights.push_back(l);
+        /*for (int i = 0; i<lights_for_BCD.size() + particles_light.size(); i++) {
             Light* temp;
             if (i < lights_for_BCD.size()) {
                 temp = lights_for_BCD[i];
             }
             else {
                 temp = particles_light[i - lights_for_BCD.size()];
-            }
+            }*/
+        for (auto temp : sub_lights){
             if(temp->spotLight){
                 std::string Lightpos="spotLight["+std::to_string(num_light_spot)+"]";
                 glUniform3fv(glGetUniformLocation(shader, (Lightpos+".position").c_str()),1, &(temp->position)[0]);
