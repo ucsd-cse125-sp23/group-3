@@ -3,9 +3,11 @@
 
 SoLoud::Soloud Audio::gSoloud;
 SoLoud::Wav Audio::gwave;
+SoLoud::Wav Audio::bobSkill;
 const char* Audio::bgm_wav;
 const char* Audio::win_wav;
 const char* Audio::lose_wav;
+const char* Audio::bob_skill_wav;
 
 
 void Audio::init() {
@@ -13,6 +15,7 @@ void Audio::init() {
 	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	//Audio::lose_wav = "resources/audio/WinningSound.wav";
+	Audio::bob_skill_wav = "resources/audio/StarWars3.wav";
 }
 
 void Audio::deinit() {
@@ -51,4 +54,33 @@ void Audio::playEnd(GameState gs) {
 	int h = Audio::gSoloud.play(Audio::gwave);
 	bool l = Audio::gSoloud.getLooping(h);
 	Audio::gSoloud.setLooping(h, !l);
+}
+
+void Audio::playSkillAudio(GameData* gd) {
+	// Alice skill audio
+	if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
+	
+
+	}
+
+	// Bob skill audio
+	if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
+		Audio::bobSkill.load(Audio::bob_skill_wav);
+		float* f = glm::value_ptr(gd->location_B);
+		int h = Audio::gSoloud.play3d(bobSkill, f[12], f[13], f[14]);
+	}
+
+	// Carol skill audio
+	if (gd->player_status[2] == (int)PlayerStatus::SKILL) {
+		
+
+	}
+
+	// Dave skill audio
+	if (gd->skill_cd[3] >= 20000) {
+
+	}
+	else {
+
+	}
 }

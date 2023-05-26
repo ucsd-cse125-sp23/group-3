@@ -29,7 +29,7 @@ UI::UI() {
 	time_bar_len = time_bar->getSizeY();
 	time_bar_s = new graphic2D(UI::time_bar_sizeX, UI::time_bar_sizeY * 800 / 600 - (UI::time_sizeY * 800 / 600) / 5,
 		UI::time_bar_posiX + UI::time_sizeX / 4, -1 + UI::char_sizeY * 800 / 600 + (UI::time_sizeY * 800 / 600) / 5.4, true);
-	time_bar->bindTexture(UI::time_bar_cut);
+	time_bar_s->bindTexture(UI::time_bar_cut);
 
 	minimap = new Minimap(UI::mnmap_sizeX * 600 / 800, UI::mnmap_sizeY,
 		0.995 - UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
@@ -208,6 +208,9 @@ void UI::setUiByPlayerID(int id) {
 			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_len = level_bar->getSizeX();
 		level_bar->update();
+		level_bar_s->setposition(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.19 * 600 / 800, UI::level_bar_sizeY,
+			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
+		level_bar_s->update();
 		skill->bindTexture(alice_skill_png);
 		skill->update();
 		skill_frame->bindTexture(alice_skill_frame_png);

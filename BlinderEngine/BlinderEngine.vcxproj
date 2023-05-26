@@ -195,12 +195,12 @@
     <ClInclude Include="..\shared\GameData.h" />
     <ClInclude Include="..\shared\GlobalVariables.h" />
     <ClInclude Include="..\shared\Packet.h" />
-    <ClInclude Include="Audio.h" />
     <ClInclude Include="include\AliceSkill.h" />
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Animator.h" />
     <ClInclude Include="include\Animdata.h" />
     <ClInclude Include="include\assimp_glm_helpers.h" />
+    <ClInclude Include="include\Audio.h" />
     <ClInclude Include="include\Bone.h" />
     <ClInclude Include="include\CollisionDetection.h" />
     <ClInclude Include="include\DynamicShader.h" />
