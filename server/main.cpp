@@ -100,22 +100,23 @@ int main()
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
-         }
-         serv->cleanUpSkillStatus();
-         serv->updateByEvent(all_records);
-         serv->checkGameEndLogic();
-         for (int j = 0; j < NUM_PLAYERS; j++)
-         {
-             serv->send_gamedata(j);
-         }
-         end = std::chrono::duration_cast<std::chrono::milliseconds>(
-             std::chrono::system_clock::now().time_since_epoch()
-         );
-         while (end - start < (std::chrono::milliseconds)TICK_TIME) {
-             // wait until tick time
+
+             serv->cleanUpSkillStatus();
+             serv->updateByEvent(all_records);
+             serv->checkGameEndLogic();
+             for (int j = 0; j < NUM_PLAYERS; j++)
+             {
+                 serv->send_gamedata(j);
+             }
              end = std::chrono::duration_cast<std::chrono::milliseconds>(
                  std::chrono::system_clock::now().time_since_epoch()
              );
+             while (end - start < (std::chrono::milliseconds)TICK_TIME) {
+                 // wait until tick time
+                 end = std::chrono::duration_cast<std::chrono::milliseconds>(
+                     std::chrono::system_clock::now().time_since_epoch()
+                 );
+             }
          }
      }
     
