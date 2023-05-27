@@ -247,7 +247,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
         if (Constants::offline) {
-            scene->daeObjectBob->doAction();
+            scene->playersObjects[playerID]->doAttack();
         }
         eventChecker[(int)EventType::ATTACK - 1] = 1;
         no_event = false;

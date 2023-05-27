@@ -233,6 +233,7 @@
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Tokenizer.h" />
     <ClInclude Include="include\UI.h" />
+    <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
