@@ -30,4 +30,5 @@ public:
 
 	// skill
 	static void playSkillAudio(GameData*);
+	static void playskill(glm::mat4);
 };

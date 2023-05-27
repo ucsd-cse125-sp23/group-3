@@ -23,7 +23,7 @@
 #include <Skybox.h>
 #include <DaeObject.h>
 
-#define CAMERA_SPEED 1.5f
+#define CAMERA_SPEED 3.0f
 #define TURNING_RATIO 20.0f
 
 #define WINDOW_WIDTH 800
@@ -128,5 +128,8 @@ public:
 	std::shared_ptr<AliceSkill> skill_for_alice;
 	// Essentials
 	std::shared_ptr<Camera> camera;
+	glm::mat4 getPos() {
+		return playersObjects[playerID]->getModel();
+	}
 	std::shared_ptr<Mult_Lights> lights;
 };

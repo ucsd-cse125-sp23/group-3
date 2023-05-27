@@ -68,6 +68,8 @@ void Audio::playSkillAudio(GameData* gd) {
 		Audio::bobSkill.load(Audio::bob_skill_wav);
 		float* f = glm::value_ptr(gd->location_B);
 		int h = Audio::gSoloud.play3d(bobSkill, f[12], f[13], f[14]);
+		gSoloud.set3dSourceAttenuation(h, 2, 10.0);
+		gSoloud.update3dAudio();
 	}
 
 	// Carol skill audio
@@ -83,4 +85,16 @@ void Audio::playSkillAudio(GameData* gd) {
 	else {
 
 	}
+}
+
+void Audio::playskill(glm::mat4 mat) {
+	//Audio::bobSkill.set3dAttenuation(1000.0);
+	Audio::bobSkill.load(Audio::bob_skill_wav);
+	float* f = glm::value_ptr(mat);
+	int h = Audio::gSoloud.play3d(Audio::bobSkill, 0, 0, 0);
+	gSoloud.set3dSourceAttenuation(h, 2, 1.0);
+	gSoloud.set3dSourcePosition(h, 0, 0, 0);
+	gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
+	//gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
+	gSoloud.update3dAudio();
 }
