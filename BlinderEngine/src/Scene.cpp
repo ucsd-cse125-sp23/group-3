@@ -21,9 +21,9 @@ void Scene::init(int PlayID)
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	initSignObject();
-	obsS = std::make_shared<ObjObject>("./resources/objects/bowlingpin/bowlingpin.obj");
-	obsM = std::make_shared<ObjObject>("./resources/objects/cage/cage_sketchfab.obj");
-	obsL = std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj");
+	obsS = std::make_shared<ObjObject>(Constants::bowlingpin_model_path, Constants::bowlingpin_scaling_factor);
+	obsM = std::make_shared<ObjObject>(Constants::cage_model_path, Constants::cage_scaling_factor);
+	obsL = std::make_shared<ObjObject>(Constants::door_model_path, Constants::door_scaling_factor);
 }
 
 void Scene::initLandingPage()
@@ -142,6 +142,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	}
 	for (auto pos : lobs_pos) {
 		obsL->setModel((glm::mat4)pos);
+		obsL->spin(90.0f);
 		obsL->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
 }
