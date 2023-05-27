@@ -21,6 +21,9 @@ void Scene::init(int PlayID)
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	initSignObject();
+	obsS = std::make_shared<ObjObject>(Constants::bowlingpin_model_path, Constants::bowlingpin_scaling_factor);
+	obsM = std::make_shared<ObjObject>(Constants::cage_model_path, Constants::cage_scaling_factor);
+	obsL = std::make_shared<ObjObject>(Constants::door_model_path, Constants::door_scaling_factor);
 }
 
 void Scene::initLandingPage()
@@ -91,7 +94,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
-	map->draw(camera->GetViewProjectMtx(), shaderProgram, os);
+	map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 	map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 
 	if (Constants::offline) {
@@ -123,10 +126,24 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		}
-
 	}
 	if (playerID != 0) {
 		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
+	}
+
+	//std::cout << lobs_pos.size() << std::endl;
+	for (auto pos : sobs_pos) {
+		obsS->setModel((glm::mat4)pos);
+		obsS->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+	}
+	for (auto pos : mobs_pos) {
+		obsM->setModel((glm::mat4)pos);
+		obsM->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+	}
+	for (auto pos : lobs_pos) {
+		obsL->setModel((glm::mat4)pos);
+		obsL->spin(90.0f);
+		obsL->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
 }
 
