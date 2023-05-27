@@ -184,6 +184,9 @@ int main(void) {
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
         // Idle callback. Updating objects, etc. can be done here.
         Window::idleCallback();
+        if (player->getLevel() >= AWARENESS_THRESHOLD) {
+            Window::scene->ui->setPlayerAlicePosition(Window::scene->playersObjects[0]->getModel());
+        }
         // Main render display callback. Rendering of objects is done here.
         if (Constants::offline) {
             /*float rate;

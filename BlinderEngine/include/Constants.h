@@ -54,7 +54,7 @@ namespace Constants
 
 
 	// Env
-	const bool offline = true;
+	const bool offline = false;
 	const int DIST_LIMIT = 20;
 	const float MINIMAP_OBJECT_SIZE=0.02f;
 
