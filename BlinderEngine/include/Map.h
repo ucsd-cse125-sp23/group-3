@@ -29,7 +29,7 @@ public:
     Map();
     ~Map();
 
-    void draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os);
+    void draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os, std::vector<glm::mat4>& sobs_pos, std::vector<glm::mat4>& mobs_pos, std::vector<glm::mat4>& lobs_pos);
     void draw(const glm::mat4& projection, const glm::mat4& view, StaticShader& shader);
     void getPosition(glm::mat4& model, int* mapID, float* x, float* y);
     std::vector<std::pair<float, float>> getGrid(int mapID, float x, float y);

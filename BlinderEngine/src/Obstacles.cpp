@@ -46,15 +46,30 @@ Obstacles::~Obstacles() {
 	}
 }
 
-void Obstacles::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os) {
+void Obstacles::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os, std::vector<glm::mat4>& sobs_pos, std::vector<glm::mat4>& mobs_pos, std::vector<glm::mat4>& lobs_pos) {
 	int idx = 0;
+	sobs_pos.clear();
+	mobs_pos.clear();
+	lobs_pos.clear();
+	//sobs_pos.push_back(cubes[0]->getModel());
+	//mobs_pos.push_back(cubes[0]->getModel());
+	//lobs_pos.push_back(cubes[0]->getModel());
+	std::vector<std::vector<glm::mat4>> vpos{sobs_pos, mobs_pos, lobs_pos};
+	int index = 0;
 	for (std::vector<Cube*>::iterator it = cubes.begin(); it != cubes.end(); it++) {
 		if (os[idx] != 0)
 		{
-			(*it)->draw(viewProjMtx, shader);
+			//(*it)->draw(viewProjMtx, shader);
+			if (obs_vec[index]->type == 1) sobs_pos.push_back(cubes[index]->getModel());
+			if (obs_vec[index]->type == 2) sobs_pos.push_back(cubes[index]->getModel());
+			if (obs_vec[index]->type == 3) sobs_pos.push_back(cubes[index]->getModel());
+			idx++;
+			//std::cout << "here" << std::endl;
 		}
-		idx++;
+		//lobs_pos.push_back((*it)->getModel());
+		index++;
 	}
+	//std::cout << cubes.size() << " " << obs_vec.size() << std::endl;
 }
 void Obstacles::obstacleCubes() {
 	glm::mat4 id_mat = {

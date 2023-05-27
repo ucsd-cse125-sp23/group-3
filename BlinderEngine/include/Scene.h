@@ -118,6 +118,13 @@ public:
 	std::shared_ptr<ObjObject> sign;
 	std::vector<glm::mat4> sign_pos;
 
+	std::shared_ptr<ObjObject> obsS;
+	std::vector<glm::mat4> sobs_pos;
+	std::shared_ptr<ObjObject> obsM;
+	std::vector<glm::mat4> mobs_pos;
+	std::shared_ptr<ObjObject> obsL;
+	std::vector<glm::mat4> lobs_pos;
+
 	// Shaders
 	GLuint shaderProgram;
 	std::shared_ptr<DynamicShader> dynamicShader;
