@@ -191,6 +191,9 @@ int main(void) {
         Audio::gSoloud.update3dAudio();*/
         //cout << "XXXXXXXXXXXXXXX: " << glm::to_string(Window::getPos()) << endl;
         
+        if (player->getLevel() >= AWARENESS_THRESHOLD) {
+            Window::scene->ui->setPlayerAlicePosition(Window::scene->playersObjects[0]->getModel());
+        }
         // Main render display callback. Rendering of objects is done here.
         if (Constants::offline) {
             /*float rate;
