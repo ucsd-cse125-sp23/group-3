@@ -24,7 +24,7 @@
 #include <Skybox.h>
 #include <DaeObject.h>
 
-#define CAMERA_SPEED 1.5f
+#define CAMERA_SPEED 0.5f
 #define TURNING_RATIO 20.0f
 
 #define WINDOW_WIDTH 800

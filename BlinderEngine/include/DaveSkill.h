@@ -17,7 +17,10 @@ public:
     std::vector<glm::vec3> initial_pos;
     int light_index_start, light_index_end;
     float angle;
-
+    float radius;
+    float ending_height;
+    float height;
+    glm::mat4 _model;
 
     DaveSkill(std::vector<Light*>& light);
     void SetUp(glm::mat4 model);

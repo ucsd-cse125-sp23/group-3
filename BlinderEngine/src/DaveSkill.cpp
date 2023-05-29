@@ -2,7 +2,7 @@
 
 DaveSkill::DaveSkill(std::vector<Light*>& light) {
 
-    systems.push_back(new Particles(1000, true, 5.0f, 10.0f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
+    systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
     systems[0]->bindTexture("./images/particle.png");
     /*systems.push_back(new Particles(1000, true, 5.0f, 0.1f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
     systems[1]->bindTexture("./images/particle.png");
@@ -25,7 +25,13 @@ DaveSkill::DaveSkill(std::vector<Light*>& light) {
 void DaveSkill::SetUp(glm::mat4 model) {
     if (!setup) {
         // light position glm::vec3(model * glm::vec4(0.0f, 3.0f, 0.0f, 1.0f))
-        leadingparticles[0]->Position = glm::vec3(model * glm::vec4(0.0f, 3.0f, 3.0f, 1.0f));
+        _model = model;
+        angle = 0.0f;
+        radius = 3.0f;
+        ending_height = 10.0f;
+        height = 2.0f;
+        glm::vec3 relative_position = glm::vec3(radius * sin(angle), height, radius * cos(angle));
+        leadingparticles[0]->Position = relative_position;
         /*leadingparticles[1]->Position = glm::vec3(model * glm::vec4(-0.5f, 3.0f, -2.0f, 1.0f));
         leadingparticles[2]->Position = glm::vec3(model * glm::vec4(0.5f, 3.0f, -2.0f, 1.0f));
         leadingparticles[3]->Position = glm::vec3(model * glm::vec4(1.5f, 3.0f, -2.0f, 1.0f));
@@ -34,7 +40,8 @@ void DaveSkill::SetUp(glm::mat4 model) {
         initial_pos[2] = leadingparticles[2]->Position;
         initial_pos[3] = leadingparticles[3]->Position;*/
         leadingparticles[0]->Velocity = glm::vec3(0.0f);
-        std::cout << "setup" << std::endl;
+        //std::cout << "setup" << std::endl;
+        
         start = true;
         setup = true;
     }
@@ -42,16 +49,17 @@ void DaveSkill::SetUp(glm::mat4 model) {
 
 void DaveSkill::update(float dt, glm::mat4 model) {
     if (start) {
-        // for (int i = 0; i < 4; i++) {
-            leadingparticles[0]->Position = glm::vec3(model * glm::vec4(0.0f, 3.0f, 3.0f, 1.0f));
-            systems[0]->Update(dt, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 1, glm::vec3(0.0f));
-            std::cout << "updating" << std::endl;
-            // *(particles_light[light_index_start + i]) = *(systems[i]->light);
-            // if (glm::length(leadingparticles[i]->Position - initial_pos[i]) >= glm::length(dest - initial_pos[i])) {
-            //     start = false;
-            //     setup = false;
-            // }
-        // }
+        angle += dt;
+        height += dt;
+        _model = model;
+        glm::vec3 relative_position = glm::vec3(radius * sin(angle), height, radius * cos(angle));
+        leadingparticles[0]->Position = relative_position;
+        systems[0]->Update(dt, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 1, glm::vec3(0.0f));
+        if (height >= ending_height) {
+            start = false;
+            setup = false;
+        }
+
     }
     else {
         // for (int i = 0; i < 4; i++) {
@@ -63,7 +71,7 @@ void DaveSkill::update(float dt, glm::mat4 model) {
 
 void DaveSkill::draw(StaticShader shader, const glm::mat4& viewProjMtx) {
     // for (int i = 0; i < 4; i++) {
-        systems[0]->Draw(shader, viewProjMtx);
-        std::cout << "drawing" << std::endl;
+        systems[0]->Draw(_model,shader, viewProjMtx);
+        //std::cout << "drawing" << std::endl;
     // } 
 }

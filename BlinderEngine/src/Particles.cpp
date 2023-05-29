@@ -93,6 +93,41 @@ void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx)
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void Particles::Draw(glm::mat4 model, StaticShader shader, const glm::mat4& viewProjMtx)
+{
+    // use additive blending to give it a 'glow' effect
+    glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    shader.use();
+    shader.setMat4("projection", viewProjMtx);
+    //std::cout<<"round "<<std::endl;
+    for (Particle particle : this->particles)
+    {
+        if (particle.Life > 0.0f)
+        {
+            //std::cout<<"error here"<<std::endl;
+            glBindTexture(GL_TEXTURE_2D, texture);
+            shader.setVec3("offset", glm::vec3(model*glm::vec4( particle.Position,1.0f)));
+            shader.setVec4("color", particle.Color);
+            //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
+            int size_int = (int)(size * 10000);
+            shader.setFloat("scale", (rand() % size_int) / ((float)10000) + size);
+            //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
+            //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
+            //std::cout<<"particle.color "<<glm::to_string(particle.Color)<<std::endl;
+
+            glBindVertexArray(VAO);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        }
+    }
+    //std::cout<<"error here"<<std::endl;
+    // don't forget to reset to default blending mode
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
 void Particles::bindTexture(const char* filename) {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);

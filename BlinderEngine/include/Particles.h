@@ -25,6 +25,7 @@ public:
     void Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset = glm::vec3(0.0f));
     // render all particles
     void Draw(StaticShader shader, const glm::mat4& viewProjMtx);
+    void Draw(glm::mat4 model, StaticShader shader, const glm::mat4& viewProjMtx);
     void bindTexture(const char* filename);
     Light* light;
 private:
