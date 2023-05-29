@@ -5,7 +5,7 @@
 #include <DynamicShader.h>
 #include <StaticShader.h>
 #include <DynamicModel.h>
-enum Action { idle, walking, action };
+enum Action { idle, walking, attack, action };
 class DaeObject
 {
 public:
@@ -31,6 +31,7 @@ public:
 	void move(float i);
 
 	void doAction();
+	void doAttack();
 
 
 	glm::mat4 calculateMoveMVP(float i);
@@ -38,6 +39,7 @@ private:
 	DynamicModel* objModel;
 	Animation* animation_walking;
 	Animation* animation_action;
+	Animation* animation_attack;
 	Animator* animator;
 
 	glm::vec3 scale;
@@ -47,6 +49,7 @@ private:
 	float lastFrame;
 	float lastStartWalking;
 	float lastStartAction;
+	float lastStartAttack;
 
 	bool animated;
 

@@ -26,7 +26,6 @@
 #include <StaticShader.h>
 
 
-
 using namespace std;
 
 class DynamicModel 

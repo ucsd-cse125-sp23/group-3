@@ -8,7 +8,7 @@ int MAP_ENCODING[3][6][6] = { 0 };
 
 Map::Map() {
     //objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.064f, 0.08f, 0.04f));
-    objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall2.obj", glm::vec3(0.31f, 0.6f, 0.45f));
+    objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall3.obj", glm::vec3(0.42f, 0.6f, 0.4f));
     wallheight = WALL_HEIGHT;
     groundheight = GROUND_HEIGHT;
     wallwidth = WALL_WIDTH;
@@ -325,12 +325,12 @@ glm::mat4 Map::getModelOnMap(glm::mat4& original, int mapID, float x, float y)
 }
 
 
-void Map::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os) {
+void Map::draw(const glm::mat4& viewProjMtx, GLuint shader, std::vector<int> os, std::vector<glm::mat4>& sobs_pos, std::vector<glm::mat4>& mobs_pos, std::vector<glm::mat4>& lobs_pos) {
     map1->draw(viewProjMtx, shader);
     map2->draw(viewProjMtx, shader);
     map3->draw(viewProjMtx, shader);
 
-    obs->draw(viewProjMtx, shader, os);
+    obs->draw(viewProjMtx, shader, os, sobs_pos, mobs_pos, lobs_pos);
 }
 
 void Map::draw(const glm::mat4& projection, const glm::mat4& view, StaticShader& shader) {
