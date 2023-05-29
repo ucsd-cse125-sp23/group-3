@@ -37,6 +37,7 @@ bool Window::no_event;
 int  Window::playerID;
 int  Window::acq_char_id = -1;
 bool Window::toReady = false;
+bool Window::clickRestart = false;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -218,6 +219,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
      */
     std::fill(eventChecker.begin(), eventChecker.end(), 0);
     no_event = true;
+    clickRestart = false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
@@ -253,14 +255,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        eventChecker[(int)EventType::SKILL - 1] = 1;
-        no_event = false;
         if (Constants::offline)
         {
             scene->playersObjects[playerID]->doAction();
         }
         eventChecker[(int)EventType::SKILL - 1] = 1;
         no_event = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
+    {
+        clickRestart = true;
     }
 
     // Check for a key press.

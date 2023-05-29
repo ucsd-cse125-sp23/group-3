@@ -13,7 +13,7 @@ int main()
          }
          serv->sessions[id] = ss;
          serv->send_init_packet(id, id);
-         std::cout << "connected ss " << ss <<" with id" << serv->ids[id] << std::endl;
+         std::cout << "connected ss " << ss <<" with id" << id << std::endl;
      }
      while (1) {
          // reinitialize all needed data
@@ -74,6 +74,8 @@ int main()
                  std::chrono::system_clock::now().time_since_epoch()
              );
 
+             if (serv->gd->gamestate == GameState::WIN || serv->gd->gamestate == GameState::LOSE) break;
+
              serv->check_event = { -1, -1, -1, -1 };
              std::unordered_map<int, std::vector<int>> all_records;
              while (end - start < (std::chrono::milliseconds)LISTEN_TICK) {
@@ -91,16 +93,6 @@ int main()
                  );
              }
 
-             serv->updateByEvent(all_records);
-             serv->checkGameEndLogic();
-             for (int j = 0; j < NUM_PLAYERS; j++)
-             {
-                 serv->send_gamedata(j);
-             }
-             end = std::chrono::duration_cast<std::chrono::milliseconds>(
-                 std::chrono::system_clock::now().time_since_epoch()
-             );
-
              serv->cleanUpSkillStatus();
              serv->updateByEvent(all_records);
              serv->checkGameEndLogic();
@@ -116,6 +108,26 @@ int main()
                  end = std::chrono::duration_cast<std::chrono::milliseconds>(
                      std::chrono::system_clock::now().time_since_epoch()
                  );
+             }
+         }
+         serv->check_event = { -1, -1, -1, -1 };
+         while (1) {
+             int count = 0;
+             for (int i = 0; i < NUM_PLAYERS; i++) {
+                 if (serv->check_event[i] == -1 && serv->recv_event(i) == (int)EventType::RESTART){
+                     serv->check_event[i] = 1;
+                 }
+                 if (serv->check_event[i] == 1) {
+                     count++;
+                 }
+             }
+             if (count == NUM_PLAYERS) {
+                 serv->gd->gamestate = GameState::READY;
+                 for (int i = 0; i < NUM_PLAYERS; i++)
+                 {
+                     serv->send_gamedata(i);
+                 }
+                 break;
              }
          }
      }

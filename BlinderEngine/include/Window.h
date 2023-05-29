@@ -48,6 +48,7 @@ public:
     static int playerID;
     static int acq_char_id;
     static bool toReady;
+    static bool clickRestart;
     //static graphic2D* canvas;
     //static UI* ui;
 
