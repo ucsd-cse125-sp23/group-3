@@ -135,5 +135,8 @@ public:
 	std::shared_ptr<AliceSkill> skill_for_alice;
 	// Essentials
 	std::shared_ptr<Camera> camera;
+	glm::mat4 getPos() {
+		return playersObjects[playerID]->getModel();
+	}
 	std::shared_ptr<Mult_Lights> lights;
 };

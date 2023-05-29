@@ -35,7 +35,9 @@ public:
 
     // Scene !!!
     static std::shared_ptr<Scene> scene;
-
+    static glm::mat4 getPos() {
+        return scene->getPos();
+    }
     // Objects to render  online
     // Shader
 

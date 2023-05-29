@@ -303,9 +303,6 @@
     <ClInclude Include="include\Scene.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\shared\Event.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -322,6 +319,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\AliceSkill.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Audio.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils.h">
