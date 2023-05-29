@@ -14,8 +14,9 @@ public:
 	static const char* win_wav;
 	static const char* lose_wav;
 	static const char* bob_skill_wav;
+	static int assign_id;
 
-	static void init();
+	static void init(int);
 
 	static void deinit();
 
@@ -30,5 +31,5 @@ public:
 
 	// skill
 	static void playSkillAudio(GameData*);
-	static void playskill(glm::mat4);
+	static void playskill(glm::mat4);		// offline testing
 };

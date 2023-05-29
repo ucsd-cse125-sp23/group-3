@@ -143,8 +143,8 @@ int main(void) {
         check_start = cli->recv_gamedata();
     }
 
-    Audio::init();
-    //Audio::playBgm();
+    Audio::init(assigned_id);
+    Audio::playBgm();
     
     // Loop while GLFW window should stay open.
     while (!glfwWindowShouldClose(window)) {
@@ -185,10 +185,12 @@ int main(void) {
         std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
         // Idle callback. Updating objects, etc. can be done here.
         Window::idleCallback();
-        const float* f = glm::value_ptr(Window::getPos());
+
+        /*const float* f = glm::value_ptr(Window::getPos());
         Audio::gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
-        Audio::gSoloud.update3dAudio();
-        cout << "XXXXXXXXXXXXXXX: " << glm::to_string(Window::getPos()) << endl;
+        Audio::gSoloud.update3dAudio();*/
+        //cout << "XXXXXXXXXXXXXXX: " << glm::to_string(Window::getPos()) << endl;
+        
         // Main render display callback. Rendering of objects is done here.
         if (Constants::offline) {
             /*float rate;

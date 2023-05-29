@@ -8,14 +8,17 @@ const char* Audio::bgm_wav;
 const char* Audio::win_wav;
 const char* Audio::lose_wav;
 const char* Audio::bob_skill_wav;
+int Audio::assign_id;
 
 
-void Audio::init() {
+void Audio::init(int assign_id) {
 	Audio::gSoloud.init();
 	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	//Audio::lose_wav = "resources/audio/WinningSound.wav";
 	Audio::bob_skill_wav = "resources/audio/StarWars3.wav";
+
+	Audio::assign_id = assign_id;
 }
 
 void Audio::deinit() {
@@ -43,7 +46,7 @@ void Audio::playBgm() {
 
 void Audio::playEnd(GameState gs) {
 	Audio::gSoloud.stopAll();
-	Audio::init();
+	// Audio::init();
 	if (gs == GameState::WIN) {
 		Audio::loadWin();
 	}
@@ -57,9 +60,27 @@ void Audio::playEnd(GameState gs) {
 }
 
 void Audio::playSkillAudio(GameData* gd) {
+	float* player_pos = NULL;
+	if (Audio::assign_id == 0) {
+		player_pos = glm::value_ptr(gd->location_A);
+	}
+	else if (Audio::assign_id == 1) {
+		player_pos = glm::value_ptr(gd->location_B);
+	}
+	else if (Audio::assign_id == 2) {
+		player_pos = glm::value_ptr(gd->location_C);
+	}
+	else if (Audio::assign_id == 3) {
+		player_pos = glm::value_ptr(gd->location_D);
+	}
+	else {
+		// error
+		return;
+	}
+
 	// Alice skill audio
 	if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
-	
+		
 
 	}
 
@@ -68,7 +89,9 @@ void Audio::playSkillAudio(GameData* gd) {
 		Audio::bobSkill.load(Audio::bob_skill_wav);
 		float* f = glm::value_ptr(gd->location_B);
 		int h = Audio::gSoloud.play3d(bobSkill, f[12], f[13], f[14]);
-		gSoloud.set3dSourceAttenuation(h, 2, 10.0);
+		gSoloud.set3dSourceAttenuation(h, 2, 1.0);
+		gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
+		gSoloud.set3dListenerPosition(player_pos[12], player_pos[13], player_pos[14]);
 		gSoloud.update3dAudio();
 	}
 
@@ -93,8 +116,8 @@ void Audio::playskill(glm::mat4 mat) {
 	float* f = glm::value_ptr(mat);
 	int h = Audio::gSoloud.play3d(Audio::bobSkill, 0, 0, 0);
 	gSoloud.set3dSourceAttenuation(h, 2, 1.0);
-	gSoloud.set3dSourcePosition(h, 0, 0, 0);
+	//gSoloud.set3dSourcePosition(h, 0, 0, 0);
 	gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
-	//gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
+	gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
 	gSoloud.update3dAudio();
 }
