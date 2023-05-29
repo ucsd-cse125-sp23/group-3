@@ -169,7 +169,6 @@ void Scene::move()
 	camera->SetMove(-CAMERA_SPEED);
 	glm::mat4 newMVP = playersObjects[playerID]->calculateMoveMVP(-CAMERA_SPEED);
 	playersObjects[playerID]->setModel(newMVP);
-	std::cout << glm::to_string(newMVP) << std::endl;
 }
 
 void Scene::spin(float i)
