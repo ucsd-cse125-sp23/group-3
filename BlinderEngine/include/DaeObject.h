@@ -6,6 +6,7 @@
 #include <StaticShader.h>
 #include <DynamicModel.h>
 enum Action { idle, walking, attack, action };
+enum GameStatus {playing, win, lose};
 class DaeObject
 {
 public:
@@ -13,6 +14,8 @@ public:
 		const std::string walking_animation_path,
 		const std::string action_animation_path,
 		const std::string attack_animation_path,
+		const std::string win_animation_path,
+		const std::string lose_animation_path,
 		glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
 
 
@@ -34,7 +37,8 @@ public:
 
 	void doAction();
 	void doAttack();
-
+	void doWin();
+	void doLose();
 
 	glm::mat4 calculateMoveMVP(float i);
 private:
@@ -42,6 +46,8 @@ private:
 	Animation* animation_walking;
 	Animation* animation_action;
 	Animation* animation_attack;
+	Animation* animation_win;
+	Animation* animation_lose;
 	Animator* animator;
 
 	glm::vec3 scale;
@@ -52,8 +58,10 @@ private:
 	float lastStartWalking;
 	float lastStartAction;
 	float lastStartAttack;
+	float lastStartLose;
 
 	bool animated;
 
 	Action currentStatus;
+	GameStatus gameStatus;
 };

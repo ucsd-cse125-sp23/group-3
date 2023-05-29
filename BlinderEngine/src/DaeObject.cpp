@@ -4,12 +4,18 @@ DaeObject::DaeObject(const std::string model_path,
 	const std::string walking_animation_path,
 	const std::string action_animation_path,
 	const std::string attack_animation_path,
+	const std::string win_animation_path,
+	const std::string lose_animation_path,
 	glm::vec3 scalingFactor)
 {
 	objModel = new DynamicModel(model_path);
+
 	animation_walking = new Animation(walking_animation_path, objModel);
 	animation_action = new Animation(action_animation_path, objModel);
 	animation_attack = new Animation(attack_animation_path, objModel);
+	animation_win = new Animation(win_animation_path, objModel);
+	animation_lose = new Animation(lose_animation_path, objModel);
+
 	animator = new Animator(animation_walking);
 	animator->UpdateAnimation(0.0f);
 
@@ -18,6 +24,7 @@ DaeObject::DaeObject(const std::string model_path,
 	translate = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = scalingFactor;
 	currentStatus = Action::idle;
+	gameStatus = GameStatus::playing;
 	animated = true;
 }
 
@@ -69,7 +76,8 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 			mvp = glm::translate(mvp, translate);
 		}
 		glm::mat4 currMVP = glm::scale(mvp, scale);
-		if (!Constants::offline) {
+		if (!Constants::offline) 
+		{
 			currMVP = currMVP * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 		shader.setMat4("model", currMVP);
@@ -81,7 +89,18 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
 
-		if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
+		if (gameStatus == GameStatus::win) 
+		{
+			updateAnimation(deltaTime);
+		}
+		else if (gameStatus == GameStatus::lose)
+		{
+			if (currentFrame - lastStartLose < animation_lose->GetDuration() / 1000)
+			{
+				updateAnimation(deltaTime);
+			}
+		}
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
 		{
 			if (currentStatus != Action::attack)
 			{
@@ -205,6 +224,25 @@ void DaeObject::doAttack()
 glm::mat4 DaeObject::calculateMoveMVP(float i)
 {
 	return glm::translate(mvp, glm::vec3(0, 0, -i));
+}
+
+void DaeObject::doWin()
+{
+	gameStatus = GameStatus::win;
+	animator->PlayAnimation(animation_win);
+
+}
+
+void DaeObject::doLose()
+{
+	gameStatus = GameStatus::lose;
+	animator->PlayAnimation(animation_lose);
+
+	float currentFrame = glfwGetTime();
+	if (currentFrame - lastStartLose >= animation_lose->GetDuration() / 1000)
+	{
+		lastStartLose = currentFrame;
+	}
 }
 
 

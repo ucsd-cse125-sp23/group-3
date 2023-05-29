@@ -312,6 +312,8 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::alice_walking_animation_path,
 			Constants::alice_action_animation_path,
 			Constants::alice_attack_animation_path,
+			Constants::alice_win_animation_path,
+			Constants::alice_lose_animation_path,
 			glm::vec3(0.3f));
 		std::cerr << "loaded Alice" << std::endl;
 		return daeObjectAlice;
@@ -323,6 +325,8 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::bob_walking_animation_path,
 			Constants::bob_action_animation_path,
 			Constants::bob_attack_animation_path,
+			Constants::bob_win_animation_path,
+			Constants::bob_lose_animation_path,
 			Constants::bob_scaling_factor);
 		std::cerr << "loaded Bob" << std::endl;
 		return daeObjectBob;
@@ -334,6 +338,8 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::carol_walking_animation_path,
 			Constants::carol_action_animation_path,
 			Constants::carol_attack_animation_path,
+			Constants::carol_win_animation_path,
+			Constants::carol_lose_animation_path,
 			Constants::carol_scaling_factor);
 		std::cerr << "loaded Carlo" << std::endl;
 		return daeObjectCarlo;
@@ -344,6 +350,8 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 			Constants::dave_walking_animation_path,
 			Constants::dave_action_animation_path,
 			Constants::dave_attack_animation_path,
+			Constants::dave_win_animation_path,
+			Constants::dave_lose_animation_path,
 			Constants::dave_scaling_factor);
 		std::cerr << "loaded David" << std::endl;
 		return daeObjectDavid;
