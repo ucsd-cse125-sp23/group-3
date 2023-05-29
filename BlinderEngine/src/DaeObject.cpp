@@ -3,12 +3,13 @@
 DaeObject::DaeObject(const std::string model_path,
 	const std::string walking_animation_path,
 	const std::string action_animation_path,
+	const std::string attack_animation_path,
 	glm::vec3 scalingFactor)
 {
 	objModel = new DynamicModel(model_path);
 	animation_walking = new Animation(walking_animation_path, objModel);
 	animation_action = new Animation(action_animation_path, objModel);
-	animation_attack = new Animation(action_animation_path, objModel);
+	animation_attack = new Animation(attack_animation_path, objModel);
 	animator = new Animator(animation_walking);
 	animator->UpdateAnimation(0.0f);
 
@@ -80,22 +81,21 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
 
-
-		if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
+		if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
+		{
+			if (currentStatus != Action::attack)
+			{
+				animator->PlayAnimation(animation_attack);
+				currentStatus = Action::attack;
+			}
+			updateAnimation(deltaTime);
+		}
+		else if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
 		{
 			if (currentStatus != Action::action)
 			{
 				animator->PlayAnimation(animation_action);
 				currentStatus = Action::action;
-			}
-			updateAnimation(deltaTime);
-		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
-		{
-			if (currentStatus != Action::attack)
-			{
-				animator->PlayAnimation(animation_action);
-				currentStatus = Action::attack;
 			}
 			updateAnimation(deltaTime);
 		}

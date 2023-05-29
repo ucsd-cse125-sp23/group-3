@@ -12,7 +12,9 @@ public:
 	DaeObject(const std::string model_path,
 		const std::string walking_animation_path,
 		const std::string action_animation_path,
+		const std::string attack_animation_path,
 		glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
+
 
 	DaeObject(const std::string model_path,
 		glm::vec3 scalingFactor = glm::vec3(1.0f, 1.0f, 1.0f));
