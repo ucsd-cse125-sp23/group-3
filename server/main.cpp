@@ -115,6 +115,7 @@ int main()
              int count = 0;
              for (int i = 0; i < NUM_PLAYERS; i++) {
                  if (serv->check_event[i] == -1 && serv->recv_event(i) == (int)EventType::RESTART){
+                     std::cout << i << " would like to restart" << std::endl;
                      serv->check_event[i] = 1;
                  }
                  if (serv->check_event[i] == 1) {
@@ -122,6 +123,7 @@ int main()
                  }
              }
              if (count == NUM_PLAYERS) {
+                 std::cout << "Restart!!!" << std::endl;
                  serv->gd->gamestate = GameState::READY;
                  for (int i = 0; i < NUM_PLAYERS; i++)
                  {

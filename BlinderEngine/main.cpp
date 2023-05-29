@@ -65,8 +65,8 @@ int main(void) {
 
     // Client setup
     Client* cli = new Client();
-    
-    while (!glfwWindowShouldClose(window))
+    int client_id = -1; // where to find corresponding character id
+    if (!Constants::offline)
     {
         client_id = cli->accept_init();
         while (client_id == -1 && !Constants::offline) {
@@ -75,128 +75,8 @@ int main(void) {
         }
     }
 
-    Window::playerID = client_id;
-
-    // TODO(graphics): load story&skill
-
-    // listen for initial game data
-    int check_gd = cli->recv_gamedata();
-    while (check_gd == -1 && !Constants::offline) {
-        check_gd = cli->recv_gamedata();
-
-    }
-
-    // load landing&character selection page
-    Window::initializeLanding();
-    if (!Constants::offline) {
-        
-
-        Window::drawLanding(window);
-        while (Window::state == WindowState::LANDING) {
-            Window::drawLanding(window);
-            if (Window::acq_char_id != -1
-                && cli->buttonAssignment[client_id] == -1
-                && cli->button_available(Window::acq_char_id)) {
-                cli->acq_character(Window::acq_char_id);
-                std::cout << "sending acq..." << std::endl;
-                Window::acq_char_id = -1;
-            }
-            if (cli->recv_buttonAssignment() != -1) {
-                Window::updateButtons(cli->buttonAssignment);
-            }
-        }
-    }
-    
-    std::cout << "sending ready" << std::endl;
-    // TODO: check user action(ready for game) & send event packet
-    cli->send_event(EventType::READY);
-    // listen for init packet
-    
-    int assigned_id;
-    if (Constants::offline) {
-        assigned_id = 3;
-    }
-    else {
-        assigned_id = cli->buttonAssignment[client_id];
-    }
-    Window::playerID = assigned_id;
-    // render things based on assigned_id & player setup
-    Player* player = new Player(assigned_id);
-    player->setCharacter((Character)assigned_id);
-    
-
-    std::chrono::time_point<std::chrono::system_clock> start, end;
-    start = std::chrono::system_clock::now();
-
-    // Initialize objects/pointers for rendering; exit if initialization fails.
-    if (!Window::initializeObjects(assigned_id)) exit(EXIT_FAILURE);
-    Window::scene->setUiByPlayerID(assigned_id);
-
-    end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end - start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
-
-    // listen for game start
-    int check_start = cli->recv_gamedata();
-    while (check_start == -1 && !Constants::offline) {
-        check_start = cli->recv_gamedata();
-    }
-
-    Audio::init(assigned_id);
-    Audio::playBgm();
-    
-    // Loop while GLFW window should stay open.
-    while (!glfwWindowShouldClose(window)) {
-
-        // check for event&send
-        
-        if (!Window::no_event)
-        int client_id = -1; // where to find corresponding character id
-        if (!Constants::offline)
-        {
-            client_id = cli->accept_init();
-            while (client_id == -1 && !Constants::offline) {
-                client_id = cli->accept_init();
-
-            }
-        }
-        else if(check_gd != -1) {
-            Window::scene->playersObjects.at(0)->setModel(cli->gd->location_A);
-            Window::scene->playersObjects.at(1)->setModel(cli->gd->location_B);
-            Window::scene->playersObjects.at(2)->setModel(cli->gd->location_C);
-            Window::scene->playersObjects.at(3)->setModel(cli->gd->location_D);
-            player->updateByGD(cli->gd);
-            Window::updateLevel(player->getLevel());
-            Window::updateTime(cli->gd->remaining_time);
-            Window::updateBySkill(cli->gd);
-            Audio::playSkillAudio(cli->gd);
-        }
-        Window::no_event = true;
-        std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
-        // Idle callback. Updating objects, etc. can be done here.
-        Window::idleCallback();
-
-        /*const float* f = glm::value_ptr(Window::getPos());
-        Audio::gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
-        Audio::gSoloud.update3dAudio();*/
-        //cout << "XXXXXXXXXXXXXXX: " << glm::to_string(Window::getPos()) << endl;
-        
-        if (player->getLevel() >= AWARENESS_THRESHOLD) {
-            Window::scene->ui->setPlayerAlicePosition(Window::scene->playersObjects[0]->getModel());
-        }
-        // Main render display callback. Rendering of objects is done here.
-        if (Constants::offline) {
-            /*float rate;
-            cin >> rate;
-            Window::ui->changeLevelbarSizeY(rate);
-            Window::ui->changeTimebarSizeY(rate);*/
-            if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-                Audio::playskill(Window::getPos());
-            
-            }
-            Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2), SKILL_CD);
-
+    while (!glfwWindowShouldClose(window))
+    {
         Window::playerID = client_id;
 
         // TODO(graphics): load story&skill
@@ -336,6 +216,8 @@ int main(void) {
             Window::displayEndPage(window);
             if (Window::clickRestart) {
                 cli->send_event(EventType::RESTART);
+                Window::clickRestart = false;
+                std::cout << " send restart" << std::endl;
             }
             cli->recv_gamedata();
             if (cli->gd->gamestate == GameState::READY) {
