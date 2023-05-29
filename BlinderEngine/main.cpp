@@ -65,19 +65,18 @@ int main(void) {
 
     // Client setup
     Client* cli = new Client();
-    
+    int client_id = -1; // where to find corresponding character id
+    if (!Constants::offline)
+    {
+        client_id = cli->accept_init();
+        while (client_id == -1 && !Constants::offline) {
+            client_id = cli->accept_init();
+
+        }
+    }
+
     while (!glfwWindowShouldClose(window))
     {
-        int client_id = -1; // where to find corresponding character id
-        if (!Constants::offline)
-        {
-            client_id = cli->accept_init();
-            while (client_id == -1 && !Constants::offline) {
-                client_id = cli->accept_init();
-
-            }
-        }
-
         Window::playerID = client_id;
 
         // TODO(graphics): load story&skill
@@ -217,6 +216,8 @@ int main(void) {
             Window::displayEndPage(window);
             if (Window::clickRestart) {
                 cli->send_event(EventType::RESTART);
+                Window::clickRestart = false;
+                std::cout << " send restart" << std::endl;
             }
             cli->recv_gamedata();
             if (cli->gd->gamestate == GameState::READY) {
