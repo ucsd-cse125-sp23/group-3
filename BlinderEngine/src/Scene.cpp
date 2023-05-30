@@ -83,6 +83,9 @@ void Scene::updateWorld()
 			skill_for_alice->SetUp(playersObjects[0]->getModel());
 			drawAliceParticle = false;
 		}
+		if (drawDaveSkill) {
+			skill_for_dave->SetUp(playersObjects[3]->getModel());
+		}
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
@@ -95,7 +98,11 @@ void Scene::updateWorld()
 		skill_for_dave->SetUp(playersObjects[playerID]->getModel());
 	}
 	skill_for_alice->update(dt);
-	skill_for_dave->update(dt, playersObjects[playerID]->getModel());
+	if (!drawDaveSkill) {
+		skill_for_dave->setup = false;
+		skill_for_dave->start = false;
+	}
+	skill_for_dave->update(dt, playersObjects[3]->getModel());
 	camera->Update();
 	map->update();
 }
@@ -144,6 +151,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		}
+		skill_for_dave->draw(*(particleShader), camera->GetViewProjectMtx());
 	}
 	if (playerID != 0) {
 		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
