@@ -336,9 +336,9 @@ void Server::handleDetect()
 		if (detect_success && this->gd->obstacle_states[i] == (int)ObstacleState::NOT_DESTROYED)
 		{
 			std::cout << i << "is being detected" << "!!!" << std::endl;
-			int obs_type = map->obs->obs_vec[i]->type;
+			/*int obs_type = map->obs->obs_vec[i]->type;
 			std::pair<int, int> obs_data = std::make_pair(i, 2000);
-			this->obs_countdown[0] = obs_data;
+			this->obs_countdown[0] = obs_data;*/
 			this->gd->obstacle_states[i] = (int)ObstacleState::DETECTED;
 		}
 	}
@@ -394,12 +394,16 @@ void Server::updateObstacleCountdown()
 					this->map->obs->obs_vec[this->obs_countdown[i].first] = nullptr;
 					this->gd->obstacle_states[this->obs_countdown[i].first] = (int)ObstacleState::DESTROYED;
 				}
-				else if (this->gd->obstacle_states[this->obs_countdown[0].first] == (int)ObstacleState::DETECTED) {
-					this->gd->obstacle_states[this->obs_countdown[0].first] = (int)ObstacleState::NOT_DESTROYED;
-				}
 				this->gd->player_status[i] = (int)PlayerStatus::NONE;
 				this->obs_countdown[i] = std::make_pair(-1, -1);
 			}
+		}
+	}
+
+	for (int i = 0; i < gd->obstacle_states.size(); i++)
+	{
+		if (this->gd->obstacle_states[i] == (int)ObstacleState::DETECTED) {
+			this->gd->obstacle_states[i] = (int)ObstacleState::NOT_DESTROYED;
 		}
 	}
 }
