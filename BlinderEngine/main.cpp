@@ -81,7 +81,6 @@ int main(void) {
     {
         cli->initialize_data();
         Window::playerID = client_id;
-        Window::state = WindowState::LANDING;
 
         Window::diaplayCoverPage(window);
         while (!Window::clickRestart) {
@@ -96,7 +95,13 @@ int main(void) {
 
         // load landing&character selection page
         if (!Constants::offline) {
+            Window::state = WindowState::LANDING;
+            Window::scene->initLandingPage();
             Window::drawLanding(window);
+            for (int i = 0; i < 4; i++)
+            {
+                std::cout << "check button:" << cli->buttonAssignment[i] << std::endl;
+            }
             while (Window::state == WindowState::LANDING) {
                 Window::drawLanding(window);
                 if (Window::acq_char_id != -1

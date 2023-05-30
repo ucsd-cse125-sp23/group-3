@@ -57,9 +57,9 @@ public:
 	void setUiByPlayerID(int id);
 	void loadGameObjects();
 	void setSignModel(glm::mat4 model);
+	void loadLanding();
 
 private:
-	void loadLanding();
 	void loadShaders();
 	void loadEssentials();
 	std::shared_ptr<DaeObject> initPlayerObject(int playerID);

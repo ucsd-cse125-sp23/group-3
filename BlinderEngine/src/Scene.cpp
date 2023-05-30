@@ -33,7 +33,7 @@ void Scene::initLandingPage()
 	c_state = 0;
 	d_state = 0;
 	ready_state = 0;
-	loadLanding();
+	// loadLanding();
 }
 
 void Scene::initCover()
