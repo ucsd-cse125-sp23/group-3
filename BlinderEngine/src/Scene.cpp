@@ -28,7 +28,17 @@ void Scene::init(int PlayID)
 
 void Scene::initLandingPage()
 {
-	loadLanding();
+	a_state = 0;
+	b_state = 0;
+	c_state = 0;
+	d_state = 0;
+	ready_state = 0;
+	// loadLanding();
+}
+
+void Scene::initCover()
+{
+	coverPage->bindTexture("./images/cover.png");
 }
 
 void Scene::drawLanding()
@@ -74,7 +84,7 @@ void Scene::updateWorld()
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
-		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
+		// ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 	}
 	else {
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
@@ -145,6 +155,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		obsL->spin(90.0f);
 		obsL->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
+}
+
+void Scene::drawCover()
+{
+	coverPage->draw(*uiShader, 1.0f);
 }
 
 void Scene::setModel(glm::mat4 model)
@@ -299,6 +314,7 @@ void Scene::loadEssentials()
 	ui = std::make_shared<UI>();
 	skybox = std::make_shared<Skybox>();
 	endPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
+	coverPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	camera = std::make_shared<Camera>();
 	camera->SetAspect(float(WINDOW_WIDTH) / float(WINDOW_HEIGHT));
 

@@ -79,26 +79,6 @@ Server::Server()
 		WSACleanup();
 		exit(1);
 	}
-
-	for (int i = 0; i < NUM_PLAYERS; i++) {
-		e[i] = Event(EventType::NOEVENT);
-	}
-
-	// Initialize map and gamedata
-	map = new Map();
-	glm::mat4 id_mat = {
-		{1,0,0,0},
-		{0,1,0,0},
-		{0,0,1,0},
-		{0,0,0,1}
-	};
-	glm::mat4 locA = map->getModelOnMap(id_mat, 1, 3.5f, 3.5f);  
-	glm::mat4 locB = map->getModelOnMap(id_mat, 1, 0.5f, 0.5f);
-	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
-	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
-
-	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0), std::vector<int>(NUM_PLAYERS, 0));
-	this->obs_countdown = std::vector<std::pair<int,int>>(NUM_PLAYERS, std::make_pair(-1,-1));
 }
 
 Server::~Server(){
@@ -588,4 +568,26 @@ void Server::cleanUpSkillStatus()
 			this->gd->player_status[i] = (int)PlayerStatus::NONE;
 		}
 	}
+}
+
+void Server::initialize_game()
+{
+	// Initialize map and gamedata
+	map = new Map();
+	glm::mat4 id_mat = {
+		{1,0,0,0},
+		{0,1,0,0},
+		{0,0,1,0},
+		{0,0,0,1}
+	};
+	glm::mat4 locA = map->getModelOnMap(id_mat, 1, 3.5f, 3.5f);
+	glm::mat4 locB = map->getModelOnMap(id_mat, 1, 0.5f, 0.5f);
+	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
+	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
+
+	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0), std::vector<int>(NUM_PLAYERS, 0));
+	this->obs_countdown = std::vector<std::pair<int, int>>(NUM_PLAYERS, std::make_pair(-1, -1));
+	this->button_assignment = { -1, -1, -1, -1 };
+	this->ids = { -1,-1,-1,-1 };
+	this->check_event = { -1, -1, -1, -1 };
 }
