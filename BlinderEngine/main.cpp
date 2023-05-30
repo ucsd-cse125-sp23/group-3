@@ -75,24 +75,27 @@ int main(void) {
         }
     }
 
+    Window::initializeCover();
+    Window::initializeLanding();
     while (!glfwWindowShouldClose(window))
     {
+        cli->initialize_data();
         Window::playerID = client_id;
+        Window::state = WindowState::LANDING;
 
-        // TODO(graphics): load story&skill
+        Window::diaplayCoverPage(window);
+        while (!Window::clickRestart) {
+            Window::diaplayCoverPage(window);
+        }
 
         // listen for initial game data
         int check_gd = cli->recv_gamedata();
         while (check_gd == -1 && !Constants::offline) {
             check_gd = cli->recv_gamedata();
-
         }
 
         // load landing&character selection page
-        Window::initializeLanding();
         if (!Constants::offline) {
-
-
             Window::drawLanding(window);
             while (Window::state == WindowState::LANDING) {
                 Window::drawLanding(window);
@@ -211,12 +214,13 @@ int main(void) {
             Window::setEndPage(cli->gd->gamestate);
             Audio::playEnd(cli->gd->gamestate);
         }
-
+        bool check_send_restart = false;
         while (!glfwWindowShouldClose(window)) {
             Window::displayEndPage(window);
-            if (Window::clickRestart) {
+            if (Window::clickRestart && !check_send_restart) {
                 cli->send_event(EventType::RESTART);
                 Window::clickRestart = false;
+                check_send_restart = true;
                 std::cout << " send restart" << std::endl;
             }
             cli->recv_gamedata();

@@ -62,6 +62,12 @@ bool Window::initializeLanding() {
     return true;
 }
 
+bool Window::initializeCover()
+{
+    scene->initCover();
+    return true;
+}
+
 void Window::cleanLanding() {
     // shared_ptr automaticly free up memory
 }
@@ -206,6 +212,18 @@ void Window::displayEndPage(GLFWwindow* window) {
     glfwSwapBuffers(window);
 }
 
+void Window::diaplayCoverPage(GLFWwindow* window)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    scene->drawCover();
+
+    // Gets events, including input such as keyboard and mouse or window resizing.
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
+}
+
 // helper to reset the camera
 void Window::resetCamera() {
     //Cam->Reset();
@@ -286,6 +304,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 }
 
 void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods) {
+    LeftDown = false;
+    RightDown = false;
+    acq_char_id = -1;
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         LeftDown = (action == GLFW_PRESS);
     }

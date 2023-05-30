@@ -66,6 +66,7 @@ public:
     static bool initializeProgram();
     static bool initializeObjects(int PlayID);
     static bool initializeLanding();
+    static bool initializeCover();
     static void cleanLanding();
     static void cleanUp();
 
@@ -80,6 +81,7 @@ public:
     static void displayCallback(GLFWwindow*, std::vector<int> os, int cd_remain);
     static void setEndPage(GameState);
     static void displayEndPage(GLFWwindow*);
+    static void diaplayCoverPage(GLFWwindow*);
 
     // helper to reset the camera
     static void resetCamera();

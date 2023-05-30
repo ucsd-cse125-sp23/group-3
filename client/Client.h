@@ -30,6 +30,8 @@ public:
 
 	bool button_available(int button_num);
 
+	void initialize_data();
+
 	GameData* gd;
 
 	std::vector<int> buttonAssignment{ -1,-1,-1,-1 };

@@ -37,11 +37,13 @@ public:
 	// Rendering
 	void init(int PlayID);
 	void initLandingPage();
+	void initCover();
 	void drawLanding();
 	void setEnd(bool won);
 	void drawEnd();
 	void updateWorld();
 	void displayWorld(std::vector<int> os, int cd_remain);
+	void drawCover();
 	// Control
 	void setModel(glm::mat4 model);
 	void updateLevel(float level);
@@ -75,6 +77,7 @@ public:
 	std::shared_ptr<Map> map;
 	std::shared_ptr<UI> ui;
 	std::shared_ptr<graphic2D> landingPage;
+	std::shared_ptr<graphic2D> coverPage;
 
 	
 	int ready_state = 0;
