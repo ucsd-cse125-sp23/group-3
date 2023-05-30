@@ -2,7 +2,7 @@
 
 DaveSkill::DaveSkill(std::vector<Light*>& light) {
 
-    systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
+    systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 1.8f, glm::vec3(1.0f, 1.0f, 1.0f)));
     systems[0]->bindTexture("./images/particle.png");
     /*systems.push_back(new Particles(1000, true, 5.0f, 0.1f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
     systems[1]->bindTexture("./images/particle.png");
@@ -12,8 +12,8 @@ DaveSkill::DaveSkill(std::vector<Light*>& light) {
     systems[3]->bindTexture("./images/particle.png");*/
 
     light_index_start = light.size();
-    for (int i = 0; i < 4; i++) {
-        // light.push_back(systems[i]->light);
+    for (int i = 0; i < 1; i++) {
+        light.push_back(systems[i]->light);
         leadingparticles.push_back(new Particle());
         initial_pos.push_back(glm::vec3(0.0f));
     }
@@ -59,6 +59,7 @@ void DaveSkill::update(float dt, glm::mat4 model) {
             start = false;
             setup = false;
         }
+        *(particles_light[light_index_start]) = *(systems[0]->light);
 
     }
     else {
@@ -66,6 +67,7 @@ void DaveSkill::update(float dt, glm::mat4 model) {
             systems[0]->Update(dt, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 0, glm::vec3(0.0f));
             // *(particles_light[light_index_start + i]) = *(systems[i]->light);
         // }
+        *(particles_light[light_index_start]) = *(systems[0]->light);
     }
 }
 
