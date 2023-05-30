@@ -21,6 +21,7 @@ void Scene::init(int PlayID)
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
+	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
 	initSignObject();
 	obsS = std::make_shared<ObjObject>(Constants::bowlingpin_model_path, Constants::bowlingpin_scaling_factor);
 	obsM = std::make_shared<ObjObject>(Constants::cage_model_path, Constants::cage_scaling_factor);
@@ -82,6 +83,9 @@ void Scene::updateWorld()
 			skill_for_alice->SetUp(playersObjects[0]->getModel());
 			drawAliceParticle = false;
 		}
+		if (drawDaveSkill) {
+			skill_for_dave->SetUp(playersObjects[3]->getModel());
+		}
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
 		camera->SetModel(playersObjects[playerID]->getModel());
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
@@ -91,8 +95,14 @@ void Scene::updateWorld()
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
 		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
+		skill_for_dave->SetUp(playersObjects[playerID]->getModel());
 	}
 	skill_for_alice->update(dt);
+	if (!drawDaveSkill) {
+		skill_for_dave->setup = false;
+		skill_for_dave->start = false;
+	}
+	skill_for_dave->update(dt, playersObjects[3]->getModel());
 	camera->Update();
 	map->update();
 }
@@ -113,9 +123,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		skill_for_dave->draw(*(particleShader), camera->GetViewProjectMtx());
 		for (int i = 0; i < sign_pos.size(); i++) {
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+			
 		}
 	}
 	else {
@@ -131,6 +143,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			// Draw all players except Alice
 			for (int i = 1; i < 4; i++) {
 				playersObjects[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+				
 			}
 		}
 		// draw Bob's skill
@@ -138,6 +151,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		}
+		skill_for_dave->draw(*(particleShader), camera->GetViewProjectMtx());
 	}
 	if (playerID != 0) {
 		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);

@@ -129,6 +129,7 @@ int main(void) {
                 }
             }
         }
+    }
 
         std::cout << "sending ready" << std::endl;
         // TODO: check user action(ready for game) & send event packet

@@ -23,7 +23,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
 
     }
     // update all particles
-    glm::vec3 Lightpos = glm::vec3(0.0f);
+    glm::vec3 Lightpos = objectPosition;
     int intensity = 0;
     for (unsigned int i = 0; i < this->amount; ++i)
     {
@@ -34,7 +34,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
             p.Position += p.Velocity * dt;
             p.Color.a -= dt * 0.5f;
             p.Life = p.Color.a;
-            Lightpos += p.Position;
+            //Lightpos += p.Position;
             //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
             intensity++;
         }
@@ -43,7 +43,56 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
     //std::cout<<"alive particles "<<intensity<<std::endl;
 
     if (intensity != 0) {
-        Lightpos = Lightpos / ((float)intensity);
+        //Lightpos = Lightpos / ((float)intensity);
+        //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
+        //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
+        //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
+        light = new Light(false, true, lightcolor, glm::vec3(1.0f), Lightpos, 0.0f, lightintensity * 0.7f * intensity / ((float)1000.0f), 0.0f);
+        light->SetParam(1.0f, 0.1f, 0.03f);
+    }
+    else {
+        light = new Light(false, true, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f);
+        light->SetParam(1.0f, 0.1f, 0.03f);
+    }
+
+}
+
+void Particles::Update(float dt,glm::mat4 model, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset)
+{
+    // add new particles 
+    _model = model;
+    for (unsigned int i = 0; i < newParticles; ++i)
+    {
+        bool noDied = false;
+        int unusedParticle = this->firstUnusedParticle(noDied);
+        //if(!noDied){
+        this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, glm::vec3(0.0f));
+        // }
+
+
+    }
+    // update all particles
+    glm::vec3 Lightpos = glm::vec3(_model*glm::vec4(objectPosition,1.0f));
+    int intensity = 0;
+    for (unsigned int i = 0; i < this->amount; ++i)
+    {
+        Particle& p = this->particles[i];
+        // reduce life
+        if (p.Life > 0.0f)
+        {	// particle is alive, thus update
+            p.Position += p.Velocity * dt;
+            p.Color.a -= dt * 0.5f;
+            p.Life = p.Color.a;
+            //Lightpos += p.Position;
+            //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
+            intensity++;
+        }
+
+    }
+    //std::cout<<"alive particles "<<intensity<<std::endl;
+
+    if (intensity != 0) {
+        //Lightpos = Lightpos / ((float)intensity);
         //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
@@ -74,6 +123,41 @@ void Particles::Draw(StaticShader shader, const glm::mat4& viewProjMtx)
             //std::cout<<"error here"<<std::endl;
             glBindTexture(GL_TEXTURE_2D, texture);
             shader.setVec3("offset", particle.Position);
+            shader.setVec4("color", particle.Color);
+            //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
+            int size_int = (int)(size * 10000);
+            shader.setFloat("scale", (rand() % size_int) / ((float)10000) + size);
+            //std::cout<<(rand()%10)/200.0f+0.05<<std::endl;
+            //std::cout<<"particle.Position "<<glm::to_string(particle.Position)<<std::endl;
+            //std::cout<<"particle.color "<<glm::to_string(particle.Color)<<std::endl;
+
+            glBindVertexArray(VAO);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        }
+    }
+    //std::cout<<"error here"<<std::endl;
+    // don't forget to reset to default blending mode
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Particles::Draw(glm::mat4 model, StaticShader shader, const glm::mat4& viewProjMtx)
+{
+    // use additive blending to give it a 'glow' effect
+    glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    shader.use();
+    shader.setMat4("projection", viewProjMtx);
+    //std::cout<<"round "<<std::endl;
+    for (Particle particle : this->particles)
+    {
+        if (particle.Life > 0.0f)
+        {
+            //std::cout<<"error here"<<std::endl;
+            glBindTexture(GL_TEXTURE_2D, texture);
+            shader.setVec3("offset", glm::vec3(model*glm::vec4( particle.Position,1.0f)));
             shader.setVec4("color", particle.Color);
             //shader.setFloat("scale",(rand()%10)/50.0f+0.05);
             int size_int = (int)(size * 10000);

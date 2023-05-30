@@ -7,6 +7,7 @@
 #include "UI.h"
 #include "Shader.h"
 #include "AliceSkill.h"
+#include "DaveSkill.h"
 #include "core.h"
 #include <vector>
 #include <graphic2D.h>
@@ -23,7 +24,7 @@
 #include <Skybox.h>
 #include <DaeObject.h>
 
-#define CAMERA_SPEED 1.5f
+#define CAMERA_SPEED 0.5f
 #define TURNING_RATIO 20.0f
 
 #define WINDOW_WIDTH 800
@@ -136,6 +137,7 @@ public:
 	std::shared_ptr<StaticShader> uiShader;
 	std::shared_ptr<StaticShader> particleShader;
 	std::shared_ptr<AliceSkill> skill_for_alice;
+	std::shared_ptr<DaveSkill> skill_for_dave;
 	// Essentials
 	std::shared_ptr<Camera> camera;
 	glm::mat4 getPos() {
