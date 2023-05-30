@@ -9,7 +9,7 @@
 </p>
 
 ## How to Run
-1. Clone the repo using:
+1. Clone the repo using:  
    install Visual Studio (recommend VS2022)  
    ```sh
     git clone https://github.com/ucsd-cse125-sp23/group-3.git
