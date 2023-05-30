@@ -124,7 +124,7 @@ int main()
              }
              if (count == NUM_PLAYERS) {
                  std::cout << "Restart!!!" << std::endl;
-                 serv->gd->gamestate = GameState::READY;
+                 serv->initialize_game();
                  for (int i = 0; i < NUM_PLAYERS; i++)
                  {
                      serv->send_gamedata(i);

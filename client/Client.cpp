@@ -196,3 +196,8 @@ bool Client::button_available(int button_num)
 	return true;
 }
 
+void Client::initialize_data()
+{
+	this->buttonAssignment = { -1, -1, -1, -1 };
+}
+
