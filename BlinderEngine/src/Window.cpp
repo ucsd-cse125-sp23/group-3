@@ -491,4 +491,8 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->drawDaveSkill = false;
 
     }
+    if (gd->player_status[playerID] == (int)PlayerStatus::ATTACK)
+    {
+        Window::scene->playersObjects.at(playerID)->doAttack();
+    }
 }
