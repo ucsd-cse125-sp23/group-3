@@ -2,7 +2,7 @@
 
 DaveSkill::DaveSkill(std::vector<Light*>& light) {
 
-    systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 1.8f, glm::vec3(1.0f, 1.0f, 1.0f)));
+    systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 3.6f, glm::vec3(1.0f, 1.0f, 1.0f)));
     systems[0]->bindTexture("./images/particle.png");
     /*systems.push_back(new Particles(1000, true, 5.0f, 0.1f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
     systems[1]->bindTexture("./images/particle.png");
@@ -28,7 +28,7 @@ void DaveSkill::SetUp(glm::mat4 model) {
         _model = model;
         angle = 0.0f;
         radius = 2.0f;
-        ending_height = 10.0f;
+        ending_height = 7.0f;
         height = 2.0f;
         glm::vec3 relative_position = glm::vec3(radius * sin(angle), height, radius * cos(angle));
         leadingparticles[0]->Position = relative_position;
@@ -48,13 +48,13 @@ void DaveSkill::SetUp(glm::mat4 model) {
 }
 
 void DaveSkill::update(float dt, glm::mat4 model) {
+    _model = model;
     if (start) {
         angle += dt;
         height += dt;
-        _model = model;
         glm::vec3 relative_position = glm::vec3(radius * sin(angle), height, radius * cos(angle));
         leadingparticles[0]->Position = relative_position;
-        systems[0]->Update(dt, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 1, glm::vec3(0.0f));
+        systems[0]->Update(dt, model, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 1, glm::vec3(0.0f));
         if (height >= ending_height) {
             start = false;
             setup = false;
@@ -64,7 +64,7 @@ void DaveSkill::update(float dt, glm::mat4 model) {
     }
     else {
         // for (int i = 0; i < 4; i++) {
-            systems[0]->Update(dt, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 0, glm::vec3(0.0f));
+            systems[0]->Update(dt, model, leadingparticles[0]->Velocity, leadingparticles[0]->Position, 0, glm::vec3(0.0f));
             // *(particles_light[light_index_start + i]) = *(systems[i]->light);
         // }
         *(particles_light[light_index_start]) = *(systems[0]->light);

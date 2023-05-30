@@ -23,6 +23,7 @@ public:
 
     // update all particles
     void Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset = glm::vec3(0.0f));
+    void Update(float dt, glm::mat4 model, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset);
     // render all particles
     void Draw(StaticShader shader, const glm::mat4& viewProjMtx);
     void Draw(glm::mat4 model, StaticShader shader, const glm::mat4& viewProjMtx);
@@ -42,6 +43,7 @@ private:
     float range;
     unsigned char* data;
     glm::vec3 lightcolor;
+    glm::mat4 _model;
 
     // initializes buffer and vertex attributes
     void init();

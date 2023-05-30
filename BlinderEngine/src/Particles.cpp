@@ -23,7 +23,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
 
     }
     // update all particles
-    glm::vec3 Lightpos = glm::vec3(0.0f);
+    glm::vec3 Lightpos = objectPosition;
     int intensity = 0;
     for (unsigned int i = 0; i < this->amount; ++i)
     {
@@ -34,7 +34,7 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
             p.Position += p.Velocity * dt;
             p.Color.a -= dt * 0.5f;
             p.Life = p.Color.a;
-            Lightpos += p.Position;
+            //Lightpos += p.Position;
             //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
             intensity++;
         }
@@ -43,7 +43,56 @@ void Particles::Update(float dt, glm::vec3 objectVelocity, glm::vec3 objectPosit
     //std::cout<<"alive particles "<<intensity<<std::endl;
 
     if (intensity != 0) {
-        Lightpos = Lightpos / ((float)intensity);
+        //Lightpos = Lightpos / ((float)intensity);
+        //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
+        //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
+        //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
+        light = new Light(false, true, lightcolor, glm::vec3(1.0f), Lightpos, 0.0f, lightintensity * 0.7f * intensity / ((float)1000.0f), 0.0f);
+        light->SetParam(1.0f, 0.1f, 0.03f);
+    }
+    else {
+        light = new Light(false, true, glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f);
+        light->SetParam(1.0f, 0.1f, 0.03f);
+    }
+
+}
+
+void Particles::Update(float dt,glm::mat4 model, glm::vec3 objectVelocity, glm::vec3 objectPosition, unsigned int newParticles, glm::vec3 offset)
+{
+    // add new particles 
+    _model = model;
+    for (unsigned int i = 0; i < newParticles; ++i)
+    {
+        bool noDied = false;
+        int unusedParticle = this->firstUnusedParticle(noDied);
+        //if(!noDied){
+        this->respawnParticle(this->particles[unusedParticle], objectVelocity, objectPosition, glm::vec3(0.0f));
+        // }
+
+
+    }
+    // update all particles
+    glm::vec3 Lightpos = glm::vec3(_model*glm::vec4(objectPosition,1.0f));
+    int intensity = 0;
+    for (unsigned int i = 0; i < this->amount; ++i)
+    {
+        Particle& p = this->particles[i];
+        // reduce life
+        if (p.Life > 0.0f)
+        {	// particle is alive, thus update
+            p.Position += p.Velocity * dt;
+            p.Color.a -= dt * 0.5f;
+            p.Life = p.Color.a;
+            //Lightpos += p.Position;
+            //std::cout<<"particle pos "<<i<<" "<<glm::to_string(p.Position)<<std::endl;
+            intensity++;
+        }
+
+    }
+    //std::cout<<"alive particles "<<intensity<<std::endl;
+
+    if (intensity != 0) {
+        //Lightpos = Lightpos / ((float)intensity);
         //std::cout<<"error here"<< glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"Lightpos "<<glm::to_string(Lightpos)<<std::endl;
         //std::cout<<"objectpos "<<glm::to_string(objectPosition)<<std::endl;
