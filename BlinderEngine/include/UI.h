@@ -14,8 +14,8 @@ public:
 	const double char_posiY = -0.995;
 	const char* char_png = "./images/Alice.png";
 
-	const double skill_sizeX = 0.1;
-	const double skill_sizeY = 0.1;
+	const double skill_sizeX = 0.17;
+	const double skill_sizeY = 0.17;
 	//const double skill_posiX = -0.995;
 	const double skill_posiY = -0.995;
 	const char* alice_skill_png = "./images/Alice_skill.png";
@@ -44,7 +44,7 @@ public:
 	const double mnmap_sizeX = 0.3 * 2 / sqrt(3);
 	const double mnmap_sizeY = 0.3;
 	//const double mnmap_posiX = 0.695;
-	const double mnmap_posiY = 0.695;
+	const double mnmap_posiY = 0.68;
 	const char* minimap_png = "./images/test2.png";
 
 	const double level_sizeX = 0.675;

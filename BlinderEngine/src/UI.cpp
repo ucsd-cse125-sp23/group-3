@@ -32,18 +32,18 @@ UI::UI() {
 	time_bar_s->bindTexture(UI::time_bar_cut);
 
 	minimap = new Minimap(UI::mnmap_sizeX * 600 / 800, UI::mnmap_sizeY,
-		0.995 - UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
+		0.99 - UI::mnmap_sizeX * 600 / 800, UI::mnmap_posiY);
 
 	level = new graphic2D(UI::level_sizeX * 600 / 800, UI::level_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY, true);
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY, true);
 	level->bindTexture(UI::insec_png);
 
 	level_bar = new graphic2D(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.1 * 600 / 800, UI::level_bar_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX*0.86) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX*0.86) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
 	level_bar->bindTexture(UI::level_bar_png);
 	level_bar_len = level_bar->getSizeX();
 	level_bar_s = new graphic2D(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.1 * 600 / 800, UI::level_bar_sizeY,
-		0.995 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5, true);
 	level_bar_s->bindTexture(UI::level_bar_cut);
 
 	shorter_timer = false;
@@ -111,30 +111,30 @@ void UI::setSize(const int& width, const int& height, int playerId) {
 	time_bar_s->update();
 
 	minimap->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
-		0.995 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
+		0.99 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
 	minimap->update();
 
 	if (playerId == 0) {		// Alice
 		level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
-			0.995 - (UI::level_sizeX) * height / width, UI::level_posiY);
+			0.99 - (UI::level_sizeX) * height / width, UI::level_posiY);
 	}
 	else {
 		level->setposition(UI::level_sizeX * height / width, UI::level_sizeY + 0.1,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * height / width, UI::level_posiY - 0.07);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * height / width, UI::level_posiY - 0.07);
 	}
 	level->update();
 	
 	if (playerId == 0) {		// Alice
 		level_bar->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.19 * height / width, UI::level_bar_sizeY,
-			0.995 - (UI::level_sizeX * 0.81) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::level_sizeX * 0.81) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_s->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.19 * height / width, UI::level_bar_sizeY,
-			0.995 - (UI::level_sizeX * 0.81) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::level_sizeX * 0.81) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
 	}
 	else {
 		level_bar->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.1 * height / width, UI::level_bar_sizeY,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_s->setposition(UI::level_bar_sizeX * height / width - UI::level_sizeX * 0.1 * height / width, UI::level_bar_sizeY,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * height / width, UI::level_bar_posiY + UI::level_sizeY / 5);
 	}
 	level_bar->update();
 	level_bar_s->update();
@@ -202,14 +202,14 @@ void UI::setUiByPlayerID(int id) {
 	if (id == 0) {			// Alice
 		char_png = "./images/Alice.png";
 		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY,
-			0.995 - (UI::level_sizeX) * 600 / 800, UI::level_posiY);
+			0.99 - (UI::level_sizeX) * 600 / 800, UI::level_posiY);
 		level->update();
 		level_bar->setposition(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.19 * 600 / 800, UI::level_bar_sizeY,
-			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_len = level_bar->getSizeX();
 		level_bar->update();
 		level_bar_s->setposition(UI::level_bar_sizeX * 600 / 800 - UI::level_sizeX * 0.19 * 600 / 800, UI::level_bar_sizeY,
-			0.995 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
+			0.99 - (UI::level_sizeX * 0.81) * 600 / 800, UI::level_bar_posiY + UI::level_sizeY / 5);
 		level_bar_s->update();
 		skill->bindTexture(alice_skill_png);
 		skill->update();
@@ -219,7 +219,7 @@ void UI::setUiByPlayerID(int id) {
 	else if (id == 1) {		// Bob
 		char_png = "./images/Bob.png";
 		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
 		skill->bindTexture(bob_skill_png);
@@ -230,7 +230,7 @@ void UI::setUiByPlayerID(int id) {
 	else if (id == 2) {		// Carol
 		char_png = "./images/Carol.png";
 		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
 		skill->bindTexture(carol_skill_png);
@@ -241,7 +241,7 @@ void UI::setUiByPlayerID(int id) {
 	else if (id == 3) {		// Dave
 		char_png = "./images/Dave.png";
 		level->setposition(UI::level_sizeX * 600 / 800, UI::level_sizeY + 0.1,
-			0.995 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
+			0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * 600 / 800, UI::level_posiY - 0.07);
 		level->bindTexture(aware_png);
 		level->update();
 		skill->bindTexture(dave_skill_png);
