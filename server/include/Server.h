@@ -42,7 +42,6 @@ public:
 	SOCKET sessions[NUM_PLAYERS];
 
 	GameData* gd;
-	Event e[NUM_PLAYERS];
 
 	static Map* map;
 	static CollisionDetection collisionDetection;
@@ -65,6 +64,7 @@ public:
 	// This function guarantees that each client will only receive one gamedata 
 	// containing status == skill for one usage of skill to avoid double action
 	void cleanUpSkillStatus();
+	void initialize_game();
 
 	// index by player_id: 0 -> Alice
 	std::vector<int> button_assignment{ -1, -1, -1, -1 };

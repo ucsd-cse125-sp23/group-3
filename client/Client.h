@@ -10,7 +10,7 @@
 #pragma comment (lib, "Mswsock.lib")
 
 #define _WIN32_WINNT _WIN32_WINNT_WINXP // mingw bug
-#define DEFAULT_ADDR "128.54.70.35"
+#define DEFAULT_ADDR "127.0.0.1"
 #define DEFAULT_PORT "2400"
 
 class Client
@@ -29,6 +29,8 @@ public:
 	int recv_buttonAssignment();
 
 	bool button_available(int button_num);
+
+	void initialize_data();
 
 	GameData* gd;
 

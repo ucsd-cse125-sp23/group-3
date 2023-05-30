@@ -37,6 +37,7 @@ bool Window::no_event;
 int  Window::playerID;
 int  Window::acq_char_id = -1;
 bool Window::toReady = false;
+bool Window::clickRestart = false;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -56,8 +57,15 @@ bool Window::initializeObjects(int PlayID) {
 }
 
 bool Window::initializeLanding() {
-    state = WindowState::LANDING;
+    // state = WindowState::LANDING;
     scene->initLandingPage();
+    scene->loadLanding();
+    return true;
+}
+
+bool Window::initializeCover()
+{
+    scene->initCover();
     return true;
 }
 
@@ -205,6 +213,18 @@ void Window::displayEndPage(GLFWwindow* window) {
     glfwSwapBuffers(window);
 }
 
+void Window::diaplayCoverPage(GLFWwindow* window)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    scene->drawCover();
+
+    // Gets events, including input such as keyboard and mouse or window resizing.
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
+}
+
 // helper to reset the camera
 void Window::resetCamera() {
     //Cam->Reset();
@@ -218,6 +238,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
      */
     std::fill(eventChecker.begin(), eventChecker.end(), 0);
     no_event = true;
+    clickRestart = false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
@@ -253,14 +274,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        eventChecker[(int)EventType::SKILL - 1] = 1;
-        no_event = false;
         if (Constants::offline)
         {
             scene->playersObjects[playerID]->doAction();
         }
         eventChecker[(int)EventType::SKILL - 1] = 1;
         no_event = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS)
+    {
+        clickRestart = true;
     }
 
     // Check for a key press.
@@ -282,6 +305,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 }
 
 void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods) {
+    LeftDown = false;
+    RightDown = false;
+    acq_char_id = -1;
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         LeftDown = (action == GLFW_PRESS);
     }
