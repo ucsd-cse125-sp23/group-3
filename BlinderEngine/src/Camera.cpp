@@ -16,7 +16,7 @@ void Camera::Update() {
 
     if (first_person) {
         CameraTar = glm::vec3(0.0f, 4.0f, 0.0f);
-        CameraDir = glm::vec3(0.0f, 0.0f, 1.0f);
+        CameraDir = glm::vec3(0.0f, 0.0f, 1.5f);
         CameraPos = CameraTar + CameraDir;
     }
     else {
