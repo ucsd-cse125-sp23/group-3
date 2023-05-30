@@ -142,4 +142,6 @@ public:
 		return playersObjects[playerID]->getModel();
 	}
 	std::shared_ptr<Mult_Lights> lights;
+
+	bool loadingModel;
 };

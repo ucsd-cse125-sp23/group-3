@@ -7,6 +7,7 @@ Scene::Scene()
 	loadShaders();
 	loadEssentials();
 	loadGameObjects();
+	loadingModel = false;
 }
 
 void Scene::init(int PlayID)
@@ -109,6 +110,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 
 	if (Constants::offline) {
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+		objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		for (int i = 0; i < sign_pos.size(); i++) {
@@ -294,8 +296,8 @@ void Scene::loadShaders()
 
 void Scene::loadGameObjects()
 {
-	objObjectCage = std::make_shared<ObjObject>("./resources/objects/cage/cage_sketchfab.obj", glm::vec3(15.0f));
-	objObjectTest = std::make_shared<ObjObject>("./resources/objects/door/door.obj");
+	std::cout << "loading" << std::endl;
+	objObjectTest = std::make_shared<ObjObject>("./resources/objects/bear_on_balloons/bear_on_balloons.obj", glm::vec3(3.0f));
 	std::fill_n(std::back_inserter(playersObjects), 4, nullptr);
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));

@@ -4,6 +4,7 @@
 #include <chrono>
 #include <ctime>
 #include "include/Audio.h"
+#include <thread>
 
 void error_callback(int error, const char* description) {
     // Print error.
@@ -47,7 +48,16 @@ void print_versions() {
 #endif
 }
 
+void loadSceneObject() {
+    if (!Window::scene->loadingModel) {
+        std::cout << "loading models" << std::endl;
+        Window::scene->loadingModel = true;
+        Window::scene->loadGameObjects();
+    }
+}
+
 int main(void) {
+    std::cout << "entrypoint" << std::endl;
     GLFWwindow* window = Window::createWindow(800, 600);
     if (!window) exit(EXIT_FAILURE);
 
@@ -59,7 +69,9 @@ int main(void) {
     setup_opengl_settings();
 
     // Initialize the shader program; exit if initialization fails.
+
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
+    
 
     // TODO(graphics): load landing page
 
@@ -77,12 +89,14 @@ int main(void) {
 
     Window::initializeCover();
     Window::initializeLanding();
+
     while (!glfwWindowShouldClose(window))
     {
         cli->initialize_data();
         Window::playerID = client_id;
         
         Window::diaplayCoverPage(window);
+
         while (!Window::clickRestart) {
             Window::diaplayCoverPage(window);
         }
@@ -247,3 +261,4 @@ int main(void) {
     Audio::deinit();
     exit(EXIT_SUCCESS);
 }
+
