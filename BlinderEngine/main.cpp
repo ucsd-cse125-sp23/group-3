@@ -81,7 +81,7 @@ int main(void) {
     {
         cli->initialize_data();
         Window::playerID = client_id;
-        std::cout << "player id: " << client_id << std::endl;
+        
         Window::diaplayCoverPage(window);
         while (!Window::clickRestart) {
             Window::diaplayCoverPage(window);
@@ -152,7 +152,7 @@ int main(void) {
             check_start = cli->recv_gamedata();
         }
 
-        Audio::init();
+        Audio::init(assigned_id);
         Audio::playBgm();
 
         // Loop while GLFW window should stay open.
@@ -203,6 +203,10 @@ int main(void) {
                 Window::ui->changeLevelbarSizeY(rate);
                 Window::ui->changeTimebarSizeY(rate);*/
 
+                if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+                    Audio::playskill(Window::getPos());
+
+                }
                 Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2), SKILL_CD);
             }
             else {
