@@ -57,8 +57,9 @@ bool Window::initializeObjects(int PlayID) {
 }
 
 bool Window::initializeLanding() {
-    state = WindowState::LANDING;
+    // state = WindowState::LANDING;
     scene->initLandingPage();
+    scene->loadLanding();
     return true;
 }
 
