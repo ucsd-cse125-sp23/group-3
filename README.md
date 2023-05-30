@@ -2,6 +2,7 @@
     <img src="BlinderEngine/images/logo.png" width=350>
   <h1 align="center">The Invisible One</h1>
   <h4 align="center">Presented by Blinder</h4>
+  <p align="center">(Zhiying Guan, Jiahui Han, Yucheng Huang, Ashley Kou, Yingkai Lee, Jack Wagner, Manshi Yang, and Xiaoxiao Zou)<p>
   <p align="center">
   <a href="https://cse125.ucsd.edu/2023/cse125g3/">Link to our website</a>
   <br/>The Invisible One is an original online 3D multi-player role-playing game, where you can experience the joy of solving mazes and collaborate with other players in an immersive musical environment. Help Alice get out of the maze and we will win together!
