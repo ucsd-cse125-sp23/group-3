@@ -15,9 +15,18 @@ int main()
          serv->send_init_packet(id, id);
          std::cout << "connected ss " << ss <<" with id" << id << std::endl;
      }
+     SOCKET original_sessions[NUM_PLAYERS];
+     for (int i = 0; i < NUM_PLAYERS; i++)
+     {
+         original_sessions[i] = serv->sessions[i];
+     }
      while (1) {
          // reinitialize all needed data
          serv->initialize_game();
+         for (int i = 0; i < NUM_PLAYERS; i++)
+         {
+             serv->sessions[i] = original_sessions[i];
+         }
 
          // send initial gamedata to all clients
          for (int i = 0; i < NUM_PLAYERS; i++)
