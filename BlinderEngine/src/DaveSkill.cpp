@@ -27,7 +27,7 @@ void DaveSkill::SetUp(glm::mat4 model) {
         // light position glm::vec3(model * glm::vec4(0.0f, 3.0f, 0.0f, 1.0f))
         _model = model;
         angle = 0.0f;
-        radius = 3.0f;
+        radius = 2.0f;
         ending_height = 10.0f;
         height = 2.0f;
         glm::vec3 relative_position = glm::vec3(radius * sin(angle), height, radius * cos(angle));
