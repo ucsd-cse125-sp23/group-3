@@ -106,7 +106,6 @@ public:
     static void updateButtons(std::vector<int> buttonAssignment);
     
     static void setUiByPlayerID();
-    static bool checkSelects();
 
     static void updateBySkill(GameData * gd);
 };
