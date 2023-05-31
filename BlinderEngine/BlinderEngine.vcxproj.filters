@@ -328,6 +328,8 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils.h">
+		<Filter>include</Filter>
+	</ClInclude>
     <ClInclude Include="include\DaveSkill.h">
       <Filter>include</Filter>
     </ClInclude>
