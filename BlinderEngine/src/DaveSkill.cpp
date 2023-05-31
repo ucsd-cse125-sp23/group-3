@@ -3,7 +3,7 @@
 DaveSkill::DaveSkill(std::vector<Light*>& light) {
 
     systems.push_back(new Particles(1000, true, 5.0f, 0.5f, 3.6f, glm::vec3(1.0f, 1.0f, 1.0f)));
-    systems[0]->bindTexture("./images/particle.png");
+    systems[0]->bindTexture("./images/particle_2.png");
     /*systems.push_back(new Particles(1000, true, 5.0f, 0.1f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
     systems[1]->bindTexture("./images/particle.png");
     systems.push_back(new Particles(1000, true, 5.0f, 0.1f, 1.8f, glm::vec3(0.8f, 0.8f, 1.0f)));
