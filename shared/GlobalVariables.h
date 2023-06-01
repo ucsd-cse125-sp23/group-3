@@ -3,7 +3,7 @@
 #define NUM_OBSTACLE 26
 #define GAME_LENGTH 300000
 #define LISTEN_TICK 10
-#define TICK_TIME 40
+#define TICK_TIME 25
 #define CAMERA_SPEED 0.6f
 #define TURNING_RATIO 10.0f
 #define NUM_EVENT_TYPES 6
