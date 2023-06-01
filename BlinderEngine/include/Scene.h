@@ -17,6 +17,7 @@
 #include "DynamicModel.h"
 #include <StaticShader.h>
 #include <Mult_Lights.h>
+#include <Fog.h>
 
 #include "ObjObject.h"
 #include <animation.h>
@@ -73,6 +74,8 @@ public:
 
 	bool drawDaveSkill = false;
 	bool drawAliceParticle = false;
+	bool loadingModel;
+
 
 	// Object to render
 	std::shared_ptr<Map> map;
@@ -138,12 +141,15 @@ public:
 	std::shared_ptr<StaticShader> particleShader;
 	std::shared_ptr<AliceSkill> skill_for_alice;
 	std::shared_ptr<DaveSkill> skill_for_dave;
+
 	// Essentials
 	std::shared_ptr<Camera> camera;
+	std::shared_ptr<Mult_Lights> lights;
+	std::shared_ptr<Fog> fog;
+
 	glm::mat4 getPos() {
 		return playersObjects[playerID]->getModel();
 	}
-	std::shared_ptr<Mult_Lights> lights;
+	
 
-	bool loadingModel;
 };

@@ -30,6 +30,7 @@ public:
 
 	void update(glm::mat4 world);
 	glm::mat4 getModel() { return mvp; };
+	glm::vec3 getTranslation();
 	void setModel(glm::mat4& model);
 
 	void spin(float deg);

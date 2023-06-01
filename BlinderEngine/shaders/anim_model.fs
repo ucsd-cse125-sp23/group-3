@@ -40,6 +40,11 @@ struct SpotLight {
     vec3 specular;       
 };
 
+struct Fog {
+    vec3 player_pos;
+    float fog_distance;
+};
+
 
 uniform int NUM_LIGHTS_POINT;
 uniform int NUM_LIGHTS_SPOT;
@@ -50,12 +55,14 @@ uniform sampler2D texture_specular1;
 uniform DirLight dirLight;
 uniform PointLight pointLights[12];
 uniform SpotLight spotLight[8];
+uniform Fog fog;
 uniform vec3 viewPos;
 
 // function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 CalcFog(vec3 inputColor, vec3 fragPos);
 
 void main()
 {    
@@ -80,6 +87,7 @@ void main()
     for(int i = 0; i < NUM_LIGHTS_SPOT; i++){
         result += CalcSpotLight(spotLight[i], norm, FragPos, viewDir);  
     }
+    result = CalcFog(result, FragPos);
     
     FragColor = vec4(result, 1.0);
     //FragColor=vec4(vec3(texture(texture_diffuse1, TexCoords)),1.0f);
@@ -147,4 +155,15 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
     return (ambient + diffuse + specular);
+}
+
+vec3 CalcFog(vec3 inputColor, vec3 fragPos) {
+	//hide items beyound certain threshold of playerposition
+    float distanceX = abs(fragPos[0] - fog.player_pos[0]); 
+    float distanceY = abs(fragPos[2] - fog.player_pos[2]); 
+    float distance = sqrt(distanceX * distanceX + distanceY * distanceY);
+    if(abs(distance) > fog.fog_distance) {
+        inputColor = inputColor * 0.05;
+    }
+    return inputColor;
 }
