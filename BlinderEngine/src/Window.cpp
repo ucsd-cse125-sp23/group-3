@@ -11,7 +11,7 @@
 // Window Properties
 int Window::width;
 int Window::height;
-const char* Window::windowTitle = "The Invisiable One";
+const char* Window::windowTitle = "The Invisible One";
 std::shared_ptr<Scene> Window::scene;
 // Window state
 WindowState Window::state;
