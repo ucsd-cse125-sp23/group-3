@@ -66,7 +66,6 @@ void Audio::playEnd(GameState gs) {
 		Audio::loadWin();
 	}
 	else if (gs == GameState::LOSE) {
-		return;
 		Audio::loadLose();
 	}
 	int h = Audio::gSoloud.play(Audio::gwave);
@@ -101,12 +100,14 @@ void Audio::playSkillAudio(GameData* gd, const std::vector<Cube*>& obs) {
 				break;
 			}
 		}
-		const float* f = glm::value_ptr(obs[i]->getModel());
-		int h = Audio::gSoloud.play3d(aliceSkill, f[12], f[13], f[14]);
-		gSoloud.set3dSourceAttenuation(h, 2, 1.0);
-		gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
-		gSoloud.set3dListenerPosition(player_pos[12], player_pos[13], player_pos[14]);
-		gSoloud.update3dAudio();
+		if (i < gd->obstacle_states.size()) {
+			const float* f = glm::value_ptr(obs[i]->getModel());
+			int h = Audio::gSoloud.play3d(aliceSkill, f[12], f[13], f[14]);
+			gSoloud.set3dSourceAttenuation(h, 2, 1.0);
+			gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
+			gSoloud.set3dListenerPosition(player_pos[12], player_pos[13], player_pos[14]);
+			gSoloud.update3dAudio();
+		}
 	}
 
 	// Bob skill audio
