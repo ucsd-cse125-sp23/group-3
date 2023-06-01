@@ -285,6 +285,11 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     {
         clickRestart = true;
     }
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+    {
+        scene->endScene();
+    }
+
 
     // Check for a key press.
     if (action == GLFW_PRESS) {

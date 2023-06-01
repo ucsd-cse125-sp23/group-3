@@ -28,6 +28,7 @@ void Scene::init(int PlayID)
 	obsL = std::make_shared<ObjObject>(Constants::door_model_path, Constants::door_scaling_factor);
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
+	sceneStatus = SceneStatus::running;
 }
 
 void Scene::initLandingPage()
@@ -114,7 +115,10 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
-	//fog->shrinkFog();
+	if (SceneStatus::ending == sceneStatus)
+	{
+		fog->shrinkFog();
+	}
 	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 
@@ -299,6 +303,11 @@ void Scene::loadLanding()
 	dbtn_vec.push_back(dBtn);
 	dbtn_vec.push_back(dBtnSelectedO);
 	dbtn_vec.push_back(dBtnSelectedU);
+}
+
+void Scene::endScene()
+{
+	sceneStatus = SceneStatus::ending;
 }
 
 void Scene::loadShaders()

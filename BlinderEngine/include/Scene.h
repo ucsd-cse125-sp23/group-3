@@ -31,6 +31,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
+enum SceneStatus { running, ending };
 
 class Scene
 {
@@ -60,6 +61,7 @@ public:
 	void loadGameObjects();
 	void setSignModel(glm::mat4 model);
 	void loadLanding();
+	void endScene();
 
 private:
 	void loadShaders();
@@ -78,6 +80,8 @@ public:
 
 	int width;
 	int height;
+
+	SceneStatus sceneStatus;
 
 
 	// Object to render
