@@ -76,6 +76,9 @@ public:
 	bool drawAliceParticle = false;
 	bool loadingModel;
 
+	int width;
+	int height;
+
 
 	// Object to render
 	std::shared_ptr<Map> map;
@@ -83,7 +86,7 @@ public:
 	std::shared_ptr<graphic2D> landingPage;
 	std::shared_ptr<graphic2D> coverPage;
 
-	
+
 	int ready_state = 0;
 	std::shared_ptr<graphic2D> readyBtnGray;
 	std::shared_ptr<graphic2D> readyBtn;
@@ -150,6 +153,6 @@ public:
 	glm::mat4 getPos() {
 		return playersObjects[playerID]->getModel();
 	}
-	
+
 
 };

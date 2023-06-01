@@ -12,20 +12,22 @@ void Scene::init(int PlayID)
 {
 	// PlayID dependent loading area
 	playerID = PlayID;
-	if (playerID == 0) 
+	if (playerID == 0)
 	{
 		camera->setFirstperson();
 	}
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	fog = std::make_shared<Fog>();
-	fog->setFogDistance(30.0f);
+	fog->setFogDistance(1000.0f);
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
 	initSignObject();
 	obsS = std::make_shared<ObjObject>(Constants::bowlingpin_model_path, Constants::bowlingpin_scaling_factor);
 	obsM = std::make_shared<ObjObject>(Constants::cage_model_path, Constants::cage_scaling_factor);
 	obsL = std::make_shared<ObjObject>(Constants::door_model_path, Constants::door_scaling_factor);
+	width = WINDOW_WIDTH;
+	height = WINDOW_HEIGHT;
 }
 
 void Scene::initLandingPage()
@@ -112,9 +114,9 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
-	//fog->shrinkFog(0.1f);
-	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation());
-	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation());
+	//fog->shrinkFog();
+	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation(), width, height);
+	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
@@ -130,7 +132,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		for (int i = 0; i < sign_pos.size(); i++) {
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
-			
+
 		}
 	}
 	else {
@@ -146,7 +148,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 			// Draw all players except Alice
 			for (int i = 1; i < 4; i++) {
 				playersObjects[i]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
-				
+
 			}
 		}
 		// draw Bob's skill
@@ -234,6 +236,8 @@ void Scene::resizeScene(int width, int height)
 	}
 	glViewport(0, 0, width, height);
 	setAspect(float(width) / float(height));
+	this->width = width;
+	this->height = height;
 }
 
 void Scene::setUiByPlayerID(int id)
@@ -319,7 +323,7 @@ void Scene::loadGameObjects()
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));
 	}
-	
+
 	//objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.05f));
 	timer = glfwGetTime();
 }
@@ -327,7 +331,7 @@ void Scene::loadGameObjects()
 void Scene::loadEssentials()
 {
 	// Initialize object to render
-	
+
 	map = std::make_shared<Map>();
 
 	ui = std::make_shared<UI>();
@@ -341,7 +345,7 @@ void Scene::loadEssentials()
 
 std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 {
-	if (0 == playerID) 
+	if (0 == playerID)
 	{
 		daeObjectAlice = std::make_shared<DaeObject>(Constants::alice_model_path,
 			Constants::alice_walking_animation_path,

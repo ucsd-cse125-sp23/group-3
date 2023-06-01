@@ -8,9 +8,10 @@ class Fog
 public:
 	Fog();
 	void setFogDistance(float fogDistance);
-	void updateFog(GLuint shaderID, glm::vec3 playerPos);
-	void shrinkFog(float shrinkDistance);
+	void updateFog(GLuint shaderID, glm::vec3 playerPos, int width, int height);
+	void shrinkFog();
 
 private:
 	float fogDistance;
+	int staticFrames;
 };

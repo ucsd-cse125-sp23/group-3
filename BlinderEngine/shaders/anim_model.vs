@@ -23,6 +23,7 @@ out vec3 Normal;
 // Outputs the texture coordinates to the Fragment Shader
 out vec2 TexCoords;
 
+
 void main()
 {
     vec4 totalPosition = vec4(0.0f);

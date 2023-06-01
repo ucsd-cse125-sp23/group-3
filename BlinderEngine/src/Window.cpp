@@ -25,7 +25,7 @@ WindowState Window::state;
 bool LeftDown, RightDown;
 int MouseX, MouseY;
 const float cameraSpeed = 1.5f;
-const float turningratio=20.0f;
+const float turningratio = 20.0f;
 
 // Shaders
 
@@ -151,35 +151,35 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
 // update and draw functions
 void Window::idleCallback() {
     scene->updateWorld();
-// void Window::idleCallback(int awareness) {
-//     // Perform any updates as necessary.
-    
-//     if (playerID == 0) {
-       
-//        Cam->setFirstperson();
-//     }
-//     if (!Constants::offline) {
-//         lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
-//         Cam->SetModel(players.at(playerID)->getModel());
-//         ui->setPlayerPosition(players.at(playerID)->getModel());
+    // void Window::idleCallback(int awareness) {
+    //     // Perform any updates as necessary.
 
-//     }
-//     else {
-//         if (awareness >= AWARENESS_THRESHOLD && playerID != 0)
-//         {
-//             // TODO(Crystal): draw Alice's location
-//         }
-//         ui->setPlayerPosition(daeObject1->getModel());
-//         lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), true);
-//     }
-    
-//     Cam->Update();
-//     map->update();
-//     //lights->updateLightAliceV2(daeObject1->getModel());
-//     int mapID;
-//     float x, y;
+    //     if (playerID == 0) {
 
-//     //cube->update();
+    //        Cam->setFirstperson();
+    //     }
+    //     if (!Constants::offline) {
+    //         lights->updateLightAlice(map->calculateLightcenter(players.at(playerID)->getModel()), true);
+    //         Cam->SetModel(players.at(playerID)->getModel());
+    //         ui->setPlayerPosition(players.at(playerID)->getModel());
+
+    //     }
+    //     else {
+    //         if (awareness >= AWARENESS_THRESHOLD && playerID != 0)
+    //         {
+    //             // TODO(Crystal): draw Alice's location
+    //         }
+    //         ui->setPlayerPosition(daeObject1->getModel());
+    //         lights->updateLightAlice(map->calculateLightcenter(daeObject1->getModel()), true);
+    //     }
+
+    //     Cam->Update();
+    //     map->update();
+    //     //lights->updateLightAliceV2(daeObject1->getModel());
+    //     int mapID;
+    //     float x, y;
+
+    //     //cube->update();
 }
 
 void Window::displayCallback(GLFWwindow* window, std::vector<int> os, int cd_remain) {
@@ -239,7 +239,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     std::fill(eventChecker.begin(), eventChecker.end(), 0);
     no_event = true;
     clickRestart = false;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         //cube->move(-cameraSpeed);
         if (Constants::offline) {
             scene->move();
@@ -248,8 +248,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         no_event = false;
     }
 
-        
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         //cube->spin(cameraSpeed*turningratio);
         if (Constants::offline) {
             scene->spin(1);
@@ -257,8 +257,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         eventChecker[(int)EventType::TURN_LEFT - 1] = 1;
         no_event = false;
     }
-        
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         //backPackObjectspin(-cameraSpeed * turningratio);
         if (Constants::offline) {
             scene->spin(-1);
@@ -266,7 +266,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
         eventChecker[(int)EventType::TURN_RIGHT - 1] = 1;
         no_event = false;
     }
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         if (Constants::offline) {
             scene->playersObjects[playerID]->doAttack();
         }
@@ -294,10 +294,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
             glfwSetWindowShouldClose(window, GL_TRUE);
             break;
 
-        /*case GLFW_KEY_R:
-            resetCamera();
-            break;
-        */
+            /*case GLFW_KEY_R:
+                resetCamera();
+                break;
+            */
         default:
             break;
         }
@@ -335,7 +335,7 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
         acq_char_id = 3;
         LeftDown = false;
     }
-    
+
 }
 
 void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
@@ -347,7 +347,7 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
         //scene->updateReadyBtn("./resources/images/test2.png");
         scene->ready_state = 2;
     }
-    else if (!toReady){
+    else if (!toReady) {
         //scene->updateReadyBtn("./resources/images/testS.png");
         scene->ready_state = 0;
     }
@@ -385,7 +385,7 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
     }
     //std::cout << currX << " " << currY << endl;
     //std::cout << posiX << " " << posiY << endl;
-    if (width*1.7/2 < currX && currX < width*1.9/2 && height*1.5/2 < currY && currY < height*1.7/2) {
+    if (width * 1.7 / 2 < currX && currX < width * 1.9 / 2 && height * 1.5 / 2 < currY && currY < height * 1.7 / 2) {
         //std::cout << "On ready btn\n";
         return true;
     }
@@ -464,7 +464,7 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
             if (buttonAssignment[i] == 1) scene->b_state = 2;
             if (buttonAssignment[i] == 2) scene->c_state = 2;
             if (buttonAssignment[i] == 3) scene->d_state = 2;
-        //    scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
+            //    scene->updateCharBtn(buttonNum, "./resources/images/testX.png");
         }
     }
     if (toReady) scene->ready_state = 1;//scene->updateReadyBtn("./resources/images/test.png");
@@ -472,7 +472,7 @@ void Window::updateButtons(std::vector<int> buttonAssignment) {
 
 void Window::updateBySkill(GameData* gd) {
     if (gd->player_status[0] == (int)PlayerStatus::SKILL) {
-        Window::scene->drawAliceParticle = true;  
+        Window::scene->drawAliceParticle = true;
     }
     if (gd->player_status[1] == (int)PlayerStatus::SKILL) {
         // TODO:: place sign/label at locB
