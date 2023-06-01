@@ -41,14 +41,14 @@ void Minimap::update(){
 void Minimap::setPosition(glm::mat4 model){
     float *pSource = (float*)glm::value_ptr(model);
     personx=(pSource[12]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeX;
-    persony=(-pSource[14]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeY;
+    persony=(-pSource[14]+GROUND_SIZE/2.0f*sqrt(3.0))/(GROUND_SIZE / 2.0f * sqrt(3.0) *2)*sizeY;
     person->setposition( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*sizeY,  positionX+personx-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  positionY+persony-Constants::MINIMAP_OBJECT_SIZE/2*sizeY);
 }
 
 void Minimap::setPositionAlice(glm::mat4 model){
     float *pSource = (float*)glm::value_ptr(model);
     float personx2=(pSource[12]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeX;
-    float persony2=(-pSource[14]+GROUND_SIZE)/(GROUND_SIZE*2)*sizeY;
+    float persony2=(-pSource[14]+GROUND_SIZE / 2.0f * sqrt(3.0))/(GROUND_SIZE*2 / 2.0f * sqrt(3.0))*sizeY;
     person2->setposition( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*sizeY,  positionX+personx2-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  positionY+persony2-Constants::MINIMAP_OBJECT_SIZE/2*sizeY);
 }
 
