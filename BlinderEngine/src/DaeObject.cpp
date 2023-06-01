@@ -173,6 +173,11 @@ void DaeObject::update(glm::mat4 world)
 	mvp = world;
 }
 
+glm::vec3 DaeObject::getTranslation()
+{
+	return glm::vec3(mvp[3][0], mvp[3][1], mvp[3][2]);
+}
+
 void DaeObject::setModel(glm::mat4 &model)
 {
 	// If there is no delta between 2 frames, do nothing,

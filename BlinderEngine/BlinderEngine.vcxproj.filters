@@ -187,6 +187,9 @@
     <ClCompile Include="src\DaveSkill.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Fog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Cube.h">
@@ -328,12 +331,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils.h">
-		<Filter>include</Filter>
-	</ClInclude>
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\DaveSkill.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\DaveSkill.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Fog.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

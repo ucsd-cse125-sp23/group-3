@@ -1,6 +1,4 @@
 #include "Scene.h"
-#include <thread>
-#include <omp.h>
 
 Scene::Scene()
 {
@@ -20,6 +18,8 @@ void Scene::init(int PlayID)
 	}
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
+	fog = std::make_shared<Fog>();
+	fog->setFogDistance(30.0f);
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
 	initSignObject();
@@ -112,6 +112,9 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
+	//fog->shrinkFog(0.1f);
+	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation());
+	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation());
 
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
