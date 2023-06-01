@@ -36,7 +36,7 @@ namespace Constants
 
 	const std::string carol_model_path = "./resources/objects/carol/carol.dae";
 	const std::string carol_walking_animation_path = "./resources/objects/carol/animation/carol_walking.dae";
-	const std::string carol_action_animation_path = "./resources/objects/carol/animation/carol_spell.dae";
+	const std::string carol_action_animation_path = "./resources/objects/carol/animation/carol_skill.dae";
 	const std::string carol_attack_animation_path = "./resources/objects/carol/animation/carol_attack.dae";
 	const std::string carol_win_animation_path = "./resources/objects/carol/animation/carol_victory.dae";
 	const std::string carol_lose_animation_path = "./resources/objects/carol/animation/carol_lose.dae";
