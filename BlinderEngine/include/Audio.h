@@ -3,17 +3,25 @@
 #include "soloud/soloud_wav.h"
 #include "../../shared/GlobalVariables.h"
 #include "../../shared/GameData.h"
+#include "Cube.h"
 
 class Audio {
 public:
 	static SoLoud::Soloud gSoloud;
 	static SoLoud::Wav gwave;
+	static SoLoud::Wav aliceSkill;
 	static SoLoud::Wav bobSkill;
+	static SoLoud::Wav carolSkill;
+	static SoLoud::Wav daveSkill;
+	
 
 	static const char* bgm_wav;
 	static const char* win_wav;
 	static const char* lose_wav;
+	static const char* alice_skill_wav;
 	static const char* bob_skill_wav;
+	static const char* carol_skill_wav;
+	static const char* dave_skill_wav;
 	static int assign_id;
 
 	static void init(int);
@@ -30,6 +38,6 @@ public:
 	static void playEnd(GameState);
 
 	// skill
-	static void playSkillAudio(GameData*);
+	static void playSkillAudio(GameData*, const std::vector<Cube*>&);
 	static void playskill(glm::mat4);		// offline testing
 };

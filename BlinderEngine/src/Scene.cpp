@@ -396,10 +396,12 @@ std::shared_ptr<DaeObject> Scene::initPlayerObject(int playerID)
 
 
 void Scene::initSignObject() {
-	sign = std::make_shared<ObjObject>("./resources/objects/sign-skill/StopSign.obj");
+	sign = std::make_shared<ObjObject>("./resources/objects/bear_on_balloons/bear_on_balloons.obj");
 }
 
 void Scene::setSignModel(glm::mat4 model) {
 	// add one more sign position to vector for drawing
+	float* f = glm::value_ptr(model);
+	f[13] = 5.0f;
 	sign_pos.push_back(model);
 }

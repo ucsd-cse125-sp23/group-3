@@ -1,4 +1,6 @@
 #include "../include/Server.h"
+#include <algorithm>
+#include <chrono>
 
 Map* Server::map;
 CollisionDetection Server::collisionDetection;
@@ -584,10 +586,18 @@ void Server::initialize_game()
 		{0,0,1,0},
 		{0,0,0,1}
 	};
+
+	std::vector<glm::mat4> BCDlocs = {map->getModelOnMap(id_mat, 1, 0.5f, 0.5f), map->getModelOnMap(id_mat, 0, 1.5f, 0.5f), map->getModelOnMap(id_mat, 2, 4.5f, 4.5f)};
+	
+	unsigned seed = std::chrono::system_clock::now()
+                        .time_since_epoch()
+                        .count();
+	std::shuffle(BCDlocs.begin(), BCDlocs.end(), std::default_random_engine(seed));
+
 	glm::mat4 locA = map->getModelOnMap(id_mat, 1, 3.5f, 3.5f);
-	glm::mat4 locB = map->getModelOnMap(id_mat, 1, 0.5f, 0.5f);
-	glm::mat4 locC = map->getModelOnMap(id_mat, 0, 1.5f, 0.5f);
-	glm::mat4 locD = map->getModelOnMap(id_mat, 2, 4.5f, 4.5f);
+	glm::mat4 locB = BCDlocs[0];
+	glm::mat4 locC = BCDlocs[1];
+	glm::mat4 locD = BCDlocs[2];
 
 	this->gd = new GameData(locA, locB, locC, locD, std::vector<int>(NUM_OBSTACLE, 2), 0, 0, 0, 0, GAME_LENGTH, GameState::READY, std::vector<int>(NUM_PLAYERS, 0), std::vector<int>(NUM_PLAYERS, 0));
 	this->obs_countdown = std::vector<std::pair<int, int>>(NUM_PLAYERS, std::make_pair(-1, -1));
