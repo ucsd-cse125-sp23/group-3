@@ -587,7 +587,7 @@ void Server::initialize_game()
 		{0,0,0,1}
 	};
 
-	vector<glm::mat4> BCDlocs = {map->getModelOnMap(id_mat, 1, 0.5f, 0.5f), map->getModelOnMap(id_mat, 0, 1.5f, 0.5f), map->getModelOnMap(id_mat, 2, 4.5f, 4.5f)};
+	std::vector<glm::mat4> BCDlocs = {map->getModelOnMap(id_mat, 1, 0.5f, 0.5f), map->getModelOnMap(id_mat, 0, 1.5f, 0.5f), map->getModelOnMap(id_mat, 2, 4.5f, 4.5f)};
 	
 	unsigned seed = std::chrono::system_clock::now()
                         .time_since_epoch()
