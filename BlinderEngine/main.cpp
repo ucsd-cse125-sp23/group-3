@@ -218,6 +218,11 @@ int main(void) {
             Window::no_event = true;
             std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
             // Idle callback. Updating objects, etc. can be done here.
+            /*int key = 0;
+            int scancode = 0;
+            int action = 0; 
+            int mods=0;
+            Window::keyCallback(window, key,  scancode,  action, mods);*/
             Window::idleCallback();
             if (player->getLevel() >= AWARENESS_THRESHOLD) {
                 Window::scene->ui->setPlayerAlicePosition(Window::scene->playersObjects[0]->getModel());

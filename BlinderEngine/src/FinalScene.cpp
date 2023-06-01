@@ -1,7 +1,13 @@
 #include "FinalScene.h"
 
 FinalScene::FinalScene(bool win) {
+	status = win;
+	if (win) {
 
+	}
+	else {
+
+	}
 }
 
 void FinalScene::update(float dt) {
