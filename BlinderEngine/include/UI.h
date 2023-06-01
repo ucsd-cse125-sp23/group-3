@@ -77,6 +77,8 @@ private:
 	graphic2D* level_bar_s;
 	float level_bar_len;
 	bool shorter_level;
+	int win_height;
+	int win_width;
 	//int assigned_id;
 public:
 	UI();
