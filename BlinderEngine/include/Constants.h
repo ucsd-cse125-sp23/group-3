@@ -52,7 +52,7 @@ namespace Constants
 
 	// Obstacles model path
 	const std::string bowlingpin_model_path = "./resources/objects/bowlingpin/bowlingpin.obj";
-	const glm::vec3 bowlingpin_scaling_factor = glm::vec3(1.0f);
+	const glm::vec3 bowlingpin_scaling_factor = glm::vec3(0.7f);
 
 	const std::string cage_model_path = "./resources/objects/cage/cage_sketchfab.obj";
 	const glm::vec3 cage_scaling_factor = glm::vec3(8.0f);
