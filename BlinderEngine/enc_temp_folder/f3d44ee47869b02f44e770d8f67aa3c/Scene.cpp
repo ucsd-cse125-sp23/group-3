@@ -19,7 +19,7 @@ void Scene::init(int PlayID)
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	fog = std::make_shared<Fog>();
-	fog->setFogDistance(Constants::default_fog_distance);
+	fog->setFogDistance(1000.0f);
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
 	initSignObject();
