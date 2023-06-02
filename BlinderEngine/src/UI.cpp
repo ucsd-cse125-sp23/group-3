@@ -33,8 +33,10 @@ UI::UI() {
 		UI::time_bar_posiX + UI::time_sizeX / 4, -1 + UI::char_sizeY * UI::win_width / UI::win_height + (UI::time_sizeY * UI::win_width / UI::win_height) / 5.4, true);
 	time_bar_s->bindTexture(UI::time_bar_cut);
 
-	minimap = new Minimap(UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_sizeY,
-		0.99 - UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_posiY);
+	minimap_dark = new Minimap(UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_sizeY,
+		0.99 - UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_posiY, UI::minimap_dark_png);
+	minimap_light = new Minimap(UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_sizeY,
+		0.99 - UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_posiY, UI::minimap_light_png);
 
 	level = new graphic2D(UI::level_sizeX * UI::win_height / UI::win_width, UI::level_sizeY,
 		0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * UI::win_height / UI::win_width, UI::level_posiY, true);
@@ -59,7 +61,8 @@ UI::~UI() {
 	delete time;
 	delete time_bar;
 	delete time_bar_s;
-	delete minimap;
+	delete minimap_dark;
+	delete minimap_light;
 	delete level;
 	delete level_bar;
 	delete level_bar_s;
@@ -78,7 +81,11 @@ void UI::draw(const glm::mat4& viewProjMtx, StaticShader shader, int playerID, i
 	}
 	time->draw(shader, 1.0f);
 	if (playerID != 0) {			// not Alice
-		minimap->draw(viewProjMtx, shader);
+		if (!minimap_dark->showAlice()) {
+			minimap_dark->draw(viewProjMtx, shader);
+		}else if (minimap_light->showAlice()) {
+			minimap_light->draw(viewProjMtx, shader);
+		}
 	}
 	if (shorter_level) {
 		level_bar_s->draw(shader, 1.0f);
@@ -117,9 +124,12 @@ void UI::setSize(const int& width, const int& height, int playerId) {
 		UI::time_bar_posiX + UI::time_sizeX / 4, -1 + UI::char_sizeY * width / height + (UI::time_sizeY * width / height) / 5.4);
 	time_bar_s->update();
 
-	minimap->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
+	minimap_dark->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
 		0.99 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
-	minimap->update();
+	minimap_dark->update();
+	minimap_light->setposition(UI::mnmap_sizeX * height / width, UI::mnmap_sizeY,
+		0.99 - UI::mnmap_sizeX * height / width, UI::mnmap_posiY);
+	minimap_light->update();
 
 	if (playerId == 0) {		// Alice
 		level->setposition(UI::level_sizeX * height / width, UI::level_sizeY,
@@ -156,7 +166,8 @@ void UI::update() {
 	time->update();
 	time_bar->update();
 	time_bar_s->update();
-	minimap->update();
+	minimap_dark->update();
+	minimap_light->update();
 	
 	level->update();
 	level_bar->update();
@@ -194,12 +205,15 @@ void UI::changeLevelbarSizeY(float rate) {
 }
 
 void UI::setPlayerPosition(glm::mat4 model) {
-	minimap->setPosition(model);
-	minimap->update();
+	minimap_dark->setPosition(model);
+	minimap_dark->update();
+	minimap_light->setPosition(model);
+	minimap_light->update();
 }
 
 void UI::setPlayerAlicePosition(glm::mat4 model) {
-	minimap->setAlice(model);
+	minimap_dark->setAlice(model);
+	minimap_light->setAlice(model);
 }
 
 

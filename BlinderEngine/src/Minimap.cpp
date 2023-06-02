@@ -3,19 +3,19 @@
 #include "Minimap.h"
 #include "Constants.h"
 
-Minimap::Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY){
+Minimap::Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY, const char* map_texture){
     minimap=new graphic2D( _sizeX, _sizeY,   _positionX,  _positionY,true);
-    const char* textfile="./images/map.png";
+    const char* textfile=map_texture;
     minimap->bindTexture(textfile);
     sizeX=_sizeX;
     sizeY=_sizeY;
     positionX=_positionX;
     positionY=_positionY;
     person=new graphic2D( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*_sizeY,  _positionX+0.5*sizeX-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  _positionY+0.5*sizeY-Constants::MINIMAP_OBJECT_SIZE/2*sizeY,true);
-    const char* persontextfile="./images/person.png";
+    const char* persontextfile="./images/star.png";
     person->bindTexture(persontextfile);
     person2=new graphic2D( Constants::MINIMAP_OBJECT_SIZE*sizeX, Constants::MINIMAP_OBJECT_SIZE*_sizeY,  _positionX+0.5*sizeX-Constants::MINIMAP_OBJECT_SIZE/2*sizeX,  _positionY+0.5*sizeY-Constants::MINIMAP_OBJECT_SIZE/2*sizeY,true);
-    persontextfile="./images/person_Alice.png";
+    persontextfile="./images/heart.png";
     person2->bindTexture(persontextfile);
     Alice_shown=false;
 }
