@@ -139,6 +139,8 @@ public:
 	std::shared_ptr<ObjObject> obsL;
 	std::vector<glm::mat4> lobs_pos;
 
+	std::shared_ptr<ObjObject> target_exit;
+
 	// Shaders
 	GLuint shaderProgram;
 	std::shared_ptr<DynamicShader> dynamicShader;
