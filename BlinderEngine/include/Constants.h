@@ -48,7 +48,7 @@ namespace Constants
 	const std::string dave_attack_animation_path = "./resources/objects/dave/animation/dave_attack.dae";
 	const std::string dave_win_animation_path = "./resources/objects/dave/animation/dave_victory.dae";
 	const std::string dave_lose_animation_path = "./resources/objects/dave/animation/dave_lose.dae";
-	const glm::vec3 dave_scaling_factor = glm::vec3(0.8f);
+	const glm::vec3 dave_scaling_factor = glm::vec3(0.7f);
 
 	// Obstacles model path
 	const std::string bowlingpin_model_path = "./resources/objects/bowlingpin/bowlingpin.obj";
