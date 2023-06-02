@@ -24,6 +24,7 @@
 #include <animator.h>
 #include <Skybox.h>
 #include <DaeObject.h>
+#include <FinalScene.h>
 
 #define CAMERA_SPEED 0.5f
 #define TURNING_RATIO 20.0f
@@ -93,6 +94,7 @@ public:
 	std::shared_ptr<graphic2D> coverPage;
 	std::shared_ptr<graphic2D> instructionPage;
 
+	std::shared_ptr<FinalScene> endPage;
 
 	int ready_state = 0;
 	std::shared_ptr<graphic2D> readyBtnGray;
@@ -121,7 +123,6 @@ public:
 	std::shared_ptr<graphic2D> dBtnSelectedU;
 	std::vector<std::shared_ptr<graphic2D>> dbtn_vec;
 
-	std::shared_ptr<graphic2D> endPage;
 	std::shared_ptr<Skybox> skybox;
 	std::vector<std::shared_ptr<DaeObject>> playersObjects;
 	std::shared_ptr<DaeObject> daeObjectAlice;

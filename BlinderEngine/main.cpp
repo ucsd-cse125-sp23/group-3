@@ -253,6 +253,7 @@ int main(void) {
                     while (elapsed_seconds_.count() < 2) {
                         end_ = std::chrono::system_clock::now();
                         elapsed_seconds_ = end_ - start_;
+                        Window::EndShrink();
                     }
                     std::cout << "elapsed time: " << elapsed_seconds_.count() << "s\n";
                     break;

@@ -208,6 +208,10 @@ void Window::setEndPage(GameState gs) {
     }
 }
 
+void Window::EndShrink() {
+    scene->endScene();
+}
+
 void Window::displayEndPage(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

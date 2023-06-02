@@ -12,6 +12,7 @@ void Scene::init(int PlayID)
 {
 	// PlayID dependent loading area
 	playerID = PlayID;
+	camera->resetFinalCam();
 	if (playerID == 0)
 	{
 		camera->setFirstperson();
@@ -72,15 +73,18 @@ void Scene::drawLanding()
 
 void Scene::setEnd(bool won)
 {
-	if (won)
-		endPage->bindTexture("./images/win.png");
-	else
-		endPage->bindTexture("./images/lose.png");
+	endPage = std::make_shared<FinalScene>(won, playersObjects);
+	lights->EmptyAllLights(won);
+	camera->setFinalCam();
 }
 
 void Scene::drawEnd()
-{
-	endPage->draw(*uiShader, 1.0f);
+{	
+	
+	lights->loadToUShader(shaderProgram, *camera);
+	lights->loadToDShader(*dynamicShader, *camera);
+	lights->loadToSShader(*staticShader, *camera);
+	endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
 }
 
 void Scene::updateWorld()

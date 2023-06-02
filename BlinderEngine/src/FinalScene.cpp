@@ -5,11 +5,17 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> players)
 	players=players;
 	status = win;
 	playertime=std::vector<float>(4,0.0f);
-	for(int i=0;i<players.size();i++){
-		glm::mat4 model=glm::translate(glm::mat4(1.0f),glm::vec3(-3.0f+i*6.0f/3,0.0f,-1.0f));
-		players[i]->setModel(model);
+	if (win) {
+		for (int i = 0; i < players.size(); i++) {
+			glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-3.0f + i * 6.0f / 3, 0.0f, -1.0f));
+			players[i]->setModel(model);
+		}
 	}
-	backWall->setModel(glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,-5.0f)))
+	else {
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -1.0f));
+		players[0]->setModel(model);
+	}
+	backWall->setModel(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -5.0f)));
 }
 
 void FinalScene::update(float dt) {
@@ -18,22 +24,29 @@ void FinalScene::update(float dt) {
 			playertime[i]+=dt;	
 		}
 	}
-	for(int i=0;i<playertime.size();i++){
-		if(playertime[i]>2.0f){
-			if(win){
+	if (win) {
+		for (int i = 0; i < playertime.size(); i++) {
+			if (playertime[i] > 2.0f) {
 				players[i]->doWin();
-			}else{
-				players[i]->doLose();
 			}
-			
+
 		}
 	}
+	else {
+		players[0]->doLose();
+	}
+	
 }
 
 void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, const glm::mat4& projection, const glm::mat4& view) {
 
 	backWall->draw(projection,view,Sshader);
-	for(auto player: players){
-		player->draw(projection,view,Dshader);
+	if (win) {
+		for (auto player : players) {
+			player->draw(projection, view, Dshader);
+		}
+	}
+	else {
+		players[0]->draw(projection, view, Dshader);
 	}
 }

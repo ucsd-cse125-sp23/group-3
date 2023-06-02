@@ -100,6 +100,7 @@ public:
     static bool cursorOnBBtn(double, double);
     static bool cursorOnCBtn(double, double);
     static bool cursorOnDBtn(double, double);
+    static void EndShrink();
 
     //static unsigned int loadCubemap(std::vector<std::string> faces);
 

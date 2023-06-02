@@ -32,6 +32,7 @@ public:
     bool getPers() { return first_person; };
     float getFOV() { return FOV; };
     void setFinalCam() { final = true; };
+    void resetFinalCam() { final = false; };
     glm::vec3 CameraPos, CameraTar;
     
 private:
