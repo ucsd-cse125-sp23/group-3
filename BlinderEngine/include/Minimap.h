@@ -23,7 +23,7 @@ class Minimap {
         bool Alice_shown;
 
     public:
-        Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY);
+        Minimap(float _sizeX,float _sizeY, float _positionX, float _positionY, const char* map_texture);
         ~Minimap();
 
         void draw(const glm::mat4& viewProjMtx, StaticShader shader);
@@ -46,5 +46,8 @@ class Minimap {
         }
         float getSizeX() {
             return sizeX;
+        }
+        bool showAlice() {
+            return Alice_shown;
         }
 };

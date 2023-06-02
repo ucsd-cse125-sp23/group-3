@@ -45,7 +45,9 @@ public:
 	const double mnmap_sizeY = 0.3;
 	//const double mnmap_posiX = 0.695;
 	const double mnmap_posiY = 0.68;
-	const char* minimap_png = "./images/test2.png";
+	//const char* minimap_png = "./images/test2.png";
+	const char* minimap_dark_png = "./images/map_dark.png";
+	const char* minimap_light_png = "./images/map_light.png";
 
 	const double level_sizeX = 0.675;
 	const double level_sizeY = 0.15;
@@ -71,7 +73,8 @@ private:
 	graphic2D* time_bar_s;
 	float time_bar_len;
 	bool shorter_timer;
-	Minimap* minimap;
+	Minimap* minimap_dark;
+	Minimap* minimap_light;
 	graphic2D* level;
 	graphic2D* level_bar;
 	graphic2D* level_bar_s;
