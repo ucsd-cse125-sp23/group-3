@@ -247,6 +247,14 @@ int main(void) {
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
                     cli->gd->gamestate == GameState::WIN) {
+                    std::chrono::time_point<std::chrono::system_clock> start_, end_;
+                    std::chrono::duration<double> elapsed_seconds_;
+                    start_ = std::chrono::system_clock::now();
+                    while (elapsed_seconds_.count() < 2) {
+                        end_ = std::chrono::system_clock::now();
+                        elapsed_seconds_ = end_ - start_;
+                    }
+                    std::cout << "elapsed time: " << elapsed_seconds_.count() << "s\n";
                     break;
                 }
             }
