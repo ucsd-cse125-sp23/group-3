@@ -26,6 +26,9 @@ void Scene::init(int PlayID)
 	obsS = std::make_shared<ObjObject>(Constants::bowlingpin_model_path, Constants::bowlingpin_scaling_factor);
 	obsM = std::make_shared<ObjObject>(Constants::cage_model_path, Constants::cage_scaling_factor);
 	obsL = std::make_shared<ObjObject>(Constants::door_model_path, Constants::door_scaling_factor);
+
+	target_exit = std::make_shared<ObjObject>(Constants::exitdoor_model_path, Constants::exitdoor_scaling_factor);
+
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
 	sceneStatus = SceneStatus::running;
@@ -180,6 +183,15 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		obsL->spin(90.0f);
 		obsL->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 	}
+	glm::mat4 id_mat = {
+		{1,0,0,0},
+		{0,1,0,0},
+		{0,0,1,0},
+		{0,0,0,1}
+	};
+	target_exit->setModel(map->getModelOnMap(id_mat, 2, 0.55, 0));
+	target_exit->spin(180.0f+38.0f);
+	target_exit->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 }
 
 void Scene::drawCover()
