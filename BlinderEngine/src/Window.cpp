@@ -531,3 +531,15 @@ void Window::updateBySkill(GameData* gd) {
         Window::scene->playersObjects.at(playerID)->doAttack();
     }
 }
+
+void Window::updateByWalk(GameData* gd) {
+    if (gd->player_status[1] == (int)PlayerStatus::WALK) {
+        Window::scene->playersObjects.at(1)->doAction();
+    }
+    if (gd->player_status[2] == (int)PlayerStatus::WALK) {
+        Window::scene->playersObjects.at(2)->doAction();
+    }
+    if (gd->player_status[3] == (int)PlayerStatus::WALK) {
+        Window::scene->playersObjects.at(3)->doAction();
+    }
+}

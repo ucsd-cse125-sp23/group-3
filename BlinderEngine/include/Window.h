@@ -108,4 +108,5 @@ public:
     static void setUiByPlayerID();
 
     static void updateBySkill(GameData * gd);
+    static void updateByWalk(GameData* gd);
 };
