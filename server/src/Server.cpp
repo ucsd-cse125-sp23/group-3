@@ -169,6 +169,9 @@ std::vector<int> Server::recv_eventRecords(int client_id)
 	{
 		eventRecord = Packet::deserializeEventRecords(buffer[client_id]);
 		this->check_event[client_id] = 1;
+		while (recv(sessions[client_id], buffer[client_id], 512, 0) > 0) {
+
+		}
 	}
 	return eventRecord;
 }
