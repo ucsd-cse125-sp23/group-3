@@ -374,6 +374,7 @@ void Scene::loadEssentials()
 	skybox = std::make_shared<Skybox>();
 	endPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	coverPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
+	instructionPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	camera = std::make_shared<Camera>();
 	camera->SetAspect(float(WINDOW_WIDTH) / float(WINDOW_HEIGHT));
 
