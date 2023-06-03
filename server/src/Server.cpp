@@ -234,6 +234,7 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		break;
 	}
 	if (e == EventType::FORWARD) {
+		this->gd->player_status[id] = (int)PlayerStatus::WALK;
 		glm::mat4 old_loc = *loc;
 		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
 		int mapID;
@@ -566,11 +567,11 @@ void Server::updateSkillCD()
 	}
 }
 
-void Server::cleanUpSkillStatus()
+void Server::cleanUpSkillWalkStatus()
 {
 	for (int i = 0; i < NUM_PLAYERS; i++)
 	{
-		if (this->gd->player_status[i] == (int)PlayerStatus::SKILL) {
+		if (this->gd->player_status[i] == (int)PlayerStatus::SKILL || this->gd->player_status[i] == (int)PlayerStatus::WALK) {
 			this->gd->player_status[i] = (int)PlayerStatus::NONE;
 		}
 	}

@@ -102,7 +102,7 @@ int main()
                  );
              }
 
-             serv->cleanUpSkillStatus();
+             serv->cleanUpSkillWalkStatus();
              serv->updateByEvent(all_records);
              serv->checkGameEndLogic();
              for (int j = 0; j < NUM_PLAYERS; j++)

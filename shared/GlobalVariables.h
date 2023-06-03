@@ -15,9 +15,9 @@
 #define SMALL_OBS 1000
 #define MEDIUM_OBS 3000
 #define LARGE_OBS 5000
-#define SMALL_ALERT 5
-#define MEDIUM_ALERT 7
-#define LARGE_ALERT 10
+#define SMALL_ALERT 2
+#define MEDIUM_ALERT 5
+#define LARGE_ALERT 7
 #define SMALL_AWD 5
 #define MEDIUM_AWD 10
 #define LARGE_AWD 15
@@ -50,7 +50,8 @@ enum class PlayerStatus
 {
 	NONE = 0,
 	ATTACK = 1,
-	SKILL = 2
+	SKILL = 2,
+	WALK = 3
 };
 
 enum class ObstacleState

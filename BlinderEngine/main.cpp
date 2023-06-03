@@ -203,6 +203,7 @@ int main(void) {
                 Window::updateLevel(player->getLevel());
                 Window::updateTime(cli->gd->remaining_time);
                 Window::updateBySkill(cli->gd);
+                Window::updateByWalk(cli->gd);
             }
             Window::no_event = true;
             std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
@@ -226,6 +227,7 @@ int main(void) {
             }
             else {
                 Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
+                Audio::playHpLow(cli->gd);
                 Audio::playSkillAudio(cli->gd, Window::scene->map->obs->cubes);
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
