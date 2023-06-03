@@ -327,7 +327,7 @@ void Scene::loadShaders()
 void Scene::loadGameObjects()
 {
 	std::cout << "loading" << std::endl;
-	objObjectTest = std::make_shared<ObjObject>("./resources/objects/bear_on_balloons/bear_on_balloons.obj", glm::vec3(3.0f));
+	objObjectTest = std::make_shared<ObjObject>("./resources/objects/exit/Exitdoor.obj", glm::vec3(1.0f));
 	std::fill_n(std::back_inserter(playersObjects), 4, nullptr);
 	for (int i = 0; i < 4; i++) {
 		playersObjects[i] = (initPlayerObject(i));

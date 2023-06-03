@@ -61,7 +61,7 @@ namespace Constants
 	const glm::vec3 door_scaling_factor = glm::vec3(1.2f);
 
 	// Scene model path
-	const std::string exitdoor_model_path = "./resources/objects/exit/Exitdoor_tri.obj";
+	const std::string exitdoor_model_path = "./resources/objects/exit/Exitdoor.obj";
 	const glm::vec3 exitdoor_scaling_factor = glm::vec3(1.0f);
 
 
