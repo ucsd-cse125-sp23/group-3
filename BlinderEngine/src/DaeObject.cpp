@@ -253,10 +253,8 @@ void DaeObject::doLose()
 	animator->PlayAnimation(animation_lose);
 
 	float currentFrame = glfwGetTime();
-	if (currentFrame - lastStartLose >= animation_lose->GetDuration() / 1000)
-	{
-		lastStartLose = currentFrame;
-	}
+	lastStartLose = currentFrame;
+
 }
 
 
