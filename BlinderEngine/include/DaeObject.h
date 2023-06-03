@@ -36,6 +36,7 @@ public:
 	void spin(float deg);
 	void move(float i);
 
+	void doWalk();
 	void doAction();
 	void doAttack();
 	void doWin();
