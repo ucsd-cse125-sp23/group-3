@@ -264,11 +264,14 @@ void Scene::setUiByPlayerID(int id)
 void Scene::loadLanding()
 {
 	landingPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
-	landingPage->bindTexture("./resources/images/test.png");
+	landingPage->bindTexture("./resources/images/landing_page.png");
 
-	readyBtnGray = std::make_shared<graphic2D>(0.2, 0.2, 0.7, -0.7, true);
-	readyBtn = std::make_shared<graphic2D>(0.2, 0.2, 0.7, -0.7, true);
-	readyBtnSelected = std::make_shared<graphic2D>(0.2, 0.2, 0.7, -0.7, true);
+	ready_x = -0.06;
+	ready_y = -0.85;
+
+	readyBtnGray = std::make_shared<graphic2D>(0.2, 0.2, ready_x, ready_y, true);
+	readyBtn = std::make_shared<graphic2D>(0.2, 0.2, ready_x, ready_y, true);
+	readyBtnSelected = std::make_shared<graphic2D>(0.2, 0.2, ready_x, ready_y, true);
 	readyBtnGray->bindTexture("./resources/images/startGray.png");
 	readyBtn->bindTexture("./resources/images/start.png");
 	readyBtnSelected->bindTexture("./resources/images/startSelect.png");
@@ -276,9 +279,13 @@ void Scene::loadLanding()
 	rbtn_vec.push_back(readyBtn);
 	rbtn_vec.push_back(readyBtnSelected);
 
-	aBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.9, -0.7, true);
-	aBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, -0.9, -0.7, true);
-	aBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, -0.9, -0.7, true);
+	buttons_y = -0.6;
+	buttons_x_initial = -0.6;
+	buttons_x_offset = 0.36;
+
+	aBtn = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial, buttons_y, true);
+	aBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial, buttons_y, true);
+	aBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial, buttons_y, true);
 	aBtn->bindTexture("./resources/images/select.png");
 	aBtnSelectedO->bindTexture("./resources/images/occupied.png");
 	aBtnSelectedU->bindTexture("./resources/images/alice.png");
@@ -286,9 +293,9 @@ void Scene::loadLanding()
 	abtn_vec.push_back(aBtnSelectedO);
 	abtn_vec.push_back(aBtnSelectedU);
 
-	bBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.5, -0.7, true);
-	bBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, -0.5, -0.7, true);
-	bBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, -0.5, -0.7, true);
+	bBtn = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 1 * buttons_x_offset, buttons_y, true);
+	bBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 1 * buttons_x_offset, buttons_y, true);
+	bBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 1 * buttons_x_offset, buttons_y, true);
 	bBtn->bindTexture("./resources/images/select.png");
 	bBtnSelectedO->bindTexture("./resources/images/occupied.png");
 	bBtnSelectedU->bindTexture("./resources/images/bob.png");
@@ -296,9 +303,9 @@ void Scene::loadLanding()
 	bbtn_vec.push_back(bBtnSelectedO);
 	bbtn_vec.push_back(bBtnSelectedU);
 
-	cBtn = std::make_shared<graphic2D>(0.2, 0.2, -0.1, -0.7, true);
-	cBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, -0.1, -0.7, true);
-	cBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, -0.1, -0.7, true);
+	cBtn = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 2 * buttons_x_offset, buttons_y, true);
+	cBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 2 * buttons_x_offset, buttons_y, true);
+	cBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 2 * buttons_x_offset, buttons_y, true);
 	cBtn->bindTexture("./resources/images/select.png");
 	cBtnSelectedO->bindTexture("./resources/images/occupied.png");
 	cBtnSelectedU->bindTexture("./resources/images/carol.png");
@@ -306,9 +313,9 @@ void Scene::loadLanding()
 	cbtn_vec.push_back(cBtnSelectedO);
 	cbtn_vec.push_back(cBtnSelectedU);
 
-	dBtn = std::make_shared<graphic2D>(0.2, 0.2, 0.3, -0.7, true);
-	dBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, 0.3, -0.7, true);
-	dBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, 0.3, -0.7, true);
+	dBtn = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 3 * buttons_x_offset, buttons_y, true);
+	dBtnSelectedO = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 3 * buttons_x_offset, buttons_y, true);
+	dBtnSelectedU = std::make_shared<graphic2D>(0.2, 0.2, buttons_x_initial + 3 * buttons_x_offset, buttons_y, true);
 	dBtn->bindTexture("./resources/images/select.png");
 	dBtnSelectedO->bindTexture("./resources/images/occupied.png");
 	dBtnSelectedU->bindTexture("./resources/images/david.png");

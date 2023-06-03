@@ -160,5 +160,9 @@ public:
 		return playersObjects[playerID]->getModel();
 	}
 
-
+	float buttons_y;
+	float buttons_x_initial;
+	float buttons_x_offset;
+	float ready_x;
+	float ready_y;
 };
