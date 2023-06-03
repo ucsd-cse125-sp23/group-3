@@ -21,6 +21,10 @@ void Scene::init(int PlayID)
 	//camera->setFinalCam();
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
+	playersObjects[0]->setScale(Constants::alice_scaling_factor);
+	playersObjects[1]->setScale(Constants::bob_scaling_factor);
+	playersObjects[2]->setScale(Constants::carol_scaling_factor);
+	playersObjects[3]->setScale(Constants::dave_scaling_factor);
 	fog = std::make_shared<Fog>();
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
@@ -34,9 +38,9 @@ void Scene::init(int PlayID)
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
 	sceneStatus = SceneStatus::running;
-	endPage = std::make_shared<FinalScene>(false, playersObjects);
+	/*endPage = std::make_shared<FinalScene>(false, playersObjects);
 	lights->EmptyAllLights(true);
-	camera->setFinalCam();
+	camera->setFinalCam();*/
 }
 
 void Scene::initLandingPage()
@@ -57,6 +61,9 @@ void Scene::initCover()
 void Scene::initInstruction()
 {
 	instructionPage->bindTexture("./images/instruction.png");
+}
+void Scene::resetFog() {
+	fog->reset();
 }
 
 void Scene::drawLanding()
@@ -83,6 +90,15 @@ void Scene::setEnd(bool won)
 	camera->setFinalCam();
 }
 
+void Scene::reset() {
+	camera->resetFinalCam();
+	camera->resetFirstCam();
+	playersObjects[0]->setScale(Constants::alice_scaling_factor);
+	playersObjects[1]->setScale(Constants::bob_scaling_factor);
+	playersObjects[2]->setScale(Constants::carol_scaling_factor);
+	playersObjects[3]->setScale(Constants::dave_scaling_factor);
+}
+
 void Scene::drawEnd()
 {	
 	lights->loadToUShader(shaderProgram, *camera);
@@ -90,7 +106,7 @@ void Scene::drawEnd()
 	lights->loadToSShader(*staticShader, *camera);
 
 	endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
-	skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
+	//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
 }
@@ -105,14 +121,14 @@ void Scene::updateEnd() {
 
 void Scene::updateWorld()
 {
-	if (true) {
+	/*if (true) {
 		double newtimer = glfwGetTime();
 		float dt = (newtimer - timer);
 		timer = newtimer;
 		endPage->update(dt);
 		camera->Update();
 		return;
-	}
+	}*/
 	double newtimer = glfwGetTime();
 	float dt = (newtimer - timer);
 	timer = newtimer;
@@ -147,7 +163,7 @@ void Scene::updateWorld()
 
 void Scene::displayWorld(std::vector<int> os, int cd_remain)
 {
-	if (true) {
+	/*if (true) {
 		
 		lights->loadToUShader(shaderProgram, *camera);
 		lights->loadToDShader(*dynamicShader, *camera);
@@ -157,11 +173,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 		fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 		fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
-		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
+		//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 		//map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 		return;
-	}
+	}*/
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);

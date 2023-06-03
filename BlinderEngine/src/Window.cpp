@@ -51,6 +51,10 @@ bool Window::initializeProgram() {
     return true;
 }
 
+void Window::resetScene() {
+    scene->reset();
+}
+
 bool Window::initializeObjects(int PlayID) {
     scene->init(PlayID);
     return true;
@@ -202,14 +206,20 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os, int cd_rem
 void Window::setEndPage(GameState gs) {
     if (gs == GameState::WIN) {
         scene->setEnd(true);
+        scene->resetFog();
     }
     else if (gs == GameState::LOSE) {
         scene->setEnd(false);
+        scene->resetFog();
     }
 }
 
 void Window::EndShrink() {
     scene->endScene();
+}
+
+void Window::resetFog() {
+    scene->resetFog();
 }
 
 void Window::updateEndPage(GLFWwindow* window) {

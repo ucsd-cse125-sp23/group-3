@@ -51,6 +51,7 @@ public:
 	void displayWorld(std::vector<int> os, int cd_remain);
 	void drawCover();
 	void drawInstruction();
+	void reset();
 	// Control
 	void setModel(glm::mat4 model);
 	void updateLevel(float level);
@@ -66,6 +67,7 @@ public:
 	void setSignModel(glm::mat4 model);
 	void loadLanding();
 	void endScene();
+	void resetFog();
 
 private:
 	void loadShaders();
