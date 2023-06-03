@@ -31,7 +31,7 @@ void Fog::updateFog(GLuint shaderID, glm::vec3 playerPos, int width, int height)
 void Fog::shrinkFog()
 {
 	if (fogDistance > 100) {
-		fogDistance -= 100.0f;
+		fogDistance -= 3.0f;
 	}
 	else if (staticFrames == 0)
 	{
