@@ -319,7 +319,8 @@ void Window::mouse_callback(GLFWwindow* window, int button, int action, int mods
     if (button == GLFW_MOUSE_BUTTON_RIGHT) {
         RightDown = (action == GLFW_PRESS);
     }
-    if ((Constants::offline || toReady) && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+    //if ((Constants::offline || toReady) && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
+    if (toReady && cursorOnReadyBtn(MouseX, MouseY) && LeftDown) {
         state = WindowState::INGAME;
         LeftDown = false;
         std::cout << "READY!!\n";
@@ -363,6 +364,13 @@ void Window::cursor_callback(GLFWwindow* window, double currX, double currY) {
 
     MouseX = (int)currX;
     MouseY = (int)currY;
+    /*
+    if (cursorOnABtn(MouseX, MouseY)) std::cout << "A" << std::endl;
+    if (cursorOnBBtn(MouseX, MouseY)) std::cout << "B" << std::endl;
+    if (cursorOnCBtn(MouseX, MouseY)) std::cout << "C" << std::endl;
+    if (cursorOnDBtn(MouseX, MouseY)) std::cout << "D" << std::endl;
+    if (cursorOnReadyBtn(MouseX, MouseY)) std::cout << "R" << std::endl;
+    */
 
     // Move camera
     // NOTE: this should really be part of Camera::Update()
@@ -388,34 +396,55 @@ bool Window::cursorOnReadyBtn(double currX, double currY) {
     if (state != WindowState::LANDING) {
         return false;
     }
-    //std::cout << currX << " " << currY << endl;
-    //std::cout << posiX << " " << posiY << endl;
-    if (width * 1.7 / 2 < currX && currX < width * 1.9 / 2 && height * 1.5 / 2 < currY && currY < height * 1.7 / 2) {
-        //std::cout << "On ready btn\n";
-        return true;
-    }
-    return false;
+    //float wmin = width * 1.7 / 2;
+    //float wmax = width * 1.9 / 2;
+    //float hmin = height * 1.5 / 2;
+    //float hmax = height * 1.7 / 2;
+    float wmin = width * (1 + scene->ready_x) / 2;
+    float wmax = width * (1 + scene->ready_x + 0.2) / 2;
+    float hmin = height * (1 - scene->ready_y - 0.2) / 2;
+    float hmax = height * (1 - scene->ready_y) / 2;
+    return wmin < currX && wmax > currX && hmin < currY && currY < hmax;
 }
 
 bool Window::cursorOnABtn(double x, double y) {
-    return state != WindowState::LANDING ||
-        width * 0.1 / 2 < x && width * 0.3 / 2 > x &&
-        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+    //float wmin = width * 0.1 / 2;
+    //float wmax = width * 0.3 / 2;
+    float wmin = width * (1 + scene->buttons_x_initial) / 2;
+    float wmax = width * (1 + scene->buttons_x_initial + 0.2) / 2;
+    //float hmin = height * 1.5 / 2;
+    //float hmax = height * 1.7 / 2;
+
+    float hmin = height * (1 - scene->buttons_y - 0.2) / 2;
+    float hmax = height * (1 - scene->buttons_y) / 2;
+    return state != WindowState::LANDING || wmin < x && wmax > x && hmin < y && y < hmax;
 }
 bool Window::cursorOnBBtn(double x, double y) {
-    return state != WindowState::LANDING ||
-        width * 0.5 / 2 < x && width * 0.7 / 2 > x &&
-        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+    //float wmin = width * 0.5 / 2;
+    //float wmax = width * 0.7 / 2;
+    float wmin = width * (1 + scene->buttons_x_initial + 1 * scene->buttons_x_offset) / 2;
+    float wmax = width * (1 + scene->buttons_x_initial + 1 * scene->buttons_x_offset + 0.2) / 2;
+    float hmin = height * (1 - scene->buttons_y - 0.2) / 2;
+    float hmax = height * (1 - scene->buttons_y) / 2;
+    return state != WindowState::LANDING || wmin < x && wmax > x && hmin < y && y < hmax;
 }
 bool Window::cursorOnCBtn(double x, double y) {
-    return state != WindowState::LANDING ||
-        width * 0.9 / 2 < x && width * 1.1 / 2 > x &&
-        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+    //float wmin = width * 0.9 / 2;
+    //float wmax = width * 1.1 / 2;
+    float wmin = width * (1 + scene->buttons_x_initial + 2 * scene->buttons_x_offset) / 2;
+    float wmax = width * (1 + scene->buttons_x_initial + 2 * scene->buttons_x_offset + 0.2) / 2;
+    float hmin = height * (1 - scene->buttons_y - 0.2) / 2;
+    float hmax = height * (1 - scene->buttons_y) / 2;
+    return state != WindowState::LANDING || wmin < x && wmax > x && hmin < y && y < hmax;
 }
 bool Window::cursorOnDBtn(double x, double y) {
-    return state != WindowState::LANDING ||
-        width * 1.3 / 2 < x && width * 1.5 / 2 > x &&
-        height * 1.5 / 2 < y && y < height * 1.7 / 2;
+    //float wmin = width * 1.3 / 2;
+    //float wmax = width * 1.5 / 2;
+    float wmin = width * (1 + scene->buttons_x_initial + 3 * scene->buttons_x_offset) / 2;
+    float wmax = width * (1 + scene->buttons_x_initial + 3 * scene->buttons_x_offset + 0.2) / 2;
+    float hmin = height * (1 - scene->buttons_y - 0.2) / 2;
+    float hmax = height * (1 - scene->buttons_y) / 2;
+    return state != WindowState::LANDING || wmin < x && wmax > x && hmin < y && y < hmax;
 }
 
 void Window::updateLevel(int curr) {
