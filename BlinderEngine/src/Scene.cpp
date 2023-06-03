@@ -48,6 +48,11 @@ void Scene::initCover()
 	coverPage->bindTexture("./images/cover.png");
 }
 
+void Scene::initInstruction()
+{
+	instructionPage->bindTexture("./images/instruction.png");
+}
+
 void Scene::drawLanding()
 {
 	landingPage->draw(*uiShader, 1.0f);
@@ -194,6 +199,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 void Scene::drawCover()
 {
 	coverPage->draw(*uiShader, 1.0f);
+}
+
+void Scene::drawInstruction()
+{
+	instructionPage->draw(*uiShader, 1.0f);
 }
 
 void Scene::setModel(glm::mat4 model)
