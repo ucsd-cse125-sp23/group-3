@@ -19,7 +19,6 @@ void Scene::init(int PlayID)
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	fog = std::make_shared<Fog>();
-	fog->setFogDistance(Constants::default_fog_distance);
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
 	initSignObject();
@@ -139,7 +138,6 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		for (int i = 0; i < sign_pos.size(); i++) {
 			sign->setModel((glm::mat4)sign_pos.at(i));
 			sign->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
-
 		}
 	}
 	else {
@@ -320,6 +318,8 @@ void Scene::loadLanding()
 void Scene::endScene()
 {
 	sceneStatus = SceneStatus::ending;
+	fog->setFogDistance(Constants::default_fog_distance);
+
 }
 
 void Scene::loadShaders()
