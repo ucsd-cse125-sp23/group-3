@@ -208,6 +208,15 @@ void DaeObject::move(float i)
 	mvp = glm::translate(mvp, glm::vec3(0, 0, -i));
 }
 
+void DaeObject::doWalk()
+{
+	float currentFrame = glfwGetTime();
+	if (currentFrame - lastStartWalking >= animation_walking->GetDuration() / 1000)
+	{
+		lastStartWalking = currentFrame;
+	}
+}
+
 void DaeObject::doAction()
 {
 	float currentFrame = glfwGetTime();

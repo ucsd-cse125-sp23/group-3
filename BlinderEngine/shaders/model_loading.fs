@@ -40,10 +40,7 @@ struct SpotLight {
     vec3 specular;       
 };
 
-struct Fog {
-    vec3 player_pos;
-    float fog_distance;
-};
+
 
 
 uniform int NUM_LIGHTS_POINT;

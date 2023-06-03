@@ -124,7 +124,6 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 
-
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 	map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
@@ -319,7 +318,6 @@ void Scene::endScene()
 {
 	sceneStatus = SceneStatus::ending;
 	fog->setFogDistance(Constants::default_fog_distance);
-
 }
 
 void Scene::loadShaders()
