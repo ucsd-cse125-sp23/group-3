@@ -48,6 +48,11 @@ void Scene::initCover()
 	coverPage->bindTexture("./images/cover.png");
 }
 
+void Scene::initInstruction()
+{
+	instructionPage->bindTexture("./images/instruction.png");
+}
+
 void Scene::drawLanding()
 {
 	landingPage->draw(*uiShader, 1.0f);
@@ -194,6 +199,11 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 void Scene::drawCover()
 {
 	coverPage->draw(*uiShader, 1.0f);
+}
+
+void Scene::drawInstruction()
+{
+	instructionPage->draw(*uiShader, 1.0f);
 }
 
 void Scene::setModel(glm::mat4 model)
@@ -364,6 +374,7 @@ void Scene::loadEssentials()
 	skybox = std::make_shared<Skybox>();
 	endPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	coverPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
+	instructionPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	camera = std::make_shared<Camera>();
 	camera->SetAspect(float(WINDOW_WIDTH) / float(WINDOW_HEIGHT));
 
