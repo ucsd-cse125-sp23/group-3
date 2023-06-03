@@ -46,6 +46,7 @@ public:
 	void drawLanding();
 	void setEnd(bool won);
 	void drawEnd();
+	void updateEnd();
 	void updateWorld();
 	void displayWorld(std::vector<int> os, int cd_remain);
 	void drawCover();

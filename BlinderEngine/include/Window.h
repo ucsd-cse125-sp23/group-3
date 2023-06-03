@@ -101,6 +101,7 @@ public:
     static bool cursorOnCBtn(double, double);
     static bool cursorOnDBtn(double, double);
     static void EndShrink();
+    static void updateEndPage(GLFWwindow* window);
 
     //static unsigned int loadCubemap(std::vector<std::string> faces);
 

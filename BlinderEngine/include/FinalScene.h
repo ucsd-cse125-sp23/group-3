@@ -11,9 +11,11 @@
 class FinalScene {
 public:
     bool status;
-    std::shared_ptr<ObjObject> backWall;
+    std::shared_ptr<ObjObject> backWallwin;
+    std::shared_ptr<ObjObject> backWalllose;
     std::vector<std::shared_ptr<DaeObject>> players;
     std::vector<float> playertime;
+    std::vector<bool> playerAnim;
 
     FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> players);
     void update(float dt);

@@ -212,6 +212,12 @@ void Window::EndShrink() {
     scene->endScene();
 }
 
+void Window::updateEndPage(GLFWwindow* window) {
+
+    scene->updateEnd();
+
+}
+
 void Window::displayEndPage(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

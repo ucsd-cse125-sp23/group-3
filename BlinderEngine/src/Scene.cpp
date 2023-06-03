@@ -16,7 +16,9 @@ void Scene::init(int PlayID)
 	if (playerID == 0)
 	{
 		camera->setFirstperson();
+		
 	}
+	//camera->setFinalCam();
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
 	lights->AddLightBCD(map->calculateBCDLightcenter());
 	fog = std::make_shared<Fog>();
@@ -32,6 +34,9 @@ void Scene::init(int PlayID)
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
 	sceneStatus = SceneStatus::running;
+	endPage = std::make_shared<FinalScene>(false, playersObjects);
+	lights->EmptyAllLights(true);
+	camera->setFinalCam();
 }
 
 void Scene::initLandingPage()
@@ -80,15 +85,34 @@ void Scene::setEnd(bool won)
 
 void Scene::drawEnd()
 {	
-	
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
+
 	endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+	skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
+	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
+	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+}
+
+void Scene::updateEnd() {
+	double newtimer = glfwGetTime();
+	float dt = (newtimer - timer);
+	timer = newtimer;
+	endPage->update(dt);
+	camera->Update();
 }
 
 void Scene::updateWorld()
 {
+	if (true) {
+		double newtimer = glfwGetTime();
+		float dt = (newtimer - timer);
+		timer = newtimer;
+		endPage->update(dt);
+		camera->Update();
+		return;
+	}
 	double newtimer = glfwGetTime();
 	float dt = (newtimer - timer);
 	timer = newtimer;
@@ -123,6 +147,21 @@ void Scene::updateWorld()
 
 void Scene::displayWorld(std::vector<int> os, int cd_remain)
 {
+	if (true) {
+		
+		lights->loadToUShader(shaderProgram, *camera);
+		lights->loadToDShader(*dynamicShader, *camera);
+		lights->loadToSShader(*staticShader, *camera);
+
+		endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
+		fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
+		fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+		skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
+		//map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		//ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
+		return;
+	}
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
@@ -130,8 +169,8 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	{
 		fog->shrinkFog();
 	}
-	fog->updateFog(staticShader->ID, playersObjects[playerID]->getTranslation(), width, height);
-	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation(), width, height);
+	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
+	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
@@ -151,7 +190,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	else {
 		if (playerID == 0) {
 			// Draw Alice herself
-			playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
+			//playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
 			skill_for_alice->draw(*(particleShader), camera->GetViewProjectMtx());
 			if (drawDaveSkill) {
 				playersObjects[3]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
@@ -376,7 +415,7 @@ void Scene::loadEssentials()
 
 	ui = std::make_shared<UI>();
 	skybox = std::make_shared<Skybox>();
-	endPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
+	//endPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	coverPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	instructionPage = std::make_shared<graphic2D>(2, 2, -1, -1, true);
 	camera = std::make_shared<Camera>();
