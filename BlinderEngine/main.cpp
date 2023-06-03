@@ -89,16 +89,26 @@ int main(void) {
 
     Window::initializeCover();
     Window::initializeLanding();
+    Window::initializeInstruction();
 
     while (!glfwWindowShouldClose(window))
     {
         cli->initialize_data();
         Window::playerID = client_id;
         
-        Window::diaplayCoverPage(window);
+        // Cover
+        Window::displayCoverPage(window);
 
         while (!Window::clickRestart) {
-            Window::diaplayCoverPage(window);
+            Window::displayCoverPage(window);
+        }
+
+        // Instruction
+        Window::clickRestart = false;
+        Window::displayInstructionPage(window);
+
+        while (!Window::clickRestart) {
+            Window::displayInstructionPage(window);
         }
 
         // listen for initial game data
