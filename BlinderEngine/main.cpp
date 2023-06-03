@@ -227,6 +227,7 @@ int main(void) {
             }
             else {
                 Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
+                Audio::playHpLow(cli->gd);
                 Audio::playSkillAudio(cli->gd, Window::scene->map->obs->cubes);
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
