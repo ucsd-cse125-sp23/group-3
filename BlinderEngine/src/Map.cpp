@@ -9,6 +9,10 @@ int MAP_ENCODING[3][6][6] = { 0 };
 Map::Map() {
     //objObjectWall = std::make_shared<ObjObject>("./resources/objects/damaged_wall/damaged_wall.fbx", glm::vec3(0.064f, 0.08f, 0.04f));
     objObjectWall = std::make_shared<ObjObject>("./resources/objects/wall/wall3.obj", glm::vec3(0.42f, 0.6f, 0.4f));
+    ground0 = std::make_shared<ObjObject>("./resources/objects/blue_ground/blue_ground.obj", glm::vec3(10.8f, 0.2f, 10.8f));
+    ground1 = std::make_shared<ObjObject>("./resources/objects/red_ground/ground.obj", glm::vec3(10.8f, 0.2f, 10.8f));
+    ground2 = std::make_shared<ObjObject>("./resources/objects/yellow_ground/ground.obj", glm::vec3(10.8f, 0.2f, 10.8f));
+    
     wallheight = WALL_HEIGHT;
     groundheight = GROUND_HEIGHT;
     wallwidth = WALL_WIDTH;
@@ -74,6 +78,24 @@ Map::Map() {
         ObsObject* obj = obs->obs_vec[ind];
         cub->setModel(this->getModelOnMap(id_mat, obj->map_id, (obj->pos).first, (obj->pos).second));
     }
+    glm::mat4 model_for_ground = glm::mat4(1.0f);
+    model_for_ground = getModelOnMap(model_for_ground, 0, 2.5f, 2.5f);
+    model_for_ground *= map1->getModel();
+    //std::cout << glm::to_string(model_for_ground) << std::endl;
+    ground0->setModel(model_for_ground);
+
+    model_for_ground = glm::mat4(1.0f);
+    model_for_ground = getModelOnMap(model_for_ground, 1, 2.5f, 2.5f);
+    model_for_ground *= map2->getModel();
+    //std::cout << glm::to_string(model_for_ground) << std::endl;
+    ground1->setModel(model_for_ground);
+
+    model_for_ground = glm::mat4(1.0f);
+    model_for_ground = getModelOnMap(model_for_ground, 2, 2.5f, 2.5f);
+    model_for_ground *= map3->getModel();
+    //std::cout << glm::to_string(model_for_ground) << std::endl;
+    ground2->setModel(model_for_ground);
+    
 }
 
 Map::~Map() {
@@ -363,7 +385,14 @@ void Map::draw(const glm::mat4& projection, const glm::mat4& view, StaticShader&
         }*/
         objObjectWall->setModel(model_for_wall);
         objObjectWall->draw(projection, view, shader);
+       
     }
+    
+    //grd0model *= map1->getModel();
+    
+    ground0->draw(projection, view, shader);
+    ground1->draw(projection, view, shader);
+    ground2->draw(projection, view, shader);
 }
 
 glm::vec3 Map::calculateLightcenter(glm::mat4 model) {
