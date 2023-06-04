@@ -130,12 +130,12 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	fog->updateFog(dynamicShader->ID, playersObjects[playerID]->getTranslation(), width, height);
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
-	map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
+	//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 	map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 
 	if (Constants::offline) {
 		playersObjects[playerID]->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *dynamicShader);
-		objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
+		//objObjectTest->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectWall->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//objObjectCage->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		skill_for_dave->draw(*(particleShader), camera->GetViewProjectMtx());
