@@ -90,10 +90,12 @@ int main(void) {
     while (!glfwWindowShouldClose(window))
     {
         if (numPage == 6) break;
+        Window::keyCallback(window, 0, 0, 0, 0);
         Window::initializeStoryPage(numPage);
         Window::displayStory(window);
         Window::clickRestart = false;
         while (!Window::clickRestart) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             Window::displayStory(window);
         }
         numPage++;
@@ -105,7 +107,7 @@ int main(void) {
 
     while (!glfwWindowShouldClose(window))
     {
-        Window::keyCallback(window, 0, 0, 0, 0);
+       c
         cli->initialize_data();
         Window::playerID = client_id;
         
