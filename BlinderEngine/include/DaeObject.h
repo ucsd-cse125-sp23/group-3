@@ -32,7 +32,7 @@ public:
 	glm::mat4 getModel() { return mvp; };
 	glm::vec3 getTranslation();
 	void setModel(glm::mat4& model);
-
+	void setScale(glm::vec3 _scale) { scale = _scale; };
 	void spin(float deg);
 	void move(float i);
 

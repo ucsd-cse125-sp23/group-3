@@ -10,6 +10,7 @@ public:
 	void setFogDistance(float fogDistance);
 	void updateFog(GLuint shaderID, glm::vec3 playerPos, int width, int height);
 	void shrinkFog();
+	void reset();
 
 private:
 	float fogDistance;

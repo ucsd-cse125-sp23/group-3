@@ -170,6 +170,7 @@
     <ClCompile Include="src\DaeObject.cpp" />
     <ClCompile Include="src\DaveSkill.cpp" />
     <ClCompile Include="src\Fog.cpp" />
+    <ClCompile Include="src\FinalScene.cpp" />
     <ClCompile Include="src\graphic2D.cpp" />
     <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Image.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="include\Cube.h" />
     <ClInclude Include="include\DaeObject.h" />
     <ClInclude Include="include\Fog.h" />
+    <ClInclude Include="include\FinalScene.h" />
     <ClInclude Include="include\graphic2D.h" />
     <ClInclude Include="include\Ground.h" />
     <ClInclude Include="include\Image.h" />

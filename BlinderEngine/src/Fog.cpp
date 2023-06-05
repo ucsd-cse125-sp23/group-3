@@ -44,3 +44,9 @@ void Fog::shrinkFog()
 
 
 }
+
+void Fog::reset()
+{
+
+	fogDistance = std::numeric_limits<float>::max();
+}

@@ -72,6 +72,7 @@ public:
     static bool initializeInstruction();
     static void cleanLanding();
     static void cleanUp();
+    static void resetFog();
 
 
     // for the Window
@@ -86,6 +87,7 @@ public:
     static void displayEndPage(GLFWwindow*);
     static void displayCoverPage(GLFWwindow*);
     static void displayInstructionPage(GLFWwindow*);
+    static void resetScene();
 
     // helper to reset the camera
     static void resetCamera();
@@ -100,6 +102,8 @@ public:
     static bool cursorOnBBtn(double, double);
     static bool cursorOnCBtn(double, double);
     static bool cursorOnDBtn(double, double);
+    static void EndShrink();
+    static void updateEndPage(GLFWwindow* window);
 
     //static unsigned int loadCubemap(std::vector<std::string> faces);
 

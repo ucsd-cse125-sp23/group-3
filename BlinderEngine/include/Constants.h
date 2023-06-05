@@ -66,11 +66,11 @@ namespace Constants
 
 
 	// Env
-	const bool offline = true;
+	const bool offline = false;
 	const int DIST_LIMIT = 20;
 	const float MINIMAP_OBJECT_SIZE=0.06f;
 
-	const float default_fog_distance = 1000.0f;
+	const float default_fog_distance = 2000.0f;
 
 };
 #endif

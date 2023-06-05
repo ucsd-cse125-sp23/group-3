@@ -31,6 +31,9 @@ public:
     const glm::mat4& GetViewMtx();
     bool getPers() { return first_person; };
     float getFOV() { return FOV; };
+    void setFinalCam() { final = true; };
+    void resetFinalCam() { final = false; };
+    void resetFirstCam() { first_person = false; };
     glm::vec3 CameraPos, CameraTar;
     
 private:
@@ -41,6 +44,7 @@ private:
     float FarClip;   // Far clipping plane distance
     // Polar controls
     glm::vec3 CameraUp, CameraDir;
+    bool final;
     // Computed data
     bool first_person;
     glm::mat4 project, view, projection_particles;
