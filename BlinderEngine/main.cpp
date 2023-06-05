@@ -107,7 +107,7 @@ int main(void) {
 
     while (!glfwWindowShouldClose(window))
     {
-       c
+        Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
         
