@@ -79,6 +79,12 @@ bool Window::initializeInstruction()
     return true;
 }
 
+bool Window::initializeStoryPage(int pageId)
+{
+    scene->initStory(pageId);
+    return true;
+}
+
 void Window::cleanLanding() {
     // shared_ptr automaticly free up memory
 }
@@ -258,6 +264,18 @@ void Window::displayInstructionPage(GLFWwindow* window)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     scene->drawInstruction();
+
+    // Gets events, including input such as keyboard and mouse or window resizing.
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
+}
+
+void Window::displayStory(GLFWwindow* window)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    scene->drawStory();
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

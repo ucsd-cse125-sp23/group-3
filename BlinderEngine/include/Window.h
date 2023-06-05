@@ -70,6 +70,7 @@ public:
     static bool initializeLanding();
     static bool initializeCover();
     static bool initializeInstruction();
+    static bool initializeStoryPage(int pageId);
     static void cleanLanding();
     static void cleanUp();
     static void resetFog();
@@ -88,6 +89,7 @@ public:
     static void displayCoverPage(GLFWwindow*);
     static void displayInstructionPage(GLFWwindow*);
     static void resetScene();
+    static void displayStory(GLFWwindow* window);
 
     // helper to reset the camera
     static void resetCamera();
