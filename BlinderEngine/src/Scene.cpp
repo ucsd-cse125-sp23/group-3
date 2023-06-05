@@ -6,6 +6,8 @@ Scene::Scene()
 	loadEssentials();
 	loadGameObjects();
 	loadingModel = false;
+	width = WINDOW_WIDTH;
+	height = WINDOW_HEIGHT;
 }
 
 void Scene::init(int PlayID)
@@ -35,8 +37,7 @@ void Scene::init(int PlayID)
 
 	target_exit = std::make_shared<ObjObject>(Constants::exitdoor_model_path, Constants::exitdoor_scaling_factor);
 
-	width = WINDOW_WIDTH;
-	height = WINDOW_HEIGHT;
+
 	sceneStatus = SceneStatus::running;
 	
 	/*endPage = std::make_shared<FinalScene>(true, playersObjects);
@@ -189,6 +190,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	}
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+	std::cout << width << "x" << height << std::endl;
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 	map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);

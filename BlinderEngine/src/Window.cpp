@@ -149,10 +149,12 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
     // In case your Mac has a retina display.
     glfwGetFramebufferSize(window, &width, &height);
 #endif
+    std::cout << "resized" << std::endl;
     Window::width = width;
     Window::height = height;
     if (scene != nullptr)
     {
+        std::cout << width << "x" << height << std::endl;
         scene->resizeScene(width, height);
     }
     // Set the viewport size.
