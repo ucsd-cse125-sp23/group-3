@@ -38,7 +38,8 @@ void Scene::init(int PlayID)
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
 	sceneStatus = SceneStatus::running;
-	/*endPage = std::make_shared<FinalScene>(false, playersObjects);
+	
+	/*endPage = std::make_shared<FinalScene>(true, playersObjects);
 	lights->EmptyAllLights(true);
 	camera->setFinalCam();*/
 }
@@ -173,6 +174,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 		fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 		fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 		//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 		//map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);

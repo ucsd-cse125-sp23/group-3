@@ -57,7 +57,7 @@ uniform sampler2D texture_specular1;
 uniform DirLight dirLight;
 uniform PointLight pointLights[12];
 uniform SpotLight spotLight[8];
-uniform Fog fog=struct Fog(vec3(0.0f,0.0f,0.0f),300.0f);
+uniform Fog fog=Fog(vec3(0.0f,0.0f,0.0f),300.0f);
 uniform vec3 viewPos;
 
 // function prototypes

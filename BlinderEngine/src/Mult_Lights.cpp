@@ -107,6 +107,13 @@ void Mult_Lights::EmptyAllLights(bool win) {
     particles_light.clear();
     Light* endLight=new Light(false, true, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 1.0f, 2.7f, 0.1f);
     endLight->SetParam(1.0f, 0.01f, 0.004f);
+    if (win) {
+        lights_for_A.push_back(endLight);
+        lights_for_BCD.push_back(endLight);
+        return;
+    }
+    endLight = new Light(false, true, glm::vec3(0.6f, 0.6f, 0.6f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 1.0f, 0.3f, 0.1f);
+    endLight->SetParam(1.0f, 0.01f, 0.004f);
     lights_for_A.push_back(endLight);
     lights_for_BCD.push_back(endLight);
 }

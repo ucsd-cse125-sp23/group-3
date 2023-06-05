@@ -66,12 +66,12 @@ void Audio::playBgm() {
 
 void Audio::playEnd(GameState gs) {
 	Audio::gSoloud.stopAll();
-	// Audio::init();
+	//Audio::init();
 	if (gs == GameState::WIN) {
-		//Audio::loadWin();
+		Audio::loadWin();
 	}
 	else if (gs == GameState::LOSE) {
-		//Audio::loadLose();
+		Audio::loadLose();
 	}
 	int h = Audio::gSoloud.play(Audio::gwave);
 	bool l = Audio::gSoloud.getLooping(h);

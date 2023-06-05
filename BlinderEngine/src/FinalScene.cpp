@@ -1,8 +1,9 @@
 #include "FinalScene.h"
 
 FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players) {
-	backWallwin = std::make_shared<ObjObject>("./resources/objects/wall/wall3.obj", glm::vec3(1.0f));
-	backWalllose = std::make_shared<ObjObject>("./resources/objects/wall/wall3.obj", glm::vec3(1.0f));
+	backWallwin = std::make_shared<ObjObject>("./resources/objects/win_page/winpage.obj", glm::vec3(6.0f));
+	backWalllose = std::make_shared<ObjObject>("./resources/objects/lose_page/losepage.obj", glm::vec3(6.0f));
+	ground = std::make_shared<ObjObject>("./resources/objects/ground_final/losepage.obj", glm::vec3(1.0f,100.0f,100.0f));
 	players=_players;
 	status = win;
 	
@@ -13,7 +14,7 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players
 		players[3]->setScale(glm::vec3(0.3f));
 		for (int i = 0; i < players.size(); i++) {
 			glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f + i * 10.0f / 3, 0.0f,0.0f));
-			model=model* glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model=model* glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
 			players[i]->setModel(model);
 			playertime.push_back(0.0f);
 			playerAnim.push_back(false);
@@ -21,13 +22,19 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players
 	}
 	else {
 		players[0]->setScale(glm::vec3(0.6f));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
 		model = model * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		players[0]->setModel(model);
 		playerAnim.push_back(false);
 	}
-	backWallwin->setModel(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -4.5f, -5.0f)));
-	backWalllose->setModel(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -4.5f, -5.0f)));
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 4.0f, -5.0f));
+	model *= glm::rotate(glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model *= glm::rotate(glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	backWallwin->setModel(model);
+	backWalllose->setModel(model);
+	model = glm::rotate(glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model *= glm::rotate(glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	ground->setModel(model);
 }
 
 void FinalScene::update(float dt) {
@@ -71,4 +78,6 @@ void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, const glm::ma
 		players[0]->draw(projection, view, Dshader);
 		backWalllose->draw(projection, view, Sshader);
 	}
+
+	ground->draw(projection, view, Sshader);
 }

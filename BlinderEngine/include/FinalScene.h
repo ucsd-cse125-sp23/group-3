@@ -13,6 +13,7 @@ public:
     bool status;
     std::shared_ptr<ObjObject> backWallwin;
     std::shared_ptr<ObjObject> backWalllose;
+    std::shared_ptr<ObjObject> ground;
     std::vector<std::shared_ptr<DaeObject>> players;
     std::vector<float> playertime;
     std::vector<bool> playerAnim;
