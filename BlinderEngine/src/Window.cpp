@@ -160,7 +160,6 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
     Window::height = height;
     if (scene != nullptr)
     {
-        std::cout << width << "x" << height << std::endl;
         scene->resizeScene(width, height);
     }
     // Set the viewport size.
@@ -345,7 +344,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
     {
-        scene->endScene();
+        if (Constants::offline)
+        {
+            scene->endScene();
+        }
     }
 
 
