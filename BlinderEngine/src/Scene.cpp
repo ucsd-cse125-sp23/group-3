@@ -5,6 +5,7 @@ Scene::Scene()
 	loadShaders();
 	loadEssentials();
 	loadGameObjects();
+	loadStory();
 	loadingModel = false;
 	width = WINDOW_WIDTH;
 	height = WINDOW_HEIGHT;
@@ -269,6 +270,11 @@ void Scene::drawInstruction()
 	instructionPage->draw(*uiShader, 1.0f);
 }
 
+void Scene::drawStory()
+{
+	story_page->draw(*uiShader, 1.0f);
+}
+
 void Scene::setModel(glm::mat4 model)
 {
 	playersObjects[playerID]->setModel(model);
@@ -508,4 +514,32 @@ void Scene::setSignModel(glm::mat4 model) {
 	float* f = glm::value_ptr(model);
 	f[13] = 5.0f;
 	sign_pos.push_back(model);
+}
+
+void Scene::loadStory() {
+	story_page = std::make_shared<graphic2D>(2, 2, -1, -1, true);
+}
+
+void Scene::initStory(int pageId)
+{
+	switch (pageId)
+	{
+	case 1:
+		story_page->bindTexture("./resources/story/1.png");
+		break;
+	case 2:
+		story_page->bindTexture("./resources/story/2.png");
+		break;
+	case 3:
+		story_page->bindTexture("./resources/story/3.png");
+		break;
+	case 4:
+		story_page->bindTexture("./resources/story/4.png");
+		break;
+	case 5:
+		story_page->bindTexture("./resources/story/5.png");
+		break;
+	default:
+		break;
+	}
 }

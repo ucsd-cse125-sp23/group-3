@@ -51,6 +51,7 @@ public:
 	void displayWorld(std::vector<int> os, int cd_remain);
 	void drawCover();
 	void drawInstruction();
+	void drawStory();
 	void reset();
 	// Control
 	void setModel(glm::mat4 model);
@@ -68,6 +69,8 @@ public:
 	void loadLanding();
 	void endScene();
 	void resetFog();
+	void loadStory();
+	void initStory(int pageId);
 
 private:
 	void loadShaders();
@@ -162,6 +165,9 @@ public:
 	std::shared_ptr<Camera> camera;
 	std::shared_ptr<Mult_Lights> lights;
 	std::shared_ptr<Fog> fog;
+
+	// Story
+	std::shared_ptr<graphic2D> story_page;
 
 	glm::mat4 getPos() {
 		return playersObjects[playerID]->getModel();

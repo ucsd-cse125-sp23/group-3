@@ -86,6 +86,18 @@ int main(void) {
 
         }
     }
+    int numPage = 1;
+    while (!glfwWindowShouldClose(window))
+    {
+        if (numPage == 6) break;
+        Window::initializeStoryPage(numPage);
+        Window::displayStory(window);
+        Window::clickRestart = false;
+        while (!Window::clickRestart) {
+            Window::displayStory(window);
+        }
+        numPage++;
+    }
 
     Window::initializeCover();
     Window::initializeLanding();
