@@ -249,10 +249,18 @@ void Server::updateBySingleEvent(EventType e, int id) {
 			*loc = old_loc;
 		}
 		int obs_type;
+
+		std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(
+			std::chrono::system_clock::now().time_since_epoch()
+		);
+
 		if (collisionDetection.collideWithObstacle(*loc, map->obs->obs_vec, &obs_type)) { // collide with obstacle
 			*loc = old_loc;
-			if (id == 0)
+			if (id == 0 && (now - prev) > (std::chrono::milliseconds)500)
 			{
+				prev = now;
+
+
 				int increase = 0;
 				switch (obs_type)
 				{

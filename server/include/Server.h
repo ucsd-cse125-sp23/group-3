@@ -15,6 +15,9 @@
 #include <vector>
 #include <unordered_map>
 
+
+#include <chrono>
+
 #pragma comment (lib, "Ws2_32.lib")
 
 #define WIN32_LEAN_AND_MEAN
@@ -74,4 +77,7 @@ public:
 
 	// index by player_id: 0 -> Alice etc.; each pair represents obstacle_id - countdown time
 	std::vector<std::pair<int, int>> obs_countdown;
+	std::chrono::milliseconds prev = std::chrono::duration_cast<std::chrono::milliseconds>(
+		std::chrono::system_clock::now().time_since_epoch()
+	);;
 };
