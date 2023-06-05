@@ -51,6 +51,10 @@ bool Window::initializeProgram() {
     return true;
 }
 
+void Window::resetScene() {
+    scene->reset();
+}
+
 bool Window::initializeObjects(int PlayID) {
     scene->init(PlayID);
     return true;
@@ -72,6 +76,12 @@ bool Window::initializeCover()
 bool Window::initializeInstruction()
 {
     scene->initInstruction();
+    return true;
+}
+
+bool Window::initializeStoryPage(int pageId)
+{
+    scene->initStory(pageId);
     return true;
 }
 
@@ -145,6 +155,7 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height) {
     // In case your Mac has a retina display.
     glfwGetFramebufferSize(window, &width, &height);
 #endif
+    std::cout << "resized" << std::endl;
     Window::width = width;
     Window::height = height;
     if (scene != nullptr)
@@ -202,10 +213,26 @@ void Window::displayCallback(GLFWwindow* window, std::vector<int> os, int cd_rem
 void Window::setEndPage(GameState gs) {
     if (gs == GameState::WIN) {
         scene->setEnd(true);
+        scene->resetFog();
     }
     else if (gs == GameState::LOSE) {
         scene->setEnd(false);
+        scene->resetFog();
     }
+}
+
+void Window::EndShrink() {
+    scene->endScene();
+}
+
+void Window::resetFog() {
+    scene->resetFog();
+}
+
+void Window::updateEndPage(GLFWwindow* window) {
+
+    scene->updateEnd();
+
 }
 
 void Window::displayEndPage(GLFWwindow* window) {
@@ -236,6 +263,18 @@ void Window::displayInstructionPage(GLFWwindow* window)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     scene->drawInstruction();
+
+    // Gets events, including input such as keyboard and mouse or window resizing.
+    glfwPollEvents();
+    // Swap buffers.
+    glfwSwapBuffers(window);
+}
+
+void Window::displayStory(GLFWwindow* window)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    scene->drawStory();
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();
@@ -305,7 +344,10 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
     {
-        scene->endScene();
+        if (Constants::offline)
+        {
+            scene->endScene();
+        }
     }
 
 

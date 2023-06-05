@@ -9,11 +9,20 @@
 
 Camera::Camera() {
     first_person = false;
+    final = false;
     Reset();
 }
 void Camera::Update() {
     // Compute camera world matrix
-
+    if (final) {
+        CameraTar = glm::vec3(0.0f, 4.0f, 10.0f);
+        CameraDir = glm::vec3(0.0f, 0.0f, 1.5f);
+        CameraPos = CameraTar + CameraDir;
+        view = glm::lookAt(CameraPos, CameraTar, CameraUp);
+        project = glm::perspective(glm::radians(FOV), Aspect, NearClip, FarClip);
+        ViewProjectMtx = project * view;
+        return;
+    }
     if (first_person) {
         CameraTar = glm::vec3(0.0f, 5.5f, 0.0f);
         CameraDir = glm::vec3(0.0f, 0.0f, 1.5f);

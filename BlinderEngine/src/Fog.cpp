@@ -5,7 +5,7 @@
 Fog::Fog()
 {
 	fogDistance = std::numeric_limits<float>::max();
-	staticFrames = 300;
+	staticFrames = 120;
 }
 
 void Fog::setFogDistance(float fogDistance)
@@ -31,7 +31,7 @@ void Fog::updateFog(GLuint shaderID, glm::vec3 playerPos, int width, int height)
 void Fog::shrinkFog()
 {
 	if (fogDistance > 100) {
-		fogDistance -= 3.0f;
+		fogDistance -= 10.0f;
 	}
 	else if (staticFrames == 0)
 	{
@@ -42,5 +42,11 @@ void Fog::shrinkFog()
 		staticFrames--;
 	}
 
+	std::cout << "distance:" << fogDistance << std::endl;
+}
 
+void Fog::reset()
+{
+
+	fogDistance = std::numeric_limits<float>::max();
 }

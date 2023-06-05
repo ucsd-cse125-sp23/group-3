@@ -48,8 +48,8 @@ struct Fog {
 
 uniform int NUM_LIGHTS_POINT;
 uniform int NUM_LIGHTS_SPOT;
-uniform int windowWidth;
-uniform int windowHeight;
+uniform int windowWidth=800;
+uniform int windowHeight=600;
 uniform float shininess=0.1f;
 uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
@@ -57,7 +57,7 @@ uniform sampler2D texture_specular1;
 uniform DirLight dirLight;
 uniform PointLight pointLights[12];
 uniform SpotLight spotLight[8];
-uniform Fog fog;
+uniform Fog fog=Fog(vec3(0.0f,0.0f,0.0f),300.0f);
 uniform vec3 viewPos;
 
 // function prototypes

@@ -66,7 +66,7 @@ void Audio::playBgm() {
 
 void Audio::playEnd(GameState gs) {
 	Audio::gSoloud.stopAll();
-	// Audio::init();
+	//Audio::init();
 	if (gs == GameState::WIN) {
 		Audio::loadWin();
 	}

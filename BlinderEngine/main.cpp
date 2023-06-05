@@ -86,6 +86,18 @@ int main(void) {
 
         }
     }
+    int numPage = 1;
+    while (!glfwWindowShouldClose(window))
+    {
+        if (numPage == 6) break;
+        Window::initializeStoryPage(numPage);
+        Window::displayStory(window);
+        Window::clickRestart = false;
+        while (!Window::clickRestart) {
+            Window::displayStory(window);
+        }
+        numPage++;
+    }
 
     Window::initializeCover();
     Window::initializeLanding();
@@ -185,6 +197,8 @@ int main(void) {
 
         Audio::init(assigned_id);
         Audio::playBgm();
+        std::chrono::time_point<std::chrono::system_clock> start_, end_;
+        bool ending = false;
 
         // Loop while GLFW window should stay open.
         while (!glfwWindowShouldClose(window)) {
@@ -224,6 +238,11 @@ int main(void) {
             Window::no_event = true;
             std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
             // Idle callback. Updating objects, etc. can be done here.
+            /*int key = 0;
+            int scancode = 0;
+            int action = 0; 
+            int mods=0;
+            Window::keyCallback(window, key,  scancode,  action, mods);*/
             Window::idleCallback();
             if (player->getLevel() >= AWARENESS_THRESHOLD) {
                 Window::scene->ui->setPlayerAlicePosition(Window::scene->playersObjects[0]->getModel());
@@ -248,7 +267,20 @@ int main(void) {
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
                     cli->gd->gamestate == GameState::WIN) {
-                    break;
+                    std::chrono::duration<double> elapsed_seconds_;
+                    if (!ending)
+                    {
+                        start_ = std::chrono::system_clock::now();
+                        ending = true;
+                    }
+                    Window::EndShrink();
+                    end_ = std::chrono::system_clock::now();
+                    elapsed_seconds_ = end_ - start_;
+                    if (elapsed_seconds_.count() > 6) 
+                    {
+                        break;
+                    }
+
                 }
             }
         }
@@ -258,6 +290,7 @@ int main(void) {
         }
         bool check_send_restart = false;
         while (!glfwWindowShouldClose(window)) {
+            Window::updateEndPage(window);
             Window::displayEndPage(window);
             if (Window::clickRestart && !check_send_restart) {
                 cli->send_event(EventType::RESTART);
@@ -270,6 +303,7 @@ int main(void) {
                 break;
             }
         }
+        Window::resetScene();
     }
 
     Window::cleanUp();

@@ -29,4 +29,5 @@ public:
     void AddLightBCD(std::vector<glm::vec3> lightcenters);
     void updateLightAliceV2(glm::mat4 model);
     void updateSkillLight(glm::mat4 model);
+    void EmptyAllLights(bool win);
 }; 

@@ -17,6 +17,9 @@
 class Map {
 private:
     std::shared_ptr<ObjObject> objObjectWall;
+    std::shared_ptr<ObjObject> ground0;
+    std::shared_ptr<ObjObject> ground1;
+    std::shared_ptr<ObjObject> ground2;
     glm::mat4 model;
     Submap* map1;
     Submap* map2;
