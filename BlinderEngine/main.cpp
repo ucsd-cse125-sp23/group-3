@@ -18,7 +18,7 @@ void setup_callbacks(GLFWwindow* window) {
     glfwSetWindowSizeCallback(window, Window::resizeCallback);
 
     // Set the key callback.
-    glfwSetKeyCallback(window, Window::keyCallback);
+    //glfwSetKeyCallback(window, Window::keyCallback);
 
     // Set the mouse and cursor callbacks
     glfwSetMouseButtonCallback(window, Window::mouse_callback);
@@ -105,6 +105,7 @@ int main(void) {
 
     while (!glfwWindowShouldClose(window))
     {
+        Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
         
@@ -112,6 +113,7 @@ int main(void) {
         Window::displayCoverPage(window);
 
         while (!Window::clickRestart) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             Window::displayCoverPage(window);
         }
 
@@ -120,12 +122,14 @@ int main(void) {
         Window::displayInstructionPage(window);
 
         while (!Window::clickRestart) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             Window::displayInstructionPage(window);
         }
 
         // listen for initial game data
         int check_gd = cli->recv_gamedata();
         while (check_gd == -1 && !Constants::offline) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             check_gd = cli->recv_gamedata();
         }
 
@@ -139,6 +143,7 @@ int main(void) {
 
             while (Window::state == WindowState::LANDING) {
                 Window::drawLanding(window);
+                Window::keyCallback(window, 0, 0, 0, 0);
                 if (Window::acq_char_id != -1
                     && cli->buttonAssignment[client_id] == -1
                     && cli->button_available(Window::acq_char_id)) {
@@ -186,6 +191,7 @@ int main(void) {
         // listen for game start
         int check_start = cli->recv_gamedata();
         while (check_start == -1 && !Constants::offline) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             check_start = cli->recv_gamedata();
         }
 
@@ -196,7 +202,7 @@ int main(void) {
 
         // Loop while GLFW window should stay open.
         while (!glfwWindowShouldClose(window)) {
-
+            Window::keyCallback(window, 0, 0, 0, 0);
             // check for event&send
 
             if (!Window::no_event)
@@ -227,7 +233,7 @@ int main(void) {
                 Window::updateLevel(player->getLevel());
                 Window::updateTime(cli->gd->remaining_time);
                 Window::updateBySkill(cli->gd);
-                Window::updateByWalk(cli->gd);
+                //Window::updateByWalk(cli->gd);
             }
             Window::no_event = true;
             std::fill(Window::eventChecker.begin(), Window::eventChecker.end(), 0);// avoid double action
