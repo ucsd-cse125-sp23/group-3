@@ -42,7 +42,6 @@ void Fog::shrinkFog()
 		staticFrames--;
 	}
 
-	std::cout << "distance:" << fogDistance << std::endl;
 }
 
 void Fog::reset()

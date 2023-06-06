@@ -119,6 +119,7 @@ void Scene::drawEnd()
 	//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+	fog->updateFog(skyboxShader->ID, glm::vec3(0.0f), width, height);
 }
 
 void Scene::updateEnd() {
@@ -198,6 +199,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 	}
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
+	fog->updateFog(skyboxShader->ID, glm::vec3(0.0f), width, height);
 	
 
 	ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
