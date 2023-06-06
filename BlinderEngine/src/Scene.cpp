@@ -105,6 +105,7 @@ void Scene::reset() {
 		player->resetAnimation();
 	}
 
+	sign_pos.clear();
 	ui->restart();
 }
 
