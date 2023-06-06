@@ -63,6 +63,7 @@ private:
 	float lastStartAction;
 	float lastStartAttack;
 	float lastStartLose;
+	float lastPressedAttack;
 
 	bool animated;
 	bool placed;

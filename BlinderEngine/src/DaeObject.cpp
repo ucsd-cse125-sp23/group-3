@@ -106,7 +106,8 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				updateAnimation(deltaTime);
 			}
 		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 &&\
+			currentFrame - lastPressedAttack < 0.1)
 		{
 			if (currentStatus != Action::attack)
 			{
@@ -122,7 +123,6 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				animator->PlayAnimation(animation_action);
 				currentStatus = Action::action;
 			}
-			std::cout << "playing action animation" << std::endl;
 			updateAnimation(deltaTime);
 		}
 		else if (currentFrame - lastStartWalking < animation_walking->GetDuration() / 1000)
@@ -132,8 +132,6 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				animator->PlayAnimation(animation_walking);
 				currentStatus = Action::walking;
 			}
-			std::cout << "currentFrame: " << currentFrame << " lastStartWalking: " << lastStartWalking << std::endl;
-			std::cout << "playing walking animation" << std::endl;
 			updateAnimation(deltaTime);
 		}
 		else {
@@ -242,6 +240,7 @@ void DaeObject::doAttack()
 	{
 		lastStartAttack = currentFrame;
 	}
+	lastPressedAttack = currentFrame;
 }
 
 glm::mat4 DaeObject::calculateMoveMVP(float i)
