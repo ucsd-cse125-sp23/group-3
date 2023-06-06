@@ -276,3 +276,67 @@ void UI::setUiByPlayerID(int id) {
 	character->bindTexture(UI::char_png);
 	
 }
+
+void UI::restart() {
+	// delete old objs
+	delete character;
+	delete skill;
+	delete skill_cd;
+	delete time;
+	delete time_bar;
+	delete time_bar_s;
+	delete minimap_dark;
+	delete minimap_light;
+	delete level;
+	delete level_bar;
+	delete level_bar_s;
+
+	// reinit new objs
+	character = new graphic2D(UI::char_sizeX, UI::char_sizeY * UI::win_width / UI::win_height,
+		UI::char_posiX, UI::char_posiY, true);
+	character->bindTexture(UI::char_png);
+
+	skill = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * UI::win_width / UI::win_height,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	//skill->bindTexture(UI::skill_png);
+
+	skill_frame = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * UI::win_width / UI::win_height,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	//skill_frame->bindTexture(UI::skill_frame_png);
+
+	skill_cd = new graphic2D(UI::skill_sizeX, UI::skill_sizeY * UI::win_width / UI::win_height,
+		UI::char_posiX + UI::char_sizeX, UI::char_posiY, true);
+	skill_cd->bindTexture(UI::skill_cd_png);
+
+	time = new graphic2D(UI::time_sizeX, UI::time_sizeY * UI::win_width / UI::win_height,
+		UI::time_posiX, -1 + UI::char_sizeY * UI::win_width / UI::win_height, true);
+	time->bindTexture(UI::time_png);
+
+	time_bar = new graphic2D(UI::time_bar_sizeX, UI::time_bar_sizeY * UI::win_width / UI::win_height - (UI::time_sizeY * UI::win_width / UI::win_height) / 5,
+		UI::time_bar_posiX + UI::time_sizeX / 4, -1 + UI::char_sizeY * UI::win_width / UI::win_height + (UI::time_sizeY * UI::win_width / UI::win_height) / 5.4, true);
+	time_bar->bindTexture(UI::time_bar_png);
+	time_bar_len = time_bar->getSizeY();
+	time_bar_s = new graphic2D(UI::time_bar_sizeX, UI::time_bar_sizeY * UI::win_width / UI::win_height - (UI::time_sizeY * UI::win_width / UI::win_height) / 5,
+		UI::time_bar_posiX + UI::time_sizeX / 4, -1 + UI::char_sizeY * UI::win_width / UI::win_height + (UI::time_sizeY * UI::win_width / UI::win_height) / 5.4, true);
+	time_bar_s->bindTexture(UI::time_bar_cut);
+
+	minimap_dark = new Minimap(UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_sizeY,
+		0.99 - UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_posiY, UI::minimap_dark_png);
+	minimap_light = new Minimap(UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_sizeY,
+		0.99 - UI::mnmap_sizeX * UI::win_height / UI::win_width, UI::mnmap_posiY, UI::minimap_light_png);
+
+	level = new graphic2D(UI::level_sizeX * UI::win_height / UI::win_width, UI::level_sizeY,
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX) * UI::win_height / UI::win_width, UI::level_posiY, true);
+	level->bindTexture(UI::insec_png);
+
+	level_bar = new graphic2D(UI::level_bar_sizeX * UI::win_height / UI::win_width - UI::level_sizeX * 0.1 * UI::win_height / UI::win_width, UI::level_bar_sizeY,
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * UI::win_height / UI::win_width, UI::level_bar_posiY + UI::level_sizeY / 5, true);
+	level_bar->bindTexture(UI::level_bar_png);
+	level_bar_len = level_bar->getSizeX();
+	level_bar_s = new graphic2D(UI::level_bar_sizeX * UI::win_height / UI::win_width - UI::level_sizeX * 0.1 * UI::win_height / UI::win_width, UI::level_bar_sizeY,
+		0.99 - (UI::mnmap_sizeX + UI::level_sizeX * 0.86) * UI::win_height / UI::win_width, UI::level_bar_posiY + UI::level_sizeY / 5, true);
+	level_bar_s->bindTexture(UI::level_bar_cut);
+
+	shorter_timer = false;
+	shorter_level = false;
+}
