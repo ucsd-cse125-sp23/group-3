@@ -123,7 +123,7 @@ void Audio::playSkillAudio(GameData* gd, const std::vector<Cube*>& obs, const st
 				h = Audio::gSoloud.play3d(aliceSkill_m, f[12], f[13], f[14]);
 			}
 			else if (pos[i]->type == 3) {
-				h = Audio::gSoloud.play3d(aliceSkill_l, f[12], f[13], f[14]);
+				h = Audio::gSoloud.play3d(aliceSkill_l, f[12], f[13], f[14], 0.0f, 0.0f, 0.0f, 8.0f);
 			}
 			gSoloud.set3dSourceAttenuation(h, 2, 1.0);
 			gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
