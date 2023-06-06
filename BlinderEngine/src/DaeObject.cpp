@@ -16,6 +16,13 @@ DaeObject::DaeObject(const std::string model_path,
 	animation_win = new Animation(win_animation_path, objModel);
 	animation_lose = new Animation(lose_animation_path, objModel);
 
+	lastStartWalking = std::numeric_limits<float>::min();
+	lastStartAction = std::numeric_limits<float>::min();
+	lastStartAttack = std::numeric_limits<float>::min();
+	lastStartLose = std::numeric_limits<float>::min();
+
+	placed = false;
+
 	animator = new Animator(animation_walking);
 	animator->UpdateAnimation(0.0f);
 
@@ -88,11 +95,6 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		lastFrame = currentFrame;
 		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
-		if (currentStatus == Action::idle)
-		{
-			objModel->Draw(shader);
-			return;
-		}
 		if (gameStatus == GameStatus::win) 
 		{
 			updateAnimation(deltaTime);
@@ -120,6 +122,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				animator->PlayAnimation(animation_action);
 				currentStatus = Action::action;
 			}
+			std::cout << "playing action animation" << std::endl;
 			updateAnimation(deltaTime);
 		}
 		else if (currentFrame - lastStartWalking < animation_walking->GetDuration() / 1000)
@@ -129,6 +132,8 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				animator->PlayAnimation(animation_walking);
 				currentStatus = Action::walking;
 			}
+			std::cout << "currentFrame: " << currentFrame << " lastStartWalking: " << lastStartWalking << std::endl;
+			std::cout << "playing walking animation" << std::endl;
 			updateAnimation(deltaTime);
 		}
 		else {
@@ -188,10 +193,11 @@ void DaeObject::setModel(glm::mat4 &model)
 	if (mvp != model)
 	{
 		float currentFrame = glfwGetTime();
-		if (currentFrame - lastStartWalking >= animation_walking->GetDuration() / 1000)
+		if (placed && currentFrame - lastStartWalking >= animation_walking->GetDuration() / 1000)
 		{
 			lastStartWalking = currentFrame;
 		}
+		placed = true;
 		mvp = model;
 	}
 }

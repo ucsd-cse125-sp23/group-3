@@ -65,6 +65,7 @@ private:
 	float lastStartLose;
 
 	bool animated;
+	bool placed;
 
 	Action currentStatus;
 	GameStatus gameStatus;
