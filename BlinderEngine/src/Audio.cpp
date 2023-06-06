@@ -3,7 +3,9 @@
 
 SoLoud::Soloud Audio::gSoloud;
 SoLoud::Wav Audio::gwave;
-SoLoud::Wav Audio::aliceSkill;
+SoLoud::Wav Audio::aliceSkill_l;
+SoLoud::Wav Audio::aliceSkill_m;
+SoLoud::Wav Audio::aliceSkill_s;
 SoLoud::Wav Audio::bobSkill;
 SoLoud::Wav Audio::carolSkill;
 SoLoud::Wav Audio::daveSkill;
@@ -11,7 +13,9 @@ SoLoud::Wav Audio::ah;
 const char* Audio::bgm_wav;
 const char* Audio::win_wav;
 const char* Audio::lose_wav;
-const char* Audio::alice_skill_wav;
+const char* Audio::alice_large_det_wav;
+const char* Audio::alice_medium_det_wav;
+const char* Audio::alice_small_det_wav;
 const char* Audio::bob_skill_wav;
 const char* Audio::carol_skill_wav;
 const char* Audio::dave_skill_wav;
@@ -25,8 +29,10 @@ void Audio::init(int assign_id) {
 	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	Audio::lose_wav = "resources/audio/WinningSound.wav";			// TODO: change wav
-	Audio::alice_skill_wav = "resources/audio/StarWars3.wav";		// TODO: change skill wavs
-	Audio::bob_skill_wav = "resources/audio/StarWars3.wav";			
+	Audio::alice_large_det_wav = "resources/audio/LargeDetect.wav";
+	Audio::alice_medium_det_wav = "resources/audio/MedObstacle.wav";
+	Audio::alice_small_det_wav = "resources/audio/PinObstacle.wav";
+	Audio::bob_skill_wav = "resources/audio/StarWars3.wav";
 	Audio::carol_skill_wav = "resources/audio/StarWars3.wav";
 	Audio::dave_skill_wav = "resources/audio/StarWars3.wav";
 	Audio::ah_wav = "resources/audio/ah.wav";				// TODO: change wav
@@ -34,7 +40,9 @@ void Audio::init(int assign_id) {
 	Audio::assign_id = assign_id;
 	Audio::level_A = 0;
 
-	Audio::aliceSkill.load(Audio::alice_skill_wav);
+	Audio::aliceSkill_l.load(Audio::alice_large_det_wav);
+	Audio::aliceSkill_m.load(Audio::alice_medium_det_wav);
+	Audio::aliceSkill_s.load(Audio::alice_small_det_wav);
 	Audio::bobSkill.load(Audio::bob_skill_wav);
 	Audio::carolSkill.load(Audio::carol_skill_wav);
 	Audio::daveSkill.load(Audio::dave_skill_wav);
@@ -78,7 +86,7 @@ void Audio::playEnd(GameState gs) {
 	Audio::gSoloud.setLooping(h, !l);
 }
 
-void Audio::playSkillAudio(GameData* gd, const std::vector<Cube*>& obs) {
+void Audio::playSkillAudio(GameData* gd, const std::vector<Cube*>& obs, const std::vector<ObsObject*>& pos) {
 	float* player_pos = NULL;
 	if (Audio::assign_id == 0) {
 		player_pos = glm::value_ptr(gd->location_A);
@@ -107,7 +115,16 @@ void Audio::playSkillAudio(GameData* gd, const std::vector<Cube*>& obs) {
 		}
 		if (i < gd->obstacle_states.size()) {
 			const float* f = glm::value_ptr(obs[i]->getModel());
-			int h = Audio::gSoloud.play3d(aliceSkill, f[12], f[13], f[14]);
+			int h = 0;
+			if (pos[i]->type == 1) {
+				h = Audio::gSoloud.play3d(aliceSkill_s, f[12], f[13], f[14]);
+			}
+			else if (pos[i]->type == 2) {
+				h = Audio::gSoloud.play3d(aliceSkill_m, f[12], f[13], f[14]);
+			}
+			else if (pos[i]->type == 3) {
+				h = Audio::gSoloud.play3d(aliceSkill_l, f[12], f[13], f[14], 0.0f, 0.0f, 0.0f, 8.0f);
+			}
 			gSoloud.set3dSourceAttenuation(h, 2, 1.0);
 			gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
 			gSoloud.set3dListenerPosition(player_pos[12], player_pos[13], player_pos[14]);
