@@ -16,14 +16,14 @@ double time_out_val = 3.5;
  float _specular
 */
 Mult_Lights::Mult_Lights(bool _player0) {
-    Light* dirLight = new Light(false, false, glm::vec3(0.2f), glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 5.0f, 0.0f), 0.15f, 0.0f, 0.0f);
-    lights_for_A.push_back(dirLight);
+    Light* adirLight = new Light(false, false, glm::vec3(0.2f), glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 5.0f, 0.0f), 0.15f, 0.0f, 0.0f);
+    Light* dirLight = new Light(false, false, glm::vec3(0.2f), glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 5.0f, 0.0f), 1.5f, 0.0f, 0.0f);
+    lights_for_A.push_back(adirLight);
     lights_for_BCD.push_back(dirLight);
     spot_center = std::vector<glm::vec3>();
     Alice = _player0;
     BCD_color_array = std::vector<glm::vec3>({ glm::vec3(1.0f),glm::vec3(1.0f),glm::vec3(1.0f) });
     particles_light = std::vector<Light*>();
-
 }
 
 Mult_Lights::~Mult_Lights() {
@@ -44,7 +44,7 @@ bool checkLights(glm::vec3 lightcenter, std::vector<glm::vec3> spotcenters) {
 void Mult_Lights::AddLightBCD(std::vector<glm::vec3> lightcenters) {
     for (int i = 0; i < lightcenters.size(); i++) {
         glm::vec3 lightpos = glm::vec3(lightcenters[i].x, 20.0f, lightcenters[i].z);
-        Light* pointLight1 = new Light(false, true, BCD_color_array[i], glm::vec3(0.0f, -1.0f, 0.0f), lightpos, 0.4f, 2.7f, 0.1f);
+        Light* pointLight1 = new Light(false, true, BCD_color_array[i], glm::vec3(0.0f, -1.0f, 0.0f), lightpos, 0.4f, 1.5f, 0.1f);
         pointLight1->SetParam(1.0f, 0.01f, 0.004f);
         lights_for_BCD.push_back(pointLight1);
     }
