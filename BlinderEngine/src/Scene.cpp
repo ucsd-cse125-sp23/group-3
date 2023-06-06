@@ -100,6 +100,8 @@ void Scene::reset() {
 	playersObjects[1]->setScale(Constants::bob_scaling_factor);
 	playersObjects[2]->setScale(Constants::carol_scaling_factor);
 	playersObjects[3]->setScale(Constants::dave_scaling_factor);
+
+	ui = std::make_shared<UI>();
 }
 
 void Scene::drawEnd()
