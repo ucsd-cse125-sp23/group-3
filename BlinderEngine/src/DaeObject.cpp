@@ -269,6 +269,7 @@ void DaeObject::doLose()
 
 void DaeObject::resetAnimation()
 {
+	placed = false;
 	currentStatus = Action::idle;
 	gameStatus = GameStatus::playing;
 }
