@@ -1,7 +1,6 @@
 #include "Window.h"
 #include "core.h"
 #include "../shared/Player.h"
-#include <chrono>
 #include <ctime>
 #include "include/Audio.h"
 #include <thread>
@@ -201,15 +200,20 @@ int main(void) {
         Audio::playBgm();
         std::chrono::time_point<std::chrono::system_clock> start_, end_;
         bool ending = false;
-
+        std::chrono::milliseconds last_sent = (std::chrono::milliseconds)0;
         // Loop while GLFW window should stay open.
         while (!glfwWindowShouldClose(window)) {
             Window::keyCallback(window, 0, 0, 0, 0);
             // check for event&send
-
-            if (!Window::no_event)
+            std::chrono::milliseconds end = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()
+            );
+            
+            if (!Window::no_event && (end - last_sent >= (std::chrono::milliseconds)TICK_TIME||last_sent == (std::chrono::milliseconds)0))
             {
                 cli->send_eventRecords(Window::eventChecker);
+                last_sent = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::system_clock::now().time_since_epoch());
             }
 
             // listen for updated game data
