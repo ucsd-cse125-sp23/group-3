@@ -38,6 +38,7 @@ int  Window::playerID;
 int  Window::acq_char_id = -1;
 bool Window::toReady = false;
 bool Window::clickRestart = false;
+std::chrono::milliseconds Window::tick_start = (std::chrono::milliseconds)0;
 //StaticShader* Window::uiShader;
 //graphic2D* Window::canvas;
 
@@ -293,7 +294,18 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     /*
      * TODO: Modify below to add your key callbacks.
      */
-    std::fill(eventChecker.begin(), eventChecker.end(), 0);
+    std::chrono::milliseconds end = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()
+    );
+
+    if (tick_start == (std::chrono::milliseconds)0 || end - tick_start >= (std::chrono::milliseconds)20) {
+        tick_start = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()
+        );
+        std::fill(eventChecker.begin(), eventChecker.end(), 0);
+    }
+
+    // std::fill(eventChecker.begin(), eventChecker.end(), 0);
     no_event = true;
     clickRestart = false;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {

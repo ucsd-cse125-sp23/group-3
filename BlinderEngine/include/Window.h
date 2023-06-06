@@ -14,6 +14,7 @@
 #include <Skybox.h>
 #include <Mult_Lights.h>
 #include <Scene.h>
+#include <chrono>
 #include "../../client/Client.h"
 
 enum class WindowState
@@ -49,6 +50,7 @@ public:
     static int acq_char_id;
     static bool toReady;
     static bool clickRestart;
+    static std::chrono::milliseconds tick_start;
     //static graphic2D* canvas;
     //static UI* ui;
 
