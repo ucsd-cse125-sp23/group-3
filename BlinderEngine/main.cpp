@@ -292,6 +292,7 @@ int main(void) {
         }
         bool check_send_restart = false;
         while (!glfwWindowShouldClose(window)) {
+            Window::keyCallback(window, 0, 0, 0, 0);
             Window::updateEndPage(window);
             Window::displayEndPage(window);
             if (Window::clickRestart && !check_send_restart) {
