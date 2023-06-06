@@ -88,7 +88,11 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		lastFrame = currentFrame;
 		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
-
+		if (currentStatus == Action::idle)
+		{
+			objModel->Draw(shader);
+			return;
+		}
 		if (gameStatus == GameStatus::win) 
 		{
 			updateAnimation(deltaTime);
@@ -129,7 +133,6 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		}
 		else {
 			animator->PlayAnimation(animation_walking);
-			updateAnimation(0.0f);
 			currentStatus = Action::idle;
 		}
 		objModel->Draw(shader);
@@ -256,6 +259,12 @@ void DaeObject::doLose()
 	float currentFrame = glfwGetTime();
 	lastStartLose = currentFrame;
 
+}
+
+void DaeObject::resetAnimation()
+{
+	currentStatus = Action::idle;
+	gameStatus = GameStatus::playing;
 }
 
 

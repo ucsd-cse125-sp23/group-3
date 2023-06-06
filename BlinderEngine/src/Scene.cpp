@@ -100,6 +100,10 @@ void Scene::reset() {
 	playersObjects[1]->setScale(Constants::bob_scaling_factor);
 	playersObjects[2]->setScale(Constants::carol_scaling_factor);
 	playersObjects[3]->setScale(Constants::dave_scaling_factor);
+	for (auto player : playersObjects)
+	{
+		player->resetAnimation();
+	}
 
 	ui = std::make_shared<UI>();
 }

@@ -42,6 +42,8 @@ public:
 	void doWin();
 	void doLose();
 
+	void resetAnimation();
+
 	glm::mat4 calculateMoveMVP(float i);
 private:
 	DynamicModel* objModel;
