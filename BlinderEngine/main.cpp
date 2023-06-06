@@ -110,7 +110,7 @@ int main(void) {
         Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
-        
+        Window::clickRestart = false;
         // Cover
         Window::displayCoverPage(window);
 
