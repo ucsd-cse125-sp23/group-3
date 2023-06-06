@@ -300,6 +300,7 @@ int main(void) {
             Window::updateEndPage(window);
             Window::displayEndPage(window);
             if (Window::clickRestart && !check_send_restart) {
+                Audio::gSoloud.stopAll();
                 cli->send_event(EventType::RESTART);
                 Window::clickRestart = false;
                 check_send_restart = true;

@@ -105,7 +105,8 @@ void Scene::reset() {
 		player->resetAnimation();
 	}
 
-	ui = std::make_shared<UI>();
+	sign_pos.clear();
+	ui->restart();
 }
 
 void Scene::drawEnd()
