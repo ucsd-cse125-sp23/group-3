@@ -17,6 +17,7 @@ public:
 	static SoLoud::Wav carolSkill;
 	static SoLoud::Wav daveSkill;
 	static SoLoud::Wav ah;
+	static SoLoud::Wav attacking;
 
 	static const char* bgm_wav;
 	static const char* win_wav;
@@ -28,8 +29,12 @@ public:
 	static const char* carol_skill_wav;
 	static const char* dave_skill_wav;
 	static const char* ah_wav;
+	static const char* attacking_wav;
 	static int assign_id;
 	static int level_A;
+
+	static bool break_sign[3];
+	static int breaking_h[3];
 
 	static void init(int);
 
@@ -47,5 +52,7 @@ public:
 	// skill
 	static void playSkillAudio(GameData*, const std::vector<Cube*>&, const std::vector<ObsObject*>&);
 	static void playHpLow(GameData*);
-	static void playskill(glm::mat4);		// offline testing
+	static void playskill(glm::mat4);		// only for offline testing
+
+	static void playBreakObs(GameData*);
 };

@@ -269,6 +269,7 @@ int main(void) {
                 Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
                 Audio::playHpLow(cli->gd);
                 Audio::playSkillAudio(cli->gd, Window::scene->map->obs->cubes, Window::scene->map->obs->obs_vec);
+                Audio::playBreakObs(cli->gd);
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
                     cli->gd->gamestate == GameState::WIN) {
@@ -279,6 +280,7 @@ int main(void) {
                         ending = true;
                     }
                     Window::EndShrink();
+                    Audio::playEnd(cli->gd->gamestate);
                     end_ = std::chrono::system_clock::now();
                     elapsed_seconds_ = end_ - start_;
                     if (elapsed_seconds_.count() > 6) 
@@ -291,7 +293,7 @@ int main(void) {
         }
         if (!Constants::offline) {
             Window::setEndPage(cli->gd->gamestate);
-            Audio::playEnd(cli->gd->gamestate);
+            //Audio::playEnd(cli->gd->gamestate);
         }
         bool check_send_restart = false;
         while (!glfwWindowShouldClose(window)) {
