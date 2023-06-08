@@ -41,9 +41,9 @@ void Scene::init(int PlayID)
 
 	sceneStatus = SceneStatus::running;
 	
-	/*endPage = std::make_shared<FinalScene>(true, playersObjects);
+	endPage = std::make_shared<FinalScene>(true, playersObjects);
 	lights->EmptyAllLights(true);
-	camera->setFinalCam();*/
+	camera->setFinalCam();
 }
 
 void Scene::initLandingPage()
@@ -115,7 +115,7 @@ void Scene::drawEnd()
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
 
-	endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+	endPage->draw(*staticShader, *dynamicShader, *uiShader, camera->GetProjectMtx(), camera->GetViewMtx());
 	//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
@@ -132,14 +132,14 @@ void Scene::updateEnd() {
 
 void Scene::updateWorld()
 {
-	/*if (true) {
+	if (true) {
 		double newtimer = glfwGetTime();
 		float dt = (newtimer - timer);
 		timer = newtimer;
 		endPage->update(dt);
 		camera->Update();
 		return;
-	}*/
+	}
 	double newtimer = glfwGetTime();
 	float dt = (newtimer - timer);
 	timer = newtimer;
@@ -174,13 +174,13 @@ void Scene::updateWorld()
 
 void Scene::displayWorld(std::vector<int> os, int cd_remain)
 {
-	/*if (true) {
+	if (true) {
 		
 		lights->loadToUShader(shaderProgram, *camera);
 		lights->loadToDShader(*dynamicShader, *camera);
 		lights->loadToSShader(*staticShader, *camera);
 
-		endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+		endPage->draw(*staticShader, *dynamicShader, *uiShader, camera->GetProjectMtx(), camera->GetViewMtx());
 		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 		fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 		fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
@@ -189,7 +189,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		//map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 		return;
-	}*/
+	}
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);

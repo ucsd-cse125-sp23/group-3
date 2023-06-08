@@ -3,6 +3,10 @@
 FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players) {
 	backWallwin = std::make_shared<ObjObject>("./resources/objects/win_page/winpage.obj", glm::vec3(6.0f));
 	backWalllose = std::make_shared<ObjObject>("./resources/objects/lose_page/losepage.obj", glm::vec3(6.0f));
+	winpage = new graphic2D(2.0f,2.0f,-1.0f,-1.0f,true);
+	winpage->bindTexture("./images/win.png");
+	losepage = new graphic2D(2.0f, 2.0f, -1.0f, -1.0f, true);
+	losepage->bindTexture("./images/lose.png");
 	ground = std::make_shared<ObjObject>("./resources/objects/ground_final/losepage.obj", glm::vec3(1.0f,100.0f,100.0f));
 	players=_players;
 	status = win;
@@ -44,18 +48,22 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players
 void FinalScene::update(float dt) {
 	
 	if (status) {
-		for (int i = 0; i < playertime.size(); i++) {
+		/*for (int i = 0; i < playertime.size(); i++) {
 			if (playertime[i] < 2.0f) {
 				playertime[i] += dt;
 				break;
 			}
-		}
-		for (int i = 0; i < playertime.size(); i++) {
-			if (playertime[i] > 2.0f&&playerAnim[i]==false) {
-
+		}*/
+		for (int i = 0; i < players.size(); i++) {
+			if (playerAnim[i] == false) {
 				players[i]->doWin();
-				playerAnim[i] = true;
 			}
+			
+			//if (playertime[i] > 2.0f&&playerAnim[i]==false) {
+
+				
+			playerAnim[i] = true;
+			//}
 
 		}
 	}
@@ -69,19 +77,25 @@ void FinalScene::update(float dt) {
 	
 }
 
-void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, const glm::mat4& projection, const glm::mat4& view) {
+void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, StaticShader Ushader, const glm::mat4& projection, const glm::mat4& view) {
 
 	
 	if (status) {
+		glDisable(GL_DEPTH_TEST);
+		winpage->draw(Ushader, 1.0f);
+		glEnable(GL_DEPTH_TEST);
 		for (auto player : players) {
 			player->draw(projection, view, Dshader);
 		}
-		backWallwin->draw(projection, view, Sshader);
+		//backWallwin->draw(projection, view, Sshader);
 	}
 	else {
+		glDisable(GL_DEPTH_TEST);
+		losepage->draw(Ushader, 1.0f);
+		glEnable(GL_DEPTH_TEST);
 		players[0]->draw(projection, view, Dshader);
-		backWalllose->draw(projection, view, Sshader);
+		//backWalllose->draw(projection, view, Sshader);
 	}
 
-	ground->draw(projection, view, Sshader);
+	//ground->draw(projection, view, Sshader);
 }
