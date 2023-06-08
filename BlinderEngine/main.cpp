@@ -101,32 +101,31 @@ int main(void) {
     }
 
     Window::initializeCover();
-    Window::initializeLanding();
-    Window::initializeInstruction();
+   
+    Window::clickRestart = false;
+    // Cover
+    Window::displayCoverPage(window);
 
+    while (!Window::clickRestart) {
+        Window::keyCallback(window, 0, 0, 0, 0);
+        Window::displayCoverPage(window);
+    }
+
+    // Instruction
+    Window::initializeInstruction();
+    Window::displayInstructionPage(window);
+    Window::clickRestart = false;
+    while (!Window::clickRestart) {
+        Window::keyCallback(window, 0, 0, 0, 0);
+        Window::displayInstructionPage(window);
+    }
+
+    Window::initializeLanding();
     while (!glfwWindowShouldClose(window))
     {
         Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
-        Window::clickRestart = false;
-        // Cover
-        Window::displayCoverPage(window);
-
-        while (!Window::clickRestart) {
-            Window::keyCallback(window, 0, 0, 0, 0);
-            Window::displayCoverPage(window);
-        }
-
-        // Instruction
-        Window::clickRestart = false;
-        Window::displayInstructionPage(window);
-
-        while (!Window::clickRestart) {
-            Window::keyCallback(window, 0, 0, 0, 0);
-            Window::displayInstructionPage(window);
-        }
-
         // listen for initial game data
         int check_gd = cli->recv_gamedata();
         while (check_gd == -1 && !Constants::offline) {

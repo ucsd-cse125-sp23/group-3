@@ -19,10 +19,10 @@
 #define SMALL_ALERT 2
 #define MEDIUM_ALERT 5
 #define LARGE_ALERT 7
-#define SMALL_AWD 5
-#define MEDIUM_AWD 10
-#define LARGE_AWD 15
-#define AWARENESS_THRESHOLD 50
+#define SMALL_AWD 10
+#define MEDIUM_AWD 20
+#define LARGE_AWD 30
+#define AWARENESS_THRESHOLD 100
 
 #define SKILL_CD 30000
 
