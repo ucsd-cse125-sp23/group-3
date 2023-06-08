@@ -32,9 +32,9 @@ void Audio::init(int assign_id) {
 	Audio::alice_large_det_wav = "resources/audio/LargeDetect.wav";
 	Audio::alice_medium_det_wav = "resources/audio/MedObstacle.wav";
 	Audio::alice_small_det_wav = "resources/audio/PinObstacle.wav";
-	Audio::bob_skill_wav = "resources/audio/StarWars3.wav";
-	Audio::carol_skill_wav = "resources/audio/StarWars3.wav";
-	Audio::dave_skill_wav = "resources/audio/StarWars3.wav";
+	Audio::bob_skill_wav = "resources/audio/Bob_skill.wav";
+	Audio::carol_skill_wav = "resources/audio/Carol_skill.wav";
+	Audio::dave_skill_wav = "resources/audio/David_skill.wav";
 	Audio::ah_wav = "resources/audio/ah.wav";				// TODO: change wav
 	
 	Audio::assign_id = assign_id;
