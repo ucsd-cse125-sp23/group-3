@@ -92,6 +92,7 @@ int main(void) {
         Window::keyCallback(window, 0, 0, 0, 0);
         Window::initializeStoryPage(numPage);
         Window::displayStory(window);
+        Audio::playStoryBgm();
         Window::clickRestart = false;
         while (!Window::clickRestart) {
             Window::keyCallback(window, 0, 0, 0, 0);
@@ -119,10 +120,13 @@ int main(void) {
         Window::keyCallback(window, 0, 0, 0, 0);
         Window::displayInstructionPage(window);
     }
-
+    bool restart = false;
     Window::initializeLanding();
     while (!glfwWindowShouldClose(window))
     {
+        if (restart) {
+            Audio::playStoryBgm();
+        }
         Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
@@ -280,7 +284,6 @@ int main(void) {
                         ending = true;
                     }
                     Window::EndShrink();
-                    Audio::playEnd(cli->gd->gamestate);
                     end_ = std::chrono::system_clock::now();
                     elapsed_seconds_ = end_ - start_;
                     if (elapsed_seconds_.count() > 6) 
@@ -293,7 +296,7 @@ int main(void) {
         }
         if (!Constants::offline) {
             Window::setEndPage(cli->gd->gamestate);
-            //Audio::playEnd(cli->gd->gamestate);
+            Audio::playEnd(cli->gd->gamestate);
         }
         bool check_send_restart = false;
         while (!glfwWindowShouldClose(window)) {
@@ -302,6 +305,7 @@ int main(void) {
             Window::displayEndPage(window);
             if (Window::clickRestart && !check_send_restart) {
                 Audio::gSoloud.stopAll();
+                restart = true;
                 cli->send_event(EventType::RESTART);
                 Window::clickRestart = false;
                 check_send_restart = true;

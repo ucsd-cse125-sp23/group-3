@@ -11,6 +11,7 @@ SoLoud::Wav Audio::carolSkill;
 SoLoud::Wav Audio::daveSkill;
 SoLoud::Wav Audio::ah;
 SoLoud::Wav Audio::attacking;
+SoLoud::Wav Audio::storyBgm;
 const char* Audio::bgm_wav;
 const char* Audio::win_wav;
 const char* Audio::lose_wav;
@@ -22,6 +23,7 @@ const char* Audio::carol_skill_wav;
 const char* Audio::dave_skill_wav;
 const char* Audio::ah_wav;
 const char* Audio::attacking_wav;
+const char* Audio::storyBgm_wav;
 int Audio::assign_id;
 int Audio::level_A;
 bool Audio::break_sign[3];
@@ -30,7 +32,7 @@ int Audio::breaking_h[3];
 
 void Audio::init(int assign_id) {
 	Audio::gSoloud.init();
-	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
+	Audio::bgm_wav = "resources/audio/MoreChaoticMix.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	Audio::lose_wav = "resources/audio/WinningSound.wav";			// TODO: change wav
 	Audio::alice_large_det_wav = "resources/audio/LargeDetect.wav";
@@ -41,6 +43,7 @@ void Audio::init(int assign_id) {
 	Audio::dave_skill_wav = "resources/audio/David_skill.wav";
 	Audio::ah_wav = "resources/audio/ah.wav";				// TODO: change wav
 	Audio::attacking_wav = "resources/audio/attacking.wav";
+	Audio::storyBgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 
 	Audio::assign_id = assign_id;
 	Audio::level_A = 0;
@@ -75,7 +78,16 @@ void Audio::loadLose() {
 	Audio::gwave.load(Audio::lose_wav);
 }
 
+void Audio::playStoryBgm() {
+	Audio::gSoloud.stopAll();
+	Audio::storyBgm.load(Audio::storyBgm_wav);
+	int h = Audio::gSoloud.play(Audio::storyBgm, 0.2);
+	bool l = Audio::gSoloud.getLooping(h);
+	Audio::gSoloud.setLooping(h, !l);
+}
+
 void Audio::playBgm() {
+	Audio::gSoloud.stopAll();
 	Audio::loadBgm();
 	int h = Audio::gSoloud.play(Audio::gwave, 0.2);
 	bool l = Audio::gSoloud.getLooping(h);

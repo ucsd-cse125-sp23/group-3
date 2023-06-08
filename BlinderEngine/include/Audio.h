@@ -18,6 +18,7 @@ public:
 	static SoLoud::Wav daveSkill;
 	static SoLoud::Wav ah;
 	static SoLoud::Wav attacking;
+	static SoLoud::Wav storyBgm;
 
 	static const char* bgm_wav;
 	static const char* win_wav;
@@ -30,6 +31,7 @@ public:
 	static const char* dave_skill_wav;
 	static const char* ah_wav;
 	static const char* attacking_wav;
+	static const char* storyBgm_wav;
 	static int assign_id;
 	static int level_A;
 
@@ -46,6 +48,7 @@ public:
 	static void loadLose();
 
 	// player
+	static void playStoryBgm();
 	static void playBgm();
 	static void playEnd(GameState);
 
