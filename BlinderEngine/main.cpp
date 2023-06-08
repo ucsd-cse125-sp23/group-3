@@ -70,7 +70,7 @@ int main(void) {
     // Initialize the shader program; exit if initialization fails.
 
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
-    
+    Audio::init();
 
     // TODO(graphics): load landing page
 
@@ -86,12 +86,14 @@ int main(void) {
         }
     }
     int numPage = 1;
+    Audio::playStoryBgm();
     while (!glfwWindowShouldClose(window))
     {
         if (numPage == 6) break;
         Window::keyCallback(window, 0, 0, 0, 0);
         Window::initializeStoryPage(numPage);
         Window::displayStory(window);
+        
         Window::clickRestart = false;
         while (!Window::clickRestart) {
             Window::keyCallback(window, 0, 0, 0, 0);
@@ -101,7 +103,7 @@ int main(void) {
     }
 
     Window::initializeCover();
-   
+    
     Window::clickRestart = false;
     // Cover
     Window::displayCoverPage(window);
@@ -119,10 +121,13 @@ int main(void) {
         Window::keyCallback(window, 0, 0, 0, 0);
         Window::displayInstructionPage(window);
     }
-
+    bool restart = false;
     Window::initializeLanding();
     while (!glfwWindowShouldClose(window))
     {
+        if (restart) {
+            Audio::playStoryBgm();
+        }
         Window::keyCallback(window, 0, 0, 0, 0);
         cli->initialize_data();
         Window::playerID = client_id;
@@ -195,7 +200,7 @@ int main(void) {
             check_start = cli->recv_gamedata();
         }
 
-        Audio::init(assigned_id);
+        Audio::setid(assigned_id);
         Audio::playBgm();
         std::chrono::time_point<std::chrono::system_clock> start_, end_;
         bool ending = false;
@@ -269,6 +274,7 @@ int main(void) {
                 Window::displayCallback(window, cli->gd->obstacle_states, cli->gd->skill_cd.at(Window::playerID));
                 Audio::playHpLow(cli->gd);
                 Audio::playSkillAudio(cli->gd, Window::scene->map->obs->cubes, Window::scene->map->obs->obs_vec);
+                Audio::playBreakObs(cli->gd);
                 // check game end logic
                 if (cli->gd->gamestate == GameState::LOSE ||
                     cli->gd->gamestate == GameState::WIN) {
@@ -300,6 +306,7 @@ int main(void) {
             Window::displayEndPage(window);
             if (Window::clickRestart && !check_send_restart) {
                 Audio::gSoloud.stopAll();
+                restart = true;
                 cli->send_event(EventType::RESTART);
                 Window::clickRestart = false;
                 check_send_restart = true;

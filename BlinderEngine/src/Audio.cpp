@@ -10,6 +10,8 @@ SoLoud::Wav Audio::bobSkill;
 SoLoud::Wav Audio::carolSkill;
 SoLoud::Wav Audio::daveSkill;
 SoLoud::Wav Audio::ah;
+SoLoud::Wav Audio::attacking;
+SoLoud::Wav Audio::storyBgm;
 const char* Audio::bgm_wav;
 const char* Audio::win_wav;
 const char* Audio::lose_wav;
@@ -20,13 +22,18 @@ const char* Audio::bob_skill_wav;
 const char* Audio::carol_skill_wav;
 const char* Audio::dave_skill_wav;
 const char* Audio::ah_wav;
+const char* Audio::attacking_wav;
+const char* Audio::storyBgm_wav;
 int Audio::assign_id;
 int Audio::level_A;
+bool Audio::break_sign[3];
+int Audio::breaking_h[3];
 
 
-void Audio::init(int assign_id) {
+void Audio::init() {
+	std::cout << "here" << std::endl;
 	Audio::gSoloud.init();
-	Audio::bgm_wav = "resources/audio/LessChaoticUnMastered.wav";
+	Audio::bgm_wav = "resources/audio/MoreChaoticMix.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	Audio::lose_wav = "resources/audio/WinningSound.wav";			// TODO: change wav
 	Audio::alice_large_det_wav = "resources/audio/LargeDetect.wav";
@@ -36,10 +43,16 @@ void Audio::init(int assign_id) {
 	Audio::carol_skill_wav = "resources/audio/Carol_skill.wav";
 	Audio::dave_skill_wav = "resources/audio/David_skill.wav";
 	Audio::ah_wav = "resources/audio/ah.wav";				// TODO: change wav
-	
-	Audio::assign_id = assign_id;
-	Audio::level_A = 0;
+	Audio::attacking_wav = "resources/audio/attacking.wav";
+	Audio::storyBgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 
+	/*Audio::assign_id = assign_id;
+	Audio::level_A = 0;
+	for (int i = 0; i < 3; i++) {
+		Audio::break_sign[i] = false;
+		Audio::breaking_h[i] = 0;
+	}*/
+	
 	Audio::aliceSkill_l.load(Audio::alice_large_det_wav);
 	Audio::aliceSkill_m.load(Audio::alice_medium_det_wav);
 	Audio::aliceSkill_s.load(Audio::alice_small_det_wav);
@@ -47,6 +60,16 @@ void Audio::init(int assign_id) {
 	Audio::carolSkill.load(Audio::carol_skill_wav);
 	Audio::daveSkill.load(Audio::dave_skill_wav);
 	Audio::ah.load(Audio::ah_wav);
+	Audio::attacking.load(Audio::attacking_wav);
+}
+
+void Audio::setid(int id) {
+	Audio::assign_id = id;
+	Audio::level_A = 0;
+	for (int i = 0; i < 3; i++) {
+		Audio::break_sign[i] = false;
+		Audio::breaking_h[i] = 0;
+	}
 }
 
 void Audio::deinit() {
@@ -65,7 +88,16 @@ void Audio::loadLose() {
 	Audio::gwave.load(Audio::lose_wav);
 }
 
+void Audio::playStoryBgm() {
+	Audio::gSoloud.stopAll();
+	Audio::storyBgm.load(Audio::storyBgm_wav);
+	int h = Audio::gSoloud.play(Audio::storyBgm, 0.2);
+	bool l = Audio::gSoloud.getLooping(h);
+	Audio::gSoloud.setLooping(h, !l);
+}
+
 void Audio::playBgm() {
+	Audio::gSoloud.stopAll();
 	Audio::loadBgm();
 	int h = Audio::gSoloud.play(Audio::gwave, 0.2);
 	bool l = Audio::gSoloud.getLooping(h);
@@ -181,4 +213,61 @@ void Audio::playskill(glm::mat4 mat) {
 	gSoloud.set3dSourceMinMaxDistance(h, 0.4, 50);
 	gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
 	gSoloud.update3dAudio();
+}
+
+void Audio::playBreakObs(GameData* gd) {
+	float* player_pos = NULL;
+	if (Audio::assign_id == 0) {
+		player_pos = glm::value_ptr(gd->location_A);
+	}
+	else if (Audio::assign_id == 1) {
+		player_pos = glm::value_ptr(gd->location_B);
+	}
+	else if (Audio::assign_id == 2) {
+		player_pos = glm::value_ptr(gd->location_C);
+	}
+	else if (Audio::assign_id == 3) {
+		player_pos = glm::value_ptr(gd->location_D);
+	}
+	else {
+		// error
+		return;
+	}
+	for (int i = 1; i <= 3; i++) {
+		if (gd->player_status[i] != (int)PlayerStatus::ATTACK) {
+			if (Audio::break_sign[i - 1] == true) {
+				Audio::gSoloud.stop(breaking_h[i - 1]);
+			}
+			Audio::break_sign[i - 1] = false;
+		}
+		else {
+			if (Audio::break_sign[i - 1] == true) {
+				continue;
+			}
+			else {
+				// play sound
+				float* f = NULL;
+				if (i == 1) {
+					f = glm::value_ptr(gd->location_B);
+				}
+				else if (i == 2) {
+					f = glm::value_ptr(gd->location_C);
+				}
+				else if (i == 3) {
+					f = glm::value_ptr(gd->location_D);
+				}
+				Audio::breaking_h[i-1] = Audio::gSoloud.play3d(attacking, f[12], f[13], f[14]);
+				gSoloud.set3dSourceAttenuation(Audio::breaking_h[i-1], 2, 1.0);
+				gSoloud.set3dSourceMinMaxDistance(Audio::breaking_h[i-1], 0.4, 50);
+				gSoloud.set3dListenerPosition(player_pos[12], player_pos[13], player_pos[14]);
+				gSoloud.update3dAudio();
+
+				bool l = Audio::gSoloud.getLooping(Audio::breaking_h[i-1]);
+				Audio::gSoloud.setLooping(Audio::breaking_h[i-1], !l);
+				Audio::break_sign[i - 1] = true;
+			}
+		}
+
+	}
+
 }
