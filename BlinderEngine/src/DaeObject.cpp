@@ -66,6 +66,9 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, const g
 
 void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader)
 {
+	float currentFrame = glfwGetTime();
+	float deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
 	if (animated)
 	{
 		shader.use();
@@ -90,9 +93,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		shader.setMat4("model", currMVP);
 
 		// Animation
-		float currentFrame = glfwGetTime();
-		float deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+		
 		//std::cerr << "Animation->GetDuration = " << animation->GetDuration() << std::endl;
 		//std::cerr << "DeltaFrames = " << currentFrame - lastStartWalking << std::endl;
 		if (gameStatus == GameStatus::win) 
@@ -106,8 +107,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				updateAnimation(deltaTime);
 			}
 		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 &&\
-			currentFrame - lastPressedAttack < 0.00001)
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && fabs(currentFrame - lastPressedAttack) < 0.00001)
 		{
 			if (currentStatus != Action::attack)
 			{
