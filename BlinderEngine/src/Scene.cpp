@@ -41,9 +41,9 @@ void Scene::init(int PlayID)
 
 	sceneStatus = SceneStatus::running;
 	
-	endPage = std::make_shared<FinalScene>(true, playersObjects);
+	/*endPage = std::make_shared<FinalScene>(true, playersObjects);
 	lights->EmptyAllLights(true);
-	camera->setFinalCam();
+	camera->setFinalCam();*/
 }
 
 void Scene::initLandingPage()
@@ -132,14 +132,14 @@ void Scene::updateEnd() {
 
 void Scene::updateWorld()
 {
-	if (true) {
+	/*if (true) {
 		double newtimer = glfwGetTime();
 		float dt = (newtimer - timer);
 		timer = newtimer;
 		endPage->update(dt);
 		camera->Update();
 		return;
-	}
+	}*/
 	double newtimer = glfwGetTime();
 	float dt = (newtimer - timer);
 	timer = newtimer;
@@ -174,7 +174,7 @@ void Scene::updateWorld()
 
 void Scene::displayWorld(std::vector<int> os, int cd_remain)
 {
-	if (true) {
+	/*if (true) {
 		
 		lights->loadToUShader(shaderProgram, *camera);
 		lights->loadToDShader(*dynamicShader, *camera);
@@ -189,7 +189,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		//map->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *staticShader);
 		//ui->draw(camera->GetViewProjectMtx(), *uiShader, playerID, cd_remain);
 		return;
-	}
+	}*/
 	lights->loadToUShader(shaderProgram, *camera);
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
