@@ -51,6 +51,7 @@ FinalScene::FinalScene(bool win, std::vector<std::shared_ptr<DaeObject>> _player
 }
 
 void FinalScene::update(float dt) {
+	tot_dt = tot_dt > 1.0 ? 0 : tot_dt + dt;
 	if (status) {
 		/*for (int i = 0; i < playertime.size(); i++) {
 			if (playertime[i] < 2.0f) {
@@ -82,11 +83,9 @@ void FinalScene::update(float dt) {
 }
 
 void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, StaticShader Ushader, const glm::mat4& projection, const glm::mat4& view) {
-	delay = (delay + 1) % 120;
-
 	if (status) {
 		glDisable(GL_DEPTH_TEST);
-		if (delay < 60) {
+		if (tot_dt < 0.5) {
 			winpage_enter->draw(Ushader, 1.0f);
 		}
 		else {
@@ -100,7 +99,7 @@ void FinalScene::draw(StaticShader Sshader, DynamicShader Dshader, StaticShader 
 	}
 	else {
 		glDisable(GL_DEPTH_TEST);
-		if (delay < 60) {
+		if (tot_dt < 0.5) {
 			losepage_enter->draw(Ushader, 1.0f);
 		}
 		else {
