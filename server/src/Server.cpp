@@ -531,7 +531,7 @@ void Server::checkGameEndLogic() {
 	float x = -1;
 	float y = -1;
 	this->map->getPosition(this->gd->location_A, &map_id, &x, &y);
-	if (map_id == 2 && x >= 0 && x <= 1.0f && y >= 0 && y <= 1.0f) {
+	if (map_id == 2 && x >= 0 && x <= 1.0f && y >= 0 && y <= 0.2f) {
 		this->gd->gamestate = GameState::WIN;
 		return;
 	}

@@ -119,7 +119,7 @@ void Scene::drawEnd()
 	lights->loadToDShader(*dynamicShader, *camera);
 	lights->loadToSShader(*staticShader, *camera);
 
-	endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+	endPage->draw(*staticShader, *dynamicShader, *uiShader, camera->GetProjectMtx(), camera->GetViewMtx());
 	//skybox->draw(camera->GetProjectMtx(), camera->GetViewMtx(), *skyboxShader);
 	fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 	fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
@@ -184,7 +184,7 @@ void Scene::displayWorld(std::vector<int> os, int cd_remain)
 		lights->loadToDShader(*dynamicShader, *camera);
 		lights->loadToSShader(*staticShader, *camera);
 
-		endPage->draw(*staticShader, *dynamicShader, camera->GetProjectMtx(), camera->GetViewMtx());
+		endPage->draw(*staticShader, *dynamicShader, *uiShader, camera->GetProjectMtx(), camera->GetViewMtx());
 		//map->draw(camera->GetViewProjectMtx(), shaderProgram, os, sobs_pos, mobs_pos, lobs_pos);
 		fog->updateFog(staticShader->ID, glm::vec3(0.0f), width, height);
 		fog->updateFog(dynamicShader->ID, glm::vec3(0.0f), width, height);
