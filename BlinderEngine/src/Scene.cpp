@@ -95,6 +95,10 @@ void Scene::setEnd(bool won)
 	endPage = std::make_shared<FinalScene>(won, playersObjects);
 	lights->EmptyAllLights(won);
 	camera->setFinalCam();
+	for (auto player : playersObjects)
+	{
+		player->resetAnimation();
+	}
 }
 
 void Scene::reset() {

@@ -101,7 +101,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		}
 		else if (gameStatus == GameStatus::lose)
 		{
-			if (currentFrame - lastStartLose < animation_lose->GetDuration()/2 / 1000 - 0.05)
+			if (currentFrame - lastStartLose < animation_lose->GetDuration()/2 / 1000 - 0.2)
 			{
 				updateAnimation(deltaTime);
 			}
