@@ -107,7 +107,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 			}
 		}
 		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 &&\
-			currentFrame - lastPressedAttack < 0.1)
+			currentFrame - lastPressedAttack < 0.00001)
 		{
 			if (currentStatus != Action::attack)
 			{
