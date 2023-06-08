@@ -358,7 +358,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     {
         if (Constants::offline)
         {
-            scene->endScene();
+            scene->playersObjects[0]->doLose();
         }
     }
 
