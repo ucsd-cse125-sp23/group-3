@@ -6,6 +6,9 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players
 	ground = std::make_shared<ObjObject>("./resources/objects/ground_final/losepage.obj", glm::vec3(1.0f,100.0f,100.0f));
 	players=_players;
 	status = win;
+	for (int i = 0; i < players.size(); i++) {
+		players[i]->resetAnimation();
+	}
 	
 	if (win) {
 		players[0]->setScale(glm::vec3(0.3f));
@@ -13,6 +16,7 @@ FinalScene::FinalScene(bool win,std::vector<std::shared_ptr<DaeObject>> _players
 		players[2]->setScale(glm::vec3(0.15f));
 		players[3]->setScale(glm::vec3(0.3f));
 		for (int i = 0; i < players.size(); i++) {
+			//players[i]->resetAnimation();
 			glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f + i * 10.0f / 3, 0.0f,0.0f));
 			model=model* glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
 			players[i]->setModel(model);
