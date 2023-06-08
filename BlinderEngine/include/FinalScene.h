@@ -27,5 +27,5 @@ public:
     void update(float dt);
     void draw(StaticShader Sshader, DynamicShader Dshader, StaticShader Ushader, const glm::mat4& projection, const glm::mat4& view);
 
-    int delay = 0;
+    float tot_dt = 0;
 };
