@@ -107,7 +107,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 				updateAnimation(deltaTime);
 			}
 		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && fabs(currentFrame - lastPressedAttack) < 0.00001)
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && currentFrame -lastPressedAttack < 0.1)
 		{
 			if (currentStatus != Action::attack)
 			{
@@ -135,7 +135,8 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 			updateAnimation(deltaTime);
 		}
 		else {
-			animator->PlayAnimation(animation_walking);
+			resetAnimation();
+			//animator->PlayAnimation(animation_walking);
 			currentStatus = Action::idle;
 		}
 		objModel->Draw(shader);
