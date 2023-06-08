@@ -28,6 +28,10 @@ void Scene::init(int PlayID)
 	playersObjects[1]->setScale(Constants::bob_scaling_factor);
 	playersObjects[2]->setScale(Constants::carol_scaling_factor);
 	playersObjects[3]->setScale(Constants::dave_scaling_factor);
+	for (auto player : playersObjects)
+	{
+		player->resetAnimation();
+	}
 	fog = std::make_shared<Fog>();
 	skill_for_alice = std::make_shared <AliceSkill>(lights->particles_light);
 	skill_for_dave = std::make_shared <DaveSkill>(lights->particles_light);
