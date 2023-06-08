@@ -239,7 +239,12 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::FORWARD) {
 		this->gd->player_status[id] = (int)PlayerStatus::WALK;
 		glm::mat4 old_loc = *loc;
-		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
+		if (id == 0) {
+			*loc = glm::translate(*loc, glm::vec3(0, 0, -ALICE_CAMERA_SPEED));
+		}
+		else {
+			*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
+		}
 		int mapID;
 		float x;
 		float y;
@@ -278,10 +283,20 @@ void Server::updateBySingleEvent(EventType e, int id) {
 		}
 	}
 	else if (e == EventType::TURN_LEFT) {
-		*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		if (id == 0) {
+			*loc = *loc * glm::rotate(glm::radians(ALICE_CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else {
+			*loc = *loc * glm::rotate(glm::radians(CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
 	}
 	else if (e == EventType::TURN_RIGHT) {
-		*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		if (id == 0) {
+			*loc = *loc * glm::rotate(glm::radians(-ALICE_CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else {
+			*loc = *loc * glm::rotate(glm::radians(-CAMERA_SPEED * TURNING_RATIO), glm::vec3(0.0f, 1.0f, 0.0f));
+		}
 	}
 	else if (e == EventType::ATTACK) {
 		if (id != 0)
