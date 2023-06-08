@@ -48,7 +48,7 @@ void FinalScene::update(float dt) {
 		}
 		for (int i = 0; i < playertime.size(); i++) {
 			if (playertime[i] > 2.0f&&playerAnim[i]==false) {
-
+				players[i]->resetAnimation();
 				players[i]->doWin();
 				playerAnim[i] = true;
 			}
