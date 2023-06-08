@@ -30,7 +30,8 @@ bool Audio::break_sign[3];
 int Audio::breaking_h[3];
 
 
-void Audio::init(int assign_id) {
+void Audio::init() {
+	std::cout << "here" << std::endl;
 	Audio::gSoloud.init();
 	Audio::bgm_wav = "resources/audio/MoreChaoticMix.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
@@ -45,12 +46,12 @@ void Audio::init(int assign_id) {
 	Audio::attacking_wav = "resources/audio/attacking.wav";
 	Audio::storyBgm_wav = "resources/audio/LessChaoticUnMastered.wav";
 
-	Audio::assign_id = assign_id;
+	/*Audio::assign_id = assign_id;
 	Audio::level_A = 0;
 	for (int i = 0; i < 3; i++) {
 		Audio::break_sign[i] = false;
 		Audio::breaking_h[i] = 0;
-	}
+	}*/
 	
 	Audio::aliceSkill_l.load(Audio::alice_large_det_wav);
 	Audio::aliceSkill_m.load(Audio::alice_medium_det_wav);
@@ -60,6 +61,15 @@ void Audio::init(int assign_id) {
 	Audio::daveSkill.load(Audio::dave_skill_wav);
 	Audio::ah.load(Audio::ah_wav);
 	Audio::attacking.load(Audio::attacking_wav);
+}
+
+void Audio::setid(int id) {
+	Audio::assign_id = id;
+	Audio::level_A = 0;
+	for (int i = 0; i < 3; i++) {
+		Audio::break_sign[i] = false;
+		Audio::breaking_h[i] = 0;
+	}
 }
 
 void Audio::deinit() {

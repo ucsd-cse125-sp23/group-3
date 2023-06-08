@@ -38,8 +38,8 @@ public:
 	static bool break_sign[3];
 	static int breaking_h[3];
 
-	static void init(int);
-
+	static void init();
+	static void setid(int);
 	static void deinit();
 
 	// load wav

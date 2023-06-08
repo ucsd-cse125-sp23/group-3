@@ -70,7 +70,7 @@ int main(void) {
     // Initialize the shader program; exit if initialization fails.
 
     if (!Window::initializeProgram()) exit(EXIT_FAILURE);
-    
+    Audio::init();
 
     // TODO(graphics): load landing page
 
@@ -86,13 +86,14 @@ int main(void) {
         }
     }
     int numPage = 1;
+    Audio::playStoryBgm();
     while (!glfwWindowShouldClose(window))
     {
         if (numPage == 6) break;
         Window::keyCallback(window, 0, 0, 0, 0);
         Window::initializeStoryPage(numPage);
         Window::displayStory(window);
-        Audio::playStoryBgm();
+        
         Window::clickRestart = false;
         while (!Window::clickRestart) {
             Window::keyCallback(window, 0, 0, 0, 0);
@@ -102,7 +103,7 @@ int main(void) {
     }
 
     Window::initializeCover();
-   
+    
     Window::clickRestart = false;
     // Cover
     Window::displayCoverPage(window);
@@ -199,7 +200,7 @@ int main(void) {
             check_start = cli->recv_gamedata();
         }
 
-        Audio::init(assigned_id);
+        Audio::setid(assigned_id);
         Audio::playBgm();
         std::chrono::time_point<std::chrono::system_clock> start_, end_;
         bool ending = false;
