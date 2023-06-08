@@ -27,6 +27,7 @@ FinalScene::FinalScene(bool win, std::vector<std::shared_ptr<DaeObject>> _player
 			//players[i]->resetAnimation();
 			glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f + i * 10.0f / 3, 0.0f,0.0f));
 			model=model* glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); 
+			players[i]->resetAnimation();
 			players[i]->setModel(model);
 			playertime.push_back(0.0f);
 			playerAnim.push_back(false);
