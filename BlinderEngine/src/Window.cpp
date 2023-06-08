@@ -602,6 +602,9 @@ void Window::updateBySkill(GameData* gd) {
     {
         Window::scene->playersObjects.at(playerID)->doAttack();
     }
+    if (gd->player_status[playerID] == (int)PlayerStatus::NONE) {
+        Window::scene->playersObjects.at(playerID)->resetAnimation();
+    }
 }
 
 void Window::updateByWalk(GameData* gd) {
