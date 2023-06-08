@@ -26,6 +26,7 @@ public:
 	void draw(const glm::mat4& projection, const glm::mat4& view, DynamicShader& shader);
 
 	void updateAnimation(float deltaTime);
+	void updateAnimationOnce(float deltaTime);
 	void setTranslation(glm::vec3& translate);
 
 	void update(glm::mat4 world);
