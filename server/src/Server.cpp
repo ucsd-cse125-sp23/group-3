@@ -239,7 +239,12 @@ void Server::updateBySingleEvent(EventType e, int id) {
 	if (e == EventType::FORWARD) {
 		this->gd->player_status[id] = (int)PlayerStatus::WALK;
 		glm::mat4 old_loc = *loc;
-		*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
+		if (id == 0) {
+			*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED*0.8));
+		}
+		else {
+			*loc = glm::translate(*loc, glm::vec3(0, 0, -CAMERA_SPEED));
+		}
 		int mapID;
 		float x;
 		float y;
