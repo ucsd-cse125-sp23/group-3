@@ -40,9 +40,8 @@ int Audio::breaking_h[3];
 
 
 void Audio::init() {
-	std::cout << "here" << std::endl;
 	Audio::gSoloud.init();
-	Audio::bgm_wav = "resources/audio/MoreChaoticMix.wav";
+	//Audio::bgm_wav = "resources/audio/MoreChaoticMix.wav";
 	Audio::win_wav = "resources/audio/WinningSound.wav";
 	Audio::lose_wav = "resources/audio/LosingSound.wav";			
 	Audio::alice_large_det_wav = "resources/audio/LargeDetect.wav";
@@ -53,11 +52,11 @@ void Audio::init() {
 	Audio::dave_skill_wav = "resources/audio/David_skill.wav";
 	Audio::ah_wav = "resources/audio/ah.wav";				
 	Audio::attacking_wav = "resources/audio/attacking.wav";
-	Audio::storyBgm_wav = "resources/audio/LessChaoticUnMastered.wav";
-	Audio::base_track_wav = "resources/audio/BaseTrack.wav";
+	//Audio::storyBgm_wav = "resources/audio/LessChaoticUnMastered.wav";
+	Audio::base_track_wav = "resources/audio/BasetrackMixing-6.wav";
 	Audio::bgm_1_wav = "resources/audio/Layer1.wav";
-	Audio::bgm_2_wav = "resources/audio/Layer2.wav";
-	Audio::bgm_3_wav = "resources/audio/Layer3.wav";
+	Audio::bgm_2_wav = "resources/audio/Layer2Mixed.wav";
+	Audio::bgm_3_wav = "resources/audio/Layer3Mixed.wav";
 
 	/*Audio::assign_id = assign_id;
 	Audio::level_A = 0;
@@ -123,20 +122,20 @@ void Audio::playBgm() {
 	bool l1 = Audio::gSoloud.getLooping(h1);
 	Audio::gSoloud.setLooping(h1, !l1);
 	gSoloud.set3dSourceAttenuation(h1, 2, 1.0);
-	gSoloud.set3dSourceMinMaxDistance(h1, 0.4, 50);
+	gSoloud.set3dSourceMinMaxDistance(h1, 0.4, 100);
 
 	int h2 = Audio::gSoloud.play3d(Audio::bgm_2, -30.0f, 0.0f, -50.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	bool l2 = Audio::gSoloud.getLooping(h2);
 	Audio::gSoloud.setLooping(h2, !l2);
 	gSoloud.set3dSourceAttenuation(h2, 2, 1.0);
-	gSoloud.set3dSourceMinMaxDistance(h2, 0.4, 50);
+	gSoloud.set3dSourceMinMaxDistance(h2, 0.4, 100);
 
 
 	int h3 = Audio::gSoloud.play3d(Audio::bgm_3, 60.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	bool l3 = Audio::gSoloud.getLooping(h3);
 	Audio::gSoloud.setLooping(h3, !l3);
 	gSoloud.set3dSourceAttenuation(h3, 2, 1.0);
-	gSoloud.set3dSourceMinMaxDistance(h3, 0.4, 50);
+	gSoloud.set3dSourceMinMaxDistance(h3, 0.4, 100);
 
 	gSoloud.update3dAudio();
 }
