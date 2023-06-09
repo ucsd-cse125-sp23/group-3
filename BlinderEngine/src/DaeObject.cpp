@@ -106,14 +106,23 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 			updateAnimationOnce(deltaTime);
 
 		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && fabs(currentFrame - lastPressedAttack) < 0.00001)
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && attacking)
 		{
-			if (currentStatus != Action::attack)
+			if (currentFrame - lastPressedAttack < 0.1)
 			{
-				animator->PlayAnimation(animation_attack);
-				currentStatus = Action::attack;
+				if (currentStatus != Action::attack)
+				{
+					animator->PlayAnimation(animation_attack);
+					currentStatus = Action::attack;
+				}
+				updateAnimation(deltaTime);
 			}
-			updateAnimation(deltaTime);
+			else
+			{
+				attacking = false;
+				animator->PlayAnimation(animation_walking);
+				updateAnimation(deltaTime);
+			}
 		}
 		else if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
 		{
@@ -238,7 +247,8 @@ void DaeObject::doAction()
 }
 
 void DaeObject::doAttack()
-{
+{	
+	attacking = true;
 	float currentFrame = glfwGetTime();
 	if (currentFrame - lastStartAttack >= animation_attack->GetDuration() / 1000)
 	{
