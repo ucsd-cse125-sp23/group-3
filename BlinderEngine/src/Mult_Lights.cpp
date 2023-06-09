@@ -105,10 +105,12 @@ void Mult_Lights::EmptyAllLights(bool win) {
     lights_for_BCD.clear();
     skill_light.clear();
     particles_light.clear();
-    Light* endLight1=new Light(true, false, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 1.0f, 2.7f, 0.1f);
+    Light* endLight1=new Light(true, false, glm::vec3(1.0f, 1.0f, 0.9f), glm::vec3(-0.9f, -1.0f, -1.0f), glm::vec3(20.0f, 20.0f, 18.0f), 1.5f, 2.0f, 0.1f);
     endLight1->SetParam(1.0f, 0.01f, 0.004f);
-    Light* endLight2 = new Light(true, false, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.5f), glm::vec3(-20.0f, 20.0f, 0.0f), 0.8f, 2.7f, 0.1f);
+    endLight1->SetSpot(5.0f, 30.0f);
+    Light* endLight2 = new Light(true, false, glm::vec3(1.0f, 1.0f, 0.9f), glm::vec3(0.9f, -1.0f, -1.0f), glm::vec3(-20.0f, 20.0f, 18.0f), 1.5f, 2.0f, 0.1f);
     endLight2->SetParam(1.0f, 0.01f, 0.004f);
+    endLight2->SetSpot(5.0f, 30.0f);
     if (win) {
         lights_for_A.push_back(endLight1);
         lights_for_A.push_back(endLight2);
@@ -116,10 +118,12 @@ void Mult_Lights::EmptyAllLights(bool win) {
         lights_for_BCD.push_back(endLight2);
         return;
     }
-    endLight1 = new Light(true, false, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), 1.0f, 2.7f, 0.1f);
+    endLight1 = new Light(true, false, glm::vec3(0.7f, 0.7f, 0.7f), glm::vec3(-0.9f, -1.0f, -1.0f), glm::vec3(20.0f, 20.0f, 18.0f), 1.5f, 2.0f, 0.1f);
     endLight1->SetParam(1.0f, 0.01f, 0.004f);
-    endLight2 = new Light(true, false, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.5f), glm::vec3(-20.0f, 20.0f, 0.0f), 0.8f, 2.7f, 0.1f);
+    endLight1->SetSpot(5.0f, 30.0f);
+    endLight2 = new Light(true, false, glm::vec3(0.7f, 0.7f, 0.7f), glm::vec3(0.9f, -1.0f, -1.0f), glm::vec3(-20.0f, 20.0f, 18.0f), 1.5f, 2.0f, 0.1f);
     endLight2->SetParam(1.0f, 0.01f, 0.004f);
+    endLight2->SetSpot(5.0f, 30.0f);
     lights_for_A.push_back(endLight1);
     lights_for_A.push_back(endLight2);
     lights_for_BCD.push_back(endLight1);

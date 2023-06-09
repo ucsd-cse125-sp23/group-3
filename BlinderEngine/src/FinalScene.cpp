@@ -34,7 +34,7 @@ FinalScene::FinalScene(bool win, std::vector<std::shared_ptr<DaeObject>> _player
 	}
 	else {
 		players[0]->setScale(glm::vec3(0.6f));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -4.0f));
 		model = model * glm::rotate(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		players[0]->setModel(model);
 		playerAnim.push_back(false);
