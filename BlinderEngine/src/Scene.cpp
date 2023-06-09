@@ -1,5 +1,5 @@
 #include "Scene.h"
-
+//int cnt = 0;
 Scene::Scene()
 {
 	loadShaders();
@@ -19,7 +19,7 @@ void Scene::init(int PlayID)
 	if (playerID == 0)
 	{
 		camera->setFirstperson();
-		
+		lastlevel = 1.0f;
 	}
 	//camera->setFinalCam();
 	lights = std::make_shared<Mult_Lights>(playerID == 0);
@@ -165,6 +165,12 @@ void Scene::updateWorld()
 		// ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 	}
 	else {
+		/*cnt = (cnt + 1) % 1000;
+		if (cnt == 500) {
+			camera->CamShake();
+		}*/
+		//cnt = 
+
 		ui->setPlayerPosition(playersObjects[playerID]->getModel());
 		ui->setPlayerAlicePosition(playersObjects[0]->getModel());
 		lights->updateLightAlice(map->calculateLightcenter(playersObjects[playerID]->getModel()), true);
@@ -300,7 +306,13 @@ void Scene::setModel(glm::mat4 model)
 void Scene::updateLevel(float level)
 {
 	ui->changeLevelbarSizeY(level);
+	if (playerID == 0) {
+		if (lastlevel - level > 0.001f) {
+			camera->CamShake();
+			lastlevel = level;
+		}
 
+	}
 }
 
 void Scene::updateTime(int curr)
