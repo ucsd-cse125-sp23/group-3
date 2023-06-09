@@ -44,6 +44,7 @@ public:
 	void doLose();
 
 	void resetAnimation();
+	void resetToIdle();
 
 	glm::mat4 calculateMoveMVP(float i);
 private:

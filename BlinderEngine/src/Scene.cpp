@@ -111,6 +111,7 @@ void Scene::reset() {
 	for (auto player : playersObjects)
 	{
 		player->resetAnimation();
+		player->resetToIdle();
 	}
 
 	sign_pos.clear();
