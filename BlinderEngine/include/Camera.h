@@ -34,6 +34,7 @@ public:
     void setFinalCam() { final = true; };
     void resetFinalCam() { final = false; };
     void resetFirstCam() { first_person = false; };
+    void CamShake() ;
     glm::vec3 CameraPos, CameraTar;
     
 private:
@@ -43,6 +44,8 @@ private:
     float NearClip;  // Near clipping plane distance
     float FarClip;   // Far clipping plane distance
     // Polar controls
+    bool start_shake;
+    float shaking_start_time;
     glm::vec3 CameraUp, CameraDir;
     bool final;
     // Computed data

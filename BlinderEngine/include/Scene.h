@@ -89,6 +89,7 @@ public:
 
 	int width;
 	int height;
+	float lastlevel;
 
 	SceneStatus sceneStatus;
 

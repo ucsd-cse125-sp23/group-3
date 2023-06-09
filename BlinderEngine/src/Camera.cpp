@@ -10,6 +10,7 @@
 Camera::Camera() {
     first_person = false;
     final = false;
+    start_shake = false;
     Reset();
 }
 void Camera::Update() {
@@ -26,7 +27,17 @@ void Camera::Update() {
     if (first_person) {
         CameraTar = glm::vec3(0.0f, 5.5f, 0.0f);
         CameraDir = glm::vec3(0.0f, 0.0f, 1.5f);
+        if (start_shake) {
+            float current_time = glfwGetTime();
+            if (current_time - shaking_start_time > 2.0f) {
+                start_shake = false;
+            }
+            float dt = (current_time - shaking_start_time) * 50.0f;
+            float offset = glm::sin(dt) / dt;
+            CameraDir += glm::vec3(0.0f, 0.0f, offset);
+        }
         CameraPos = CameraTar + CameraDir;
+
     }
     else {
         CameraTar = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -89,6 +100,11 @@ void Camera::Reset() {
     //std::cout<<glm::to_string(CameraPos)<<std::endl;
     //TODO:: change back to glm::vec3(0.0f,1.0f,0.0f); for later use
     CameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+}
+
+void Camera::CamShake() {
+    start_shake = true;
+    shaking_start_time = glfwGetTime();
 }
 
 const glm::mat4& Camera::GetProjectMtx()
