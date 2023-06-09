@@ -102,19 +102,27 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		}
 		else if (gameStatus == GameStatus::lose)
 		{
-			if (currentFrame - lastStartLose < animation_lose->GetDuration()/2 / 1000 - 0.2)
+
+			updateAnimationOnce(deltaTime);
+
+		}
+		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000)
+		{
+			if (currentFrame - lastPressedAttack < 0.1)
 			{
+				if (currentStatus != Action::attack)
+				{
+					animator->PlayAnimation(animation_attack);
+					currentStatus = Action::attack;
+				}
 				updateAnimation(deltaTime);
 			}
-		}
-		else if (currentFrame - lastStartAttack < animation_attack->GetDuration() / 1000 && currentFrame -lastPressedAttack < 0.1)
-		{
-			if (currentStatus != Action::attack)
+			else
 			{
-				animator->PlayAnimation(animation_attack);
-				currentStatus = Action::attack;
+				attacking = false;
+				animator->PlayAnimation(animation_walking);
+				updateAnimation(deltaTime);
 			}
-			updateAnimation(deltaTime);
 		}
 		else if (currentFrame - lastStartAction < animation_action->GetDuration() / 1000)
 		{
@@ -166,6 +174,11 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 void DaeObject::updateAnimation(float deltaTime)
 {
 	animator->UpdateAnimation(deltaTime);
+}
+
+void DaeObject::updateAnimationOnce(float deltaTime) 
+{
+	animator->UpdateAnimationOnce(deltaTime);
 }
 
 void DaeObject::setTranslation(glm::vec3& translate)
@@ -235,7 +248,8 @@ void DaeObject::doAction()
 }
 
 void DaeObject::doAttack()
-{
+{	
+	attacking = true;
 	float currentFrame = glfwGetTime();
 	if (currentFrame - lastStartAttack >= animation_attack->GetDuration() / 1000)
 	{
@@ -258,6 +272,7 @@ void DaeObject::doWin()
 
 void DaeObject::doLose()
 {
+	std::cout << "doLose" << std::endl;
 	std::cout << "doLose" << std::endl;
 	gameStatus = GameStatus::lose;
 	animator->PlayAnimation(animation_lose);
