@@ -68,6 +68,7 @@ private:
 
 	bool animated;
 	bool placed;
+	bool attacking;
 
 	Action currentStatus;
 	GameStatus gameStatus;
