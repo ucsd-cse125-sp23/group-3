@@ -290,7 +290,7 @@ int main(void) {
                     Window::EndShrink();
                     end_ = std::chrono::system_clock::now();
                     elapsed_seconds_ = end_ - start_;
-                    if (elapsed_seconds_.count() > 6) 
+                    if (elapsed_seconds_.count() > 4) 
                     {
                         break;
                     }
