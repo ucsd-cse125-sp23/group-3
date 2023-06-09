@@ -263,10 +263,13 @@ int main(void) {
                 cin >> rate;
                 Window::ui->changeLevelbarSizeY(rate);
                 Window::ui->changeTimebarSizeY(rate);*/
-
+                const float* f = glm::value_ptr(Window::getPos());
+                std::cout << f[12] << " " << f[13] << " " << f[14] << "\n";
+                Audio::gSoloud.set3dListenerPosition(f[12], f[13], f[14]);
+                Audio::gSoloud.update3dAudio();
                 if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
                     Audio::playskill(Window::getPos());
-
+                    
                 }
                 Window::displayCallback(window, std::vector<int>(NUM_OBSTACLE, 2), SKILL_CD);
             }

@@ -19,6 +19,10 @@ public:
 	static SoLoud::Wav ah;
 	static SoLoud::Wav attacking;
 	static SoLoud::Wav storyBgm;
+	static SoLoud::Wav bgm_1;
+	static SoLoud::Wav bgm_2;
+	static SoLoud::Wav bgm_3;
+	static SoLoud::Wav base_track;
 
 	static const char* bgm_wav;
 	static const char* win_wav;
@@ -32,6 +36,10 @@ public:
 	static const char* ah_wav;
 	static const char* attacking_wav;
 	static const char* storyBgm_wav;
+	static const char* base_track_wav;
+	static const char* bgm_1_wav;
+	static const char* bgm_2_wav;
+	static const char* bgm_3_wav;
 	static int assign_id;
 	static int level_A;
 
