@@ -144,6 +144,7 @@ void DaeObject::draw(const glm::mat4& projection, const glm::mat4& view, Dynamic
 		}
 		else {
 			resetAnimation();
+			resetToIdle();
 			//animator->PlayAnimation(animation_walking);
 			currentStatus = Action::idle;
 		}
